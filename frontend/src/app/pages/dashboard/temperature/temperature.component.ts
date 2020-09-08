@@ -40,10 +40,10 @@ export class TemperatureComponent implements OnDestroy {
       this.theme = config.variables.temperature;
     });
 
-    forkJoin([
+    forkJoin(
       this.temperatureHumidityService.getTemperatureDevice(),
       this.temperatureHumidityService.getHumidityDevice(),
-    ])
+    )
       .subscribe(([temperatureData, humidityData]: [Device, Device]) => {
         this.temperatureDevice = temperatureData;
         this.humidityDevice = humidityData;

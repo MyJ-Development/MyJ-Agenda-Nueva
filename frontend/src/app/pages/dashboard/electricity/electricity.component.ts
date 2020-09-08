@@ -43,10 +43,10 @@ export class ElectricityComponent implements OnDestroy {
   }
 
   fetchData() {
-    forkJoin([
+    forkJoin(
       this.electricityService.getListData(3),
       this.electricityService.getChartData(this.type),
-    ])
+    )
       .pipe(takeWhile(() => this.alive))
       .subscribe(([listData, chartData]: [Electricity[], ElectricityChart]) => {
         this.listData = listData;

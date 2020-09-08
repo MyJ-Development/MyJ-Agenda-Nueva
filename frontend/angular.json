@@ -52,20 +52,6 @@
               "node_modules/echarts/dist/echarts.min.js",
               "node_modules/echarts/dist/extension/bmap.min.js",
               "node_modules/chart.js/dist/Chart.min.js"
-            ],
-            "allowedCommonJsDependencies": [
-              "angular2-chartjs",
-              "echarts",
-              "lodash",
-              "zrender/lib/svg/svg",
-              "zrender/lib/vml/vml",
-              "style-loader!angular2-toaster/toaster.css",
-              "style-loader!leaflet/dist/leaflet.css",
-              "rxjs-compat/Subject",
-              "rxjs-compat/add/operator/delay",
-              "rxjs/add/operator/delay",
-              "rxjs-compat/add/observable/of",
-              "rxjs/add/observable/of"
             ]
           },
           "configurations": {

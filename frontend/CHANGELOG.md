@@ -1,19 +1,5 @@
 # Change Log
 
-## 20.08.2020 (2020-08-20)
-
-### Feature
-* feat(app): update to angular 10 and Nebular 6
-
-### Bug Fixes
-* fix(auth): null refresh token
-* fix(app): theme initialization
-
-## 07.04.2020 (2020-04-07)
-
-### Features
-feat(theme): add material themes(material light, material dark)
-
 ## 03.04.2020 (2020-04-03)
 
 ### Feature
@@ -55,10 +41,28 @@ feat(theme): add material themes(material light, material dark)
 
 ### Bug Fixes
 
+* fix(order): order component validation fix
+* fix(user): update current user from grid
+* fix(smart-table): add custom smart table filter by number form control
+* fix: validation for register form
+* fix(input): fix input types
+* fix(tree grid): refactor code and move pipe provider to tables.module
+* fix(tree-grid): add measure converter
+* fix(toaster): fix style for toaster without icon
+* fix(user): fix starter user component
+* fix(chat): fix console issue when send txt type file
+* fix(smart-table): fix invisible letters in inputs smart table
+* fix(ckeditor): fix invisible letters in inputs ckeditor
+* fix(users): fix invisible letters in inputs fields in users table
+* fix(orders): fix invisible letters in inputs fields in orders table
+* fix(user): fix user validation, handle error on user edit, error during creating new order, standart url
 * feat(auth): implement refresh token after user edit
 * fix(sign-out): removed clear localstorage function before logout method call
 * fix(auth): refactor reset password page
+* fix(order): timezone and validation
+* fix(pages): change validation for order and user forms
 * fix(roles): fix users page
+* fix(e-commerce): fix e-commerce order chart size
 
 ### 1.4, October 14, 2019
 

@@ -15,7 +15,6 @@ import { PagesMenu } from './pages-menu';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { NbMenuModule } from '@nebular/theme';
 import { AuthModule } from '../@auth/auth.module';
-
 const PAGES_COMPONENTS = [
   PagesComponent,
 ];

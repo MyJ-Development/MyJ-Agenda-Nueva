@@ -22,10 +22,10 @@ export class ContactsComponent implements OnDestroy {
   recent: any[];
 
   constructor(private phoneService: PhoneData) {
-    forkJoin([
+    forkJoin(
       this.phoneService.getContacts(),
       this.phoneService.getRecentUsers(),
-  ])
+    )
       .pipe(takeWhile(() => this.alive))
       .subscribe(([contacts, recent]: [Contact[], RecentUser[]]) => {
         this.contacts = contacts;

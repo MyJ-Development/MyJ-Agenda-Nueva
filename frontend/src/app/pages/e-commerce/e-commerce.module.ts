@@ -16,12 +16,16 @@ import {
   NbListModule,
   NbSpinnerModule,
 } from '@nebular/theme';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { ECommerceComponent } from './e-commerce.component';
 import { ProfitCardComponent } from './profit-card/profit-card.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { TreeGridShowcaseComponent } from './tree-grid/tree-grid-showcase.component';
+import { TreeGridWeekShowcaseComponent } from './tree-grid-week/tree-grid-showcase.component';
 import { ECommerceChartsPanelComponent } from './charts-panel/charts-panel.component';
 import { OrdersChartComponent } from './charts-panel/charts/orders-chart.component';
 import { ProfitChartComponent } from './charts-panel/charts/profit-chart.component';
@@ -63,11 +67,28 @@ import { EarningPieChartComponent } from './earning-card/back-side/earning-pie-c
 import { EarningCardFrontComponent } from './earning-card/front-side/earning-card-front.component';
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
 
+import { FsIconComponent } from './tree-grid/tree-grid-showcase.component';
+import { NbInputModule, NbTreeGridModule } from '@nebular/theme';
+import { DayCellComponent } from './calendar/day-cell/day-cell.component';
+import {
+  NbActionsModule,
+  NbAlertModule,
+  NbCalendarKitModule,
+  NbCalendarModule,
+  NbCalendarRangeModule,
+  NbChatModule,
+  NbTooltipModule,
+  NbContextMenuModule,
+  NbWindowModule
+} from '@nebular/theme';
 @NgModule({
   imports: [
     ThemeModule,
+    NbWindowModule,
+    NbTooltipModule,
     NbCardModule,
     NbUserModule,
+    NbContextMenuModule,
     NbButtonModule,
     NbIconModule,
     NbTabsetModule,
@@ -79,10 +100,24 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
     NgxChartsModule,
     NbSpinnerModule,
     LeafletModule,
+    NbActionsModule,
+    NbAlertModule,
+    NbCalendarKitModule,
+    NbCalendarModule,
+    NbCalendarRangeModule,
+    NbChatModule,
+    Ng2SmartTableModule,
+    NbInputModule, 
+    NbTreeGridModule
   ],
   declarations: [
     ECommerceComponent,
+    FsIconComponent,
+    TreeGridWeekShowcaseComponent,
+    TreeGridShowcaseComponent,
+    DayCellComponent,
     StatsCardFrontComponent,
+    CalendarComponent,
     StatsAreaChartComponent,
     StatsBarAnimationChartComponent,
     ProfitCardComponent,
