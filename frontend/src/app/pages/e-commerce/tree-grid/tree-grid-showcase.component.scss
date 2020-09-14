@@ -11,15 +11,12 @@
   .calendar-container {
     margin: 1rem -9rem;
   }
-  .search-label {
-    display: block;
-  }
   .search-input {
-    margin-bottom: 1rem;
+    margin: 1rem;
   }
 
   .nb-column-name {
-    width: 100%;
+    width: 150%;
   }
 
   @media screen and (min-width: 400px) {
@@ -46,5 +43,13 @@
     .nb-column-items {
       width: 23%;
     }
+  }
+  .ajustandoBuscador{
+    margin: 0px;
+  }
+  
+  .tablitatr{
+    padding: 5px;
+    text-align: center;
   }
 }

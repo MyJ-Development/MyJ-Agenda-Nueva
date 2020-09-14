@@ -8,15 +8,15 @@ import { AnalyticsService } from './@core/utils';
 import { InitUserService } from './@theme/services/init-user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { peticionesGetService } from './services/peticionesGet.service';
+import { OrdenesDiarias } from './models/ordenesDiarias';
 
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit, OnDestroy {
-
   private destroy$: Subject<void> = new Subject<void>();
-
   constructor(private analytics: AnalyticsService,
               private initUserService: InitUserService) {
               this.initUser();

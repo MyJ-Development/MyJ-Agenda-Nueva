@@ -7,7 +7,7 @@
 <nb-card>
   <nb-card-body>
 
-    <label class="search-label" for="search">Search:</label>
+    <label class="search-label" for="search">Buscar:</label>
     <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
 
     <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">

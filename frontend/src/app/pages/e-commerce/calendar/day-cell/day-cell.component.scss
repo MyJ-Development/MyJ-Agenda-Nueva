@@ -14,12 +14,26 @@
     display: block;
   }
 
-  &.selected .caption,
-  &:hover .caption {
-    color: nb-theme(text-control-color);
-  }
-
   &.bounding-month .caption {
     color: inherit;
+  }
+
+  &.selected .caption2
+  {
+    color: rgb(5, 253, 179);
+    font-size: 27px;
+  }
+  &:hover .caption2 {
+    color: rgb(5, 253, 179);
+  }
+
+  &.selected .caption
+  {
+    color: rgb(5, 253, 179);
+    font-size: 16px;
+  }
+  &:hover .caption {
+    color: rgb(5, 253, 179);
+    //color: nb-theme(text-control-color);
   }
 }

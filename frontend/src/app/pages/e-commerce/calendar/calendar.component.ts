@@ -7,6 +7,8 @@
 import { Component } from '@angular/core';
 import { NbCalendarRange, NbDateService } from '@nebular/theme';
 import { DayCellComponent } from './day-cell/day-cell.component';
+import { peticionesGetService } from '../../../services/peticionesGet.service';
+import { OrdenesDiarias } from '../../../models/ordenesDiarias';
 
 @Component({
   selector: 'ngx-calendar',
@@ -15,16 +17,17 @@ import { DayCellComponent } from './day-cell/day-cell.component';
   entryComponents: [DayCellComponent],
 })
 export class CalendarComponent {
-
+  public cont:number= 0; 
+  ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   date = new Date();
   date2 = new Date();
   range: NbCalendarRange<Date>;
   dayCellComponent = DayCellComponent;
 
-  constructor(protected dateService: NbDateService<Date>) {
+  constructor(private peticionesGet: peticionesGetService, private dateService: NbDateService<Date>) {
     this.range = {
       start: this.dateService.addDay(this.monthStart, 3),
-      end: this.dateService.addDay(this.monthEnd, -3),
+      end: this.dateService.addDay(this.monthEnd, -3), 
     };
   }
 
@@ -34,5 +37,18 @@ export class CalendarComponent {
 
   get monthEnd(): Date {
     return this.dateService.getMonthEnd(new Date());
+  }
+
+  ngOnInit(): void {
+    this.peticionesGet.leerOrdenesDiarias().subscribe((ordenesDiariasdesdeApi) => {
+      this.ordenesDiarias = ordenesDiariasdesdeApi;
+      
+      for(let ordenes of this.ordenesDiarias)
+      {
+        while (ordenes.tipo == "Instalacion") {
+          this.cont = this.cont + 1;
+        }
+      }
+    })
   }
 }

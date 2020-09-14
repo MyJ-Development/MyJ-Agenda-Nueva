@@ -3,6 +3,8 @@ import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSou
 import { NB_WINDOW, NbMenuService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
 import { NbWindowService } from '@nebular/theme';
+import { WindowFormComponent } from '../../modal-overlays/window/window-form/window-form.component';
+import { WindowFormComponent2 } from './tree-grid-week-forms/tree-grid-week-forms-windowsformcomponent2';
 
 interface TreeNode<T> {
   data: T;
@@ -77,7 +79,7 @@ export class TreeGridWeekShowcaseComponent {
 
   getShowOn(index: number) {
     const minWithForMultipleColumns = 0;
-    const nextColumnStep = 350;
+    const nextColumnStep = 130;
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
   ngOnInit() {
@@ -86,12 +88,17 @@ export class TreeGridWeekShowcaseComponent {
         filter(({ tag }) => tag === 'context-menu'),
         map(({ item: { title } }) => title),
       )
-      .subscribe(title => this.openWindow(title) );
+      .subscribe(title => this.openWindowForm() );
   }
   openWindow(id: string) {
     this.windowService.open(
       this.contentTemplate,
       { title: 'Orden seleccionada: '+id , context: { text: 'Campos de la orden' } },
+    );
+  }
+
+   openWindowForm() {
+    this.windowService.open(WindowFormComponent2, { title: `Orden`},
     );
   }
 }

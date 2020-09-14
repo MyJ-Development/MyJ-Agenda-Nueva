@@ -1,40 +1,47 @@
 
     
- 
-    <label class="search-label" for="search">Search:</label>
-    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
-
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+<div>
+  <nb-card class="ajustandoBuscador2">
+    <nb-card-body class="ajustandoBuscador2">
+    <input nbInput size="100" [nbFilterInput]="dataSource" id="search" class="search-input" placeholder="Buscar">
+  </nb-card-body>
+  </nb-card>
+    <nb-card>
+      <nb-card-body> 
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" class="tablares">
 
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
       <ng-container [nbTreeGridColumnDef]="customColumn">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
           {{customColumn}}
         </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
           {{row.data[customColumn]}}
           <ng-template #contentTemplate let-data>
             <p>"{{ data.text }}"</p>
           </ng-template>
-          <button nbButton nbContextMenuPlacement="right" nbContextMenuTag="context-menu" [nbContextMenu]="items" nbContextMenuTrigger="hover">?</button>
+          <button nbButton class="tamañoTextoB" [nbContextMenu]="items" nbContextMenuTrigger="hover" size="small" nbContextMenuPlacement="right" nbContextMenuAdjustment="counterclockwise" nbContextMenuTag="context-menu" ghost>+</button>
         </td>
       </ng-container>
 
       <ng-container *ngFor="let column of defaultColumns; let index = index"
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
           {{column}}
         </th>
 
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}
+        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}
           <ng-template #contentTemplate let-data>
             <p>"{{ data.text }}"</p>
           </ng-template>
-          <button nbButton nbContextMenuPlacement="right" nbContextMenuTag="context-menu" [nbContextMenu]="items" nbContextMenuTrigger="hover">?</button>
+          <button nbButton class="tamañoTextoB" [nbContextMenu]="items" nbContextMenuTrigger="hover" size="small"  nbContextMenuPlacement="right" nbContextMenuAdjustment="counterclockwise" nbContextMenuTag="context-menu" ghost>+</button>
         </td>
       </ng-container>
 
     </table>
+  </nb-card-body>
+</nb-card>
+  </div>

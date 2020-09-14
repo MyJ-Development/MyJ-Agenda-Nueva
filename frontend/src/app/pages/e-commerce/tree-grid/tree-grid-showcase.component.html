@@ -1,17 +1,23 @@
 
-    <label class="search-label" for="search">Search:</label>
-    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
-
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+    
+<div class="tablabusqueda1e">
+  <nb-card class="ajustandoBuscador">
+  <nb-card-body class="ajustandoBuscador"> 
+    <input nbInput size="100" [nbFilterInput]="dataSource" id="search" class="search-input" placeholder="Buscar">
+  </nb-card-body>
+   </nb-card>
+    <nb-card class="ajustandoBuscador">
+    <nb-card-body class="ajustandoBuscador">
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" class="tablita">
 
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
       <ng-container [nbTreeGridColumnDef]="customColumn">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
           {{customColumn}}
         </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        <td class="tablitatr"nbTreeGridCell *nbTreeGridCellDef="let row">
           <nb-fs-icon [tipo]="row.data.tipo" [expanded]="row.expanded"></nb-fs-icon>
           {{row.data[customColumn]}}
         </td>
@@ -19,10 +25,12 @@
 
       <ng-container *ngFor="let column of defaultColumns; let index = index"
                     [nbTreeGridColumnDef]="column">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
           {{column}}
         </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+        <td class="tablitatr"nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
       </ng-container>
-
     </table>
+   </nb-card-body>
+   </nb-card>
+</div>

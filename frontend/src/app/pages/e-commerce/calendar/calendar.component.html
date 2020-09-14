@@ -3,14 +3,19 @@
   ~ Licensed under the Single Application / Multi Application License.
   ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
   -->
-
+  <div class="calendar">
     <div class="calendar-container">
+      <nb-card>
+        <nb-card-body>
       <nb-calendar
         [(date)]="date"
         [dayCellComponent]="dayCellComponent"
+        [boundingMonth]="true"
         showWeekNumber="True"
       ></nb-calendar>
+      </nb-card-body>
+      </nb-card>
     </div>
-
+  </div>
   
   

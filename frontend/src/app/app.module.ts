@@ -23,6 +23,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { peticionesGetService } from './services/peticionesGet.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,7 +48,9 @@ import {
     ThemeModule.forRoot(),
   ],
   bootstrap: [AppComponent],
-  providers: [],
+  providers: [
+    peticionesGetService
+  ],
 })
 export class AppModule {
 }
