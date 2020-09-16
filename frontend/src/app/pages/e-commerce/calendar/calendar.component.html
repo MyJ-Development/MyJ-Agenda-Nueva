@@ -8,14 +8,28 @@
       <nb-card>
         <nb-card-body>
       <nb-calendar
-        [(date)]="date"
-        [dayCellComponent]="dayCellComponent"
-        [boundingMonth]="true"
+        [(date)]="date" 
+        (click) = "openWindow(contentTemplate)"
+        [boundingMonth]="false"
         showWeekNumber="True"
+        [dayCellComponent]="dayCellComponent"
       ></nb-calendar>
       </nb-card-body>
       </nb-card>
     </div>
+  
   </div>
+
+  <ng-template #contentTemplate let-data >
+    <h5>{{ date | date }}</h5>
+    <div *ngFor="let ordenes of ordenesDiarias">
+    <p>1.- Instalacion: {{ordenes.tipo.descripcion}}</p>
+    <p></p>
+    </div>
+  </ng-template>
+  
+  <ng-template #disabledEsc>
+    Disabled close on escape click.
+  </ng-template>
   
   

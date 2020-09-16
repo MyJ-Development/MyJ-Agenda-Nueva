@@ -27,9 +27,9 @@ interface FSEntry {
   styleUrls: ['./tree-grid-showcase.component.scss'],
 })
 export class TreeGridWeekShowcaseComponent {
-  items = [{ title: '1234 ,Instalacion, Santa Luisa,Terminado, 12345678-9' },
-  { title: '1235 ,Instalacion, Santa Luisa,Terminado, 12345678-9' },
-  { title: '1236 ,Instalacion, Santa Luisa,Terminado, 12345678-9' }];
+  items = [{ title: '1234 ,Instalacion, 12345678-9' },
+  { title: '1235 ,Instalacion, 12345678-9' },
+  { title: '1236 ,Instalacion, 12345678-9' }];
 
   customColumn = 'Lunes';
   defaultColumns = [ 'Martes', 'Miercoles', 'Jueves' , 'Viernes','Sabado'];
