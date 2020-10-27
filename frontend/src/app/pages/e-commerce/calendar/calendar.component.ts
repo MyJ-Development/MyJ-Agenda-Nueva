@@ -11,6 +11,7 @@ import { peticionesGetService } from '../../../services/peticionesGet.service';
 import { OrdenesDiarias } from '../../../models/ordenesDiarias';
 import { WeekDay } from '@angular/common';
 import { TipoOrdenes } from '../../../models/tipoOrdenes';
+import { componentSyncService } from '../../../services/componentSync.service';
 
 @Component({
   selector: 'ngx-calendar',
@@ -26,10 +27,14 @@ export class CalendarComponent {
   tipoOrdenes: Array<TipoOrdenes> = new Array<TipoOrdenes>();
   date = new Date();
   date2 = new Date();
+  message:any;
   range: NbCalendarRange<Date>;
   dayCellComponent = DayCellComponent;
 
-  constructor(private peticionesGet: peticionesGetService, private dateService: NbDateService<Date>, private windowService: NbWindowService) {
+  constructor(private peticionesGet: peticionesGetService,
+              private dateService: NbDateService<Date>,
+              private windowService: NbWindowService,
+              private syncService: componentSyncService) {
     this.range = {
       start: this.dateService.addDay(this.monthStart, 3),
       end: this.dateService.addDay(this.monthEnd, -3), 
@@ -45,18 +50,7 @@ export class CalendarComponent {
   }
 
   ngOnInit(): void {
-    this.peticionesGet.leerOrdenesDiarias("2020-02-10","2020-09-20").subscribe((ordenesDiariasdesdeApi) => {
-      this.ordenesDiarias = ordenesDiariasdesdeApi;
-      console.log(this.ordenesDiarias);
-      
-      for(let ordenes of this.ordenesDiarias)
-      {
-          if(ordenes.tipo.descripcion=="Instalacion"){
-            this.cont = this.cont + 1;
-          }
-      }
-      console.log(this.cont);
-    })
+    this.syncService.currentMessage.subscribe(message => this.message = message)
   }
 
   openWindow(contentTemplate) {
@@ -67,6 +61,8 @@ export class CalendarComponent {
         context: {},
       },
     );
+    this.syncService.changeMessage(this.date)
+    console.log("Calendar: "+this.message)
   }
   
 }

@@ -5,6 +5,11 @@ import { filter, map } from 'rxjs/operators';
 import { NbWindowService } from '@nebular/theme';
 import { WindowFormComponent } from '../../modal-overlays/window/window-form/window-form.component';
 import { WindowFormComponent2 } from './tree-grid-week-forms/tree-grid-week-forms-windowsformcomponent2';
+import { peticionesGetService } from '../../../services/peticionesGet.service';
+import { OrdenesDiarias } from '../../../models/ordenesDiarias';
+import { TipoOrdenes } from '../../../models/tipoOrdenes';
+import { componentSyncService } from '../../../services/componentSync.service';
+import { DatePipe } from '@angular/common';
 
 interface TreeNode<T> {
   data: T;
@@ -34,20 +39,25 @@ export class TreeGridWeekShowcaseComponent {
   customColumn = 'Lunes';
   defaultColumns = [ 'Martes', 'Miercoles', 'Jueves' , 'Viernes','Sabado'];
   allColumns = [ this.customColumn, ...this.defaultColumns ];
-
+  ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
+  tecnicos : any;
+  message:any;
+  tipoOrdenes: Array<TipoOrdenes> = new Array<TipoOrdenes>();
   dataSource: NbTreeGridDataSource<FSEntry>;
-
+  public cont:number= 0; 
   sortColumn: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
-
+  public todayFormated: string = null
   @ViewChild('escClose', { read: TemplateRef }) escCloseTemplate: TemplateRef<HTMLElement>;
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
 
-  constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
+  constructor(private peticionesGet: peticionesGetService,
+    private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
     private nbMenuService: NbMenuService,
     private windowService: NbWindowService,
+    private syncService: componentSyncService,
+    private datePipe: DatePipe,
     @Inject(NB_WINDOW) private window) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
   }
 
   updateSort(sortRequest: NbSortRequest): void {
@@ -62,20 +72,9 @@ export class TreeGridWeekShowcaseComponent {
     return NbSortDirection.NONE;
   }
 
-  private data: TreeNode<FSEntry>[] = [
-    { 
-      data: { Lunes: 'Jose (3)', Martes: 'Jose (2)', Jueves: 'Jose (1)', Miercoles: 'Jose (3)' , Viernes: 'Jose (4)', Sabado:'Jose (5)' },
-    },
-    { 
-      data: { Lunes: 'Pepito (5)', Martes: 'Pepito (2)', Jueves: 'Pepito (0)', Miercoles: 'Pepito (7)' , Viernes: 'Pepito (2)', Sabado:'Pepito (1)' },
-    },
-    { 
-      data: { Lunes: 'Jorge (3)', Martes: 'Jorge (4)', Jueves: 'Jorge (1)', Miercoles: 'Jorge (3)' , Viernes: 'Jorge (5)', Sabado:'Jorge (3)' },
-    },
-    { 
-      data: { Lunes: 'Felipe (3)', Martes: 'Felipe (1)', Jueves: 'Felipe (1)', Miercoles: 'Felipe (1)' , Viernes: 'Felipe (4)', Sabado:'Felipe (1)' },
-    }
-  ];
+  
+  public data: TreeNode<FSEntry>[] = [];
+
 
   getShowOn(index: number) {
     const minWithForMultipleColumns = 0;
@@ -83,13 +82,40 @@ export class TreeGridWeekShowcaseComponent {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
   ngOnInit() {
+    this.updateTreeGrid()
+  }
+
+  updateTreeGrid(){
+    this.syncService.currentMessage.subscribe(message => this.message = message)
+    this.todayFormated = this.datePipe.transform(this.message, 'w');
+    console.log(this.todayFormated)
     this.nbMenuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === 'context-menu'),
         map(({ item: { title } }) => title),
       )
       .subscribe(title => this.openWindowForm() );
+
+    this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {
+      this.tecnicos = TecnicosList;  
+    })
+
+    this.peticionesGet.leerOrdenesDiarias("2020-02-10","2020-09-20").subscribe((ordenesDiariasdesdeApi) => {
+      this.ordenesDiarias = ordenesDiariasdesdeApi;  
+
+      for(let tecnico of this.tecnicos)
+      {
+        let OrdenesPorTecnico=(this.ordenesDiarias.filter(x=>x.encargado.nombre == tecnico.nombre))
+        console.log(tecnico.nombre);
+
+        this.data.push({
+          data: { Lunes: tecnico.nombre +" ("+OrdenesPorTecnico.length+")", Martes: tecnico.nombre+" (1)", Jueves: tecnico.nombre+" (1)", Miercoles: tecnico.nombre +" (1)", Viernes: tecnico.nombre+" (1)", Sabado: tecnico.nombre+" (1)" },
+        })
+      }
+      this.dataSource = this.dataSourceBuilder.create(this.data);
+    })
   }
+
   openWindow(id: string) {
     this.windowService.open(
       this.contentTemplate,
@@ -98,9 +124,25 @@ export class TreeGridWeekShowcaseComponent {
   }
 
    openWindowForm() {
+    //console.log("Tree grid: "+this.message)
+    this.updateTreeGrid()
+    console.log(this.firstDayOfWeek(2020, Number(this.todayFormated))); //12-21-2015 to 12-27-2015
     this.windowService.open(WindowFormComponent2, { title: `Orden`},
     );
   }
+
+  firstDayOfWeek (year, week) {
+    var d = new Date(year, 0, 1),
+        offset = d.getTimezoneOffset();
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000 
+        * (week + (year == d.getFullYear() ? -1 : 0 )));
+    d.setTime(d.getTime() 
+        + (d.getTimezoneOffset() - offset) * 60 * 1000);
+    d.setDate(d.getDate() - 3);
+    return d;
+}
+
 }
 
 @Component({

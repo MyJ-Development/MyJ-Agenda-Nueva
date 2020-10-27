@@ -15,12 +15,16 @@ export class peticionesGetService{
 
     leerOrdenesDiarias(date_init,date_end) : Observable<OrdenesDiarias[]>
     {
-        return this.http.get<OrdenesDiarias[]>('http://10.19.11.7:3003/api/scheduler/order?date_init='+date_init+'&date_end='+date_end+'')
+        return this.http.get<OrdenesDiarias[]>('http://10.19.11.9:3003/api/scheduler/order?date_init='+date_init+'&date_end='+date_end+'')
     }
 
     leerTipoOrdenes() : Observable<TipoOrdenes[]>
     {
-        return this.http.get<TipoOrdenes[]>('http://10.19.11.7:3003/api/scheduler/order')
+        return this.http.get<TipoOrdenes[]>('http://10.19.11.9:3003/api/scheduler/order')
+    }
+    leerTecnicos() : Observable<any[]>
+    {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/technician')
     }
 
 }

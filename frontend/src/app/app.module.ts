@@ -24,7 +24,7 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { peticionesGetService } from './services/peticionesGet.service';
-
+import { componentSyncService } from './services/componentSync.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -49,7 +49,8 @@ import { peticionesGetService } from './services/peticionesGet.service';
   ],
   bootstrap: [AppComponent],
   providers: [
-    peticionesGetService
+    peticionesGetService,
+    componentSyncService
   ],
 })
 export class AppModule {
