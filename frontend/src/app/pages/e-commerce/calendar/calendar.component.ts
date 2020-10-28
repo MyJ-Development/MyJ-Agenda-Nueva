@@ -62,7 +62,7 @@ export class CalendarComponent {
       },
     );
     this.syncService.changeMessage(this.date)
-    console.log("Calendar: "+this.message)
+    //console.log("Calendar: "+this.message)
   }
   
 }

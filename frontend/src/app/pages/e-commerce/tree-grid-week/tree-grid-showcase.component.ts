@@ -82,13 +82,13 @@ export class TreeGridWeekShowcaseComponent {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
   ngOnInit() {
-    this.updateTreeGrid()
-  }
-
-  updateTreeGrid(){
     this.syncService.currentMessage.subscribe(message => this.message = message)
     this.todayFormated = this.datePipe.transform(this.message, 'w');
-    console.log(this.todayFormated)
+    let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
+    this.updateTreeGrid(newDate)
+  }
+
+  updateTreeGrid(first_date:Date){
     this.nbMenuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === 'context-menu'),
@@ -100,13 +100,21 @@ export class TreeGridWeekShowcaseComponent {
       this.tecnicos = TecnicosList;  
     })
 
-    this.peticionesGet.leerOrdenesDiarias("2020-02-10","2020-09-20").subscribe((ordenesDiariasdesdeApi) => {
+    let last_date:Date = first_date
+    let first_date_formatted =this.datePipe.transform(first_date, 'yyyy-MM-dd');
+    let date_init:String = String(first_date_formatted)
+    last_date.setDate(last_date.getDate() + 5)
+    let last_date_formatted =this.datePipe.transform(last_date, 'yyyy-MM-dd');
+    let date_end:String = String(last_date_formatted)
+    console.log("init: "+date_init)
+    console.log("end: "+date_end)
+    this.peticionesGet.leerOrdenesDiarias(date_init,date_end).subscribe((ordenesDiariasdesdeApi) => {
       this.ordenesDiarias = ordenesDiariasdesdeApi;  
 
       for(let tecnico of this.tecnicos)
       {
         let OrdenesPorTecnico=(this.ordenesDiarias.filter(x=>x.encargado.nombre == tecnico.nombre))
-        console.log(tecnico.nombre);
+        //console.log(tecnico.nombre);
 
         this.data.push({
           data: { Lunes: tecnico.nombre +" ("+OrdenesPorTecnico.length+")", Martes: tecnico.nombre+" (1)", Jueves: tecnico.nombre+" (1)", Miercoles: tecnico.nombre +" (1)", Viernes: tecnico.nombre+" (1)", Sabado: tecnico.nombre+" (1)" },
@@ -124,14 +132,16 @@ export class TreeGridWeekShowcaseComponent {
   }
 
    openWindowForm() {
-    //console.log("Tree grid: "+this.message)
-    this.updateTreeGrid()
-    console.log(this.firstDayOfWeek(2020, Number(this.todayFormated))); //12-21-2015 to 12-27-2015
+    console.log("Tree grid: "+this.message)
+    this.todayFormated = this.datePipe.transform(this.message, 'w');
+    let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
+    //let formatted_date =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.updateTreeGrid(newDate)
     this.windowService.open(WindowFormComponent2, { title: `Orden`},
     );
   }
 
-  firstDayOfWeek (year, week) {
+  firstDayOfWeek(year, week) {
     var d = new Date(year, 0, 1),
         offset = d.getTimezoneOffset();
     d.setDate(d.getDate() + 4 - (d.getDay() || 7));
