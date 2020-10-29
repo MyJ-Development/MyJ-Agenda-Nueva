@@ -82,13 +82,20 @@ export class TreeGridWeekShowcaseComponent {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
   ngOnInit() {
-    this.syncService.currentMessage.subscribe(message => this.message = message)
-    this.todayFormated = this.datePipe.transform(this.message, 'w');
-    let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
-    this.updateTreeGrid(newDate)
+    //this.syncService.currentMessage.subscribe(message => this.message = message)
+    this.syncService.currentMessage.subscribe((message) => {
+      this.todayFormated = this.datePipe.transform(message, 'w');
+      let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
+      this.updateTreeGrid(newDate)
+     })
+
+
+
   }
 
   updateTreeGrid(first_date:Date){
+    this.data = [];
+
     this.nbMenuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === 'context-menu'),
@@ -101,7 +108,7 @@ export class TreeGridWeekShowcaseComponent {
     })
 
     let last_date:Date = first_date
-    let first_date_formatted =this.datePipe.transform(first_date, 'yyyy-MM-dd');
+    let first_date_formatted = this.datePipe.transform(first_date, 'yyyy-MM-dd');
     let date_init:String = String(first_date_formatted)
     last_date.setDate(last_date.getDate() + 5)
     let last_date_formatted =this.datePipe.transform(last_date, 'yyyy-MM-dd');
@@ -110,15 +117,23 @@ export class TreeGridWeekShowcaseComponent {
     console.log("end: "+date_end)
     this.peticionesGet.leerOrdenesDiarias(date_init,date_end).subscribe((ordenesDiariasdesdeApi) => {
       this.ordenesDiarias = ordenesDiariasdesdeApi;  
-
+      let counter = [0,0,0,0,0,0]
       for(let tecnico of this.tecnicos)
       {
         let OrdenesPorTecnico=(this.ordenesDiarias.filter(x=>x.encargado.nombre == tecnico.nombre))
-        //console.log(tecnico.nombre);
+        
+        let aux_date:Date = new Date( String(date_init))
+        for (let i=0;i<6;i++){
+          let row_date = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
+          let aux_counter = (OrdenesPorTecnico.filter(x=>this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == row_date))
+          aux_date.setDate(aux_date.getDate() + 1)
+          counter[i]=aux_counter.length
+        }
 
         this.data.push({
-          data: { Lunes: tecnico.nombre +" ("+OrdenesPorTecnico.length+")", Martes: tecnico.nombre+" (1)", Jueves: tecnico.nombre+" (1)", Miercoles: tecnico.nombre +" (1)", Viernes: tecnico.nombre+" (1)", Sabado: tecnico.nombre+" (1)" },
+          data: { Lunes: tecnico.nombre +" ("+counter[0]+")", Martes: tecnico.nombre+" ("+counter[1]+")", Jueves: tecnico.nombre+" ("+counter[2]+")", Miercoles: tecnico.nombre +" ("+counter[3]+")", Viernes: tecnico.nombre+" ("+counter[4]+")", Sabado: tecnico.nombre+" ("+counter[5]+")" },
         })
+
       }
       this.dataSource = this.dataSourceBuilder.create(this.data);
     })
@@ -132,11 +147,6 @@ export class TreeGridWeekShowcaseComponent {
   }
 
    openWindowForm() {
-    console.log("Tree grid: "+this.message)
-    this.todayFormated = this.datePipe.transform(this.message, 'w');
-    let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
-    //let formatted_date =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    this.updateTreeGrid(newDate)
     this.windowService.open(WindowFormComponent2, { title: `Orden`},
     );
   }
