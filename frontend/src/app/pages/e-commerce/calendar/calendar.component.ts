@@ -54,12 +54,14 @@ export class CalendarComponent {
   }
 
   openWindow(contentTemplate) {
+    
     this.windowService.open(
       contentTemplate,
       { 
         title: 'Cantidad de Ordenes del dia: ' + this.cont,
         context: {},
       },
+      
     );
     this.syncService.changeMessage(this.date)
     //console.log("Calendar: "+this.message)

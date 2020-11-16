@@ -13,19 +13,6 @@
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
-      <ng-container [nbTreeGridColumnDef]="customColumn">
-        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-          {{customColumn}}
-        </th>
-        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
-          {{row.data[customColumn]}}
-          <ng-template #contentTemplate let-data>
-            <p>"{{ data.text }}"</p>
-          </ng-template>
-          <button nbButton class="tamañoTextoB" [nbContextMenu]="items" nbContextMenuTrigger="hover" size="small" nbContextMenuPlacement="right" nbContextMenuAdjustment="counterclockwise" nbContextMenuTag="context-menu" ghost>+</button>
-        </td>
-      </ng-container>
-
       <ng-container *ngFor="let column of defaultColumns; let index = index"
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
@@ -37,7 +24,7 @@
           <ng-template #contentTemplate let-data>
             <p>"{{ data.text }}"</p>
           </ng-template>
-          <button nbButton class="tamañoTextoB" [nbContextMenu]="items" nbContextMenuTrigger="hover" size="small"  nbContextMenuPlacement="right" nbContextMenuAdjustment="counterclockwise" nbContextMenuTag="context-menu" ghost>+</button>
+          <button nbButton class="tamañoTextoB" [nbContextMenu]="items" nbContextMenuTrigger="hover" size="small"  nbContextMenuPlacement="right" nbContextMenuAdjustment="counterclockwise" nbContextMenuTag="context-menu" ghost>{{ column }}</button>
         </td>
       </ng-container>
 

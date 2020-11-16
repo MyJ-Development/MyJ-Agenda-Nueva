@@ -32,13 +32,15 @@ interface FSEntry {
   styleUrls: ['./tree-grid-showcase.component.scss'],
 })
 export class TreeGridWeekShowcaseComponent {
+  
   items = [{ title: '1234 ,Instalacion, 12345678-9' },
   { title: '1235 ,Instalacion, 12345678-9' },
   { title: '1236 ,Instalacion, 12345678-9' }];
 
-  customColumn = 'Lunes';
-  defaultColumns = [ 'Martes', 'Miercoles', 'Jueves' , 'Viernes','Sabado'];
-  allColumns = [ this.customColumn, ...this.defaultColumns ];
+
+  //customColumn = 'Lunes';
+  defaultColumns = [ 'Lunes', 'Martes', 'Miercoles', 'Jueves' , 'Viernes', 'Sabado'];
+  allColumns = [ ...this.defaultColumns ];
   ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   tecnicos : any;
   message:any;
@@ -95,14 +97,14 @@ export class TreeGridWeekShowcaseComponent {
 
   updateTreeGrid(first_date:Date){
     this.data = [];
-
+/*
     this.nbMenuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === 'context-menu'),
         map(({ item: { title } }) => title),
       )
       .subscribe(title => this.openWindowForm() );
-
+*/
     this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;  
     })
@@ -118,6 +120,7 @@ export class TreeGridWeekShowcaseComponent {
     this.peticionesGet.leerOrdenesDiarias(date_init,date_end).subscribe((ordenesDiariasdesdeApi) => {
       this.ordenesDiarias = ordenesDiariasdesdeApi;  
       let counter = [0,0,0,0,0,0]
+      let tec_counter = 0
       for(let tecnico of this.tecnicos)
       {
         let OrdenesPorTecnico=(this.ordenesDiarias.filter(x=>x.encargado.nombre == tecnico.nombre))
@@ -133,9 +136,11 @@ export class TreeGridWeekShowcaseComponent {
         this.data.push({
           data: { Lunes: tecnico.nombre +" ("+counter[0]+")", Martes: tecnico.nombre+" ("+counter[1]+")", Jueves: tecnico.nombre+" ("+counter[2]+")", Miercoles: tecnico.nombre +" ("+counter[3]+")", Viernes: tecnico.nombre+" ("+counter[4]+")", Sabado: tecnico.nombre+" ("+counter[5]+")" },
         })
+        tec_counter = tec_counter + 1
 
       }
       this.dataSource = this.dataSourceBuilder.create(this.data);
+      console.log(this.data)
     })
   }
 
