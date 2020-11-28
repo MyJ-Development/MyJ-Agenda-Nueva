@@ -12,7 +12,6 @@ import { OrdenesDiarias } from '../../../models/ordenesDiarias';
 import { WeekDay } from '@angular/common';
 import { TipoOrdenes } from '../../../models/tipoOrdenes';
 import { componentSyncService } from '../../../services/componentSync.service';
-import { tableService } from '../../../services/table.service';
 
 @Component({
   selector: 'ngx-calendar',
@@ -23,7 +22,7 @@ import { tableService } from '../../../services/table.service';
 export class CalendarComponent {
   @ViewChild('contentTemplate', { static: true }) contentTemplate: TemplateRef<any>;
   @ViewChild('disabledEsc', { read: TemplateRef, static: true }) disabledEscTemplate: TemplateRef<HTMLElement>;
-  ordenesPorFecha: any = [];
+  public cont:number= 0; 
   ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   tipoOrdenes: Array<TipoOrdenes> = new Array<TipoOrdenes>();
   date = new Date();
@@ -35,16 +34,12 @@ export class CalendarComponent {
   constructor(private peticionesGet: peticionesGetService,
               private dateService: NbDateService<Date>,
               private windowService: NbWindowService,
-              private syncService: componentSyncService,
-              private tableService: tableService) {
+              private syncService: componentSyncService) {
     this.range = {
       start: this.dateService.addDay(this.monthStart, 3),
       end: this.dateService.addDay(this.monthEnd, -3), 
     };
-
-
   }
-
 
   get monthStart(): Date {
     return this.dateService.getMonthStart(new Date());
@@ -56,9 +51,6 @@ export class CalendarComponent {
 
   ngOnInit(): void {
     this.syncService.currentMessage.subscribe(message => this.message = message)
-    this.ordenesPorFecha = this.tableService.getOrdenesPorFecha();
-    console.log('calendario');
-    console.log(this.ordenesPorFecha);
   }
 
   openWindow(contentTemplate) {
@@ -66,7 +58,7 @@ export class CalendarComponent {
     this.windowService.open(
       contentTemplate,
       { 
-        title: 'Cantidad de Ordenes del dia: ' + this.ordenesPorFecha.length,
+        title: 'Cantidad de Ordenes del dia: ' + this.cont,
         context: {},
       },
       
