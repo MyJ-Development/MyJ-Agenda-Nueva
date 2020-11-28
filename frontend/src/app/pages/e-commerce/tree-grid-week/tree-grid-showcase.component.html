@@ -24,7 +24,7 @@
           <ng-template #contentTemplate let-data>
             <p>"{{ data.text }}"</p>
           </ng-template>
-          <button nbButton class="tamañoTextoB" [nbContextMenu]="items" nbContextMenuTrigger="hover" size="small"  nbContextMenuPlacement="right" nbContextMenuAdjustment="counterclockwise" nbContextMenuTag="context-menu" ghost>{{ column }}</button>
+          <button nbButton (click)="open(index, row.data[column])">+</button>
         </td>
       </ng-container>
 

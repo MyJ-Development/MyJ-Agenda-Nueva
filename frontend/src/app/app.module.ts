@@ -25,6 +25,7 @@ import {
 } from '@nebular/theme';
 import { peticionesGetService } from './services/peticionesGet.service';
 import { componentSyncService } from './services/componentSync.service';
+import { tableService } from './services/table.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -50,7 +51,8 @@ import { componentSyncService } from './services/componentSync.service';
   bootstrap: [AppComponent],
   providers: [
     peticionesGetService,
-    componentSyncService
+    componentSyncService,
+    tableService
   ],
 })
 export class AppModule {

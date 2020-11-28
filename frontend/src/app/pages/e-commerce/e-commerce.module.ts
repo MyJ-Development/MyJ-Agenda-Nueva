@@ -5,6 +5,8 @@
  */
 
 import { NgModule } from '@angular/core';
+import { ShowcaseDialogComponent } from './tree-grid-week/showcase-dialog/showcase-dialog.component';
+import { DialogNamePromptComponent } from './tree-grid-week/dialog-name-prompt/dialog-name-prompt.component';
 import {
   NbButtonModule,
   NbCardModule,
@@ -148,6 +150,8 @@ import {
     EarningCardBackComponent,
     EarningPieChartComponent,
     EarningLiveUpdateChartComponent,
+    ShowcaseDialogComponent,
+    DialogNamePromptComponent
   ],
   providers: [
     CountryOrdersMapService,
