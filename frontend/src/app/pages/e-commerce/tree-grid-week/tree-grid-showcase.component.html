@@ -24,7 +24,7 @@
           <ng-template #contentTemplate let-data>
             <p>"{{ data.text }}"</p>
           </ng-template>
-          <button nbButton (click)="open(index, row.data[column])">+</button>
+          <button nbButton (click)="open(index, row.data[column], column)">+</button>
         </td>
       </ng-container>
 

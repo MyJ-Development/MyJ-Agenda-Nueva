@@ -12,6 +12,7 @@ import { OrdenesDiarias } from '../../../models/ordenesDiarias';
 import { WeekDay } from '@angular/common';
 import { TipoOrdenes } from '../../../models/tipoOrdenes';
 import { componentSyncService } from '../../../services/componentSync.service';
+import { tableService } from '../../../services/table.service';
 
 @Component({
   selector: 'ngx-calendar',
@@ -22,23 +23,27 @@ import { componentSyncService } from '../../../services/componentSync.service';
 export class CalendarComponent {
   @ViewChild('contentTemplate', { static: true }) contentTemplate: TemplateRef<any>;
   @ViewChild('disabledEsc', { read: TemplateRef, static: true }) disabledEscTemplate: TemplateRef<HTMLElement>;
-  public cont:number= 0; 
+  cont: number = 0;
   ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   tipoOrdenes: Array<TipoOrdenes> = new Array<TipoOrdenes>();
+  ordenesPorFecha: any[] = [];
   date = new Date();
   date2 = new Date();
-  message:any;
+  message: any;
   range: NbCalendarRange<Date>;
   dayCellComponent = DayCellComponent;
 
   constructor(private peticionesGet: peticionesGetService,
-              private dateService: NbDateService<Date>,
-              private windowService: NbWindowService,
-              private syncService: componentSyncService) {
+    private dateService: NbDateService<Date>,
+    private windowService: NbWindowService,
+    private syncService: componentSyncService,
+    private tableService: tableService) {
     this.range = {
       start: this.dateService.addDay(this.monthStart, 3),
-      end: this.dateService.addDay(this.monthEnd, -3), 
+      end: this.dateService.addDay(this.monthEnd, -3),
     };
+
+
   }
 
   get monthStart(): Date {
@@ -54,17 +59,29 @@ export class CalendarComponent {
   }
 
   openWindow(contentTemplate) {
-    
+
+    this.ordenesPorFecha = this.tableService.getOrdenesPorFecha();
+
+    for (let i = 0; i < this.ordenesPorFecha.length; i++) {
+      console.log('ordenes Por fecha');
+      console.log(this.ordenesPorFecha);
+      console.log(this.ordenesPorFecha[i].length);
+      this.cont = this.ordenesPorFecha.length + this.cont;
+      console.log('cont');
+      console.log(this.cont);
+    }
+
     this.windowService.open(
       contentTemplate,
-      { 
+      {
         title: 'Cantidad de Ordenes del dia: ' + this.cont,
         context: {},
-      },
-      
+      }
+
     );
     this.syncService.changeMessage(this.date)
     //console.log("Calendar: "+this.message)
+
   }
-  
+
 }

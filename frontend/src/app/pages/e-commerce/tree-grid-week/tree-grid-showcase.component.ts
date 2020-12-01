@@ -46,6 +46,7 @@ export class TreeGridWeekShowcaseComponent {
   message: any;
   indice: any;
   encargado: any;
+  dia: any;
   nuevaFecha: any;
   nuevaFechaFormat: any;
   ordDiarias: any;
@@ -58,6 +59,8 @@ export class TreeGridWeekShowcaseComponent {
   sortColumn: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
   public todayFormated: string = null
+  ordFechas = [];
+  semana = [];
 
 
   @ViewChild('escClose', { read: TemplateRef }) escCloseTemplate: TemplateRef<HTMLElement>;
@@ -89,13 +92,16 @@ export class TreeGridWeekShowcaseComponent {
     return NbSortDirection.NONE;
   }
 
-  open(index: any, data: any) {
+  open(index: any, data: any, dia: any) {
 
     this.encargado = data;
     this.indice = index;
+    this.dia = dia;
+
 
     this.sendIndex(this.indice);
     this.sendEncargado(this.encargado);
+    this.sendDia(this.dia);
 
     this.dialogService.open(ShowcaseDialogComponent)
 
@@ -121,16 +127,24 @@ export class TreeGridWeekShowcaseComponent {
 
   }
 
-  sendOrdenesPorFecha(datos){
+  sendTecnicos(datos){
+    this.tableService.setTecnicos(datos);
+  }
+
+  sendSemana(datos){
+    this.tableService.setSemana(datos);
+  }
+
+  sendDia(datos) {
+    this.tableService.setDia(datos);
+  }
+
+  sendOrdenesPorFecha(datos) {
     this.tableService.setOrdenesPorFecha(datos);
   }
 
-  sendNuevaFecha(datos){
+  sendNuevaFecha(datos) {
     this.tableService.setNuevaFecha(datos);
-  }
-
-  sendOrdenesDiarias(datos) {
-    this.tableService.setOrdenesDiarias(datos);
   }
 
   sendOrdenesDiariasPorTecnico(datos) {
@@ -157,7 +171,7 @@ export class TreeGridWeekShowcaseComponent {
     */
     this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
-
+      this.sendTecnicos(this.tecnicos);
     })
 
     let last_date: Date = first_date
@@ -169,7 +183,7 @@ export class TreeGridWeekShowcaseComponent {
     console.log("init: " + date_init)
     console.log("end: " + date_end)
     let test = [];
-    let ordFechas = [];
+
 
     this.peticionesGet.leerOrdenesDiarias(date_init, date_end).subscribe((ordenesDiariasdesdeApi) => {
 
@@ -182,20 +196,26 @@ export class TreeGridWeekShowcaseComponent {
 
         this.ordenesPorFecha = (this.ordenesDiarias.filter(x => this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == this.nuevaFechaFormat))
 
+        this.ordFechas.push(this.ordenesPorFecha);
+
         console.log('fecha');
         console.log(this.nuevaFechaFormat);
 
         console.log('ordenes');
         console.log(this.ordenesPorFecha);
         console.log(this.ordenesPorFecha.length);
-        ordFechas.push(this.ordenesPorFecha);
+
 
       }
+
+      console.log('ordDiaria');
+      console.log(this.ordFechas);
+      this.sendOrdenesPorFecha(this.ordFechas);
 
 
       this.sendNuevaFecha(this.nuevaFechaFormat);
 
-      let counter = [0, 0, 0, 0, 0, 0];
+      let counter: number[] = [0, 0, 0, 0, 0, 0];
       let tec_counter = 0;
 
       for (let tecnico of this.tecnicos) {
@@ -216,9 +236,15 @@ export class TreeGridWeekShowcaseComponent {
           this.ordenesDiariasPorTecnico = aux_counter;
           aux_date.setDate(aux_date.getDate() + 1)
           counter[i] = aux_counter.length
+          console.log('counter tree');
+          console.log(this.ordenesDiariasPorTecnico.length);
           test.push(this.ordenesDiariasPorTecnico)
-
+          this.semana.push(counter[i])
         }
+
+
+        
+        
 
         this.data.push({
           data: { Lunes: tecnico.nombre + " (" + counter[0] + ")", Martes: tecnico.nombre + " (" + counter[1] + ")", Miercoles: tecnico.nombre + " (" + counter[2] + ")", Jueves: tecnico.nombre + " (" + counter[3] + ")", Viernes: tecnico.nombre + " (" + counter[4] + ")", Sabado: tecnico.nombre + " (" + counter[5] + ")" },
@@ -226,26 +252,18 @@ export class TreeGridWeekShowcaseComponent {
 
         tec_counter = tec_counter + 1
 
-        this.sendOrdenesDiarias(this.ordenesDiarias);
-
-
       }
 
+      this.sendSemana(this.semana);
       this.dataSource = this.dataSourceBuilder.create(this.data);
 
-      this.sendOrdenesPorFecha(ordFechas);
-      console.log('ordDiaria');
-      console.log(ordFechas);
-
+      console.log("TEST")
+      console.log(test)
+      this.sendOrdenesDiariasPorTecnico(test);
     })
 
-    console.log("TEST")
-    console.log(test)
-    this.sendOrdenesDiariasPorTecnico(test);
-
-
   }
-  
+
 
   openWindow(id: string) {
     this.windowService.open(
