@@ -5,10 +5,9 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { Component, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
-import { OrdenesDiarias } from '../../../../models/ordenesDiarias';
 import { tableService } from '../../../../services/table.service';
 
 
@@ -19,7 +18,7 @@ import { tableService } from '../../../../services/table.service';
 })
 
 
-export class ShowcaseDialogComponent {
+export class ShowcaseDialogComponent implements OnInit {
 
   settings = {
     add: {
@@ -59,99 +58,42 @@ export class ShowcaseDialogComponent {
   ordenesDiariasPorTecnico: any = [];
   source: LocalDataSource = new LocalDataSource();
   data: any[] = [];
-  index: any;
-  encargado: any;
-  dia: any;
+  index: any = this.service.getIndex();
+  encargado: any = this.service.getEncargado();
+  dia: any = this.service.getDia();
   encargadoNombre: any;
   ordDiarias: any[] = [];
-  fecha: any;
-  numeroDia: number;
-  semana: any;
-  counter: number[] = [0, 0, 0, 0, 0, 0];
-  tecnicos: any;
+  fecha: Date = this.service.getNuevaFecha();
+  semana: any = this.service.getSemana();
+  ordenesSemanales = [];
+  longitud = 6;
+  tecnico: any = this.service.getTecnico();
 
   constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>,
     private service: tableService,
     private datePipe: DatePipe,) {
 
-    this.index = this.service.getIndex();
-    this.encargado = this.service.getEncargado();
-    this.dia = this.service.getDia();
     this.ordenesDiariasPorTecnico = this.service.getOrdenesDiariasPorTecnico();
-    this.fecha = this.service.getNuevaFecha();
-    this.semana = this.service.getSemana();
-    this.tecnicos = this.service.getTecnicos();
-
-    console.log('index');
-    console.log(this.index);
-
-    console.log('encargado');
     this.encargadoNombre = this.encargado.slice(0, -4);
-    console.log(this.encargadoNombre);
-
-    console.log('dia');
-    console.log(this.dia);
-
-    console.log('Nueva fecha');
-    console.log(this.fecha);
-
-    console.log('semana');
-    console.log(this.semana);
 
 
-
-
-
-    for (let tecnico of this.tecnicos) {
-
-      console.log(`tecnico`);
-      // for (let i = 0; i < 6; i++) {
-      //   // this.counter.push(this.semana[i])
-      //   console.log('counter');
-      //   console.log(this.counter[i]);
-
-      // }
-      for (let i = 0; i < 6; i++) {
-        // console.log('ordentec');
-        // console.log(this.ordenesDiariasPorTecnico[i].length);
-        for (let i = 0; i < this.ordenesDiariasPorTecnico.length; i++) {
-          this.counter[i] = this.ordenesDiariasPorTecnico[i].length;
-          
-        }
-        
-        console.log('counter');
-        console.log(this.counter[i]);
-      }
+    // Separa cantidad de ordenes de un tecnico por semana.
+    for (let i = 0; i < this.semana.length; i += this.longitud) {
+      let extracto = this.semana.slice(i, i + this.longitud);
+      this.ordenesSemanales.push(extracto);
 
     }
 
+    // console.log('arreglos', this.ordenesSemanales);
+    let first_date_formatted = this.datePipe.transform(this.fecha, 'yyyy-MM-dd');
+    let date_init: String = String(first_date_formatted)
 
 
     // Imprime las ordenes de cada técnico por día.
     for (let i = 0; i < this.ordenesDiariasPorTecnico.length; i++) {
       if (this.ordenesDiariasPorTecnico[i] != 0) {
-        console.log('ordenes diarias por tecnico');
-        console.log(this.ordenesDiariasPorTecnico[i]);
         this.ordDiarias.push(this.ordenesDiariasPorTecnico[i]);
       }
-    }
-
-    console.log('ordDiarias');
-    console.log(this.ordDiarias);
-
-
-    if (this.dia === 'Lunes') {
-      this.numeroDia = 0;
-    } else if (this.dia === 'Martes') {
-      this.numeroDia = 1;
-    } else if (this.dia === 'Miercoles') {
-      this.numeroDia = 2;
-    } else if (this.dia === 'Jueves') {
-      this.numeroDia = 3;
-    } else if (this.dia === 'Viernes') {
-      this.numeroDia = 4;
-    } else if (this.dia === 'Sabado') {
-      this.numeroDia = 5;
     }
 
 
@@ -162,22 +104,14 @@ export class ShowcaseDialogComponent {
           if ((this.ordDiarias[j][i])) {
 
             if ((this.encargadoNombre === this.ordDiarias[j][i]['encargado']['nombre'])
-              && (this.index === this.numeroDia)) {
+              && (this.newFecha(this.index) == this.ordDiarias[j][i]['fechaejecucion'])) {
 
-              console.log('numeroDia');
-              console.log(this.numeroDia);
-              console.log('index');
-              console.log(this.index);
-
-              console.log('Arr');
-              console.log(this.ordDiarias[j][i]['encargado']['nombre']);
-
-              this.data = [{
+              this.data.push({
                 id_orden: this.ordDiarias[j][i]['id'],
                 tecnico: this.ordDiarias[j][i]['encargado']['nombre'],
                 localizacion: this.ordDiarias[j][i]['client_residence']['direccion'],
                 tipo_orden: this.ordDiarias[j][i]['tipo']['descripcion']
-              }];
+              });
             }
 
             this.source.load(this.data);
@@ -187,6 +121,58 @@ export class ShowcaseDialogComponent {
       }
     } catch (error) {
       console.log("No existe")
+    }
+
+  }
+
+  ngOnInit() {
+    this.newFecha(this.index);
+  }
+
+  newFecha(index: any) {
+
+    if (index === 0) {
+
+      let fechaAux = new Date(this.service.getNuevaFecha());
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 1)), 'yyyy-MM-dd')
+
+      return fechaFormat;
+
+    } else if (index === 1) {
+
+      let fechaAux = new Date(this.service.getNuevaFecha());
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 2)), 'yyyy-MM-dd')
+
+      return fechaFormat;
+
+    } else if (index === 2) {
+
+      let fechaAux = new Date(this.service.getNuevaFecha());
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 3)), 'yyyy-MM-dd')
+
+      return fechaFormat;
+
+    } else if (index === 3) {
+
+      let fechaAux = new Date(this.service.getNuevaFecha());
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 4)), 'yyyy-MM-dd')
+
+      return fechaFormat;
+
+    } else if (index === 4) {
+
+      let fechaAux = new Date(this.service.getNuevaFecha());
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 5)), 'yyyy-MM-dd')
+
+      return fechaFormat;
+
+    } else if (index === 5) {
+
+      let fechaAux = new Date(this.service.getNuevaFecha());
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 6)), 'yyyy-MM-dd')
+
+      return fechaFormat;
+
     }
 
   }

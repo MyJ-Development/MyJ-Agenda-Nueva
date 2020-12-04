@@ -12,6 +12,7 @@ import { TipoOrdenes } from '../../../models/tipoOrdenes';
 import { componentSyncService } from '../../../services/componentSync.service';
 import { DatePipe } from '@angular/common';
 import { tableService } from '../../../services/table.service';
+import { runInThisContext } from 'vm';
 
 interface TreeNode<T> {
   data: T;
@@ -61,6 +62,7 @@ export class TreeGridWeekShowcaseComponent {
   public todayFormated: string = null
   ordFechas = [];
   semana = [];
+  arrTecnicos = [];
 
 
   @ViewChild('escClose', { read: TemplateRef }) escCloseTemplate: TemplateRef<HTMLElement>;
@@ -107,7 +109,6 @@ export class TreeGridWeekShowcaseComponent {
 
   };
 
-
   public data: TreeNode<FSEntry>[] = [];
 
   getShowOn(index: number) {
@@ -123,15 +124,18 @@ export class TreeGridWeekShowcaseComponent {
       let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
       this.updateTreeGrid(newDate)
       this.nuevaFecha = newDate;
+
     })
 
   }
 
-  sendTecnicos(datos){
-    this.tableService.setTecnicos(datos);
+
+  sendTecnico(datos) {
+    this.tableService.setTecnico(datos);
   }
 
-  sendSemana(datos){
+
+  sendSemana(datos) {
     this.tableService.setSemana(datos);
   }
 
@@ -171,7 +175,6 @@ export class TreeGridWeekShowcaseComponent {
     */
     this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
-      this.sendTecnicos(this.tecnicos);
     })
 
     let last_date: Date = first_date
@@ -182,8 +185,10 @@ export class TreeGridWeekShowcaseComponent {
     let date_end: String = String(last_date_formatted)
     console.log("init: " + date_init)
     console.log("end: " + date_end)
-    let test = [];
+    this.sendNuevaFecha(date_init);
 
+    let test = [];
+    this.semana = [];
 
     this.peticionesGet.leerOrdenesDiarias(date_init, date_end).subscribe((ordenesDiariasdesdeApi) => {
 
@@ -198,22 +203,9 @@ export class TreeGridWeekShowcaseComponent {
 
         this.ordFechas.push(this.ordenesPorFecha);
 
-        console.log('fecha');
-        console.log(this.nuevaFechaFormat);
-
-        console.log('ordenes');
-        console.log(this.ordenesPorFecha);
-        console.log(this.ordenesPorFecha.length);
-
-
       }
 
-      console.log('ordDiaria');
-      console.log(this.ordFechas);
       this.sendOrdenesPorFecha(this.ordFechas);
-
-
-      this.sendNuevaFecha(this.nuevaFechaFormat);
 
       let counter: number[] = [0, 0, 0, 0, 0, 0];
       let tec_counter = 0;
@@ -222,13 +214,9 @@ export class TreeGridWeekShowcaseComponent {
 
         this.ordenesPorTecnico = (this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre))
 
-        console.log('o-tecnico');
-        console.log(tecnico.nombre);
-        console.log(this.ordenesPorTecnico);
-
         let aux_date: Date = new Date(String(date_init))
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = -1; i < 6; i++) {
 
           let row_date = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
           let aux_counter = (this.ordenesPorTecnico.filter(x => this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == row_date))
@@ -236,34 +224,28 @@ export class TreeGridWeekShowcaseComponent {
           this.ordenesDiariasPorTecnico = aux_counter;
           aux_date.setDate(aux_date.getDate() + 1)
           counter[i] = aux_counter.length
-          console.log('counter tree');
-          console.log(this.ordenesDiariasPorTecnico.length);
           test.push(this.ordenesDiariasPorTecnico)
-          this.semana.push(counter[i])
+          this.semana.push(aux_counter.length)
         }
-
-
-        
-        
 
         this.data.push({
           data: { Lunes: tecnico.nombre + " (" + counter[0] + ")", Martes: tecnico.nombre + " (" + counter[1] + ")", Miercoles: tecnico.nombre + " (" + counter[2] + ")", Jueves: tecnico.nombre + " (" + counter[3] + ")", Viernes: tecnico.nombre + " (" + counter[4] + ")", Sabado: tecnico.nombre + " (" + counter[5] + ")" },
         })
 
+        this.arrTecnicos.push(tecnico)
+
         tec_counter = tec_counter + 1
 
       }
 
+      this.sendTecnico(this.arrTecnicos);
       this.sendSemana(this.semana);
+      this.sendOrdenesDiariasPorTecnico(test);
       this.dataSource = this.dataSourceBuilder.create(this.data);
 
-      console.log("TEST")
-      console.log(test)
-      this.sendOrdenesDiariasPorTecnico(test);
     })
 
   }
-
 
   openWindow(id: string) {
     this.windowService.open(

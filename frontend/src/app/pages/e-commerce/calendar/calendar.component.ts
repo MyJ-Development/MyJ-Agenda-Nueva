@@ -63,12 +63,12 @@ export class CalendarComponent {
     this.ordenesPorFecha = this.tableService.getOrdenesPorFecha();
 
     for (let i = 0; i < this.ordenesPorFecha.length; i++) {
-      console.log('ordenes Por fecha');
-      console.log(this.ordenesPorFecha);
-      console.log(this.ordenesPorFecha[i].length);
+      // console.log('ordenes Por fecha');
+      // console.log(this.ordenesPorFecha);
+      // console.log(this.ordenesPorFecha[i].length);
       this.cont = this.ordenesPorFecha.length + this.cont;
-      console.log('cont');
-      console.log(this.cont);
+      // console.log('cont');
+      // console.log(this.cont);
     }
 
     this.windowService.open(

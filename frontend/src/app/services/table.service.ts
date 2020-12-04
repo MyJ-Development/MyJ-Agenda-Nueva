@@ -18,69 +18,69 @@ export class tableService {
   fecha: any;
   dia: any;
   semana: any[];
-  tecnicos: any;
+  tecnico: any[];
 
-  setTecnicos(valor: any[]){
-    this.tecnicos = valor;
+  setTecnico(valor: any[]) {
+    this.tecnico = valor;
   }
 
-  getTecnicos(){
-    return this.tecnicos;
+  getTecnico() {
+    return this.tecnico;
   }
 
-  setSemana(valor: any[]){
+  setSemana(valor: any[]) {
     this.semana = valor;
   }
 
-  getSemana(){
+  getSemana() {
     return this.semana;
   }
 
-  setDia(valor: any){
+  setDia(valor: any) {
     this.dia = valor;
   }
 
-  getDia(){
+  getDia() {
     return this.dia;
   }
 
-  setIndex(valor: any){
+  setIndex(valor: any) {
     this.index = valor;
   }
 
-  getIndex(){
+  getIndex() {
     return this.index;
   }
 
-  setEncargado(valor: any){
+  setEncargado(valor: any) {
     this.encargado = valor;
   }
 
-  getEncargado(){
+  getEncargado() {
     return this.encargado;
   }
 
-  setOrdenesDiariasPorTecnico(valor: any[]){
+  setOrdenesDiariasPorTecnico(valor: any[]) {
     this.ordenesDiariasPorTecnico = valor;
   }
 
-  getOrdenesDiariasPorTecnico(){
+  getOrdenesDiariasPorTecnico() {
     return this.ordenesDiariasPorTecnico;
   }
 
-  setNuevaFecha(valor: any[]){
+  setNuevaFecha(valor: any) {
     this.fecha = valor;
   }
 
-  getNuevaFecha(){
+  getNuevaFecha() {
     return this.fecha;
   }
 
-  setOrdenesPorFecha(valor: any[]){
+  setOrdenesPorFecha(valor: any[]) {
     this.ordenesPorFecha = valor;
   }
 
-  getOrdenesPorFecha(){
+  getOrdenesPorFecha() {
     return this.ordenesPorFecha;
   }
 
