@@ -6,9 +6,10 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { tableService } from '../../../../services/table.service';
+import { MostrarOrdenComponent } from '../mostrar-orden/mostrar-orden.component';
 
 
 @Component({
@@ -21,19 +22,19 @@ import { tableService } from '../../../../services/table.service';
 export class ShowcaseDialogComponent implements OnInit {
 
   settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+    hideSubHeader: true,
+    actions: {
+      columnTitle: 'Ver más',
+      filter: false,
+      add: false,
+      edit: false,
+      delete: false,
+      custom: [
+        {
+          name: 'mas',
+          title: '<i class="icon ion-document" title="mas"></i>'
+        }
+      ]
     },
     columns: {
       id_orden: {
@@ -50,6 +51,10 @@ export class ShowcaseDialogComponent implements OnInit {
       },
       tipo_orden: {
         title: 'Tipo orden',
+        type: 'string',
+      },
+      fecha: {
+        title: 'Fecha',
         type: 'string',
       },
     },
@@ -71,11 +76,30 @@ export class ShowcaseDialogComponent implements OnInit {
 
   constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>,
     private service: tableService,
-    private datePipe: DatePipe,) {
+    private datePipe: DatePipe,
+    private mostrar: NbDialogService) {
 
     this.ordenesDiariasPorTecnico = this.service.getOrdenesDiariasPorTecnico();
     this.encargadoNombre = this.encargado.slice(0, -4);
 
+  }
+
+  ngOnInit() {
+    this.newFecha(this.index);
+    this.getOrdenes();
+  }
+
+  mostrarOrden(orden) {
+
+    this.mostrar.open(MostrarOrdenComponent);
+    this.ref.close();
+
+
+    console.log(orden.data);
+
+  }
+
+  getOrdenes() {
 
     // Separa cantidad de ordenes de un tecnico por semana.
     for (let i = 0; i < this.semana.length; i += this.longitud) {
@@ -84,18 +108,12 @@ export class ShowcaseDialogComponent implements OnInit {
 
     }
 
-    // console.log('arreglos', this.ordenesSemanales);
-    let first_date_formatted = this.datePipe.transform(this.fecha, 'yyyy-MM-dd');
-    let date_init: String = String(first_date_formatted)
-
-
     // Imprime las ordenes de cada técnico por día.
     for (let i = 0; i < this.ordenesDiariasPorTecnico.length; i++) {
       if (this.ordenesDiariasPorTecnico[i] != 0) {
         this.ordDiarias.push(this.ordenesDiariasPorTecnico[i]);
       }
     }
-
 
     try {
       for (let i = 0; i < this.ordDiarias.length; i++) {
@@ -110,7 +128,8 @@ export class ShowcaseDialogComponent implements OnInit {
                 id_orden: this.ordDiarias[j][i]['id'],
                 tecnico: this.ordDiarias[j][i]['encargado']['nombre'],
                 localizacion: this.ordDiarias[j][i]['client_residence']['direccion'],
-                tipo_orden: this.ordDiarias[j][i]['tipo']['descripcion']
+                tipo_orden: this.ordDiarias[j][i]['tipo']['descripcion'],
+                fecha: this.ordDiarias[j][i]['fechaejecucion']
               });
             }
 
@@ -122,11 +141,6 @@ export class ShowcaseDialogComponent implements OnInit {
     } catch (error) {
       console.log("No existe")
     }
-
-  }
-
-  ngOnInit() {
-    this.newFecha(this.index);
   }
 
   newFecha(index: any) {
@@ -178,7 +192,7 @@ export class ShowcaseDialogComponent implements OnInit {
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm('Seguro que quieres eliminar la orden?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();

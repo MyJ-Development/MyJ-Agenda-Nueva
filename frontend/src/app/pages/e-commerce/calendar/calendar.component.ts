@@ -8,9 +8,6 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NbCalendarRange, NbDateService, NbWindowService } from '@nebular/theme';
 import { DayCellComponent } from './day-cell/day-cell.component';
 import { peticionesGetService } from '../../../services/peticionesGet.service';
-import { OrdenesDiarias } from '../../../models/ordenesDiarias';
-import { WeekDay } from '@angular/common';
-import { TipoOrdenes } from '../../../models/tipoOrdenes';
 import { componentSyncService } from '../../../services/componentSync.service';
 import { tableService } from '../../../services/table.service';
 
@@ -24,11 +21,9 @@ export class CalendarComponent {
   @ViewChild('contentTemplate', { static: true }) contentTemplate: TemplateRef<any>;
   @ViewChild('disabledEsc', { read: TemplateRef, static: true }) disabledEscTemplate: TemplateRef<HTMLElement>;
   cont: number = 0;
-  ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
-  tipoOrdenes: Array<TipoOrdenes> = new Array<TipoOrdenes>();
-  ordenesPorFecha: any[] = [];
+  longitud = 6;
+  ordenesPorFecha: any = [];
   date = new Date();
-  date2 = new Date();
   message: any;
   range: NbCalendarRange<Date>;
   dayCellComponent = DayCellComponent;
@@ -43,7 +38,6 @@ export class CalendarComponent {
       end: this.dateService.addDay(this.monthEnd, -3),
     };
 
-
   }
 
   get monthStart(): Date {
@@ -55,21 +49,25 @@ export class CalendarComponent {
   }
 
   ngOnInit(): void {
-    this.syncService.currentMessage.subscribe(message => this.message = message)
+    this.syncService.currentMessage.subscribe(message => this.message = message);
+
   }
 
   openWindow(contentTemplate) {
 
-    this.ordenesPorFecha = this.tableService.getOrdenesPorFecha();
+    // this.ordenesPorFecha = this.tableService.getOrdenesPorFecha();
 
-    for (let i = 0; i < this.ordenesPorFecha.length; i++) {
-      // console.log('ordenes Por fecha');
-      // console.log(this.ordenesPorFecha);
-      // console.log(this.ordenesPorFecha[i].length);
-      this.cont = this.ordenesPorFecha.length + this.cont;
-      // console.log('cont');
-      // console.log(this.cont);
-    }
+
+
+    // for (let i = 0; i < 6; i++) {
+    //   this.ordenesPorFecha = []
+    //   console.log('ordenes');
+    //   console.log(this.ordenesPorFecha);
+    //   console.log(this.ordenesPorFecha.length);
+      
+    // }
+
+    this.cont = this.ordenesPorFecha.length;
 
     this.windowService.open(
       contentTemplate,

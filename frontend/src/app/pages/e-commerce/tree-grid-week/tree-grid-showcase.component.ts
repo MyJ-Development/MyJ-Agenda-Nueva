@@ -12,7 +12,6 @@ import { TipoOrdenes } from '../../../models/tipoOrdenes';
 import { componentSyncService } from '../../../services/componentSync.service';
 import { DatePipe } from '@angular/common';
 import { tableService } from '../../../services/table.service';
-import { runInThisContext } from 'vm';
 
 interface TreeNode<T> {
   data: T;
@@ -48,7 +47,7 @@ export class TreeGridWeekShowcaseComponent {
   indice: any;
   encargado: any;
   dia: any;
-  nuevaFecha: any;
+  diaFecha: Date;
   nuevaFechaFormat: any;
   ordDiarias: any;
   ordenesPorFecha: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
@@ -60,7 +59,7 @@ export class TreeGridWeekShowcaseComponent {
   sortColumn: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
   public todayFormated: string = null
-  ordFechas = [];
+  ordFechas: any = [];
   semana = [];
   arrTecnicos = [];
 
@@ -123,7 +122,6 @@ export class TreeGridWeekShowcaseComponent {
       this.todayFormated = this.datePipe.transform(message, 'w');
       let newDate = this.firstDayOfWeek(2020, Number(this.todayFormated))
       this.updateTreeGrid(newDate)
-      this.nuevaFecha = newDate;
 
     })
 
@@ -185,6 +183,7 @@ export class TreeGridWeekShowcaseComponent {
     let date_end: String = String(last_date_formatted)
     console.log("init: " + date_init)
     console.log("end: " + date_end)
+    this.diaFecha = new Date(String(date_init));
     this.sendNuevaFecha(date_init);
 
     let test = [];
@@ -196,14 +195,14 @@ export class TreeGridWeekShowcaseComponent {
 
       for (let i = 0; i < 6; i++) {
 
-        this.nuevaFecha[i] = this.nuevaFecha.setDate(this.nuevaFecha.getDate() - 1)
-        this.nuevaFechaFormat = this.datePipe.transform(this.nuevaFecha, 'yyyy-MM-dd');
+        this.diaFecha = new Date(this.diaFecha.setDate(this.diaFecha.getDate() + 1));
+        this.nuevaFechaFormat = this.datePipe.transform(this.diaFecha, 'yyyy-MM-dd');
 
         this.ordenesPorFecha = (this.ordenesDiarias.filter(x => this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == this.nuevaFechaFormat))
 
-        this.ordFechas.push(this.ordenesPorFecha);
-
       }
+
+      this.ordFechas.push(this.ordenesPorFecha);
 
       this.sendOrdenesPorFecha(this.ordFechas);
 

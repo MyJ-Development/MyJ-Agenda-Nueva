@@ -4,11 +4,15 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-@import '../../../../@theme/styles/themes';
+@import "../../../../@theme/styles/themes";
 
 @include nb-install-component() {
   nb-card {
-    max-width: 600px;
-    max-height: 500px;
+    max-width: 1600px;
+    max-height: 700px;
   }
+}
+
+:host /deep/ ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
+  margin-bottom: -45px !important;
 }

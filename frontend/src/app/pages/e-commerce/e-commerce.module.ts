@@ -83,6 +83,7 @@ import {
   NbContextMenuModule,
   NbWindowModule
 } from '@nebular/theme';
+import { MostrarOrdenComponent } from './tree-grid-week/mostrar-orden/mostrar-orden.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -151,7 +152,8 @@ import {
     EarningPieChartComponent,
     EarningLiveUpdateChartComponent,
     ShowcaseDialogComponent,
-    DialogNamePromptComponent
+    DialogNamePromptComponent,
+    MostrarOrdenComponent
   ],
   providers: [
     CountryOrdersMapService,
