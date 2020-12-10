@@ -16,32 +16,23 @@ export class tableService {
   index: any;
   encargado: any;
   fecha: any;
-  dia: any;
-  semana: any[];
-  tecnico: any[];
+  ordenCompleta: any[];
+  idOrden: any[];
 
-  setTecnico(valor: any[]) {
-    this.tecnico = valor;
+  setIdOrden(valor: any[]) {
+    this.idOrden = valor;
   }
 
-  getTecnico() {
-    return this.tecnico;
+  getIdOrden() {
+    return this.idOrden;
   }
 
-  setSemana(valor: any[]) {
-    this.semana = valor;
+  setOrdenCompleta(valor: any[]) {
+    this.ordenCompleta = valor;
   }
 
-  getSemana() {
-    return this.semana;
-  }
-
-  setDia(valor: any) {
-    this.dia = valor;
-  }
-
-  getDia() {
-    return this.dia;
+  getOrdenCompleta() {
+    return this.ordenCompleta;
   }
 
   setIndex(valor: any) {

@@ -4,12 +4,38 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
- @import '../../../../@theme/styles/themes';
+nb-card-body {
+  align-self: center;
+  overflow: visible;
+  padding-top: 0;
 
- @include nb-install-component() {
-   nb-card {
-     max-width: 600px;
-     max-height: 500px;
-   }
- }
- 
+  > * {
+    margin-top: 1rem;
+  }
+}
+
+.full-name-inputs,
+.validation-checkboxes {
+  display: flex;
+  margin: 0 -0.5rem;
+
+  > * {
+    margin: 0 0.5rem;
+  }
+}
+
+.checkbox-radio {
+  display: flex;
+}
+
+.demo-items {
+  flex: 1 0 33%;
+}
+
+.titulo{
+  font-size: 15px;
+}
+
+.blanco{
+  color: aliceblue;
+}

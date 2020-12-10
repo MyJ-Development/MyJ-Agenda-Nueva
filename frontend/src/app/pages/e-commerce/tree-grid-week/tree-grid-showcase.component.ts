@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { NbDialogService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from './showcase-dialog/showcase-dialog.component';
@@ -43,13 +43,10 @@ export class TreeGridWeekShowcaseComponent {
   allColumns = [...this.defaultColumns];
   ordenesDiarias: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   tecnicos: any;
-  message: any;
   indice: any;
   encargado: any;
-  dia: any;
   diaFecha: Date;
   nuevaFechaFormat: any;
-  ordDiarias: any;
   ordenesPorFecha: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   ordenesDiariasPorTecnico: Array<OrdenesDiarias> = new Array<OrdenesDiarias>();
   ordenesPorTecnico: any;
@@ -60,8 +57,6 @@ export class TreeGridWeekShowcaseComponent {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
   public todayFormated: string = null
   ordFechas: any = [];
-  semana = [];
-  arrTecnicos = [];
 
 
   @ViewChild('escClose', { read: TemplateRef }) escCloseTemplate: TemplateRef<HTMLElement>;
@@ -97,12 +92,9 @@ export class TreeGridWeekShowcaseComponent {
 
     this.encargado = data;
     this.indice = index;
-    this.dia = dia;
-
 
     this.sendIndex(this.indice);
     this.sendEncargado(this.encargado);
-    this.sendDia(this.dia);
 
     this.dialogService.open(ShowcaseDialogComponent)
 
@@ -125,20 +117,6 @@ export class TreeGridWeekShowcaseComponent {
 
     })
 
-  }
-
-
-  sendTecnico(datos) {
-    this.tableService.setTecnico(datos);
-  }
-
-
-  sendSemana(datos) {
-    this.tableService.setSemana(datos);
-  }
-
-  sendDia(datos) {
-    this.tableService.setDia(datos);
   }
 
   sendOrdenesPorFecha(datos) {
@@ -187,7 +165,6 @@ export class TreeGridWeekShowcaseComponent {
     this.sendNuevaFecha(date_init);
 
     let test = [];
-    this.semana = [];
 
     this.peticionesGet.leerOrdenesDiarias(date_init, date_end).subscribe((ordenesDiariasdesdeApi) => {
 
@@ -224,21 +201,16 @@ export class TreeGridWeekShowcaseComponent {
           aux_date.setDate(aux_date.getDate() + 1)
           counter[i] = aux_counter.length
           test.push(this.ordenesDiariasPorTecnico)
-          this.semana.push(aux_counter.length)
         }
 
         this.data.push({
           data: { Lunes: tecnico.nombre + " (" + counter[0] + ")", Martes: tecnico.nombre + " (" + counter[1] + ")", Miercoles: tecnico.nombre + " (" + counter[2] + ")", Jueves: tecnico.nombre + " (" + counter[3] + ")", Viernes: tecnico.nombre + " (" + counter[4] + ")", Sabado: tecnico.nombre + " (" + counter[5] + ")" },
         })
 
-        this.arrTecnicos.push(tecnico)
-
         tec_counter = tec_counter + 1
 
       }
 
-      this.sendTecnico(this.arrTecnicos);
-      this.sendSemana(this.semana);
       this.sendOrdenesDiariasPorTecnico(test);
       this.dataSource = this.dataSourceBuilder.create(this.data);
 

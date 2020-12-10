@@ -4,17 +4,97 @@
   ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
   -->
 
-<nb-card>
-  <nb-card-header>{{ title }}</nb-card-header>
-  <nb-card-body>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras convallis tincidunt tincidunt.
-    Vestibulum vulputate maximus massa vel tristique. Suspendisse potenti. Duis aliquet purus sed dictum dictum.
-    Donec fringilla, purus at fermentum imperdiet, velit enim malesuada turpis, quis luctus arcu arcu nec orci.
-    Duis eu mattis felis. Quisque sollicitudin elementum nunc vel tincidunt. Vestibulum egestas mi nec
-    iaculis varius. Morbi in risus sed sapien ultricies feugiat. Quisque pulvinar mattis purus,
-    in aliquet massa aliquet et.
-  </nb-card-body>
-  <nb-card-footer>
-    <button nbButton hero status="primary" (click)="dismiss()">Dismiss Dialog</button>
-  </nb-card-footer>
-</nb-card>
+<div class="row">
+  <div class="col-lg-12 offset-md-2">
+    <nb-card>
+      <nb-card-header>
+      <div class="form-group row">
+        <label for="numOrden" class="label col-6 col-md-4 col-form-label titulo blanco">Orden N°: {{numOrden}}</label>
+        <label for="nombreTecnico" class="label col-12 col-md-8 col-form-label titulo blanco">Técnico: {{nombreTecnico}}</label>
+      </div>
+      </nb-card-header>
+      <nb-card-body>
+        <form>
+          
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="nombreCliente" class="label">Nombre cliente</label>
+              <input type="text" nbInput fullWidth id="nombreCliente" status="info"
+              placeholder={{nombreCliente}} shape="semi-round">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="rutCliente" class="label">Rut cliente</label>
+              <input type="text" nbInput fullWidth id="rutCliente" status="info"
+              placeholder={{rutCliente}} shape="semi-round">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="direccionCliente" class="label">Dirección</label>
+              <input type="text" nbInput fullWidth id="direccionCliente" status="info"
+              placeholder={{direccionCliente}} shape="semi-round">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="comunaCliente" class="label">Comuna</label>
+              <input type="text" nbInput fullWidth id="comunaCliente" status="info"
+              placeholder={{comunaCliente}} shape="semi-round">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="telefonoCliente1" class="label">Teléfono 1</label>
+              <input type="text" nbInput fullWidth id="telefonoCliente1" status="info"
+              placeholder={{telefonoCliente1}} shape="semi-round">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="telefonoCliente2" class="label">Teléfono 2</label>
+              <input type="text" nbInput fullWidth id="telefonoCliente2" status="info"
+              placeholder={{telefonoCliente2}} shape="semi-round">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="correoCliente" class="label">Correo</label>
+              <input type="text" nbInput fullWidth id="correoCliente" status="info"
+              placeholder={{correoCliente}} shape="semi-round">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="nombreTecnico" class="label">Encargado</label>
+              <input type="text" nbInput fullWidth id="nombreTecnico" status="info"
+              placeholder={{nombreTecnico}} disabled shape="semi-round">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="comentarioCliente" class="label">Comentario</label>
+              <textarea rows="2" nbInput fullWidth shape="semi-round" status="info"
+              placeholder={{comentarioCliente}}></textarea>
+            </div>
+          </div>
+        </div>
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>

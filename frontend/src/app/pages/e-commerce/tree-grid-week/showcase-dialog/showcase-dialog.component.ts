@@ -65,14 +65,10 @@ export class ShowcaseDialogComponent implements OnInit {
   data: any[] = [];
   index: any = this.service.getIndex();
   encargado: any = this.service.getEncargado();
-  dia: any = this.service.getDia();
   encargadoNombre: any;
   ordDiarias: any[] = [];
-  fecha: Date = this.service.getNuevaFecha();
-  semana: any = this.service.getSemana();
-  ordenesSemanales = [];
-  longitud = 6;
-  tecnico: any = this.service.getTecnico();
+  ordenCompleta: any[] = [];
+  idOrden: any[] = [];
 
   constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>,
     private service: tableService,
@@ -89,26 +85,26 @@ export class ShowcaseDialogComponent implements OnInit {
     this.getOrdenes();
   }
 
-  mostrarOrden(orden) {
+  sendIdOrden(datos){
+    this.service.setIdOrden(datos);
+  }
+
+  sendOrdenCompleta(datos) {
+    this.service.setOrdenCompleta(datos);
+  }
+
+  mostrarOrden(event) {
 
     this.mostrar.open(MostrarOrdenComponent);
     this.ref.close();
 
-
-    console.log(orden.data);
+    this.idOrden.push(event);
 
   }
 
   getOrdenes() {
 
-    // Separa cantidad de ordenes de un tecnico por semana.
-    for (let i = 0; i < this.semana.length; i += this.longitud) {
-      let extracto = this.semana.slice(i, i + this.longitud);
-      this.ordenesSemanales.push(extracto);
-
-    }
-
-    // Imprime las ordenes de cada técnico por día.
+    // Separa las ordenes de cada técnico por día.
     for (let i = 0; i < this.ordenesDiariasPorTecnico.length; i++) {
       if (this.ordenesDiariasPorTecnico[i] != 0) {
         this.ordDiarias.push(this.ordenesDiariasPorTecnico[i]);
@@ -123,6 +119,10 @@ export class ShowcaseDialogComponent implements OnInit {
 
             if ((this.encargadoNombre === this.ordDiarias[j][i]['encargado']['nombre'])
               && (this.newFecha(this.index) == this.ordDiarias[j][i]['fechaejecucion'])) {
+
+              this.ordenCompleta.push(this.ordDiarias[j][i]);
+              this.sendOrdenCompleta(this.ordenCompleta);
+              this.sendIdOrden(this.idOrden);
 
               this.data.push({
                 id_orden: this.ordDiarias[j][i]['id'],
