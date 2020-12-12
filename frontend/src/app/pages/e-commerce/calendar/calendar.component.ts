@@ -40,6 +40,13 @@ export class CalendarComponent {
 
   }
 
+  ngOnInit(): void {
+    
+    this.syncService.currentMessage.subscribe(message => this.message = message);
+
+  }
+
+
   get monthStart(): Date {
     return this.dateService.getMonthStart(new Date());
   }
@@ -48,12 +55,12 @@ export class CalendarComponent {
     return this.dateService.getMonthEnd(new Date());
   }
 
-  ngOnInit(): void {
-    this.syncService.currentMessage.subscribe(message => this.message = message);
-
-  }
-
   openWindow(contentTemplate) {
+    
+    this.syncService.changeMessage(this.date);
+    
+    //console.log("Calendar: "+this.message)
+
 
     // this.ordenesPorFecha = this.tableService.getOrdenesPorFecha();
 
@@ -77,8 +84,6 @@ export class CalendarComponent {
       }
 
     );
-    this.syncService.changeMessage(this.date)
-    //console.log("Calendar: "+this.message)
 
   }
 

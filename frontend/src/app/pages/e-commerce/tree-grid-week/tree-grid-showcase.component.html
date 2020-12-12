@@ -1,36 +1,52 @@
 
     
 <div *ngIf=data>
+
   <nb-card class="ajustandoBuscador2">
     <nb-card-body class="ajustandoBuscador2">
-    <input nbInput size="100" [nbFilterInput]="dataSource" id="search" class="search-input" placeholder="Buscar">
-  </nb-card-body>
+      <input nbInput size="100" [nbFilterInput]="dataSource" 
+                                id="search" 
+                                class="search-input" 
+                                placeholder="Buscar">
+    </nb-card-body>
   </nb-card>
+
     <nb-card>
       <nb-card-body> 
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" class="tablares">
+        <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" 
+                                         (sort)="updateSort($event)" 
+                                         class="tablares">
 
-      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+          <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+          <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
-      <ng-container *ngFor="let column of defaultColumns; let index = index"
+          <ng-container *ngFor="let column of defaultColumns; let index = index"
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
-        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-          {{column}}
-        </th>
 
-        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}
-          <ng-template #contentTemplate let-data>
-            <p>"{{ data.text }}"</p>
-          </ng-template>
-          <hr>
-          <button nbButton (click)="open(index, row.data[column], column)">+</button>
-        </td>
-      </ng-container>
+            <th class="tablitatr" nbTreeGridHeaderCell 
+                                  *nbTreeGridHeaderCellDef
+                                  [nbSortHeader]="getSortDirection(column)">{{column}}</th>
 
-    </table>
-  </nb-card-body>
-</nb-card>
-  </div>
+            <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
+              {{row.data[column] | slice: 0: -3 || '-'}}
+
+              <ng-template #contentTemplate let-data>
+                <p>
+                  "{{ data.text }}"
+                </p>
+              </ng-template>
+              <hr>
+
+              <button nbButton (click)="open(index, row.data[column], column)">
+                {{row.data[column] | slice: -2: -1}}
+              </button>
+            </td>
+
+          </ng-container>
+
+        </table>
+      </nb-card-body>
+    </nb-card>
+</div>
 
