@@ -54,7 +54,7 @@ interface FSEntry {
 })
 
 
-// Clase TreeGridWeekShowcaseComponent:
+// Clase exportable TreeGridWeekShowcaseComponent:
 export class TreeGridWeekShowcaseComponent {
 
   // Variables:
@@ -96,11 +96,12 @@ export class TreeGridWeekShowcaseComponent {
 
   }
 
-
+  // Primer método a iniciar en el componente:
   ngOnInit() {
     this.sincronizar();
   }
 
+  // Sincroniza los datos del servicio con el primer día de la semana:
   sincronizar() {
     this.syncService.currentMessage.subscribe((message) => {
       this.todayFormated = this.datePipe.transform(message, 'w');
@@ -109,6 +110,7 @@ export class TreeGridWeekShowcaseComponent {
     })
   }
 
+  // Obtiene el primer día de la semana:
   firstDayOfWeek(year, week) {
     var d = new Date(year, 0, 1),
         offset = d.getTimezoneOffset();
@@ -131,6 +133,7 @@ export class TreeGridWeekShowcaseComponent {
     return NbSortDirection.NONE;
   }
 
+  // Método que al ejecutarse, obtiene y envía datos al servicio:
   open(index: any, data: any) {
     this.encargado = data;
     this.indice    = index;
@@ -140,11 +143,12 @@ export class TreeGridWeekShowcaseComponent {
   }
 
   getShowOn(index: number) {
-    const minWithForMultipleColumns = 0;
-    const nextColumnStep = 130;
+    const minWithForMultipleColumns  = 0;
+    const nextColumnStep             = 130;
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
+  // Los métodos sendXXXX enlazan datos del componente actual, con los metodos del servicio:
   sendOrdenesPorFecha(datos) {
     this.tableService.setOrdenesPorFecha(datos);
   }
@@ -165,6 +169,7 @@ export class TreeGridWeekShowcaseComponent {
     this.tableService.setEncargado(datos);
   }
 
+  // Método principal encargado de obtener y enlazar datos para mostrarlos en el componente html:
   updateTreeGrid(first_date: Date) {
     this.data = [];
 
@@ -177,8 +182,10 @@ export class TreeGridWeekShowcaseComponent {
           .subscribe(title => this.openWindowForm() );
     */
 
+    // Obtiene los datos de los técnicos del servicio y los guarda en una variable:
     this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {this.tecnicos = TecnicosList;})
 
+    // Obtiene la fecha del primer día de semana, lo formatea y determina el último día de la semana:
     let last_date: Date      = first_date;
     let first_date_formatted = this.datePipe.transform(first_date, 'yyyy-MM-dd');
     let date_init: String    = String(first_date_formatted);
@@ -188,15 +195,18 @@ export class TreeGridWeekShowcaseComponent {
     this.diaFecha            = new Date(String(date_init));
     this.sendNuevaFecha(date_init);
 
+    // Imprime el inicio y término de semana:
     console.log("init: " + date_init);
     console.log("end: "  + date_end);
 
     let test = [];
 
+    // Obtiene los datos de las ordenes de la API y los enlaza en variable:
     this.peticionesGet.leerOrdenesDiarias(date_init, date_end).subscribe((ordenesDiariasdesdeApi) => {
 
       this.ordenesDiarias = ordenesDiariasdesdeApi;
-
+      
+      // Filtra las ordenes diarias por fecha:
       for (let i = 0; i < 6; i++) {
         this.diaFecha         = new Date(this.diaFecha.setDate(this.diaFecha.getDate() + 1));
         this.nuevaFechaFormat = this.datePipe.transform(this.diaFecha, 'yyyy-MM-dd');
@@ -204,19 +214,24 @@ export class TreeGridWeekShowcaseComponent {
           this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == this.nuevaFechaFormat));
       }
 
+      // Inserta las ordenes filtradas en un arreglo:
       this.ordFechas.push(this.ordenesPorFecha);
       this.sendOrdenesPorFecha(this.ordFechas);
+
 
       let counter: number[] = [0, 0, 0, 0, 0, 0];
       let tec_counter       = 0;
 
+      // Crea un bucle para cada técnico de la lista de técnicos:
       for (let tecnico of this.tecnicos) {
 
+        // Filtra las ordenes diarias por el nombre de cada técnico:
         this.ordenesPorTecnico = (this.ordenesDiarias.filter(x => 
           x.encargado.nombre   == tecnico.nombre));
 
         let aux_date: Date = new Date(String(date_init));
 
+        // Realiza un conteo de las ordenes filtradas por fecha de ejecución y la inserta en arreglo:
         for (let i = -1; i < 5; i++) {
           let row_date    = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
           let aux_counter = (this.ordenesPorTecnico.filter(x =>
@@ -227,6 +242,7 @@ export class TreeGridWeekShowcaseComponent {
           test.push(this.ordenesDiariasPorTecnico);
         }
 
+        // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
         this.data.push({
           data: {
             Lunes    : tecnico.nombre + " (" + counter[0] + ")",
@@ -242,6 +258,8 @@ export class TreeGridWeekShowcaseComponent {
       }
 
       this.sendOrdenesDiariasPorTecnico(test);
+
+      // Construye la estructura de datos a mostrar, en base a la interfaz definida:
       this.dataSource = this.dataSourceBuilder.create(this.data);
     })
   }
@@ -272,7 +290,7 @@ export class TreeGridWeekShowcaseComponent {
   `,
 })
 
-// Clase FsIconComponent;
+// Clase exportable FsIconComponent:
 export class FsIconComponent {
   @Input() Miercoles: string;
   @Input() expanded : boolean;

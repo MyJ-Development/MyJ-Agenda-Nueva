@@ -1,6 +1,6 @@
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~@nebular/theme/styles/global/breakpoints';
-@import '../../../@theme/styles/themes';
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
+@import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
   ::ng-deep .form {
@@ -52,20 +52,20 @@
       width: 23%;
     }
   }
-  .tamañoTextoB{
+  .tamañoTextoB {
     font-size: 20px;
     font-weight: bold;
   }
-  .ajustandoBuscador2{
+  .ajustandoBuscador2 {
     margin: 0px;
   }
-  .tablitatr{
+  .tablitatr {
     padding: 5px;
     text-align: center;
   }
 
-  .tablares{
-    overflow:scroll;
+  .tablares {
+    overflow: scroll;
   }
   button + button {
     margin-left: 2rem;
@@ -98,5 +98,4 @@
       padding: 0.75rem;
     }
   }
-  
 }

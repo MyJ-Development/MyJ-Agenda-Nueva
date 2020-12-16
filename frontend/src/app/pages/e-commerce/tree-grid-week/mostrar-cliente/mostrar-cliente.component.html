@@ -1,0 +1,126 @@
+<!--
+  ~ Copyright (c) Akveo 2019. All Rights Reserved.
+  ~ Licensed under the Single Application / Multi Application License.
+  ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+  -->
+
+<div class="row ">
+  <div>
+    <nb-card>
+      <nb-card-body>
+
+        <form>
+          
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="nombre" class="label">Nombre cliente:</label>
+                <input type="text" nbInput fullWidth id="nombre" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="rutCliente" class="label">Rut cliente:</label>
+                <input type="text" nbInput fullWidth id="rutCliente" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="direccionCliente" class="label">Dirección:</label>
+                <input type="text" nbInput fullWidth id="direccionCliente" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="comunaCliente" class="label">Comuna:</label>
+                <input type="text" nbInput fullWidth id="comunaCliente" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="telefonoCliente1" class="label">Teléfono 1:</label>
+                <input type="text" nbInput fullWidth id="telefonoCliente1" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="telefonoCliente2" class="label">Teléfono 2:</label>
+                <input type="text" nbInput fullWidth id="telefonoCliente2" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>  
+            </div>
+
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="correoCliente" class="label">Correo:</label>
+                <input type="text" nbInput fullWidth id="correoCliente" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+          
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="estadoCliente" class="label">Estado cliente:</label>
+                <input type="text" nbInput fullWidth id="estadoCliente" status="info"
+                placeholder="xxx" shape="semi-round" value="xxx"
+                fieldSize="small">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row restar">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <button nbButton fullWidth status="success" shape="semi-round" fieldSize="tiny" size="medium" (click)="agregarOrden()" outline>
+                Agregar orden
+                </button>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <button nbButton fullWidth status="info" shape="semi-round" fieldSize="tiny" size="medium" (click)="ordenCompleta()" outline>
+                Ver orden completa
+                </button>
+              </div>
+            </div>
+          
+          </div>
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

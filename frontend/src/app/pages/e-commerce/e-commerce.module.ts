@@ -84,6 +84,9 @@ import {
   NbWindowModule
 } from '@nebular/theme';
 import { MostrarOrdenComponent } from './tree-grid-week/mostrar-orden/mostrar-orden.component';
+import { MostrarClienteComponent } from './tree-grid-week/mostrar-cliente/mostrar-cliente.component';
+import { OrdenCompletaComponent } from './tree-grid-week/orden-completa/orden-completa.component';
+import { AgregarOrdenComponent } from './tree-grid-week/agregar-orden/agregar-orden.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -153,7 +156,10 @@ import { MostrarOrdenComponent } from './tree-grid-week/mostrar-orden/mostrar-or
     EarningLiveUpdateChartComponent,
     ShowcaseDialogComponent,
     DialogNamePromptComponent,
-    MostrarOrdenComponent
+    MostrarOrdenComponent,
+    MostrarClienteComponent,
+    OrdenCompletaComponent,
+    AgregarOrdenComponent
   ],
   providers: [
     CountryOrdersMapService,

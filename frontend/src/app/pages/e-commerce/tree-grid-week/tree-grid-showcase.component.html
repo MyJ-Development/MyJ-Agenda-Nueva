@@ -1,24 +1,13 @@
 
     
 <div *ngIf=data>
+  <nb-card>
+    <nb-card-body> 
+      <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" 
+                                        class="tablares">
 
-  <nb-card class="ajustandoBuscador2">
-    <nb-card-body class="ajustandoBuscador2">
-      <input nbInput size="100" [nbFilterInput]="dataSource" 
-                                id="search" 
-                                class="search-input" 
-                                placeholder="Buscar">
-    </nb-card-body>
-  </nb-card>
-
-    <nb-card>
-      <nb-card-body> 
-        <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" 
-                                         (sort)="updateSort($event)" 
-                                         class="tablares">
-
-          <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-          <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+         <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
           <ng-container *ngFor="let column of defaultColumns; let index = index"
                     [nbTreeGridColumnDef]="column"
@@ -31,11 +20,6 @@
             <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
               {{row.data[column] | slice: 0: -3 || '-'}}
 
-              <ng-template #contentTemplate let-data>
-                <p>
-                  "{{ data.text }}"
-                </p>
-              </ng-template>
               <hr>
 
               <button nbButton (click)="open(index, row.data[column], column)">
@@ -47,6 +31,6 @@
 
         </table>
       </nb-card-body>
-    </nb-card>
+  </nb-card>
 </div>
 

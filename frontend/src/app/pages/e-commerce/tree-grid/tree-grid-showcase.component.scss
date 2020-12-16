@@ -3,6 +3,12 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
+
+  nb-card {
+    max-width: 770px;
+    max-height: 299px;
+  }
+
   button[nbTreeGridRowToggle] {
     background: transparent;
     border: none;
@@ -12,7 +18,12 @@
     margin: 1rem -9rem;
   }
   .search-input {
-    margin: 1rem;
+    margin: 1px;
+    width: 500px;
+  }
+
+  .inputLarge{
+    width: 500px;
   }
 
   .nb-column-name {
@@ -45,11 +56,26 @@
     }
   }
   .ajustandoBuscador{
-    margin: 0px;
+    margin-top: -4px;
+    margin-bottom: -40px;
+    width: max-content;
+  }
+
+  .ajusteInput{
+    margin-bottom: 1px;
   }
   
+  .ajusteCard{
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
   .tablitatr{
     padding: 5px;
     text-align: center;
+  }
+
+  .largo{
+    width: 830px;
   }
 }

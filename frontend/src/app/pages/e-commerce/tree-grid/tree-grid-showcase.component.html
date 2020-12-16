@@ -1,25 +1,29 @@
 
     
-<div class="tablabusqueda1e">
-  <nb-card class="ajustandoBuscador">
-  <nb-card-body class="ajustandoBuscador"> 
-    <input nbInput size="100" [nbFilterInput]="dataSource" id="search1" class="search-input" placeholder="Buscar">
-  </nb-card-body>
-   </nb-card>
-    <nb-card class="ajustandoBuscador">
-    <nb-card-body class="ajustandoBuscador">
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" class="tablita">
+<div class="ajustandoBuscador">
+  <nb-card class="ajusteInput largo">
+
+    <nb-card-body class="largo"> 
+      <input nbInput fullWidth status="info" [nbFilterInput]="dataSource" id="search1" class="search-input" (keyup.enter)="aparece = true" (keyup.backspace)="aparece = false"
+      placeholder="Buscar por: Nombre - Ubicación - Estado - Tipo - Rut - Fecha">
+    </nb-card-body>
+
+  </nb-card>
+
+  <nb-card class="ajusteCard" *ngIf="aparece">
+    <nb-card-body>
+      <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" 
+                                        class="tablita">
 
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
-      <ng-container [nbTreeGridColumnDef]="customColumn">
-        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-          {{customColumn}}
+      <ng-container [nbTreeGridColumnDef]="columnaNombre">
+        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(columnaNombre)" *nbTreeGridHeaderCellDef>
+          {{columnaNombre}}
         </th>
-        <td class="tablitatr"nbTreeGridCell *nbTreeGridCellDef="let row">
-          <nb-fs-icon [tipo]="row.data.tipo" [expanded]="row.expanded"></nb-fs-icon>
-          {{row.data[customColumn]}}
+        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
+          {{row.data[columnaNombre]}}
         </td>
       </ng-container>
 
@@ -28,7 +32,17 @@
         <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
           {{column}}
         </th>
-        <td class="tablitatr"nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+      </ng-container>
+
+      <ng-container [nbTreeGridColumnDef]="columnaBoton">
+        <th class="tablitatr" nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(columnaBoton)" *nbTreeGridHeaderCellDef>
+          {{columnaBoton}}
+        </th>
+        <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
+          <button nbButton ghost><nb-icon icon="file-text-outline" (click)="datosCliente()">
+          </nb-icon></button>
+        </td>
       </ng-container>
     </table>
    </nb-card-body>
