@@ -222,6 +222,8 @@ export class TreeGridWeekShowcaseComponent {
       let counter: number[] = [0, 0, 0, 0, 0, 0];
       let tec_counter       = 0;
 
+
+
       // Crea un bucle para cada técnico de la lista de técnicos:
       for (let tecnico of this.tecnicos) {
 

@@ -1,52 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { NbDialogService, NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { peticionesGetService } from '../../../services/peticionesGet.service';
 import { MostrarClienteComponent } from '../tree-grid-week/mostrar-cliente/mostrar-cliente.component';
+import { NgForm } from "@angular/forms";
+import { LocalDataSource } from 'ng2-smart-table';
 
-
-interface TreeNode<T> {
-  data: T;
-  children?: TreeNode<T>[];
-  expanded?: boolean;
-}
-
-interface Orden {
-
-  tipo: string;
-  prioridad: string;
-  disponibilidad: string;
-  comentario: string;
-  fechaejecucion: string;
-  estadocliente: string;
-  estadoticket: string;
-  mediodepago: string;
-  monto: string;
-  created_by: string;
-  encargado: string;
-  client_order: string;
-  domicilio: string;
-
-}
-
-interface Cliente {
-  contacto1: string;
-  contacto2: string;
-  created_at: string;
-  created_by: string;
-  email: string;
-  nombre: string;
-  rut: string;
-  updated_at: string;
-  updated_by: string;
-}
-
-interface FSEntry {
-  nombre: string;
-  estado: string;
-  tipo: string;
-  rut?: string;
-  fecha: string;
-  ubicacion: string;
-}
 
 @Component({
   selector: 'nb-tree-grid-showcase',
@@ -57,124 +15,98 @@ interface FSEntry {
 
 export class TreeGridShowcaseComponent {
 
-  columnaNombre = 'nombre';
-  columnaBoton = 'ver mas';
-  defaultColumns = ['ubicacion', 'estado', 'tipo', 'rut', 'fecha'];
-  allColumns = [this.columnaNombre, ...this.defaultColumns, this.columnaBoton];
-  aparece: boolean = false;
-  dataSource: NbTreeGridDataSource<FSEntry>;
-  data: TreeNode<FSEntry>[];
-  datitos: Orden;
-  cliente: Cliente;
+  // Estructura de la tabla a mostrar en html:
+  settings = {
 
+    // Oculta el header de búsqueda por defecto:
+    hideSubHeader: true,
 
-  nombre: string;
-  ubicacion: string;
-  estado: string;
-  rut: string;
-  tipo: string;
-  fecha: string;
+    // Se define la columna de los botones con acciones a realizar:
+    actions: {
 
+      // Se define el título que aparecerá en la columna de acciones:
+      columnTitle: 'Ver más',
 
-  sortColumn: string;
-  sortDirection: NbSortDirection = NbSortDirection.NONE;
+      // Acciones por defecto:
+      filter: false,
+      add: false,
+      edit: false,
+      delete: false,
 
-  constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
-    private mostrar: NbDialogService,) {
+      // Acción customizada:
+      custom: [
+        {
+          name: 'mas',
+          title: '<i class="icon ion-document" title="mas"></i>'
+        }
+      ]
+    },
 
-
-
-
-    this.datitos = {
-      tipo: "Instalación",
-      prioridad: "Primera del dia",
-      disponibilidad: "despues 10 am",
-      comentario: "comentario 2",
-      fechaejecucion: "2020-11-17",
-      estadocliente: "No aplicable",
-      estadoticket: "Pendiente",
-      mediodepago: "Imported",
-      monto: "0",
-      created_by: "test@test.test",
-      encargado: "987654321",
-      client_order: "987654321",
-      domicilio: "San Martin 345"
-    }
-
-    this.cliente = {
-      contacto1: "995515509",
-      contacto2: "995515509",
-      created_at: "2020-12-11T21:38:24.301277",
-      created_by: "test@test.test",
-      email: "sc",
-      nombre: "claudia cecilia cid navia",
-      rut: "16656041-1",
-      updated_at: "2020-12-11T21:38:24.301291",
-      updated_by: "test@test.test"
-    }
-
-  }
-
-  ngOnInit(): void {
-    
-    this.cargarData();
-
-  }
-
-  cargarData() {
-
-    this.data = [
-      {
-        data: {
-          nombre: this.cliente['nombre'],
-          ubicacion: this.datitos['domicilio'],
-          estado: this.datitos['estadoticket'],
-          rut: this.cliente['rut'],
-          tipo: this.datitos['tipo'],
-          fecha: this.datitos['fechaejecucion']
-        },
+    // Define las columnas que queremos mostrar en la tabla (Título/tipo de dato):
+    columns: {
+      rut: {
+        title: 'Rut',
+        type: 'string',
       },
-    ];
+      nombre: {
+        title: 'Nombre',
+        type: 'string',
+      },
+      telefono: {
+        title: 'Teléfono',
+        type: 'string',
+      },
+    },
+  };
 
-    this.nombre = this.data[0].data.nombre;
-    console.log('nombre');
-    console.log(this.nombre);
-    this.ubicacion = this.data[0]['data']['ubicacion'];
-    this.estado = this.data[0]['data']['estado'];
-    this.rut = this.data[0]['data']['rut'];
-    this.tipo = this.data[0]['data']['tipo'];
-    this.fecha = this.data[0]['data']['fecha'];
+  source: LocalDataSource = new LocalDataSource();
+  rut_cliente: any;
+  lista: any;
+  data: any[] = [];
+  aparece: boolean = false;
 
+  clientes: any;
 
-    console.log(this.data[0]['data']);
+  constructor(private mostrar: NbDialogService,
+    private service: peticionesGetService) {
 
-    this.dataSource = this.dataSourceBuilder.create(this.data);
   }
+
+
+  guardar(formulario: NgForm) {
+
+
+    this.rut_cliente = formulario.value['buscar']
+
+    this.sincronizacion();
+    this.aparece = true;
+
+  }
+
+  sincronizacion() {
+
+    this.service.leerClientes(this.rut_cliente).subscribe((clientesList) => {
+
+      this.clientes = clientesList;
+
+      this.data.push({
+        rut: this.clientes['rut'],
+        nombre: this.clientes['nombre'],
+        telefono: this.clientes['contacto1'],
+      });
+
+      // Carga los datos insertados en una estructura del componente html:
+      this.source.load(this.data);
+    })
+  }
+
 
   datosCliente() {
     this.mostrar.open(MostrarClienteComponent);
 
   }
 
-  updateSort(sortRequest: NbSortRequest): void {
-    this.sortColumn = sortRequest.column;
-    this.sortDirection = sortRequest.direction;
-  }
 
-  getSortDirection(column: string): NbSortDirection {
-    if (this.sortColumn === column) {
-      return this.sortDirection;
-    }
-    return NbSortDirection.NONE;
-  }
-
-
-
-  getShowOn(index: number) {
-    const minWithForMultipleColumns = 0;
-    const nextColumnStep = 200;
-    return minWithForMultipleColumns + (nextColumnStep * index);
-  }
 }
 
 @Component({

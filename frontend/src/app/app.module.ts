@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AuthModule } from './@auth/auth.module';
+import { FormsModule } from "@angular/forms";
 
 import {
   NbChatModule,
@@ -23,9 +24,11 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+
 import { peticionesGetService } from './services/peticionesGet.service';
 import { componentSyncService } from './services/componentSync.service';
 import { tableService } from './services/table.service';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -33,6 +36,7 @@ import { tableService } from './services/table.service';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
 
     AuthModule.forRoot(),
 
