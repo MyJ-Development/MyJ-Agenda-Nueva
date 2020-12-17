@@ -1,8 +1,3 @@
-<!--
-  ~ Copyright (c) Akveo 2019. All Rights Reserved.
-  ~ Licensed under the Single Application / Multi Application License.
-  ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
-  -->
 
 <div class="row ">
   <div>
@@ -17,8 +12,7 @@
               <div class="form-group">
                 <label for="nombre" class="label">Nombre cliente:</label>
                 <input type="text" nbInput fullWidth id="nombre" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
+                 shape="semi-round" value={{nombre_cliente}} fieldSize="small">
               </div>
             </div>
 
@@ -26,43 +20,19 @@
               <div class="form-group">
                 <label for="rutCliente" class="label">Rut cliente:</label>
                 <input type="text" nbInput fullWidth id="rutCliente" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
+                shape="semi-round" value={{rut_cliente}} fieldSize="small">
               </div>
             </div>
 
           </div>
 
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="direccionCliente" class="label">Dirección:</label>
-                <input type="text" nbInput fullWidth id="direccionCliente" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="comunaCliente" class="label">Comuna:</label>
-                <input type="text" nbInput fullWidth id="comunaCliente" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
-              </div>
-            </div>
-
-          </div>
-
-          <div class="row">
+           <div class="row">
             
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="telefonoCliente1" class="label">Teléfono 1:</label>
                 <input type="text" nbInput fullWidth id="telefonoCliente1" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
+                shape="semi-round" value={{telefono1}} fieldSize="small">
               </div>
             </div>
             
@@ -70,8 +40,7 @@
               <div class="form-group">
                 <label for="telefonoCliente2" class="label">Teléfono 2:</label>
                 <input type="text" nbInput fullWidth id="telefonoCliente2" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
+                shape="semi-round" value={{telefono2}} fieldSize="small">
               </div>  
             </div>
 
@@ -83,25 +52,75 @@
               <div class="form-group">
                 <label for="correoCliente" class="label">Correo:</label>
                 <input type="text" nbInput fullWidth id="correoCliente" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
-              </div>
-            </div>
-          
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="estadoCliente" class="label">Estado cliente:</label>
-                <input type="text" nbInput fullWidth id="estadoCliente" status="info"
-                placeholder="xxx" shape="semi-round" value="xxx"
-                fieldSize="small">
+                shape="semi-round" value={{correo_cliente}} fieldSize="small">
               </div>
             </div>
 
           </div>
 
-          <div class="row restar">
+          <div class="row">
             
             <div class="col-sm-6">
+              <div class="form-group">
+                <label for="creadoPor" class="label">Creado por:</label>
+                <input type="text" nbInput fullWidth id="creadoPor" status="info"
+                shape="semi-round" value={{creadoPor}} fieldSize="small">
+              </div>
+            </div>
+          
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="actualizadoPor" class="label">Actualizado por:</label>
+                <input type="text" nbInput fullWidth id="actualizadoPor" status="info"
+                shape="semi-round" value={{actualizadoPor}} fieldSize="small">
+              </div>
+            </div>
+
+          </div>
+
+          <hr>
+
+          <div *ngFor="let residencia of residencia_clientes; let i = index" class="form-group row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="direccionCliente" class="label">Dirección {{i+1}}:</label>
+                <input type="text" nbInput fullWidth id="direccionCliente" status="info"
+                shape="semi-round" value={{residencia.direccion}} fieldSize="small">
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="comunaCliente" class="label">Comuna {{i+1}}:</label>
+                <input type="text" nbInput fullWidth id="comunaCliente" status="info"
+                shape="semi-round" value={{residencia.comuna}} fieldSize="small">
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="macCliente" class="label">Mac {{i+1}}:</label>
+                <input type="text" nbInput fullWidth id="macCliente" status="info"
+                shape="semi-round" value={{residencia.mac}} fieldSize="small">
+              </div>
+              <hr>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="pppoeCliente" class="label">Pppoe {{i+1}}:</label>
+                <input type="text" nbInput fullWidth id="pppoeCliente" status="info"
+                shape="semi-round" value={{residencia.pppoe}} fieldSize="small">
+              </div>
+              <hr>
+            </div>
+  
+          </div>
+
+          <div class="row restar">
+            
+            <div class="col-sm-4">
               <div class="form-group">
                 <button type="button" nbButton fullWidth status="success" shape="semi-round" fieldSize="tiny" size="medium" (click)="agregarOrden()" outline>
                 Agregar orden
@@ -109,10 +128,18 @@
               </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="form-group">
-                <button type="button" nbButton fullWidth status="info" shape="semi-round" fieldSize="tiny" size="medium" (click)="ordenCompleta()" outline>
-                Ver orden completa
+                <button type="button" nbButton fullWidth status="info" shape="semi-round" fieldSize="tiny" size="medium" (click)="listaOrdenes()" outline>
+                Ordenes del cliente
+                </button>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <button type="button" nbButton fullWidth status="success" shape="semi-round" fieldSize="tiny" size="medium" (click)="actualizarDatos()" outline>
+                Actualizar datos
                 </button>
               </div>
             </div>

@@ -31,4 +31,8 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/client?rut=' + rut_cliente + '')
     }
 
+    leerResidencia(rut_cliente): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/residence?rut=' + rut_cliente + '')
+    }
+
 }

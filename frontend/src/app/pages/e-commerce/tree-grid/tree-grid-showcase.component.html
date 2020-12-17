@@ -6,7 +6,7 @@
 
 
       <nb-card-body class="largo"> 
-        <input ngModel name="buscar" nbInput fullWidth status="info" class="search-input" 
+        <input ngModel name="buscar" data-ng-click="removeRow($index)" nbInput fullWidth status="info" class="search-input" 
         placeholder="Buscar por: Nombre - Ubicación - Estado - Tipo - Rut - Fecha" type="text">
         <button type="submit" nbButton ghost><nb-icon icon="file-text-outline">
         </nb-icon></button>

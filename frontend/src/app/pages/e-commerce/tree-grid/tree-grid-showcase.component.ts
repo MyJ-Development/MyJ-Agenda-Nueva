@@ -4,6 +4,7 @@ import { peticionesGetService } from '../../../services/peticionesGet.service';
 import { MostrarClienteComponent } from '../tree-grid-week/mostrar-cliente/mostrar-cliente.component';
 import { NgForm } from "@angular/forms";
 import { LocalDataSource } from 'ng2-smart-table';
+import { tableService } from '../../../services/table.service';
 
 
 @Component({
@@ -68,19 +69,20 @@ export class TreeGridShowcaseComponent {
   clientes: any;
 
   constructor(private mostrar: NbDialogService,
-    private service: peticionesGetService) {
+    private service: peticionesGetService,
+    private tableService: tableService) {
 
   }
 
 
-  guardar(formulario: NgForm) {
 
+
+  guardar(formulario: NgForm) {
 
     this.rut_cliente = formulario.value['buscar']
 
     this.sincronizacion();
     this.aparece = true;
-
   }
 
   sincronizacion() {
@@ -93,15 +95,19 @@ export class TreeGridShowcaseComponent {
         rut: this.clientes['rut'],
         nombre: this.clientes['nombre'],
         telefono: this.clientes['contacto1'],
-      });
+      });      
 
       // Carga los datos insertados en una estructura del componente html:
       this.source.load(this.data);
+
     })
   }
 
 
   datosCliente() {
+
+    this.tableService.setRut_cliente(this.rut_cliente);
+
     this.mostrar.open(MostrarClienteComponent);
 
   }

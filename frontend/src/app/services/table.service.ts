@@ -18,6 +18,15 @@ export class tableService {
   fecha: any;
   ordenCompleta: any[];
   idOrden: any[];
+  rut_cliente: any;
+
+  setRut_cliente(valor: any[]) {
+    this.rut_cliente = valor;
+  }
+
+  getRut_cliente() {
+    return this.rut_cliente;
+  }
 
   setIdOrden(valor: any[]) {
     this.idOrden = valor;
