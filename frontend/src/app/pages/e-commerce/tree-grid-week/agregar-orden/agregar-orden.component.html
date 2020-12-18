@@ -15,19 +15,17 @@
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombre" class="label">Nombre cliente:</label>
-                <input type="text" nbInput fullWidth id="nombre" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                <label for="nombre_cliente" class="label">Nombre cliente:</label>
+                <input type="text" nbInput fullWidth id="nombre_cliente" status="info"
+                shape="semi-round" value={{nombre_cliente}} fieldSize="medium">
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="rutCliente" class="label">Rut cliente:</label>
-                <input type="text" nbInput fullWidth id="rutCliente" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                <label for="rut_cliente" class="label">Rut cliente:</label>
+                <input type="text" nbInput fullWidth id="rut_cliente" status="info"
+                shape="semi-round" value={{rut_cliente}} fieldSize="medium">
               </div>
             </div>
 
@@ -39,8 +37,7 @@
               <div class="form-group">
                 <label for="direccionCliente" class="label">Dirección:</label>
                 <input type="text" nbInput fullWidth id="direccionCliente" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                shape="semi-round" fieldSize="medium">
               </div>
             </div>
             
@@ -48,8 +45,7 @@
               <div class="form-group">
                 <label for="comunaCliente" class="label">Comuna:</label>
                 <input type="text" nbInput fullWidth id="comunaCliente" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                shape="semi-round" fieldSize="medium">
               </div>
             </div>
 
@@ -59,19 +55,17 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="telefonoCliente1" class="label">Teléfono 1:</label>
-                <input type="text" nbInput fullWidth id="telefonoCliente1" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                <label for="telefono1" class="label">Teléfono 1:</label>
+                <input type="text" nbInput fullWidth id="telefono1" status="info"
+                shape="semi-round" value={{telefono1}} fieldSize="medium">
               </div>
             </div>
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="telefonoCliente2" class="label">Teléfono 2:</label>
-                <input type="text" nbInput fullWidth id="telefonoCliente2" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                <label for="telefono2" class="label">Teléfono 2:</label>
+                <input type="text" nbInput fullWidth id="telefono2" status="info"
+                shape="semi-round" value={{telefono2}} fieldSize="medium">
               </div>  
             </div>
 
@@ -81,19 +75,19 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="correoCliente" class="label">Correo:</label>
-                <input type="text" nbInput fullWidth id="correoCliente" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                <label for="correo_cliente" class="label">Correo:</label>
+                <input type="text" nbInput fullWidth id="correo_cliente" status="info"
+                shape="semi-round" value={{correo_cliente}} fieldSize="medium">
               </div>
             </div>
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombreTecnico" class="label">Encargado:</label>
-                <input type="text" nbInput fullWidth id="nombreTecnico" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                <label for="nombreTecnico" class="label">Encargado: </label>
+                <nb-select type="text" nbSelect fullWidth fieldSize="small"  shape="semi-round" status="info" name="select_encargado">
+                  <nb-option type="text" nbSelect fullWidth fieldSize="small" shape="semi-round" status="info"
+                  [value]="tecnico.nombre" *ngFor="let tecnico of tecnicos">{{tecnico.nombre}}</nb-option>
+                </nb-select>
               </div>
             </div>
           
@@ -105,8 +99,7 @@
               <div class="form-group">
                 <label for="creadoPor" class="label">Creado por:</label>
                 <input type="text" nbInput fullWidth id="creadoPor" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                shape="semi-round" fieldSize="medium">
               </div>
             </div>
             
@@ -114,8 +107,7 @@
               <div class="form-group">
                 <label for="fechaCreacion" class="label">Fecha creación:</label>
                 <input type="text" nbInput fullWidth id="fechaCreacion" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                shape="semi-round" disabled fieldSize="medium" value={{hora}}>
               </div>
             </div>
           
@@ -127,8 +119,7 @@
               <div class="form-group">
                 <label for="fechaEjecucion" class="label">Fecha de ejecución:</label>
                 <input type="text" nbInput fullWidth id="fechaEjecucion" status="info"
-                placeholder="xxx" shape="semi-round" 
-                fieldSize="small">
+                shape="semi-round" fieldSize="medium">
               </div>
             </div>
             
@@ -136,7 +127,7 @@
               <div class="form-group">
                 <label for="disponibilidad" class="label">Disponibilidad:</label>
                 <input type="text" nbInput fullWidth id="disponibilidad" status="info"
-                placeholder="xxx" shape="semi-round" fieldSize="small">
+                shape="semi-round" fieldSize="medium">
               </div>
             </div>
           
@@ -148,7 +139,7 @@
               <div class="form-group">
                 <label for="estadoCliente" class="label">Estado cliente:</label>
                 <input type="text" nbInput fullWidth id="estadoCliente" status="info"
-                placeholder="xxx" shape="semi-round" fieldSize="small">
+                shape="semi-round" fieldSize="medium">
               </div>
             </div>
             
@@ -156,7 +147,7 @@
               <div class="form-group">
                 <label for="estadoTicket" class="label">Estado ticket:</label>
                 <input type="text" nbInput fullWidth id="estadoTicket" status="info"
-                 shape="semi-round" fieldSize="small">
+                 shape="semi-round" fieldSize="medium">
               </div>
             </div>
           
@@ -168,7 +159,7 @@
               <div class="form-group">
                 <label for="medioDePago" class="label">Medio de pago:</label>
                 <input type="text" nbInput fullWidth id="medioDePago" status="info"
-                 shape="semi-round" fieldSize="small">
+                 shape="semi-round" fieldSize="medium">
               </div>
             </div>
             
@@ -176,7 +167,7 @@
               <div class="form-group">
                 <label for="monto" class="label">Monto:</label>
                 <input type="text" nbInput fullWidth id="monto" status="info"
-                 shape="semi-round"  fieldSize="small">
+                 shape="semi-round"  fieldSize="medium">
               </div>
             </div>
           
@@ -188,7 +179,7 @@
               <div class="form-group">
                 <label for="tipoOrden" class="label">Tipo orden:</label>
                 <input type="text" nbInput fullWidth id="tipoOrden" status="info"
-                 shape="semi-round"  fieldSize="small">
+                 shape="semi-round"  fieldSize="medium">
               </div>
             </div>
             
@@ -196,7 +187,7 @@
               <div class="form-group">
                 <label for="prioridad" class="label">Prioridad:</label>
                 <input type="text" nbInput fullWidth id="prioridad" status="info"
-                 shape="semi-round"  fieldSize="small">
+                 shape="semi-round"  fieldSize="medium">
               </div>
             </div>
           
@@ -208,7 +199,7 @@
               <div class="form-group">
                 <label for="comentarioCliente" class="label">Comentario:</label>
                 <textarea rows="4" nbInput fullWidth id="comentarioCliente" status="info"
-                 shape="semi-round" type="text" fieldSize="small"></textarea>
+                 shape="semi-round" type="text" fieldSize="medium"></textarea>
               </div>
             </div>
           

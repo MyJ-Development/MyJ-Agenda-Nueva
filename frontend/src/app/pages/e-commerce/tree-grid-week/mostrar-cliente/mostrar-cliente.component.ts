@@ -3,7 +3,7 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { tableService } from '../../../../services/table.service';
 import { AgregarOrdenComponent } from '../agregar-orden/agregar-orden.component';
-import { OrdenCompletaComponent } from '../orden-completa/orden-completa.component';
+import { ListaOrdenesComponent } from '../lista-ordenes/lista-ordenes.component';
 
 @Component({
   selector: 'ngx-mostrar-cliente',
@@ -77,13 +77,13 @@ export class MostrarClienteComponent implements OnInit {
   }
 
   actualizarDatos(){
-    
+
   }
 
 
   listaOrdenes() {
 
-    this.mostrar.open(OrdenCompletaComponent);
+    this.mostrar.open(ListaOrdenesComponent);
     this.ref.close();
   }
 

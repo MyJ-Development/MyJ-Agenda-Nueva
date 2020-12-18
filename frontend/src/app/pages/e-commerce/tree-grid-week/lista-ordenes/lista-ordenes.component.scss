@@ -1,12 +1,26 @@
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
-@import '../../../@theme/styles/themes';
+@import '../../../../@theme/styles/themes';
 
 @include nb-install-component() {
 
   nb-card {
-    max-width: 770px;
-    max-height: 299px;
+    margin-top: 1px;
+    margin-bottom: 10px;
+    max-width: 1000px;
+    
+  }
+
+  nb-card-body {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 600px;
+  }
+
+
+
+  ng2-smart-table{
+    margin-bottom: 0px;
   }
 
   button[nbTreeGridRowToggle] {
@@ -14,24 +28,9 @@
     border: none;
     padding: 0;
   }
-  .calendar-container {
-    margin: 1rem -9rem;
-  }
-  .search-input {
-    margin: 1px;
-    width: 500px;
-  }
-
-  .inputLarge{
-    width: 500px;
-  }
 
   .nb-column-name {
     width: 150%;
-  }
-
-  .center{
-    text-align: center;
   }
 
   @media screen and (min-width: 400px) {
@@ -59,28 +58,10 @@
       width: 23%;
     }
   }
-  .ajustandoBuscador{
-    margin-top: -4px;
-    margin-bottom: -40px;
-    width: max-content;
-  }
 
-  .ajusteInput{
-    margin-bottom: 1px;
-  }
-  
-  .ajusteCard{
-    margin-top: 0px;
-    margin-left: 0px;
-  }
 
-  .tablitatr{
-    padding: 5px;
+  .center{
     text-align: center;
-  }
-
-  .largo{
-    width: 830px;
   }
 }
 

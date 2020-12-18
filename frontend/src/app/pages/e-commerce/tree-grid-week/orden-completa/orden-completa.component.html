@@ -15,41 +15,17 @@
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombre" class="label">Nombre cliente:</label>
-                <input type="text" nbInput fullWidth id="nombre" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="nombre_cliente" class="label">Nombre cliente:</label>
+                <input type="text" nbInput fullWidth id="nombre_cliente" status="info"
+                shape="semi-round" value={{nombre_cliente}} fieldSize="small">
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="rutCliente" class="label">Rut cliente:</label>
-                <input type="text" nbInput fullWidth id="rutCliente" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
-              </div>
-            </div>
-
-          </div>
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="direccionCliente" class="label">Dirección:</label>
-                <input type="text" nbInput fullWidth id="direccionCliente" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="comunaCliente" class="label">Comuna:</label>
-                <input type="text" nbInput fullWidth id="comunaCliente" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="rut_cliente" class="label">Rut cliente:</label>
+                <input type="text" nbInput fullWidth id="rut_cliente" status="info"
+                shape="semi-round" value={{rut_cliente}} fieldSize="small">
               </div>
             </div>
 
@@ -59,19 +35,37 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="telefonoCliente1" class="label">Teléfono 1:</label>
-                <input type="text" nbInput fullWidth id="telefonoCliente1" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="direccion_cliente" class="label">Dirección:</label>
+                <input type="text" nbInput fullWidth id="direccion_cliente" status="info"
+                shape="semi-round" value={{direccion_cliente}} fieldSize="small">
               </div>
             </div>
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="telefonoCliente2" class="label">Teléfono 2:</label>
-                <input type="text" nbInput fullWidth id="telefonoCliente2" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="comuna_cliente" class="label">Comuna:</label>
+                <input type="text" nbInput fullWidth id="comuna_cliente" status="info"
+                shape="semi-round" value={{comuna_cliente}} fieldSize="small">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="telefono1" class="label">Teléfono 1:</label>
+                <input type="text" nbInput fullWidth id="telefono1" status="info"
+                shape="semi-round" value={{telefono1}} fieldSize="small">
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="telefono2" class="label">Teléfono 2:</label>
+                <input type="text" nbInput fullWidth id="telefono2" status="info"
+                shape="semi-round" value={{telefono2}} fieldSize="small">
               </div>  
             </div>
 
@@ -81,41 +75,17 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="correoCliente" class="label">Correo:</label>
-                <input type="text" nbInput fullWidth id="correoCliente" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="correo_cliente" class="label">Correo:</label>
+                <input type="text" nbInput fullWidth id="correo_cliente" status="info"
+                shape="semi-round" value={{correo_cliente}} fieldSize="small">
               </div>
             </div>
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombreTecnico" class="label">Encargado:</label>
-                <input type="text" nbInput fullWidth id="nombreTecnico" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
-              </div>
-            </div>
-          
-          </div>
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="creadoPor" class="label">Creado por:</label>
-                <input type="text" nbInput fullWidth id="creadoPor" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="fechaCreacion" class="label">Fecha creación:</label>
-                <input type="text" nbInput fullWidth id="fechaCreacion" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="encargado" class="label">Encargado:</label>
+                <input type="text" nbInput fullWidth id="encargado" status="info"
+                shape="semi-round" value={{encargado}} fieldSize="small">
               </div>
             </div>
           
@@ -125,10 +95,29 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="fechaEjecucion" class="label">Fecha de ejecución:</label>
-                <input type="text" nbInput fullWidth id="fechaEjecucion" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="creado_por" class="label">Creado por:</label>
+                <input type="text" nbInput fullWidth id="creado_por" status="info"
+                shape="semi-round" value={{creado_por}} fieldSize="small">
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="fecha_creacion" class="label">Fecha creación:</label>
+                <input type="text" nbInput fullWidth id="fecha_creacion" status="info"
+                shape="semi-round" value={{fecha_creacion}} fieldSize="small">
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
+                <input type="text" nbInput fullWidth id="fecha_ejecucion" status="info"
+                shape="semi-round" value={{fecha_ejecucion}} fieldSize="small">
               </div>
             </div>
             
@@ -136,8 +125,7 @@
               <div class="form-group">
                 <label for="disponibilidad" class="label">Disponibilidad:</label>
                 <input type="text" nbInput fullWidth id="disponibilidad" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                shape="semi-round" value={{disponibilidad}} fieldSize="small">
               </div>
             </div>
           
@@ -147,19 +135,17 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="estadoCliente" class="label">Estado cliente:</label>
-                <input type="text" nbInput fullWidth id="estadoCliente" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="estado_cliente" class="label">Estado cliente:</label>
+                <input type="text" nbInput fullWidth id="estado_cliente" status="info"
+                shape="semi-round" value={{estado_cliente}} fieldSize="small">
               </div>
             </div>
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="estadoTicket" class="label">Estado ticket:</label>
-                <input type="text" nbInput fullWidth id="estadoTicket" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="estado_ticket" class="label">Estado ticket:</label>
+                <input type="text" nbInput fullWidth id="estado_ticket" status="info"
+                shape="semi-round" value={{estado_ticket}} fieldSize="small">
               </div>
             </div>
           
@@ -169,10 +155,9 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="medioDePago" class="label">Medio de pago:</label>
-                <input type="text" nbInput fullWidth id="medioDePago" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small">
+                <label for="medio_pago" class="label">Medio de pago:</label>
+                <input type="text" nbInput fullWidth id="medio_pago" status="info"
+                shape="semi-round" value={{medio_pago}} fieldSize="small">
               </div>
             </div>
             
@@ -180,7 +165,7 @@
               <div class="form-group">
                 <label for="monto" class="label">Monto:</label>
                 <input type="text" nbInput fullWidth id="monto" status="info"
-                placeholder="xxx" shape="semi-round" disabled fieldSize="small">
+                shape="semi-round" value={{monto}} fieldSize="small">
               </div>
             </div>
           
@@ -190,9 +175,9 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="tipoOrden" class="label">Tipo orden:</label>
-                <input type="text" nbInput fullWidth id="tipoOrden" status="info"
-                placeholder="xxx" shape="semi-round" disabled fieldSize="small">
+                <label for="tipo_orden" class="label">Tipo orden:</label>
+                <input type="text" nbInput fullWidth id="tipo_orden" status="info"
+                shape="semi-round" value={{tipo_orden}} fieldSize="small">
               </div>
             </div>
             
@@ -200,7 +185,7 @@
               <div class="form-group">
                 <label for="prioridad" class="label">Prioridad:</label>
                 <input type="text" nbInput fullWidth id="prioridad" status="info"
-                placeholder="xxx" shape="semi-round" disabled fieldSize="small">
+                shape="semi-round" value={{prioridad}} fieldSize="small">
               </div>
             </div>
           
@@ -210,10 +195,9 @@
             
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="comentarioCliente" class="label">Comentario:</label>
-                <textarea rows="4" nbInput fullWidth id="comentarioCliente" status="info"
-                placeholder="xxx" shape="semi-round" disabled
-                fieldSize="small"></textarea>
+                <label for="comentario" class="label">Comentario:</label>
+                <textarea rows="4" nbInput fullWidth id="comentario" status="info"
+                shape="semi-round" value={{comentario}} fieldSize="small"></textarea>
               </div>
             </div>
           
@@ -224,7 +208,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <button nbButton fullWidth status="success" shape="semi-round" fieldSize="tiny" size="medium" outline>
-                Agregar orden
+                Guardar cambios
                 </button>
               </div>
             </div>

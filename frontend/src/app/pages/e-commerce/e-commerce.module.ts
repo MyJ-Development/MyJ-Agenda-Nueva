@@ -88,6 +88,7 @@ import { MostrarOrdenComponent } from './tree-grid-week/mostrar-orden/mostrar-or
 import { MostrarClienteComponent } from './tree-grid-week/mostrar-cliente/mostrar-cliente.component';
 import { OrdenCompletaComponent } from './tree-grid-week/orden-completa/orden-completa.component';
 import { AgregarOrdenComponent } from './tree-grid-week/agregar-orden/agregar-orden.component';
+import { ListaOrdenesComponent } from './tree-grid-week/lista-ordenes/lista-ordenes.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -161,7 +162,8 @@ import { AgregarOrdenComponent } from './tree-grid-week/agregar-orden/agregar-or
     MostrarOrdenComponent,
     MostrarClienteComponent,
     OrdenCompletaComponent,
-    AgregarOrdenComponent
+    AgregarOrdenComponent,
+    ListaOrdenesComponent
   ],
   providers: [
     CountryOrdersMapService,
