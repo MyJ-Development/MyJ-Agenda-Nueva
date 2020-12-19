@@ -4,13 +4,21 @@
 <form (ngSubmit)="guardar(formulario)" autocomplete="off" #formulario="ngForm">
   <nb-card class="ajusteInput largo">
 
+    <nb-card-body class="largo"> 
 
-      <nb-card-body class="largo"> 
-        <input ngModel name="buscar" data-ng-click="removeRow($index)" nbInput fullWidth status="info" class="search-input" 
-        placeholder="Buscar por: Nombre - Ubicación - Estado - Tipo - Rut - Fecha" type="text">
-        <button type="submit" nbButton ghost><nb-icon icon="file-text-outline">
-        </nb-icon></button>
-      </nb-card-body>
+      <input  ngModel 
+              name="buscar" 
+              data-ng-click="removeRow($index)" 
+              nbInput 
+              fullWidth 
+              status="info" 
+              class="search-input" 
+              placeholder="Buscar por: Nombre - Ubicación - Estado - Tipo - Rut - Fecha" 
+              type="text">
+
+      <button type="submit" nbButton ghost><nb-icon icon="file-text-outline"></nb-icon></button>
+
+    </nb-card-body>
 
   </nb-card>
 </form>

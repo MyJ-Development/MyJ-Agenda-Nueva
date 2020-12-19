@@ -72,7 +72,7 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
 import { FsIconComponent } from './tree-grid/tree-grid-showcase.component';
 import { NbInputModule, NbTreeGridModule } from '@nebular/theme';
 import { DayCellComponent } from './calendar/day-cell/day-cell.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   NbActionsModule,
   NbAlertModule,
@@ -117,7 +117,8 @@ import { ListaOrdenesComponent } from './tree-grid-week/lista-ordenes/lista-orde
     Ng2SmartTableModule,
     NbInputModule, 
     NbTreeGridModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ECommerceComponent,

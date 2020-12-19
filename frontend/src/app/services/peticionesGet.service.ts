@@ -20,7 +20,7 @@ export class peticionesGetService {
     }
 
     leerTipoOrdenes(): Observable<TipoOrdenes[]> {
-        return this.http.get<TipoOrdenes[]>('http://10.19.11.9:3003/api/scheduler/order')
+        return this.http.get<TipoOrdenes[]>('http://10.19.11.9:3003/api/scheduler/typeorder')
     }
 
     leerTecnicos(): Observable<any[]> {
@@ -38,5 +38,11 @@ export class peticionesGetService {
     leerOrdenesClientes(rut_cliente): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?rut=' + rut_cliente + '')
     }
+
+
+	agregarOrden(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/order/api/v1/reports/create/', report);
+	}
 
 }
