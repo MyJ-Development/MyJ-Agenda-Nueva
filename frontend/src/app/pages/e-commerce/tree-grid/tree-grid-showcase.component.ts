@@ -3,20 +3,20 @@
 import { Component, Input } from '@angular/core';
 
 // Angular/forms:
-import { NgForm } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 
 // Nebular/theme:
-import { NbDialogService } from '@nebular/theme';
+import { NbDateService, NbDialogService } from '@nebular/theme';
 
 // Ng2-smart-table:
 import { LocalDataSource } from 'ng2-smart-table';
 
 // Servicios:
 import { peticionesGetService } from '../../../services/peticionesGet.service';
-import { tableService } from '../../../services/table.service';
+import { tableService }         from '../../../services/table.service';
 
 // Componentes:
-import { MostrarClienteComponent } from '../tree-grid-week/mostrar-cliente/mostrar-cliente.component';
+import { OrdenCompletaComponent } from '../tree-grid-week/orden-completa/orden-completa.component';
 
 
 // Componente decorado:
@@ -59,8 +59,8 @@ export class TreeGridShowcaseComponent {
 
     // Define las columnas que queremos mostrar en la tabla (Título/tipo de dato):
     columns: {
-      rut: {
-        title: 'Rut',
+      id_orden: {
+        title: 'Id orden',
         type : 'string',
       },
       nombre: {
@@ -76,51 +76,82 @@ export class TreeGridShowcaseComponent {
 
 
   // Variables:
+  formulario : FormGroup;
   source     : LocalDataSource = new LocalDataSource();
   aparece    : boolean         = false;
-  data       : any[]           = [];
+  data       : any[];
   rut_cliente: any;
   lista      : any;
   clientes   : any;
-
+  opciones   : any[];
+  opcion_rut_cliente: string = 'Rut cliente';
+  opcion_nombre_encargado: string = 'Nombre encargado';
+  opcion_id_orden: string = 'Id orden';
+  min: Date;
+  max: Date;
 
   // Constructor:
   constructor(private mostrar     : NbDialogService,
               private service     : peticionesGetService,
-              private tableService: tableService) {
+              protected dateService: NbDateService<Date>,
+              private tableService: tableService,
+              private fb          : FormBuilder) {
 
+    this.crearFormulario();
+
+    this.opciones = [
+      this.opcion_rut_cliente,
+      this.opcion_nombre_encargado,
+      this.opcion_id_orden
+    ]
+
+    this.min = this.dateService.addDay(this.dateService.today(), -5);
+    this.max = this.dateService.addDay(this.dateService.today(), 5);
   }
 
 
 
   // Método encargado de obtener datos del formulario html:
-  guardar(formulario: NgForm) {
+  buscarOrden() {
 
-    // Iguala el dato obtenido del formulario con variable local:
-    this.rut_cliente = formulario.value['buscar']
+    this.data = [];
 
-    // Ejecuta el método seleccionado:
-    this.sincronizacion();
+    if (this.formulario.value['buscar'] === 'Rut cliente') {
 
-    // Cambia el estado de la tabla para mostrar la información:
-    this.aparece = true;
+      // Iguala el dato obtenido del formulario con variable local:
+      this.rut_cliente = this.formulario.value['buscador'];
+      
+      // Ejecuta el método seleccionado:
+      this.sincronizacionOrdenesClientes();
+
+      // Cambia el estado de la tabla para mostrar la información:
+      this.aparece = true;
+    }
+
+
   }
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
-  sincronizacion() {
+  sincronizacionOrdenesClientes() {
 
     /* Obtiene la lista de clientes desde el servicio 
     y los almacena en variable (clientes): */
-    this.service.leerClientes(this.rut_cliente).subscribe((clientesList) => {
+    this.service.leerOrdenesClientes(this.rut_cliente).subscribe((clientesList) => {
+      
       this.clientes = clientesList;
 
-      // Inserta los datos del arreglo en la variable data:
-      this.data.push({
-        rut: this.clientes['rut'],
-        nombre: this.clientes['nombre'],
-        telefono: this.clientes['contacto1'],
-      });
+      for (let i = 0; i < this.clientes.length; i++) {
+
+        // Inserta los datos del arreglo en la variable data:
+        this.data.push({
+          indice: i,
+          id_orden: this.clientes[i]['id'],
+          nombre: this.clientes[i]['client_order']['nombre'],
+          telefono: this.clientes[i]['client_order']['contacto1'],
+        });
+        
+      }
 
       // Carga los datos insertados en una estructura del componente html:
       this.source.load(this.data);
@@ -129,16 +160,29 @@ export class TreeGridShowcaseComponent {
   }
 
 
-  // Método encargado de enviar el dato obtenido al servicio y abre el componente seleccionado:
-  datosCliente() {
+  // Método encargado de enviar los datos del evento al servicio y abre el componente indicado:
+  ordenCompleta(event) {
 
-    // Envía el dato obtenido al servicio:
+    // Envía el rut del cliente seleccionado, al servicio indicado:
     this.tableService.setRut_cliente(this.rut_cliente);
 
-    // Abre el componente seleccionado:
-    this.mostrar.open(MostrarClienteComponent);
+    // Envía los datos obtenidos del evento al servicio:
+    this.tableService.setIdListaOrden(event['data']['indice']);
+
+    // Abre el componente indicado:
+    this.mostrar.open(OrdenCompletaComponent);
   }
 
+  
+  // Método encargado de crear el formulario que extrae los datos del componente html:
+  crearFormulario(){
+
+    this.formulario = this.fb.group({
+
+      buscar: ['', Validators.required],
+      buscador: ['', Validators.required]
+    })
+  }
 
 }
 
@@ -158,7 +202,7 @@ export class TreeGridShowcaseComponent {
 
 // Clase exportable FsIconComponent:
 export class FsIconComponent {
-  @Input() tipo: string;
+  @Input() tipo    : string;
   @Input() expanded: boolean;
 
   isDir(): boolean {

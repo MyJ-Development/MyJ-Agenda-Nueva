@@ -10,12 +10,14 @@
          <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
           <ng-container *ngFor="let column of defaultColumns; let index = index"
-                    [nbTreeGridColumnDef]="column"
-                    [showOn]="getShowOn(index)">
+                        [nbTreeGridColumnDef]="column"
+                        [showOn]="getShowOn(index)">
 
             <th class="tablitatr" nbTreeGridHeaderCell 
                                   *nbTreeGridHeaderCellDef
-                                  [nbSortHeader]="getSortDirection(column)">{{column}}</th>
+                                  [nbSortHeader]="getSortDirection(column)">
+                                  {{column}}
+            </th>
 
             <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
               {{row.data[column] | slice: 0: -3 || '-'}}

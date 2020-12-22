@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 // Nebular/theme:
-import { NbDialogRef } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 // Servicios:
-import { tableService } from '../../../../services/table.service';
+import { tableService }            from '../../../../services/table.service';
+import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.component';
 
 
 // Componente decorador:
@@ -51,7 +52,8 @@ export class MostrarOrdenComponent implements OnInit {
   // Constructor:
   constructor(protected ref   : NbDialogRef<MostrarOrdenComponent>,
               private service : tableService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private mostrar : NbDialogService) {
 
     this.ordenCompleta = this.service.getOrdenCompleta();
     this.idOrden       = this.service.getIdOrden();
@@ -59,8 +61,10 @@ export class MostrarOrdenComponent implements OnInit {
   }
 
 
-  // Primer método al inciar en el componente:
+  // Método ngOnInit:
   ngOnInit(): void {
+
+    // Llamada de métodos:
     this.getOrdenCompleta();
   }
 
@@ -96,17 +100,21 @@ export class MostrarOrdenComponent implements OnInit {
         this.tipoOrden         = this.ordenCompleta[i]['tipo']['descripcion'];
         this.fechaCreacion     = this.datePipe.
         transform(this.ordenCompleta[i]['created_at'], 'yyyy-MM-dd');
-
       }
-
     }
   }
 
 
-  // Método que cierra el diálogo y lo remueve de la pantalla:
-  dismiss() {
+  // Método encargado de abrir el componente con los datos del cliente:
+  verCliente(){
+
+    // Cierra el componente actual:
     this.ref.close();
+
+    // Abre el componente indicado:
+    this.mostrar.open(MostrarClienteComponent);
   }
+
 }
 
 

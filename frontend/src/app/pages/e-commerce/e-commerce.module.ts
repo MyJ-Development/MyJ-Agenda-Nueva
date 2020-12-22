@@ -17,6 +17,7 @@ import {
   NbSelectModule,
   NbListModule,
   NbSpinnerModule,
+  NbDatepickerModule,
 } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -118,7 +119,8 @@ import { ListaOrdenesComponent } from './tree-grid-week/lista-ordenes/lista-orde
     NbInputModule, 
     NbTreeGridModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbDatepickerModule
   ],
   declarations: [
     ECommerceComponent,

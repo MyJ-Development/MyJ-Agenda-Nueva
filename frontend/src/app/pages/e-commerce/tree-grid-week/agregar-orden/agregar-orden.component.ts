@@ -46,8 +46,10 @@ export class AgregarOrdenComponent implements OnInit {
   }
 
 
-  // Componente ngOnInit:
+  // Método ngOnInit:
   ngOnInit(): void {
+
+    // Llamada de métodos:
     this.sincronizarCliente();
     this.sincronizarResidencia();
     this.sincronizarTecnicos();

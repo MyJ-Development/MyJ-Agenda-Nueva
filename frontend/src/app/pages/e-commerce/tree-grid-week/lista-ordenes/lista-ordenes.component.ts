@@ -91,9 +91,13 @@ export class ListaOrdenesComponent implements OnInit {
   }
 
 
-  // Componente ngOnInit:
+  // Método ngOnInit:
   ngOnInit(): void {
+
+    // Obtiene el rut_cliente desde el servicio, enviado previamente desde otro componente:
     this.rut_cliente = this.tableService.getRut_cliente();
+
+    //Llamada de métodos:
     this.sincronizacion();
   }
 
@@ -110,11 +114,11 @@ export class ListaOrdenesComponent implements OnInit {
 
         // Inserta los datos indicados en la variable data:
         this.data.push({
-          indice: i,
-          id_orden: this.ordenesPorCliente[i]['id'],
+          indice         : i,
+          id_orden       : this.ordenesPorCliente[i]['id'],
           fecha_ejecucion: this.ordenesPorCliente[i]['fechaejecucion'],
-          encargado: this.ordenesPorCliente[i]['encargado']['nombre'],
-          estado_ticket: this.ordenesPorCliente[i]['estadoticket'],
+          encargado      : this.ordenesPorCliente[i]['encargado']['nombre'],
+          estado_ticket  : this.ordenesPorCliente[i]['estadoticket'],
         });
 
       }

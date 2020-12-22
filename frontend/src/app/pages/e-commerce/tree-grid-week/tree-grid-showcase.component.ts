@@ -86,20 +86,21 @@ export class TreeGridWeekShowcaseComponent {
   // Constructor:
   constructor(private peticionesGet    : peticionesGetService,
               private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
-              private nbMenuService    : NbMenuService,
-              private windowService    : NbWindowService,
               private syncService      : componentSyncService,
               private datePipe         : DatePipe,
               private dialogService    : NbDialogService,
-              private tableService     : tableService,
-              @Inject(NB_WINDOW) private window,) {
+              private tableService     : tableService) {
 
   }
 
-  // Primer método a iniciar en el componente:
+
+  // Método ngOnInit:
   ngOnInit() {
+
+    // Llamada de métodos:
     this.sincronizar();
   }
+
 
   // Sincroniza los datos del servicio con el primer día de la semana:
   sincronizar() {
@@ -109,6 +110,7 @@ export class TreeGridWeekShowcaseComponent {
       this.updateTreeGrid(this.newDate);
     })
   }
+
 
   // Obtiene el primer día de la semana:
   firstDayOfWeek(year, week) {
@@ -121,10 +123,12 @@ export class TreeGridWeekShowcaseComponent {
     return d;
   }
 
+
   updateSort(sortRequest: NbSortRequest): void {
     this.sortColumn     = sortRequest.column;
     this.sortDirection  = sortRequest.direction;
   }
+
 
   getSortDirection(column: string): NbSortDirection {
     if (this.sortColumn === column) {
@@ -132,6 +136,7 @@ export class TreeGridWeekShowcaseComponent {
     }
     return NbSortDirection.NONE;
   }
+
 
   // Método que al ejecutarse, obtiene y envía datos al servicio:
   open(index: any, data: any) {
@@ -142,11 +147,13 @@ export class TreeGridWeekShowcaseComponent {
     this.dialogService.open(ShowcaseDialogComponent);
   }
 
+
   getShowOn(index: number) {
     const minWithForMultipleColumns  = 0;
     const nextColumnStep             = 130;
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
+
 
   // Los métodos sendXXXX enlazan datos del componente actual, con los metodos del servicio:
   sendOrdenesPorFecha(datos) {
@@ -169,18 +176,11 @@ export class TreeGridWeekShowcaseComponent {
     this.tableService.setEncargado(datos);
   }
 
+
   // Método principal encargado de obtener y enlazar datos para mostrarlos en el componente html:
   updateTreeGrid(first_date: Date) {
-    this.data = [];
 
-    /*
-        this.nbMenuService.onItemClick()
-          .pipe(
-            filter(({ tag }) => tag === 'context-menu'),
-            map(({ item: { title } }) => title),
-          )
-          .subscribe(title => this.openWindowForm() );
-    */
+    this.data = [];
 
     // Obtiene los datos de los técnicos del servicio y los guarda en una variable:
     this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {this.tecnicos = TecnicosList;})
@@ -216,6 +216,8 @@ export class TreeGridWeekShowcaseComponent {
 
       // Inserta las ordenes filtradas en un arreglo:
       this.ordFechas.push(this.ordenesPorFecha);
+
+      // Envía las ordenes filtradas al método que enlaza el servicio:
       this.sendOrdenesPorFecha(this.ordFechas);
 
 
@@ -233,6 +235,7 @@ export class TreeGridWeekShowcaseComponent {
 
         let aux_date: Date = new Date(String(date_init));
 
+
         // Realiza un conteo de las ordenes filtradas por fecha de ejecución y la inserta en arreglo:
         for (let i = -1; i < 5; i++) {
           let row_date    = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
@@ -243,6 +246,7 @@ export class TreeGridWeekShowcaseComponent {
           counter[i] = aux_counter.length;
           test.push(this.ordenesDiariasPorTecnico);
         }
+
 
         // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
         this.data.push({
@@ -265,18 +269,6 @@ export class TreeGridWeekShowcaseComponent {
       this.dataSource = this.dataSourceBuilder.create(this.data);
     })
   }
-
-  // openWindow(id: string) {
-  //   this.windowService.open(
-  //     this.contentTemplate,
-  //     { title: 'Orden seleccionada: ' + id, context: { text: 'Campos de la orden' } }
-  //   );
-  // }
-
-  // openWindowForm() {
-  //   this.windowService.open(WindowFormComponent2, { title: `Orden` }
-  //   );
-  // }
 }
 
 

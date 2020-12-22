@@ -1,3 +1,5 @@
+
+
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/breakpoints";
 @import "../../../@theme/styles/themes";
@@ -18,7 +20,7 @@
   }
   .search-input {
     margin: 1px;
-    width: 500px;
+    width: 160px;
   }
 
   .inputLarge {
@@ -79,7 +81,27 @@
   }
 
   .largo {
-    width: 830px;
+    width: 950px;
+  }
+
+  .margenIzquierdo {
+    margin-left: 2rem;
+  }
+
+  .margenArriba {
+    margin-top: 26px;
+  }
+
+  .margenDate {
+    margin-top: 27px;
+  }
+
+  .margen {
+    margin-right: 10px;
+  }
+
+  .icono {
+    margin-left: -10px;
   }
 }
 

@@ -1,23 +1,67 @@
 
 
 <div class="ajustandoBuscador">
-<form (ngSubmit)="guardar(formulario)" autocomplete="off" #formulario="ngForm">
+<form [formGroup]="formulario" (ngSubmit)="buscarOrden()" autocomplete="off">
   <nb-card class="ajusteInput largo">
 
     <nb-card-body class="largo"> 
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+          <label for="buscar" class="label">Buscar por: </label>
+                <nb-select  formControlName="buscar"
+                            name="buscar" 
+                            type="text" 
+                            nbSelect 
+                            fullWidth 
+                            fieldSize="small"  
+                            shape="semi-round" 
+                            status="info">
 
-      <input  ngModel 
+                  <nb-option  *ngFor="let opcion of opciones"
+                              type="text"
+                              nbSelect 
+                              fullWidth 
+                              fieldSize="small" 
+                              shape="semi-round" 
+                              status="info" 
+                              [value]="opcion">
+                              {{opcion}}
+                  </nb-option>
+                  <nb-option value="" disabled selected>Seleccione:</nb-option>
+
+                </nb-select>
+
+                </div>
+                </div>
+
+
+          <div class="col-sm-3 margenDate margen">
+          <div class="form-group">
+
+            <input nbInput shape="semi-round" 
+              status="info"  placeholder="Rango de fechas" [nbDatepicker]="rangepicker">
+            <nb-rangepicker #rangepicker></nb-rangepicker>
+          </div>
+        </div>
+
+        <div class="col-sm-3 margenArriba">
+          <div class="form-group margen">
+            
+      <input  formControlName="buscador"
               name="buscar" 
-              data-ng-click="removeRow($index)" 
               nbInput 
-              fullWidth 
+              fieldSize="medium" 
+              shape="semi-round" 
               status="info" 
               class="search-input" 
-              placeholder="Buscar por: Nombre - Ubicación - Estado - Tipo - Rut - Fecha" 
+              placeholder="Buscar:" 
               type="text">
 
-      <button type="submit" nbButton ghost><nb-icon icon="file-text-outline"></nb-icon></button>
-
+      <button class="icono" type="submit" nbButton ghost><nb-icon icon="file-text-outline"></nb-icon></button>
+      </div>
+      </div>
+      </div>
     </nb-card-body>
 
   </nb-card>
@@ -29,7 +73,7 @@
                      class="tablita center"
                      [settings]="settings"
                      [source]="source"
-                     (custom)="datosCliente()">
+                     (custom)="ordenCompleta($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

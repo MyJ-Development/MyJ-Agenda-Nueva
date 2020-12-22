@@ -109,8 +109,10 @@ export class ShowcaseDialogComponent implements OnInit {
   }
 
 
-  // Primer método al inciar en el componente:
+  // Método ngOnInit:
   ngOnInit() {
+
+    // Llamada de métodos:
     this.newFecha(this.index);
     this.getOrdenes();
   }
@@ -203,56 +205,81 @@ export class ShowcaseDialogComponent implements OnInit {
     // Condicion a ejecutar si el índice esperado coincide, agregar una cantidad determinada de días a la fecha obtenida a través del servicio (Primer día de la semana):
     if (index === 0) {
 
+      // Obtiene la fecha desde el servicio:
       let fechaAux    = new Date(this.service.getNuevaFecha());
+
+      // Formatea la fecha recibida anteriormente:
       let fechaFormat = this.datePipe.
       transform((fechaAux.setDate(fechaAux.getDate() + 1)), 'yyyy-MM-dd');
 
+      // retorna la fecha formateada:
       return fechaFormat;
 
     } else if (index === 1) {
 
+      // Obtiene la fecha desde el servicio:
       let fechaAux    = new Date(this.service.getNuevaFecha());
+
+      // Formatea la fecha recibida anteriormente:
       let fechaFormat = this.datePipe.
       transform((fechaAux.setDate(fechaAux.getDate() + 2)), 'yyyy-MM-dd');
 
+      // retorna la fecha formateada:
       return fechaFormat;
 
     } else if (index === 2) {
 
+      // Obtiene la fecha desde el servicio:
       let fechaAux    = new Date(this.service.getNuevaFecha());
+
+      // Formatea la fecha recibida anteriormente:
       let fechaFormat = this.datePipe.
       transform((fechaAux.setDate(fechaAux.getDate() + 3)), 'yyyy-MM-dd');
 
+      // retorna la fecha formateada:
       return fechaFormat;
 
     } else if (index === 3) {
 
+      // Obtiene la fecha desde el servicio:
       let fechaAux    = new Date(this.service.getNuevaFecha());
+
+      // Formatea la fecha recibida anteriormente:
       let fechaFormat = this.datePipe.
       transform((fechaAux.setDate(fechaAux.getDate() + 4)), 'yyyy-MM-dd');
 
+      // retorna la fecha formateada:
       return fechaFormat;
 
     } else if (index === 4) {
 
+      // Obtiene la fecha desde el servicio:
       let fechaAux    = new Date(this.service.getNuevaFecha());
+
+      // Formatea la fecha recibida anteriormente:
       let fechaFormat = this.datePipe.
       transform((fechaAux.setDate(fechaAux.getDate() + 5)), 'yyyy-MM-dd');
 
+      // retorna la fecha formateada:
       return fechaFormat;
 
     } else if (index === 5) {
 
+      // Obtiene la fecha desde el servicio:
       let fechaAux    = new Date(this.service.getNuevaFecha());
+
+      // Formatea la fecha recibida anteriormente:
       let fechaFormat = this.datePipe.
       transform((fechaAux.setDate(fechaAux.getDate() + 6)), 'yyyy-MM-dd');
 
+      // retorna la fecha formateada:
       return fechaFormat;
 
-    }
+    } 
 
   }
 
+  
   // Método que cierra el diálogo y lo remueve de la pantalla:
   dismiss() {
     this.ref.close();
