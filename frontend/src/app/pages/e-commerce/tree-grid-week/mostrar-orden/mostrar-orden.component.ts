@@ -108,6 +108,9 @@ export class MostrarOrdenComponent implements OnInit {
   // Método encargado de abrir el componente con los datos del cliente:
   verCliente(){
 
+    // Envía el rut del cliente seleccionado, al servicio indicado:
+    this.service.setRut_cliente(this.rutCliente);
+
     // Cierra el componente actual:
     this.ref.close();
 

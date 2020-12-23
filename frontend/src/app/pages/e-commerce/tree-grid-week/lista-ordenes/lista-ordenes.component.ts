@@ -106,8 +106,8 @@ export class ListaOrdenesComponent implements OnInit {
   sincronizacion() {
 
     this.service.leerOrdenesClientes(this.rut_cliente).subscribe((ordenesList) => {
+      
       this.ordenesPorCliente = ordenesList;
-      console.log(this.ordenesPorCliente);
 
       // Recorre el total de la lista de ordenes:
       for (let i = 0; i < this.ordenesPorCliente.length; i++) {

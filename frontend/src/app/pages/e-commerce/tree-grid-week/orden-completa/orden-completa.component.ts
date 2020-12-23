@@ -45,6 +45,7 @@ export class OrdenCompletaComponent implements OnInit {
   tipo_orden       : any;
   prioridad        : any;
   comentario       : any;
+  id_orden         : any;
 
 
   // Constructor:
@@ -84,6 +85,7 @@ export class OrdenCompletaComponent implements OnInit {
       this.orden = this.ordenesPorCliente[this.idLista];
 
       // Almacena en variables locales, los datos obtenidos del objeto orden:
+      this.id_orden          = this.orden['id'];
       this.nombre_cliente    = this.orden['client_order']['nombre'];
       this.direccion_cliente = this.orden['client_residence']['direccion'];
       this.comuna_cliente    = this.orden['client_residence']['comuna'];

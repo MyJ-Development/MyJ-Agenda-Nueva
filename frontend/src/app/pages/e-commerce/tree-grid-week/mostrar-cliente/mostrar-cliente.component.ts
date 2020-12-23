@@ -111,6 +111,9 @@ export class MostrarClienteComponent implements OnInit {
   // Método encargado de abrir el componente indicado y cerrar el actual:
   listaOrdenes() {
 
+    // Envía el rut del cliente seleccionado, al servicio indicado:
+    this.tableService.setRut_cliente(this.rut_cliente);
+
     // Abre el componente indicado:
     this.mostrar.open(ListaOrdenesComponent);
 
