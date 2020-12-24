@@ -105,7 +105,7 @@ export class ListaOrdenesComponent implements OnInit {
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizacion() {
 
-    this.service.leerOrdenesClientes(this.rut_cliente).subscribe((ordenesList) => {
+    this.service.leerOrdenesClientesRut(this.rut_cliente).subscribe((ordenesList) => {
       
       this.ordenesPorCliente = ordenesList;
 

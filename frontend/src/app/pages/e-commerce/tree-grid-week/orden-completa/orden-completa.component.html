@@ -26,7 +26,7 @@
 
       <nb-card-body>
 
-        <form>
+        <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden()">
           
           <div class="row">
 
@@ -34,13 +34,13 @@
               <div class="form-group">
                 <label for="nombre_cliente" class="label">Nombre cliente:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="nombre_cliente"
                         nbInput 
                         fullWidth 
                         id="nombre_cliente" 
                         status="info"
                         shape="semi-round" 
-                        value={{nombre_cliente}} 
                         fieldSize="small">
 
               </div>
@@ -51,12 +51,12 @@
                 <label for="rut_cliente" class="label">Rut cliente:</label>
 
                 <input  type="text" 
+                        formControlName="rut_cliente"
                         nbInput 
                         fullWidth 
                         id="rut_cliente" 
                         status="info"
                         shape="semi-round" 
-                        value={{rut_cliente}} 
                         fieldSize="small">
 
               </div>
@@ -70,13 +70,13 @@
               <div class="form-group">
                 <label for="direccion_cliente" class="label">Dirección:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="direccion_cliente"
                         nbInput 
                         fullWidth 
                         id="direccion_cliente" 
                         status="info"
                         shape="semi-round" 
-                        value={{direccion_cliente}} 
                         fieldSize="small">
 
               </div>
@@ -86,13 +86,13 @@
               <div class="form-group">
                 <label for="comuna_cliente" class="label">Comuna:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="comuna_cliente"
                         nbInput 
                         fullWidth 
                         id="comuna_cliente" 
                         status="info"
                         shape="semi-round" 
-                        value={{comuna_cliente}} 
                         fieldSize="small">
 
               </div>
@@ -106,13 +106,13 @@
               <div class="form-group">
                 <label for="telefono1" class="label">Teléfono 1:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="telefono1"
                         nbInput 
                         fullWidth 
                         id="telefono1" 
                         status="info"
                         shape="semi-round" 
-                        value={{telefono1}} 
                         fieldSize="small">
 
               </div>
@@ -123,12 +123,12 @@
                 <label for="telefono2" class="label">Teléfono 2:</label>
 
                 <input  type="text" 
+                        formControlName="telefono2"
                         nbInput 
                         fullWidth 
                         id="telefono2" 
                         status="info"
                         shape="semi-round" 
-                        value={{telefono2}} 
                         fieldSize="small">
 
               </div>  
@@ -143,12 +143,12 @@
                 <label for="correo_cliente" class="label">Correo:</label>
 
                 <input  type="text" 
+                        formControlName="correo_cliente"
                         nbInput 
                         fullWidth 
                         id="correo_cliente" 
                         status="info"
                         shape="semi-round" 
-                        value={{correo_cliente}} 
                         fieldSize="small">
 
               </div>
@@ -158,13 +158,13 @@
               <div class="form-group">
                 <label for="encargado" class="label">Encargado:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="nombre_encargado"
                         nbInput 
                         fullWidth 
                         id="encargado" 
                         status="info"
                         shape="semi-round" 
-                        value={{encargado}} 
                         fieldSize="small">
 
               </div>
@@ -178,13 +178,13 @@
               <div class="form-group">
                 <label for="creado_por" class="label">Creado por:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="creado_por"
                         nbInput 
                         fullWidth 
                         id="creado_por" 
                         status="info"
                         shape="semi-round" 
-                        value={{creado_por}} 
                         fieldSize="small">
 
               </div>
@@ -194,13 +194,13 @@
               <div class="form-group">
                 <label for="fecha_creacion" class="label">Fecha creación:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="fecha_creacion"
                         nbInput 
                         fullWidth 
                         id="fecha_creacion" 
                         status="info"
                         shape="semi-round" 
-                        value={{fecha_creacion}} 
                         fieldSize="small">
 
               </div>
@@ -214,13 +214,13 @@
               <div class="form-group">
                 <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="fecha_ejecucion"
                         nbInput 
                         fullWidth 
                         id="fecha_ejecucion" 
                         status="info"
-                        shape="semi-round" 
-                        value={{fecha_ejecucion}} 
+                        shape="semi-round"  
                         fieldSize="small">
 
               </div>
@@ -230,13 +230,13 @@
               <div class="form-group">
                 <label for="disponibilidad" class="label">Disponibilidad:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="disponibilidad"
                         nbInput 
                         fullWidth 
                         id="disponibilidad" 
                         status="info"
                         shape="semi-round" 
-                        value={{disponibilidad}} 
                         fieldSize="small">
 
               </div>
@@ -251,12 +251,12 @@
                 <label for="estado_cliente" class="label">Estado cliente:</label>
 
                 <input  type="text" 
+                        formControlName="estado_cliente"
                         nbInput 
                         fullWidth 
                         id="estado_cliente" 
                         status="info"
                         shape="semi-round" 
-                        value={{estado_cliente}} 
                         fieldSize="small">
 
               </div>
@@ -266,13 +266,13 @@
               <div class="form-group">
                 <label for="estado_ticket" class="label">Estado ticket:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="estado_ticket"
                         nbInput 
                         fullWidth 
                         id="estado_ticket" 
                         status="info"
-                        shape="semi-round" 
-                        value={{estado_ticket}} 
+                        shape="semi-round"
                         fieldSize="small">
 
               </div>
@@ -286,13 +286,13 @@
               <div class="form-group">
                 <label for="medio_pago" class="label">Medio de pago:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="medio_pago"
                         nbInput 
                         fullWidth 
                         id="medio_pago" 
                         status="info"
                         shape="semi-round" 
-                        value={{medio_pago}} 
                         fieldSize="small">
 
               </div>
@@ -303,12 +303,12 @@
                 <label for="monto" class="label">Monto:</label>
 
                 <input  type="text" 
+                        formControlName="monto"
                         nbInput 
                         fullWidth 
                         id="monto" 
                         status="info"
                         shape="semi-round" 
-                        value={{monto}} 
                         fieldSize="small">
 
               </div>
@@ -322,13 +322,13 @@
               <div class="form-group">
                 <label for="tipo_orden" class="label">Tipo orden:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="tipo_orden"
                         nbInput 
                         fullWidth 
                         id="tipo_orden" 
                         status="info"
                         shape="semi-round" 
-                        value={{tipo_orden}} 
                         fieldSize="small">
 
               </div>
@@ -338,13 +338,13 @@
               <div class="form-group">
                 <label for="prioridad" class="label">Prioridad:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="prioridad"
                         nbInput 
                         fullWidth 
                         id="prioridad" 
                         status="info"
-                        shape="semi-round" 
-                        value={{prioridad}} 
+                        shape="semi-round"
                         fieldSize="small">
 
               </div>
@@ -358,13 +358,13 @@
               <div class="form-group">
                 <label for="comentario" class="label">Comentario:</label>
 
-                <textarea rows="4" 
+                <textarea rows="4"
+                          formControlName="comentario"
                           nbInput 
                           fullWidth 
                           id="comentario" 
                           status="info"
-                          shape="semi-round" 
-                          value={{comentario}} 
+                          shape="semi-round"
                           fieldSize="small">
                 </textarea>
                 
@@ -378,7 +378,8 @@
             <div class="col-sm-6">
               <div class="form-group">
 
-                <button nbButton 
+                <button nbButton
+                        type="button"
                         fullWidth 
                         status="success" 
                         shape="semi-round" 

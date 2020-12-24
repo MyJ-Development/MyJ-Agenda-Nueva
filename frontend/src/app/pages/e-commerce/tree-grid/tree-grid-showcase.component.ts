@@ -1,9 +1,10 @@
 
 // Angular/ core:
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 // Angular/forms:
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Nebular/theme:
 import { NbDateService, NbDialogService } from '@nebular/theme';
@@ -88,24 +89,26 @@ export class TreeGridShowcaseComponent {
   formulario : FormGroup;
   source     : LocalDataSource = new LocalDataSource();
   aparece    : boolean         = false;
+  ver    : boolean         = false;
   data       : any[];
   buscar     : any;
   rut_cliente: any;
   lista      : any;
   servicio   : Observable<any[]>;
   clientes   : any[];
+  date_init  : any;
+  date_end   : any;
   opciones   : any[];
   opcion_rut_cliente: string = 'Rut cliente';
-  opcion_nombre_encargado: string = 'Nombre encargado';
+  opcion_nombre_encargado: string = 'Nombre técnico';
   opcion_id_orden: string = 'Id orden';
-  min: Date;
-  max: Date;
+  opcion_domicilio: string = 'Domicilio';
 
   // Constructor:
   constructor(private mostrar     : NbDialogService,
               private service     : peticionesGetService,
-              protected dateService: NbDateService<Date>,
               private tableService: tableService,
+              private datePipe    : DatePipe,
               private fb          : FormBuilder) {
 
     this.crearFormulario();
@@ -113,11 +116,21 @@ export class TreeGridShowcaseComponent {
     this.opciones = [
       this.opcion_rut_cliente,
       this.opcion_nombre_encargado,
-      this.opcion_id_orden
+      this.opcion_id_orden,
+      this.opcion_domicilio
     ]
 
-    this.min = this.dateService.addDay(this.dateService.today(), -5);
-    this.max = this.dateService.addDay(this.dateService.today(), 5);
+    this.formulario.valueChanges.subscribe(x => {
+      
+      if ((x.buscar === "Nombre técnico") || (x.buscar === "Domicilio")) {
+        
+        this.ver = true;
+        
+      } else {
+
+        this.ver = false;
+      }
+    })
 
   }
 
@@ -132,7 +145,59 @@ export class TreeGridShowcaseComponent {
       // Iguala el dato obtenido del formulario con variable local:
       this.buscar = this.formulario.value['buscador'];    
 
-      this.servicio = this.service.leerOrdenesClientes(this.buscar);
+      this.servicio = this.service.leerOrdenesClientesRut(this.buscar);
+  
+
+      // Ejecuta el método seleccionado:
+      this.sincronizacionOrdenesClientes();
+
+      // Cambia el estado de la tabla para mostrar la información:
+      this.aparece = true;
+
+    } else if (this.formulario.value['buscar'] === 'Id orden') {
+
+      // Iguala el dato obtenido del formulario con variable local:
+      this.buscar = this.formulario.value['buscador'];    
+
+      this.servicio = this.service.leerOrdenesClientesId(this.buscar);
+  
+
+      // Ejecuta el método seleccionado:
+      this.sincronizacionOrdenesClientes();
+
+      // Cambia el estado de la tabla para mostrar la información:
+      this.aparece = true;
+
+    } else if ((this.formulario.value['buscar'] === 'Nombre técnico') 
+    && (this.formulario.value['calendar'])) {
+
+      // Iguala el dato obtenido del formulario con variable local:
+      this.buscar = this.formulario.value['buscador'];    
+
+      this.date_init = this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd');
+
+      this.date_end = this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd');
+
+      this.servicio = this.service.leerOrdenesClientesTecnico(this.buscar, this.date_init, this.date_end);
+  
+
+      // Ejecuta el método seleccionado:
+      this.sincronizacionOrdenesClientes();
+
+      // Cambia el estado de la tabla para mostrar la información:
+      this.aparece = true;
+
+    } else if ((this.formulario.value['buscar'] === 'Domicilio') 
+   ) {
+
+      // Iguala el dato obtenido del formulario con variable local:
+      this.buscar = this.formulario.value['buscador'];    
+
+      this.date_init = this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd');
+
+      this.date_end = this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd');
+
+      this.servicio = this.service.leerOrdenesClientesDomicilio(this.buscar, this.date_init, this.date_end);
   
 
       // Ejecuta el método seleccionado:
@@ -191,14 +256,11 @@ export class TreeGridShowcaseComponent {
   // Método encargado de enviar los datos del evento al servicio y abre el componente indicado:
   ordenCompleta(event) {
 
-    console.log('evento');
-    console.log(event['data']['objeto']['client_order']['rut']);
-
     // Envía el rut del cliente seleccionado, al servicio indicado:
     this.tableService.setRut_cliente(event['data']['objeto']['client_order']['rut']);
 
     // Envía los datos obtenidos del evento al servicio:
-    this.tableService.setIdListaOrden(event['data']['indice']);
+    this.tableService.setIdOrden(event['data']['objeto']['id']);
 
     // Abre el componente indicado:
     this.mostrar.open(OrdenCompletaComponent);
@@ -211,7 +273,8 @@ export class TreeGridShowcaseComponent {
     this.formulario = this.fb.group({
 
       buscar: ['', Validators.required],
-      buscador: ['', Validators.required]
+      buscador: ['', Validators.required],
+      calendar: ['', Validators.required],
     })
   }
 

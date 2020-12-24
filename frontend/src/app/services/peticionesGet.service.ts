@@ -35,8 +35,20 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/residence?rut=' + rut_cliente + '')
     }
 
-    leerOrdenesClientes(rut_cliente): Observable<any[]> {
+    leerOrdenesClientesRut(rut_cliente): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?rut_cliente=' + rut_cliente + '')
+    }
+
+    leerOrdenesClientesId(id_orden): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?id_orden=' + id_orden + '')
+    }
+
+    leerOrdenesClientesTecnico(nombre_tecnico, date_init, date_end): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?nombre_encargado=' + nombre_tecnico + '&date_init=' + date_init + '&date_end=' + date_end + '')
+    }
+
+    leerOrdenesClientesDomicilio(domicilio, date_init, date_end): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?domicilio=' + domicilio + '&date_init=' + date_init + '&date_end=' + date_end + '')
     }
 
 
