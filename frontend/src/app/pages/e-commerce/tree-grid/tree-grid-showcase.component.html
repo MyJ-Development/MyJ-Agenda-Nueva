@@ -16,14 +16,14 @@
                             fullWidth 
                             size="small"  
                             shape="semi-round" 
-                            status="info">
+                            status="info"
+                            placeholder="Seleccione:">
 
                   <nb-option  *ngFor="let opcion of opciones"
                               type="text"
                               [value]="opcion">
                               {{opcion}}
                   </nb-option>
-                  <nb-option value="" disabled selected>Seleccione:</nb-option>
 
                 </nb-select>
 

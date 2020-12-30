@@ -10,13 +10,15 @@ import { tap } from 'rxjs/operators';
 import { UserStore } from '../../@core/stores/user.store';
 import { Injectable } from '@angular/core';
 import { NbJSThemesRegistry, NbThemeService } from '@nebular/theme';
+import { tableService } from '../../services/table.service';
 
 @Injectable()
 export class InitUserService {
     constructor(protected userStore: UserStore,
         protected usersService: UserData,
         protected jsThemes: NbJSThemesRegistry,
-        protected themeService: NbThemeService) { }
+        protected themeService: NbThemeService,
+        private tableService: tableService) { }
 
     initCurrentUser(): Observable<User> {
       return this.usersService.getCurrentUser()
@@ -28,6 +30,8 @@ export class InitUserService {
                     if (this.jsThemes.has(user.settings.themeName)
                       && !!this.jsThemes.get(user.settings.themeName).variables.initialized) {
                       this.themeService.changeTheme(user.settings.themeName);
+                      console.log('Usuario: ' + user.email);
+                      this.tableService.setUsuario(user.email);
                     }
                   }
                 }

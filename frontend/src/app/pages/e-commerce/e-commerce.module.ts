@@ -92,6 +92,7 @@ import { AgregarOrdenComponent } from './tree-grid-week/agregar-orden/agregar-or
 import { ListaOrdenesComponent } from './tree-grid-week/lista-ordenes/lista-ordenes.component';
 import { CaracteresPipe } from './pipes/caracteres.pipe';
 import { MayusPipe } from './pipes/mayus.pipe';
+import { VerClienteComponent } from './tree-grid-week/ver-cliente/ver-cliente.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -170,7 +171,8 @@ import { MayusPipe } from './pipes/mayus.pipe';
     AgregarOrdenComponent,
     ListaOrdenesComponent,
     CaracteresPipe,
-    MayusPipe
+    MayusPipe,
+    VerClienteComponent
   ],
   providers: [
     CountryOrdersMapService,

@@ -22,6 +22,15 @@ export class tableService {
   idOrden: any[];
   idListaOrden: any;
   rut_cliente: any;
+  usuario: any;
+
+  setUsuario(valor: any) {
+    this.usuario = valor;
+  }
+
+  getUsuario() {
+    return this.usuario;
+  }
 
   setResidencia(valor: any[]) {
     this.residencia = valor;

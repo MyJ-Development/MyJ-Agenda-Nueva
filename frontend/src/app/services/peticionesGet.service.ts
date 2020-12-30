@@ -62,4 +62,9 @@ export class peticionesGetService {
 		return this.http.put('http://10.19.11.9:3003/api/scheduler/order/', report);
 	}
 
+    editarCliente(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/client/', report);
+	}
+
 }

@@ -11,6 +11,7 @@ import { tableService } from '../../../../services/table.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { VerClienteComponent } from '../ver-cliente/ver-cliente.component';
 
 
 // Compontente decorado:
@@ -42,7 +43,8 @@ export class OrdenCompletaComponent implements OnInit {
     private service: peticionesGetService,
     private datePipe: DatePipe,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private mostrar: NbDialogService) {
 
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -62,6 +64,22 @@ export class OrdenCompletaComponent implements OnInit {
     this.sincronizarTecnicos();
     this.sincronizarTipoOrdenes();
     this.crearFormulario();
+  }
+
+
+  verCliente(){
+
+    // Envía el rut del cliente seleccionado, al servicio indicado:
+    this.tableService.setRut_cliente(this.rut_cliente);
+
+    this.tableService.setOrden(this.ordenCliente);
+
+    // Cierra el componente actual:
+    this.ref.close();
+
+    // Abre el componente indicado:
+    this.mostrar.open(VerClienteComponent);
+
   }
 
 
@@ -149,9 +167,12 @@ export class OrdenCompletaComponent implements OnInit {
       rut_cliente: [{value: this.rut_cliente, disabled: true}, Validators.required],
       direccion_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
       comuna_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
-      telefono1: [this.ordenCliente['client_order']['contacto1'], Validators.required],
-      telefono2: [this.ordenCliente['client_order']['contacto2'], Validators.required],
-      correo_cliente: [this.ordenCliente['client_order']['email'], Validators.required],
+      telefono1: [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+                  Validators.required],
+      telefono2: [{value: this.ordenCliente['client_order']['contacto2'], disabled: true},
+                  Validators.required],
+      correo_cliente: [{value: this.ordenCliente['client_order']['email'], disabled: true},
+                       Validators.required],
       encargado: [this.ordenCliente['encargado']['rut'], Validators.required],
       creado_por: 
       [{value: this.ordenCliente['created_by']['email'], disabled: true}, Validators.required],

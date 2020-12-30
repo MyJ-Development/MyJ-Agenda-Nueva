@@ -91,6 +91,7 @@ export class TreeGridWeekShowcaseComponent {
               private dialogService    : NbDialogService,
               private tableService     : tableService) {
 
+
   }
 
 

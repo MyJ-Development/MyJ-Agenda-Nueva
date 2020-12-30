@@ -19,14 +19,14 @@ import { Router } from '@angular/router';
 
 // Componente decorador:
 @Component({
-  selector   : 'ngx-mostrar-cliente',
-  templateUrl: './mostrar-cliente.component.html',
-  styleUrls  : ['./mostrar-cliente.component.scss']
+  selector: 'ngx-ver-cliente',
+  templateUrl: './ver-cliente.component.html',
+  styleUrls: ['./ver-cliente.component.scss']
 })
 
 
 // Clase exportable MostrarClienteComponent implementa ngOnInit:
-export class MostrarClienteComponent implements OnInit {
+export class VerClienteComponent implements OnInit {
 
   // Variables:
   formulario         : FormGroup;
@@ -42,7 +42,7 @@ export class MostrarClienteComponent implements OnInit {
   
 
   // Constructor:
-  constructor(protected ref       : NbDialogRef<MostrarClienteComponent>,
+  constructor(protected ref       : NbDialogRef<VerClienteComponent>,
               private mostrar     : NbDialogService,
               private tableService: tableService,
               private service     : peticionesGetService,
