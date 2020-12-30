@@ -1,5 +1,6 @@
 
 // Angular/core:
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 // Angular/forms:
@@ -30,6 +31,7 @@ export class AgregarOrdenComponent implements OnInit {
   report            : any;
   rut_cli           : any;
   cliente           : any;
+  usuario           : any;
   tecnicos          : any[];
   tipoOrdenes       : any[];
 
@@ -38,9 +40,11 @@ export class AgregarOrdenComponent implements OnInit {
   constructor(private tableService: tableService,
               private service     : peticionesGetService,
               private router      : Router,
-              private fb          : FormBuilder) {
+              private fb          : FormBuilder,
+              private datePipe    : DatePipe) {
 
     this.rut_cli = this.tableService.getRut_cliente();
+    this.usuario = this.tableService.getUsuario();
     this.crearFormulario();
 
   }
@@ -104,22 +108,23 @@ export class AgregarOrdenComponent implements OnInit {
       estadoticket  : this.formulario.value['estado_ticket'],
       mediodepago   : this.formulario.value['medio_pago'],
       monto         : this.formulario.value['monto'],
-      created_by    : this.formulario.value['creado_por'],
+      created_by    : this.usuario,
       encargado     : this.formulario.value['encargado'],
-      client_order  : this.formulario.value['rut_cliente'],
+      client_order  : this.rut_cli,
       domicilio     : this.formulario.value['direccion_cliente'],
     };
 
+    console.log(this.report);
 
     let res = '';
 
     // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-    this.service.agregarOrden(this.report).subscribe(data => {
-      res = data;
-      console.log('res');
-      console.log(res);
-      this.router.navigate(['/success']);
-    });
+    // this.service.agregarOrden(this.report).subscribe(data => {
+    //   res = data;
+    //   console.log('res');
+    //   console.log(res);
+    //   this.router.navigate(['/success']);
+    // });
   }
 
 
@@ -128,10 +133,10 @@ export class AgregarOrdenComponent implements OnInit {
 
     this.formulario = this.fb.group({
 
-      rut_cliente      : [this.rut_cli, Validators.required],
+      rut_cliente      : [{value: this.rut_cli, disabled: true}, Validators.required],
       direccion_cliente: ['', Validators.required],
       encargado        : ['', Validators.required],
-      creado_por       : ['', Validators.required],
+      creado_por       : [{value: this.usuario, disabled: true}, Validators.required],
       fecha_ejecucion  : ['', Validators.required],
       disponibilidad   : ['', Validators.required],
       estado_cliente   : ['', Validators.required],
@@ -143,78 +148,4 @@ export class AgregarOrdenComponent implements OnInit {
       comentario       : ['', Validators.required],
     })
   }
-
-
-  formato(dato) {
-    return String(dato)
-      .replace('&ntilde', 'ñ')
-      .replace('&Ntilde', 'Ñ')
-      .replace('&amp', '&')
-      .replace('&Ntilde', 'Ñ')
-      .replace('&ntilde', 'ñ')
-      .replace('&Ntilde', 'Ñ')
-      .replace('&Agrave', 'À')
-      .replace('&Aacute', 'Á')
-      .replace('&Acirc', 'Â')
-      .replace('&Atilde', 'Ã')
-      .replace('&Auml', 'Ä')
-      .replace('&Aring', 'Å')
-      .replace('&AElig', 'Æ')
-      .replace('&Ccedil', 'Ç')
-      .replace('&Egrave', 'È')
-      .replace('&Eacute', 'É')
-      .replace('&Ecirc', 'Ê')
-      .replace('&Euml', 'Ë')
-      .replace('&Igrave', 'Ì')
-      .replace('&Iacute', 'Í')
-      .replace('&Icirc', 'Î')
-      .replace('&Iuml', 'Ï')
-      .replace('&ETH', 'Ð')
-      .replace('&Ntilde', 'Ñ')
-      .replace('&Ograve', 'Ò')
-      .replace('&Oacute', 'Ó')
-      .replace('&Ocirc', 'Ô')
-      .replace('&Otilde', 'Õ')
-      .replace('&Ouml', 'Ö')
-      .replace('&Oslash', 'Ø')
-      .replace('&Ugrave', 'Ù')
-      .replace('&Uacute', 'Ú')
-      .replace('&Ucirc', 'Û')
-      .replace('&Uuml', 'Ü')
-      .replace('&Yacute', 'Ý')
-      .replace('&THORN', 'Þ')
-      .replace('&szlig', 'ß')
-      .replace('&agrave', 'à')
-      .replace('&aacute', 'á')
-      .replace('&acirc', 'â')
-      .replace('&atilde', 'ã')
-      .replace('&auml', 'ä')
-      .replace('&aring', 'å')
-      .replace('&aelig', 'æ')
-      .replace('&ccedil;', 'ç')
-      .replace('&egrave', 'è')
-      .replace('&eacute', 'é')
-      .replace('&ecirc', 'ê')
-      .replace('&euml', 'ë')
-      .replace('&igrave', 'ì')
-      .replace('&iacute', 'í')
-      .replace('&icirc', 'î')
-      .replace('&iuml', 'ï')
-      .replace('&eth', 'ð')
-      .replace('&ntilde', 'ñ')
-      .replace('&ograve', 'ò')
-      .replace('&oacute', 'ó')
-      .replace('&ocirc', 'ô')
-      .replace('&otilde', 'õ')
-      .replace('&ouml', 'ö')
-      .replace('&oslash', 'ø')
-      .replace('&ugrave', 'ù')
-      .replace('&uacute', 'ú')
-      .replace('&ucirc', 'û')
-      .replace('&uuml', 'ü')
-      .replace('&yacute', 'ý')
-      .replace('&thorn', 'þ')
-      .replace('&yuml', 'ÿ');
-  }
-
 }

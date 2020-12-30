@@ -236,13 +236,14 @@
                 <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
 
                 <input  type="text"
-                        formControlName="fecha_ejecucion"
-                        nbInput 
                         fullWidth 
-                        id="fecha_ejecucion" 
                         status="info"
-                        shape="semi-round"  
-                        fieldSize="small">
+                        formControlName="fecha_ejecucion" 
+                        shape="semi-round" 
+                        fieldSize="small"
+                        nbInput
+                       [nbDatepicker]="formpicker">
+                <nb-datepicker #formpicker></nb-datepicker>
 
               </div>
             </div>
@@ -416,24 +417,6 @@
                         size="medium" 
                         outline>
                 Guardar cambios
-                </button>
-
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <div class="form-group">
-
-                <button nbButton
-                        type="button"
-                        fullWidth 
-                        status="info" 
-                        shape="semi-round" 
-                        fieldSize="tiny" 
-                        size="medium"
-                        (click)="verCliente()"
-                        outline>
-                Ver cliente
                 </button>
 
               </div>

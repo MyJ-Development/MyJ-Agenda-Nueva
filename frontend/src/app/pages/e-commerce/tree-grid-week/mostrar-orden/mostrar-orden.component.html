@@ -235,13 +235,14 @@
                 <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
 
                 <input  type="text"
-                        formControlName="fecha_ejecucion"
-                        nbInput 
                         fullWidth 
-                        id="fecha_ejecucion" 
                         status="info"
-                        shape="semi-round"  
-                        fieldSize="small">
+                        formControlName="fecha_ejecucion" 
+                        shape="semi-round" 
+                        fieldSize="small"
+                        nbInput
+                       [nbDatepicker]="formpicker">
+                <nb-datepicker #formpicker></nb-datepicker>
 
               </div>
             </div>

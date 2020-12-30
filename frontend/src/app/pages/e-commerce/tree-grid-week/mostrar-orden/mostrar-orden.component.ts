@@ -83,7 +83,7 @@ export class MostrarOrdenComponent implements OnInit {
         prioridad     : this.formulario.value['prioridad'],
         disponibilidad: this.formulario.value['disponibilidad'],
         comentario    : this.formulario.value['comentario'],
-        fechaejecucion: this.formulario.value['fecha_ejecucion'],
+        fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
         estadocliente : this.formulario.value['estado_cliente'],
         estadoticket  : this.formulario.value['estado_ticket'],
         mediodepago   : this.formulario.value['medio_pago'],

@@ -11,7 +11,6 @@ import { tableService } from '../../../../services/table.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { VerClienteComponent } from '../ver-cliente/ver-cliente.component';
 
 
 // Compontente decorado:
@@ -43,8 +42,7 @@ export class OrdenCompletaComponent implements OnInit {
     private service: peticionesGetService,
     private datePipe: DatePipe,
     private router: Router,
-    private fb: FormBuilder,
-    private mostrar: NbDialogService) {
+    private fb: FormBuilder) {
 
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -67,22 +65,6 @@ export class OrdenCompletaComponent implements OnInit {
   }
 
 
-  verCliente(){
-
-    // Envía el rut del cliente seleccionado, al servicio indicado:
-    this.tableService.setRut_cliente(this.rut_cliente);
-
-    this.tableService.setOrden(this.ordenCliente);
-
-    // Cierra el componente actual:
-    this.ref.close();
-
-    // Abre el componente indicado:
-    this.mostrar.open(VerClienteComponent);
-
-  }
-
-
   actualizarOrden() {
 
 
@@ -96,7 +78,7 @@ export class OrdenCompletaComponent implements OnInit {
         prioridad     : this.formulario.value['prioridad'],
         disponibilidad: this.formulario.value['disponibilidad'],
         comentario    : this.formulario.value['comentario'],
-        fechaejecucion: this.formulario.value['fecha_ejecucion'],
+        fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
         estadocliente : this.formulario.value['estado_cliente'],
         estadoticket  : this.formulario.value['estado_ticket'],
         mediodepago   : this.formulario.value['medio_pago'],

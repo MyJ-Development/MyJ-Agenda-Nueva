@@ -34,8 +34,14 @@
           <div *ngIf="ver" class="col-sm-3 margenDate margen">
           <div class="form-group">
 
-            <input formControlName="calendar" fieldSize="small" nbInput shape="semi-round" 
-              status="info"  placeholder="Rango de fechas" [nbDatepicker]="rangepicker">
+            <input  type="text"
+                    formControlName="calendar" 
+                    fieldSize="small" 
+                    nbInput 
+                    shape="semi-round" 
+                    status="info"
+                    placeholder="Rango de fechas" 
+                    [nbDatepicker]="rangepicker">
             <nb-rangepicker #rangepicker></nb-rangepicker>
           </div>
         </div>

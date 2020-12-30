@@ -174,9 +174,9 @@ export class TreeGridShowcaseComponent {
       // Iguala el dato obtenido del formulario con variable local:
       this.buscar = this.formulario.value['buscador'];
 
-      this.date_init = this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd');
+      this.date_init = new Date(this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd'));
 
-      this.date_end = this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd');
+      this.date_end = new Date(this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd'));
 
       this.servicio = this.service.leerOrdenesClientesTecnico(this.buscar, this.date_init, this.date_end);
 
@@ -192,9 +192,9 @@ export class TreeGridShowcaseComponent {
       // Iguala el dato obtenido del formulario con variable local:
       this.buscar    = this.formulario.value['buscador'];
 
-      this.date_init = this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd');
+      this.date_init = new Date(this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd'));
 
-      this.date_end  = this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd');
+      this.date_end = new Date(this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd'));
 
       this.servicio  = this.service.leerOrdenesClientesDomicilio(this.buscar, this.date_init, this.date_end);
 

@@ -99,14 +99,15 @@
               <div class="form-group">
                 <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
 
-                <input  type="text" 
-                        nbInput 
+                <input  type="text"
                         fullWidth 
-                        id="fecha_ejecucion" 
                         status="info"
                         formControlName="fecha_ejecucion" 
                         shape="semi-round" 
-                        fieldSize="small">
+                        fieldSize="small"
+                        nbInput
+                       [nbDatepicker]="formpicker">
+                <nb-datepicker format="yyyy.MM.dd" #formpicker></nb-datepicker>
 
               </div>
             </div>

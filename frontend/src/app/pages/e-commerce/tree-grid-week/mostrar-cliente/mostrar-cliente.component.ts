@@ -62,7 +62,6 @@ export class MostrarClienteComponent implements OnInit {
     /* Obtiene la orden completa del cliente desde el servicio,
     enviada previamente desde otro componente: */
     this.ordenCliente = this.tableService.getOrden();
-    console.log(this.ordenCliente);
 
     this.usuario = this.tableService.getUsuario();
 
