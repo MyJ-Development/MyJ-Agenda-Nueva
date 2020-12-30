@@ -115,6 +115,7 @@ export class ListaOrdenesComponent implements OnInit {
         // Inserta los datos indicados en la variable data:
         this.data.push({
           indice         : i,
+          objeto         : this.ordenesPorCliente[i],
           id_orden       : this.ordenesPorCliente[i]['id'],
           fecha_ejecucion: this.ordenesPorCliente[i]['fechaejecucion'],
           encargado      : this.ordenesPorCliente[i]['encargado']['nombre'],
@@ -138,6 +139,9 @@ export class ListaOrdenesComponent implements OnInit {
 
     // Envía los datos obtenidos del evento al servicio:
     this.tableService.setIdListaOrden(event['data']['indice']);
+
+    // Envía la orden seleccionada al servicio:
+    this.tableService.setOrden(event['data']['objeto']);
   }
 
 }

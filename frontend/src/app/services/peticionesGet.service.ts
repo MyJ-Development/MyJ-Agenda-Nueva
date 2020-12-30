@@ -54,7 +54,12 @@ export class peticionesGetService {
 
 	agregarOrden(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
-		return this.http.post('http://10.19.11.9:3003/api/scheduler/order/api/v1/reports/create/', report);
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/order/', report);
+	}
+
+    editarOrden(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/order/', report);
 	}
 
 }

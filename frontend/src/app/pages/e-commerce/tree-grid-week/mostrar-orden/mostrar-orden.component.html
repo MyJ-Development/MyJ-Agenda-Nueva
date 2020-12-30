@@ -9,13 +9,13 @@
 
           <div class="col-sm-4">
             <div class="form-group">
-              <label class="label titulo blanco">Orden N°: {{numOrden}}</label>
+              <label class="label titulo blanco">Orden N°: {{id_orden}}</label>
             </div>
           </div>
 
           <div class="col-sm-7">
             <div class="form-group">
-              <label class="label titulo blanco">Técnico: {{nombreTecnico}}</label>
+              <label class="label titulo blanco">Fecha de ejecución: {{fecha_ejecucion}}</label>
             </div>
           </div>
 
@@ -25,22 +25,21 @@
 
       <nb-card-body>
 
-        <form>
+        <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden()">
           
           <div class="row">
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombreCliente" class="label">Nombre cliente:</label>
+                <label for="nombre_cliente" class="label">Nombre cliente:</label>
 
                 <input  type="text"
+                        formControlName="nombre_cliente"
                         nbInput 
                         fullWidth 
-                        id="nombreCliente" 
+                        id="nombre_cliente" 
                         status="info"
-                        placeholder={{nombreCliente}} 
                         shape="semi-round" 
-                        value={{nombreCliente}}
                         fieldSize="small">
 
               </div>
@@ -48,54 +47,15 @@
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="rutCliente" class="label">Rut cliente:</label>
+                <label for="rut_cliente" class="label">Rut cliente:</label>
 
                 <input  type="text" 
+                        formControlName="rut_cliente"
                         nbInput 
                         fullWidth 
-                        id="rutCliente" 
+                        id="rut_cliente" 
                         status="info"
-                        placeholder={{rutCliente}} 
                         shape="semi-round" 
-                        value={{rutCliente}}
-                        fieldSize="small">
-
-              </div>
-            </div>
-
-          </div>
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="direccionCliente" class="label">Dirección:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="direccionCliente" 
-                        status="info"
-                        placeholder={{direccionCliente}} 
-                        shape="semi-round" 
-                        value={{direccionCliente}}
-                        fieldSize="small">
-
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="comunaCliente" class="label">Comuna:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="comunaCliente" 
-                        status="info"
-                        placeholder={{comunaCliente}} 
-                        shape="semi-round" 
-                        value={{comunaCliente}}
                         fieldSize="small">
 
               </div>
@@ -107,16 +67,65 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="telefonoCliente1" class="label">Teléfono 1:</label>
+                <label for="direccion_cliente" class="label">Dirección:</label>
 
-                <input  type="text" 
+                <nb-select  formControlName="direccion_cliente"
+                            name="direccion_cliente" 
+                            type="text"
+                            fullWidth
+                            shape="semi-round" 
+                            status="info"
+                            size="small">
+
+                  <nb-option  *ngFor="let direccion of residencia_cliente"
+                              type="text"
+                              [value]="direccion.id">
+                              {{direccion.direccion | caracteres | mayus}}
+                  </nb-option>
+
+                </nb-select>
+
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="comuna_cliente" class="label">Comuna:</label>
+
+                <nb-select  formControlName="comuna_cliente"
+                            name="comuna_cliente" 
+                            type="text"
+                            fullWidth
+                            shape="semi-round" 
+                            status="info"
+                            size="small">
+
+                  <nb-option  *ngFor="let comuna of residencia_cliente"
+                              type="text"
+                              [value]="comuna.id">
+                              {{comuna.comuna | caracteres | mayus}}
+                  </nb-option>
+
+                </nb-select>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="telefono1" class="label">Teléfono 1:</label>
+
+                <input  type="text"
+                        formControlName="telefono1"
                         nbInput 
                         fullWidth 
-                        id="telefonoCliente1" 
+                        id="telefono1" 
                         status="info"
-                        placeholder={{telefonoCliente1}} 
                         shape="semi-round" 
-                        value={{telefonoCliente1}}
                         fieldSize="small">
 
               </div>
@@ -124,16 +133,15 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="telefonoCliente2" class="label">Teléfono 2:</label>
+                <label for="telefono2" class="label">Teléfono 2:</label>
 
                 <input  type="text" 
+                        formControlName="telefono2"
                         nbInput 
                         fullWidth 
-                        id="telefonoCliente2" 
+                        id="telefono2" 
                         status="info"
-                        placeholder={{telefonoCliente2}} 
                         shape="semi-round" 
-                        value={{telefonoCliente2}}
                         fieldSize="small">
 
               </div>  
@@ -145,16 +153,58 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="correoCliente" class="label">Correo:</label>
+                <label for="correo_cliente" class="label">Correo:</label>
+
+                <input  type="text" 
+                        formControlName="correo_cliente"
+                        nbInput 
+                        fullWidth 
+                        id="correo_cliente" 
+                        status="info"
+                        shape="semi-round" 
+                        fieldSize="small">
+
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="encargado" class="label">Encargado:</label>
+
+                <nb-select  formControlName="encargado"
+                            name="encargado" 
+                            type="text"
+                            fullWidth 
+                            shape="semi-round" 
+                            status="info"
+                            size="small">
+
+                  <nb-option  *ngFor="let tecnico of tecnicos"
+                              type="text"
+                              [value]="tecnico.rut">
+                              {{tecnico.nombre}}
+                  </nb-option>
+
+                </nb-select>
+
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="creado_por" class="label">Creado por:</label>
 
                 <input  type="text"
+                        formControlName="creado_por"
                         nbInput 
                         fullWidth 
-                        id="correoCliente" 
+                        id="creado_por" 
                         status="info"
-                        placeholder={{correoCliente}} 
                         shape="semi-round" 
-                        value={{correoCliente}}
                         fieldSize="small">
 
               </div>
@@ -162,54 +212,15 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombreTecnico" class="label">Encargado:</label>
+                <label for="fecha_creacion" class="label">Fecha creación:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="fecha_creacion"
                         nbInput 
                         fullWidth 
-                        id="nombreTecnico" 
+                        id="fecha_creacion" 
                         status="info"
-                        placeholder={{nombreTecnico}} 
                         shape="semi-round" 
-                        value={{nombreTecnico}}
-                        fieldSize="small">
-
-              </div>
-            </div>
-          
-          </div>
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="creadoPor" class="label">Creado por:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="creadoPor" 
-                        status="info"
-                        placeholder={{creadoPor}} 
-                        shape="semi-round" 
-                        value={{creadoPor}}
-                        fieldSize="small">
-
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="fechaCreacion" class="label">Fecha creación:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="fechaCreacion" 
-                        status="info"
-                        placeholder={{fechaCreacion}} 
-                        shape="semi-round" 
-                        value={{fechaCreacion}}
                         fieldSize="small">
 
               </div>
@@ -221,16 +232,15 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="fechaEjecucion" class="label">Fecha de ejecución:</label>
+                <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="fecha_ejecucion"
                         nbInput 
                         fullWidth 
-                        id="fechaEjecucion" 
+                        id="fecha_ejecucion" 
                         status="info"
-                        placeholder={{fechaEjecucion}} 
-                        shape="semi-round" 
-                        value={{fechaEjecucion}}
+                        shape="semi-round"  
                         fieldSize="small">
 
               </div>
@@ -240,14 +250,13 @@
               <div class="form-group">
                 <label for="disponibilidad" class="label">Disponibilidad:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="disponibilidad"
                         nbInput 
                         fullWidth 
                         id="disponibilidad" 
                         status="info"
-                        placeholder={{disponibilidad}} 
                         shape="semi-round" 
-                        value={{disponibilidad}}
                         fieldSize="small">
 
               </div>
@@ -259,16 +268,15 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="estadoCliente" class="label">Estado cliente:</label>
-                
+                <label for="estado_cliente" class="label">Estado cliente:</label>
+
                 <input  type="text" 
+                        formControlName="estado_cliente"
                         nbInput 
                         fullWidth 
-                        id="estadoCliente" 
+                        id="estado_cliente" 
                         status="info"
-                        placeholder={{estadoCliente}} 
                         shape="semi-round" 
-                        value={{estadoCliente}}
                         fieldSize="small">
 
               </div>
@@ -276,16 +284,15 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="estadoTicket" class="label">Estado ticket:</label>
+                <label for="estado_ticket" class="label">Estado ticket:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="estado_ticket"
                         nbInput 
                         fullWidth 
-                        id="estadoTicket" 
+                        id="estado_ticket" 
                         status="info"
-                        placeholder={{estadoTicket}} 
-                        shape="semi-round" 
-                        value={{estadoTicket}}
+                        shape="semi-round"
                         fieldSize="small">
 
               </div>
@@ -297,16 +304,15 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="medioDePago" class="label">Medio de pago:</label>
+                <label for="medio_pago" class="label">Medio de pago:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="medio_pago"
                         nbInput 
                         fullWidth 
-                        id="medioDePago" 
+                        id="medio_pago" 
                         status="info"
-                        placeholder={{medioDePago}} 
                         shape="semi-round" 
-                        value={{medioDePago}}
                         fieldSize="small">
 
               </div>
@@ -317,13 +323,12 @@
                 <label for="monto" class="label">Monto:</label>
 
                 <input  type="text" 
+                        formControlName="monto"
                         nbInput 
                         fullWidth 
                         id="monto" 
                         status="info"
-                        placeholder={{monto}} 
                         shape="semi-round" 
-                        value={{monto}} 
                         fieldSize="small">
 
               </div>
@@ -335,17 +340,24 @@
             
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="tipoOrden" class="label">Tipo orden:</label>
+                <label for="tipo_orden" class="label">Tipo orden:</label>
 
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="tipoOrden" 
-                        status="info"
-                        placeholder={{tipoOrden}} 
-                        shape="semi-round" 
-                        value={{tipoOrden}} 
-                        fieldSize="small">
+                <nb-select  formControlName="tipo_orden"
+                            name="tipo_orden" 
+                            type="text"
+                            fullWidth
+                            shape="semi-round" 
+                            status="info"
+                            size="small"
+                            [(selected)]="id_orden">
+
+                  <nb-option  *ngFor="let orden of tipoOrdenes"
+                              type="text"
+                              [value]="orden.id">
+                              {{orden.descripcion}}
+                  </nb-option>
+
+                </nb-select>
 
               </div>
             </div>
@@ -354,14 +366,13 @@
               <div class="form-group">
                 <label for="prioridad" class="label">Prioridad:</label>
 
-                <input  type="text" 
+                <input  type="text"
+                        formControlName="prioridad"
                         nbInput 
                         fullWidth 
                         id="prioridad" 
                         status="info"
-                        placeholder={{prioridad}} 
-                        shape="semi-round" 
-                        value={{prioridad}} 
+                        shape="semi-round"
                         fieldSize="small">
 
               </div>
@@ -373,33 +384,35 @@
             
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="comentarioCliente" class="label">Comentario:</label>
+                <label for="comentario" class="label">Comentario:</label>
 
-                <textarea rows="4" 
+                <textarea rows="4"
+                          formControlName="comentario"
                           nbInput 
                           fullWidth 
-                          id="comentarioCliente" 
+                          id="comentario" 
                           status="info"
-                          placeholder={{comentarioCliente}} 
-                          shape="semi-round" 
-                          value={{comentarioCliente}}
+                          shape="semi-round"
                           fieldSize="small">
                 </textarea>
-
+                
               </div>
             </div>
           
           </div>
 
-          <div class="row margen">
+          <div class="row">
             
             <div class="col-sm-6">
               <div class="form-group">
 
-                <button nbButton 
+                <button nbButton
+                        type="submit"
                         fullWidth 
                         status="success" 
                         shape="semi-round" 
+                        fieldSize="tiny" 
+                        size="medium" 
                         outline>
                 Guardar cambios
                 </button>
@@ -415,9 +428,11 @@
                         fullWidth 
                         status="info" 
                         shape="semi-round" 
-                        outline 
-                        (click)="verCliente()">
-                Ver Cliente
+                        fieldSize="tiny" 
+                        size="medium" 
+                        (click)="verCliente()"
+                        outline>
+                Ver cliente
                 </button>
 
               </div>

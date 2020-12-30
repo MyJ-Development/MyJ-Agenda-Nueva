@@ -8,8 +8,6 @@ import { AnalyticsService } from './@core/utils';
 import { InitUserService } from './@theme/services/init-user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { peticionesGetService } from './services/peticionesGet.service';
-import { OrdenesDiarias } from './models/ordenesDiarias';
 
 @Component({
   selector: 'ngx-app',

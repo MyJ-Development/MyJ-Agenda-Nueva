@@ -14,17 +14,12 @@
                             type="text" 
                             nbSelect 
                             fullWidth 
-                            fieldSize="small"  
+                            size="small"  
                             shape="semi-round" 
                             status="info">
 
                   <nb-option  *ngFor="let opcion of opciones"
                               type="text"
-                              nbSelect 
-                              fullWidth 
-                              fieldSize="small" 
-                              shape="semi-round" 
-                              status="info" 
                               [value]="opcion">
                               {{opcion}}
                   </nb-option>
@@ -39,7 +34,7 @@
           <div *ngIf="ver" class="col-sm-3 margenDate margen">
           <div class="form-group">
 
-            <input formControlName="calendar" nbInput shape="semi-round" 
+            <input formControlName="calendar" fieldSize="small" nbInput shape="semi-round" 
               status="info"  placeholder="Rango de fechas" [nbDatepicker]="rangepicker">
             <nb-rangepicker #rangepicker></nb-rangepicker>
           </div>
@@ -51,7 +46,7 @@
       <input  formControlName="buscador"
               name="buscar" 
               nbInput 
-              fieldSize="medium" 
+              fieldSize="small" 
               shape="semi-round" 
               status="info" 
               class="search-input" 

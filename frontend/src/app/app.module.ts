@@ -29,8 +29,12 @@ import { peticionesGetService } from './services/peticionesGet.service';
 import { componentSyncService } from './services/componentSync.service';
 import { tableService } from './services/table.service';
 
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

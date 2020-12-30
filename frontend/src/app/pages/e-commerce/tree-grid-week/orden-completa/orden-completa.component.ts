@@ -7,16 +7,17 @@ import { DatePipe } from '@angular/common';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
-import { tableService }         from '../../../../services/table.service';
+import { tableService } from '../../../../services/table.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 // Compontente decorado:
 @Component({
-  selector   : 'ngx-orden-completa',
+  selector: 'ngx-orden-completa',
   templateUrl: './orden-completa.component.html',
-  styleUrls  : ['./orden-completa.component.scss']
+  styleUrls: ['./orden-completa.component.scss']
 })
 
 
@@ -24,85 +25,83 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class OrdenCompletaComponent implements OnInit {
 
   // Variables:
-  ordenesPorCliente: any[];
-  cliente          : any;
-  tecnicos         : any[];
-  tipoOrdenes      : any[];
+  tecnicos: any[];
+  tipoOrdenes: any[];
   residencia_cliente: any;
-  formulario       : FormGroup;
-  rut_cliente      : any;
-  idOrden          : any;
-  orden            : any;
-  nombre_cliente   : any;
-  direccion_cliente: any;
-  comuna_cliente   : any;
-  telefono1        : any;
-  telefono2        : any;
-  correo_cliente   : any;
-  encargado        : any;
-  creado_por       : any;
-  fecha_creacion   : any;
-  fecha_ejecucion  : any;
-  disponibilidad   : any;
-  estado_cliente   : any;
-  estado_ticket    : any;
-  medio_pago       : any;
-  monto            : any;
-  tipo_orden       : any;
-  prioridad        : any;
-  comentario       : any;
-  id_orden         : any;
+  formulario: FormGroup;
+  rut_cliente: any;
+  id_orden: any;
+  ordenCliente: any;
+  report: any;
+  fecha_ejecucion: any;
 
 
   // Constructor:
-  constructor(protected ref   : NbDialogRef<OrdenCompletaComponent>,
-              private tableService: tableService,
-              private service     : peticionesGetService,
-              private datePipe    : DatePipe,
-              private mostrar     : NbDialogService,
-              private fb          : FormBuilder) {
+  constructor(protected ref: NbDialogRef<OrdenCompletaComponent>,
+    private tableService: tableService,
+    private service: peticionesGetService,
+    private datePipe: DatePipe,
+    private router: Router,
+    private fb: FormBuilder) {
 
+    // Obtiene el rut del cliente seleccionado, al servicio indicado:
+    this.rut_cliente = this.tableService.getRut_cliente();
 
+    this.ordenCliente = this.tableService.getOrden();
+    this.id_orden = this.ordenCliente['id'];
+    this.fecha_ejecucion = this.ordenCliente['fechaejecucion'];
 
-                
-                
-
-
-            
   }
 
 
   // Método ngOnInit:
   ngOnInit() {
 
-    // Obtiene el rut del cliente seleccionado, al servicio indicado:
-    this.rut_cliente = this.tableService.getRut_cliente();
-    // Obtiene el id seleccionado de la lista, al servicio indicado:
-    this.idOrden     = this.tableService.getIdOrden();
-
     // Llamada de métodos:
-    // this.sincronizarResidencia();
-    // this.sincronizarTecnicos();
-    // this.sincronizarTipoOrdenes();
-    
-    this.sincronizarClientes();
+    this.sincronizarResidencia();
+    this.sincronizarTecnicos();
+    this.sincronizarTipoOrdenes();
     this.crearFormulario();
-    
-
-    console.log('id');
-    console.log(this.idOrden);
-
-    console.log('clientes');
-    console.log(this.sincronizarClientes());
-
-    console.log('nombre');
-    console.log(this.nombre_cliente);
-
   }
 
 
-  actualizarOrden(){
+  actualizarOrden() {
 
+
+    if (this.formulario.valid) {
+
+      /* Se define la estructura de datos a enviar al servicio y 
+      se le asignan los datos obtenidos del formulario: */
+      this.report = {
+        id            : this.ordenCliente['id'],
+        idtipo        : this.formulario.value['tipo_orden'],
+        prioridad     : this.formulario.value['prioridad'],
+        disponibilidad: this.formulario.value['disponibilidad'],
+        comentario    : this.formulario.value['comentario'],
+        fechaejecucion: this.formulario.value['fecha_ejecucion'],
+        estadocliente : this.formulario.value['estado_cliente'],
+        estadoticket  : this.formulario.value['estado_ticket'],
+        mediodepago   : this.formulario.value['medio_pago'],
+        monto         : this.formulario.value['monto'],
+        created_by    : this.ordenCliente['created_by']['email'],
+        encargado     : this.formulario.value['encargado'],
+        client_order  : this.ordenCliente['client_order']['rut'],
+        domicilio     : this.formulario.value['direccion_cliente'],
+    };
+
+    let res = '';
+
+    // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+    this.service.editarOrden(this.report).subscribe(data => {
+      res = data;
+      console.log('res');
+      console.log(res);
+      this.router.navigate(['/success']);
+    });
+    }
+    else {
+      alert("Revisa los campos")
+    }
   }
 
 
@@ -129,7 +128,7 @@ export class OrdenCompletaComponent implements OnInit {
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
-  sincronizarTipoOrdenes(){
+  sincronizarTipoOrdenes() {
 
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (tipoOrdenes): */
@@ -138,71 +137,112 @@ export class OrdenCompletaComponent implements OnInit {
     })
   }
 
-  // Método que sincroniza los datos del servicio con los del componente actual:
-  sincronizarClientes() {
-
-    /* Obtiene la lista de clientes desde el servicio 
-    y los almacena en variable (cliente): */
-    this.service.leerOrdenesClientesRut(this.rut_cliente).subscribe((ordenesList) => {
-
-      this.ordenesPorCliente = ordenesList;
-
-      for (let i = 0; i < this.ordenesPorCliente.length; i++) {
-        
-        if (this.idOrden === this.ordenesPorCliente[i]['id']) {
-          
-          // Almacena en variables locales, los datos obtenidos del objeto orden:
-          this.id_orden          = this.ordenesPorCliente[i]['id'];
-          this.nombre_cliente    = this.ordenesPorCliente[i]['client_order']['nombre'];
-          this.direccion_cliente = this.ordenesPorCliente[i]['client_residence']['direccion'];
-          this.comuna_cliente    = this.ordenesPorCliente[i]['client_residence']['comuna'];
-          this.telefono1         = this.ordenesPorCliente[i]['client_order']['contacto1'];
-          this.telefono2         = this.ordenesPorCliente[i]['client_order']['contacto2'];
-          this.correo_cliente    = this.ordenesPorCliente[i]['client_order']['email'];
-          this.encargado         = this.ordenesPorCliente[i]['encargado']['nombre'];
-          this.creado_por        = this.ordenesPorCliente[i]['created_by']['email'];
-          this.fecha_ejecucion   = this.ordenesPorCliente[i]['fechaejecucion'];
-          this.disponibilidad    = this.ordenesPorCliente[i]['disponibilidad'];
-          this.estado_cliente    = this.ordenesPorCliente[i]['estadocliente'];
-          this.estado_ticket     = this.ordenesPorCliente[i]['estadoticket'];
-          this.medio_pago        = this.ordenesPorCliente[i]['mediodepago'];
-          this.monto             = this.ordenesPorCliente[i]['monto'];
-          this.tipo_orden        = this.ordenesPorCliente[i]['tipo']['descripcion'];
-          this.prioridad         = this.ordenesPorCliente[i]['prioridad'];
-          this.comentario        = this.ordenesPorCliente[i]['comentario'];
-          this.fecha_creacion    = this.datePipe.transform(this.ordenesPorCliente[i]['created_at'], 'yyyy-MM-dd');
-        }
-        
-      }
-    })
-  }
-
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
-  crearFormulario(){
+  crearFormulario() {
 
     this.formulario = this.fb.group({
 
-      nombre_cliente   : [this.nombre_cliente, Validators.required],
-      rut_cliente      : [this.rut_cliente, Validators.required],
-      direccion_cliente: ['', Validators.required],
-      comuna_cliente   : ['', Validators.required],
-      telefono1        : ['', Validators.required],
-      telefono2        : ['', Validators.required],
-      correo_cliente   : ['', Validators.required],
-      nombre_encargado : ['', Validators.required],
-      creado_por       : ['', Validators.required],
-      fecha_ejecucion  : ['', Validators.required],
-      fecha_creacion   : ['', Validators.required],
-      disponibilidad   : ['', Validators.required],
-      estado_cliente   : ['', Validators.required],
-      estado_ticket    : ['', Validators.required],
-      medio_pago       : ['', Validators.required],
-      monto            : ['', Validators.required],
-      tipo_orden       : ['', Validators.required],
-      prioridad        : ['', Validators.required],
-      comentario       : ['', Validators.required],
+      nombre_cliente: 
+      [{value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])), 
+      disabled: true}, Validators.required],
+      rut_cliente: [{value: this.rut_cliente, disabled: true}, Validators.required],
+      direccion_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
+      comuna_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
+      telefono1: [this.ordenCliente['client_order']['contacto1'], Validators.required],
+      telefono2: [this.ordenCliente['client_order']['contacto2'], Validators.required],
+      correo_cliente: [this.ordenCliente['client_order']['email'], Validators.required],
+      encargado: [this.ordenCliente['encargado']['rut'], Validators.required],
+      creado_por: 
+      [{value: this.ordenCliente['created_by']['email'], disabled: true}, Validators.required],
+      fecha_ejecucion: [this.ordenCliente['fechaejecucion'], Validators.required],
+      fecha_creacion: 
+      [{value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'), disabled: true}, Validators.required],
+      disponibilidad: [this.ordenCliente['disponibilidad'], Validators.required],
+      estado_cliente: [this.ordenCliente['estadocliente'], Validators.required],
+      estado_ticket: [this.ordenCliente['estadoticket'], Validators.required],
+      medio_pago: [this.ordenCliente['mediodepago'], Validators.required],
+      monto: [this.ordenCliente['monto'], Validators.required],
+      tipo_orden: [this.ordenCliente['tipo']['id'], Validators.required],
+      prioridad: [this.ordenCliente['prioridad'], Validators.required],
+      comentario: [this.ordenCliente['comentario'], Validators.required],
     })
   }
 
+
+  mayus(dato){
+    return String(dato).replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))
+  }
+
+  formato(dato) {
+    return String(dato)
+      .replace('&ntilde', 'ñ')
+      .replace('&Ntilde', 'Ñ')
+      .replace('&amp', '&')
+      .replace('&Ntilde', 'Ñ')
+      .replace('&ntilde', 'ñ')
+      .replace('&Ntilde', 'Ñ')
+      .replace('&Agrave', 'À')
+      .replace('&Aacute', 'Á')
+      .replace('&Acirc', 'Â')
+      .replace('&Atilde', 'Ã')
+      .replace('&Auml', 'Ä')
+      .replace('&Aring', 'Å')
+      .replace('&AElig', 'Æ')
+      .replace('&Ccedil', 'Ç')
+      .replace('&Egrave', 'È')
+      .replace('&Eacute', 'É')
+      .replace('&Ecirc', 'Ê')
+      .replace('&Euml', 'Ë')
+      .replace('&Igrave', 'Ì')
+      .replace('&Iacute', 'Í')
+      .replace('&Icirc', 'Î')
+      .replace('&Iuml', 'Ï')
+      .replace('&ETH', 'Ð')
+      .replace('&Ntilde', 'Ñ')
+      .replace('&Ograve', 'Ò')
+      .replace('&Oacute', 'Ó')
+      .replace('&Ocirc', 'Ô')
+      .replace('&Otilde', 'Õ')
+      .replace('&Ouml', 'Ö')
+      .replace('&Oslash', 'Ø')
+      .replace('&Ugrave', 'Ù')
+      .replace('&Uacute', 'Ú')
+      .replace('&Ucirc', 'Û')
+      .replace('&Uuml', 'Ü')
+      .replace('&Yacute', 'Ý')
+      .replace('&THORN', 'Þ')
+      .replace('&szlig', 'ß')
+      .replace('&agrave', 'à')
+      .replace('&aacute', 'á')
+      .replace('&acirc', 'â')
+      .replace('&atilde', 'ã')
+      .replace('&auml', 'ä')
+      .replace('&aring', 'å')
+      .replace('&aelig', 'æ')
+      .replace('&ccedil;', 'ç')
+      .replace('&egrave', 'è')
+      .replace('&eacute', 'é')
+      .replace('&ecirc', 'ê')
+      .replace('&euml', 'ë')
+      .replace('&igrave', 'ì')
+      .replace('&iacute', 'í')
+      .replace('&icirc', 'î')
+      .replace('&iuml', 'ï')
+      .replace('&eth', 'ð')
+      .replace('&ntilde', 'ñ')
+      .replace('&ograve', 'ò')
+      .replace('&oacute', 'ó')
+      .replace('&ocirc', 'ô')
+      .replace('&otilde', 'õ')
+      .replace('&ouml', 'ö')
+      .replace('&oslash', 'ø')
+      .replace('&ugrave', 'ù')
+      .replace('&uacute', 'ú')
+      .replace('&ucirc', 'û')
+      .replace('&uuml', 'ü')
+      .replace('&yacute', 'ý')
+      .replace('&thorn', 'þ')
+      .replace('&yuml', 'ÿ');
+  }
 }

@@ -19,7 +19,7 @@
                         fullWidth 
                         status="info" 
                         shape="semi-round" 
-                        fieldSize="medium" 
+                        fieldSize="small" 
                         required>
 
               </div>
@@ -31,20 +31,15 @@
 
                 <nb-select  formControlName="encargado"
                             name="encargado" 
-                            type="text" 
-                            nbSelect 
+                            type="text"
                             fullWidth 
-                            fieldSize="small"  
                             shape="semi-round" 
-                            status="info">
+                            status="info"
+                            size="small"
+                            placeholder="Seleccione un técnico">
 
                   <nb-option  *ngFor="let tecnico of tecnicos"
                               type="text"
-                              nbSelect 
-                              fullWidth 
-                              fieldSize="small" 
-                              shape="semi-round" 
-                              status="info" 
                               [value]="tecnico.rut">
                               {{tecnico.nombre}}
                   </nb-option>
@@ -64,21 +59,16 @@
                 <nb-select  formControlName="direccion_cliente"
                             name="direccion_cliente"
                             type="text"
-                            nbSelect 
                             fullWidth 
-                            fieldSize="small"  
                             shape="semi-round" 
-                            status="info">
+                            size="small"
+                            status="info"
+                            placeholder="Seleccione una direccion">
 
                   <nb-option  *ngFor="let direccion of residencia_cliente"
-                              type="text" 
-                              nbSelect 
-                              fullWidth 
-                              fieldSize="small" 
-                              shape="semi-round" 
-                              status="info" 
+                              type="text"
                               [value]="direccion.id">
-                              {{direccion.direccion}}
+                              {{direccion.direccion | caracteres | mayus}}
                   </nb-option>
 
                 </nb-select>
@@ -96,7 +86,7 @@
                         id="creado_por" 
                         status="info" 
                         shape="semi-round" 
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -116,7 +106,7 @@
                         status="info"
                         formControlName="fecha_ejecucion" 
                         shape="semi-round" 
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -132,7 +122,7 @@
                         status="info"
                         formControlName="disponibilidad" 
                         shape="semi-round" 
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -152,7 +142,7 @@
                         status="info"
                         formControlName="estado_cliente" 
                         shape="semi-round" 
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -168,7 +158,7 @@
                         status="info"
                         formControlName="estado_ticket" 
                         shape="semi-round" 
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -188,7 +178,7 @@
                         status="info"
                         formControlName="medio_pago" 
                         shape="semi-round" 
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -204,7 +194,7 @@
                         status="info"
                         formControlName="monto" 
                         shape="semi-round"  
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -217,25 +207,20 @@
               <div class="form-group">
                 <label for="tipo_orden" class="label">Tipo orden:</label>
 
-                  <nb-select  type="text" 
-                              nbSelect 
+                  <nb-select  type="text"
                               fullWidth 
-                              fieldSize="small"  
+                              size="small"  
                               shape="semi-round" 
                               status="info" 
                               name="tipo_orden" 
-                              formControlName="tipo_orden">
+                              formControlName="tipo_orden"
+                              placeholder="Seleccione el tipo de orden">
 
                     <nb-option  *ngFor="let orden of tipoOrdenes" 
-                                type="text" 
-                                nbSelect 
-                                fullWidth 
-                                fieldSize="small" 
-                                shape="semi-round" 
-                                status="info"
+                                type="text"
                                 [value]="orden.id" >
                                 {{orden.descripcion}}
-                      </nb-option>
+                    </nb-option>
 
                 </nb-select>
               </div>
@@ -252,7 +237,7 @@
                         status="info"
                         formControlName="prioridad" 
                         shape="semi-round"  
-                        fieldSize="medium">
+                        fieldSize="small">
 
               </div>
             </div>
@@ -273,7 +258,7 @@
                           formControlName="comentario" 
                           shape="semi-round" 
                           type="text" 
-                          fieldSize="medium">
+                          fieldSize="small">
                 </textarea>
 
               </div>
@@ -292,7 +277,7 @@
                         status="success" 
                         shape="semi-round" 
                         fieldSize="tiny" 
-                        size="medium" 
+                        size="small" 
                         outline>
                   Guardar cambios
                 </button>

@@ -13,6 +13,8 @@ export class tableService {
   ordenesDiarias: any[];
   ordenesDiariasPorTecnico: any[];
   ordenesPorFecha: any[];
+  residencia: any[];
+  orden: any[];
   index: any;
   encargado: any;
   fecha: any;
@@ -20,6 +22,22 @@ export class tableService {
   idOrden: any[];
   idListaOrden: any;
   rut_cliente: any;
+
+  setResidencia(valor: any[]) {
+    this.residencia = valor;
+  }
+
+  getResidencia() {
+    return this.residencia;
+  }
+
+  setOrden(valor: any[]) {
+    this.orden = valor;
+  }
+
+  getOrden() {
+    return this.orden;
+  }
 
   setIdListaOrden(valor: any[]) {
     this.idListaOrden = valor;
