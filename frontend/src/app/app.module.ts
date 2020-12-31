@@ -5,7 +5,7 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 
@@ -14,6 +14,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AuthModule } from './@auth/auth.module';
 import { FormsModule } from "@angular/forms";
+
+import { registerLocaleData } from '@angular/common';
+import localeEsCl from '@angular/common/locales/es-CL';
+registerLocaleData(localeEsCl);
 
 import {
   NbChatModule,
@@ -60,7 +64,8 @@ import { tableService } from './services/table.service';
   providers: [
     peticionesGetService,
     componentSyncService,
-    tableService
+    tableService,
+    { provide: LOCALE_ID, useValue: 'es-CL' }
   ],
 })
 export class AppModule {

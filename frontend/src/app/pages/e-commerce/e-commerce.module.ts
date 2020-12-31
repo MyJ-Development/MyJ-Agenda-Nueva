@@ -18,6 +18,7 @@ import {
   NbListModule,
   NbSpinnerModule,
   NbDatepickerModule,
+  
 } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -122,7 +123,7 @@ import { MayusPipe } from './pipes/mayus.pipe';
     NbTreeGridModule,
     FormsModule,
     ReactiveFormsModule,
-    NbDatepickerModule
+    NbDatepickerModule,
   ],
   declarations: [
     ECommerceComponent,

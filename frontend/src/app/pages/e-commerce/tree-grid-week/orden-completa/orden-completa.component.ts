@@ -158,7 +158,7 @@ export class OrdenCompletaComponent implements OnInit {
       encargado: [this.ordenCliente['encargado']['rut'], Validators.required],
       creado_por: 
       [{value: this.ordenCliente['created_by']['email'], disabled: true}, Validators.required],
-      fecha_ejecucion: [this.ordenCliente['fechaejecucion'], Validators.required],
+      fecha_ejecucion: [new Date(this.ordenCliente['fechaejecucion']), Validators.required],
       fecha_creacion: 
       [{value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'), disabled: true}, Validators.required],
       disponibilidad: [this.ordenCliente['disponibilidad'], Validators.required],
