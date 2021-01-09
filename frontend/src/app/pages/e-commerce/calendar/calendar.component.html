@@ -7,25 +7,19 @@
     <div class="calendar-container">
       <nb-card>
         <nb-card-body>
-      <nb-calendar
-        [(date)]="date" 
-        (click) = "openWindow(contentTemplate)"
-        [boundingMonth]="false"
-        showWeekNumber="True"
-        [dayCellComponent]="dayCellComponent"
-      ></nb-calendar>
-      </nb-card-body>
+          <nb-calendar
+            [(date)]="date"
+            (dateChange)="contador(); cambioFecha($event);"
+            [boundingMonth]="false"
+            showWeekNumber="True">
+          </nb-calendar>
+        </nb-card-body>
       </nb-card>
     </div>
-  
   </div>
 
-  <ng-template #contentTemplate let-data >
+  <ng-template #contentTemplate>
     <h5>{{ date | date }}</h5>
-    <div *ngFor="let ordenes of ordenesDiarias">
-    <p>1.- Instalacion: {{ordenes.tipo.descripcion}}</p>
-    <p></p>
-    </div>
   </ng-template>
   
   

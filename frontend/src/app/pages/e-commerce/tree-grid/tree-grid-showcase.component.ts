@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Nebular/theme:
-import { NbDateService, NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 
 // Ng2-smart-table:
 import { LocalDataSource } from 'ng2-smart-table';
@@ -97,7 +97,9 @@ export class TreeGridShowcaseComponent {
   servicio: Observable<any[]>;
   clientes: any[];
   date_init: any;
+  date_inicio: any;
   date_end: any;
+  date_fin: any;
   opciones: any[];
   opcion_rut_cliente: string = 'Rut cliente';
   opcion_nombre_encargado: string = 'Nombre técnico';
@@ -174,9 +176,15 @@ export class TreeGridShowcaseComponent {
       // Iguala el dato obtenido del formulario con variable local:
       this.buscar = this.formulario.value['buscador'];
 
-      this.date_init = new Date(this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd'));
+      this.date_inicio = new Date(this.formulario.value['calendar']['start']);
+      this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
 
-      this.date_end = new Date(this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd'));
+      console.log(this.date_init);
+
+      this.date_fin = new Date(this.formulario.value['calendar']['end']);
+      this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
+
+      console.log(this.date_end);
 
       this.servicio = this.service.leerOrdenesClientesTecnico(this.buscar, this.date_init, this.date_end);
 

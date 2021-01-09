@@ -1,8 +1,7 @@
 
 // Angular/core:
 import { Component, 
-         Input, 
-         Inject, 
+         Input,
          TemplateRef, 
          ViewChild } from '@angular/core';
 
@@ -14,10 +13,7 @@ import { NbSortDirection,
          NbSortRequest, 
          NbTreeGridDataSource, 
          NbTreeGridDataSourceBuilder,
-         NbDialogService,
-         NB_WINDOW, 
-         NbMenuService,
-         NbWindowService } from '@nebular/theme';
+         NbDialogService,} from '@nebular/theme';
 
 // Componentes:
 import { ShowcaseDialogComponent } from './showcase-dialog/showcase-dialog.component';
@@ -76,6 +72,7 @@ export class TreeGridWeekShowcaseComponent {
   sortColumn              : string;
   newDate                 : any;
   diaFecha                : Date;
+  year                    : any;
 
 
   // Propiedad decorada:
@@ -107,7 +104,9 @@ export class TreeGridWeekShowcaseComponent {
   sincronizar() {
     this.syncService.currentMessage.subscribe((message) => {
       this.todayFormated = this.datePipe.transform(message, 'w');
-      this.newDate       = this.firstDayOfWeek(2020, Number(this.todayFormated));
+      let año            = new Date(message);
+      this.year          = año.getFullYear();
+      this.newDate       = this.firstDayOfWeek(this.year, Number(this.todayFormated));
       this.updateTreeGrid(this.newDate);
     })
   }

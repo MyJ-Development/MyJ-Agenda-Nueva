@@ -23,6 +23,24 @@ export class tableService {
   idListaOrden: any;
   rut_cliente: any;
   usuario: any;
+  cantidad: any;
+  fechaClick: any;
+
+  setFechaClick(valor: any) {
+    this.fechaClick = valor;
+  }
+
+  getFechaClick() {
+    return this.fechaClick;
+  }
+
+  setCantidad(valor: any) {
+    this.cantidad = valor;
+  }
+
+  getCantidad() {
+    return this.cantidad;
+  }
 
   setUsuario(valor: any) {
     this.usuario = valor;

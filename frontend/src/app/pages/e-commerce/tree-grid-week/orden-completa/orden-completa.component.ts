@@ -33,7 +33,8 @@ export class OrdenCompletaComponent implements OnInit {
   id_orden: any;
   ordenCliente: any;
   report: any;
-  fecha_ejecucion: any;
+  fecha_ejecucion: Date;
+  fecha_transform: any;
 
 
   // Constructor:
@@ -47,10 +48,6 @@ export class OrdenCompletaComponent implements OnInit {
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
 
-    this.ordenCliente = this.tableService.getOrden();
-    this.id_orden = this.ordenCliente['id'];
-    this.fecha_ejecucion = this.ordenCliente['fechaejecucion'];
-
   }
 
 
@@ -58,10 +55,20 @@ export class OrdenCompletaComponent implements OnInit {
   ngOnInit() {
 
     // Llamada de métodos:
+    this.orden();
     this.sincronizarResidencia();
     this.sincronizarTecnicos();
     this.sincronizarTipoOrdenes();
     this.crearFormulario();
+  }
+
+
+  orden(){
+    this.ordenCliente = this.tableService.getOrden();
+    this.id_orden = this.ordenCliente['id'];
+    let fecha = new Date(this.ordenCliente['fechaejecucion']);
+    this.fecha_transform = this.datePipe.transform(fecha.setDate(fecha.getDate() +1));
+    this.fecha_ejecucion = fecha;
   }
 
 
@@ -158,7 +165,7 @@ export class OrdenCompletaComponent implements OnInit {
       encargado: [this.ordenCliente['encargado']['rut'], Validators.required],
       creado_por: 
       [{value: this.ordenCliente['created_by']['email'], disabled: true}, Validators.required],
-      fecha_ejecucion: [new Date(this.ordenCliente['fechaejecucion']), Validators.required],
+      fecha_ejecucion: [new Date(this.fecha_ejecucion), Validators.required],
       fecha_creacion: 
       [{value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'), disabled: true}, Validators.required],
       disponibilidad: [this.ordenCliente['disponibilidad'], Validators.required],

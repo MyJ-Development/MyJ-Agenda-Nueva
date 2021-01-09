@@ -6,105 +6,55 @@
 
 @include nb-install-component() {
   nb-card {
-    max-width: 770px;
-    max-height: 299px;
+    margin-left: 1rem;
+    margin-top: -4px;
+    margin-bottom: 6px;
+    width: 48rem;
+    height: 262px;
   }
 
-  button[nbTreeGridRowToggle] {
-    background: transparent;
-    border: none;
-    padding: 0;
-  }
-  .calendar-container {
-    margin: 1rem -9rem;
-  }
-  .search-input {
-    margin: 1px;
-    width: 160px;
+  .input-largo{
+    width: 12rem;
   }
 
-  .inputLarge {
-    width: 500px;
+  .medida-card {
+    height: 7rem;
   }
 
-  .nb-column-name {
-    width: 150%;
+  .medida-body {
+    height: 6rem;
+  }
+
+  .columna{
+    height: 4rem;
+  }
+  
+  .ancho{
+    height: 2.5rem;
   }
 
   .center {
     text-align: center;
   }
 
-  @media screen and (min-width: 400px) {
-    .nb-column-name,
-    .nb-column-size {
-      width: 50%;
-    }
+  .input-calendario{
+    margin-right: 2rem;
   }
 
-  @media screen and (min-width: 500px) {
-    .nb-column-name,
-    .nb-column-size,
-    .nb-column-kind {
-      width: 33.333%;
-    }
+  .input-arriba{
+    margin-top: 28px;
   }
 
-  @media screen and (min-width: 600px) {
-    .nb-column-name {
-      width: 31%;
-    }
-    .nb-column-size,
-    .nb-column-kind,
-    .nb-column-items {
-      width: 23%;
-    }
-  }
-  .ajustandoBuscador {
-    margin-top: -4px;
-    margin-bottom: -40px;
-    width: max-content;
+  .boton{
+    margin-left: 12rem;
+    margin-top: -57px;
+    
   }
 
-  .ajusteInput {
-    margin-bottom: 1px;
-  }
 
-  .ajusteCard {
-    margin-top: 0px;
-    margin-left: 0px;
-  }
-
-  .tablitatr {
-    padding: 5px;
-    text-align: center;
-  }
-
-  .largo {
-    width: 950px;
-  }
-
-  .margenIzquierdo {
-    margin-left: 2rem;
-  }
-
-  .margenArriba {
-    margin-top: 26px;
-  }
-
-  .margenDate {
-    margin-top: 27px;
-  }
-
-  .margen {
-    margin-right: 5px;
-  }
-
-  .icono {
-    margin-left: -4px;
-  }
 }
 
 :host /deep/ ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
-  margin-bottom: -45px !important;
+  margin-bottom: -65px !important;
 }
+

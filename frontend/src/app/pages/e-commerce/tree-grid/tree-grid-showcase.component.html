@@ -1,16 +1,15 @@
 
 
-<div class="ajustandoBuscador">
-<form [formGroup]="formulario" (ngSubmit)="buscarOrden()" autocomplete="off">
-  <nb-card class="ajusteInput largo">
 
-    <nb-card-body class="largo"> 
-      <div class="row">
-        <div class="col-sm-3">
+<form [formGroup]="formulario" (ngSubmit)="buscarOrden()" autocomplete="off">
+  <nb-card class="medida-card">
+
+    <nb-card-body class="medida-body"> 
+      <div class="row columna">
+        <div class="col-sm-3 ancho">
           <div class="form-group">
           <label for="buscar" class="label">Buscar por: </label>
                 <nb-select  formControlName="buscar"
-                            name="buscar" 
                             type="text" 
                             nbSelect 
                             fullWidth 
@@ -20,7 +19,7 @@
                             placeholder="Seleccione:">
 
                   <nb-option  *ngFor="let opcion of opciones"
-                              type="text"
+                               type="text"
                               [value]="opcion">
                               {{opcion}}
                   </nb-option>
@@ -31,12 +30,13 @@
                 </div>
 
 
-          <div *ngIf="ver" class="col-sm-3 margenDate margen">
-          <div class="form-group">
+          <div *ngIf="ver" class="col-sm-3 input-calendario input-arriba ancho">
+          <div class="form-group ancho">
 
             <input  type="text"
                     formControlName="calendar" 
-                    fieldSize="small" 
+                    fieldSize="small"
+                    class="input-largo"
                     nbInput 
                     shape="semi-round" 
                     status="info"
@@ -46,20 +46,18 @@
           </div>
         </div>
 
-        <div class="col-sm-3 margenArriba">
-          <div class="form-group margen">
+        <div class="col-sm-3 input-arriba">
+          <div class="form-group ancho">
             
       <input  formControlName="buscador"
-              name="buscar" 
               nbInput 
               fieldSize="small" 
               shape="semi-round" 
-              status="info" 
-              class="search-input" 
+              status="info"
               placeholder="Buscar:" 
               type="text">
 
-      <button class="icono" type="submit" nbButton ghost><nb-icon icon="file-text-outline"></nb-icon></button>
+      <button class="boton" type="submit" nbButton ghost><nb-icon icon="file-text-outline"></nb-icon></button>
       </div>
       </div>
       </div>
@@ -68,10 +66,10 @@
   </nb-card>
 </form>
 
-<nb-card class="ajusteCard" *ngIf="aparece">
+<nb-card *ngIf="aparece">
   <nb-card-body>
     <ng2-smart-table 
-                     class="tablita center"
+                     class="center"
                      [settings]="settings"
                      [source]="source"
                      (custom)="ordenCompleta($event)">

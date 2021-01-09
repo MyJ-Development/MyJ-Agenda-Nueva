@@ -119,12 +119,12 @@ export class AgregarOrdenComponent implements OnInit {
     let res = '';
 
     // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-    // this.service.agregarOrden(this.report).subscribe(data => {
-    //   res = data;
-    //   console.log('res');
-    //   console.log(res);
-    //   this.router.navigate(['/success']);
-    // });
+    this.service.agregarOrden(this.report).subscribe(data => {
+      res = data;
+      console.log('res');
+      console.log(res);
+      this.router.navigate(['/success']);
+    });
   }
 
 
