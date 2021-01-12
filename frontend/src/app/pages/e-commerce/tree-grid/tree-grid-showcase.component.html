@@ -2,35 +2,33 @@
 
 
 <form [formGroup]="formulario" (ngSubmit)="buscarOrden()" autocomplete="off">
-  <nb-card class="medida-card">
 
+  <nb-card class="medida-card">
     <nb-card-body class="medida-body"> 
       <div class="row columna">
         <div class="col-sm-3 ancho">
           <div class="form-group">
-          <label for="buscar" class="label">Buscar por: </label>
-                <nb-select  formControlName="buscar"
-                            type="text" 
-                            nbSelect 
-                            fullWidth 
-                            size="small"  
-                            shape="semi-round" 
-                            status="info"
-                            placeholder="Seleccione:">
+            <label for="buscar" class="label">Buscar por: </label>
+              <nb-select  formControlName="buscar"
+                          type="text" 
+                          nbSelect 
+                          fullWidth 
+                          size="small"  
+                          shape="semi-round" 
+                          status="info"
+                          placeholder="Seleccione:">
+                <nb-option  *ngFor="let opcion of opciones"
+                             type="text"
+                            [value]="opcion">
+                            {{opcion}}
+                </nb-option>
+              </nb-select>
 
-                  <nb-option  *ngFor="let opcion of opciones"
-                               type="text"
-                              [value]="opcion">
-                              {{opcion}}
-                  </nb-option>
-
-                </nb-select>
-
-                </div>
-                </div>
+          </div>
+        </div>
 
 
-          <div *ngIf="ver" class="col-sm-3 input-calendario input-arriba ancho">
+        <div *ngIf="ver" class="col-sm-3 input-calendario input-arriba ancho">
           <div class="form-group ancho">
 
             <input  type="text"
@@ -49,30 +47,32 @@
         <div class="col-sm-3 input-arriba">
           <div class="form-group ancho">
             
-      <input  formControlName="buscador"
-              nbInput 
-              fieldSize="small" 
-              shape="semi-round" 
-              status="info"
-              placeholder="Buscar:" 
-              type="text">
+            <input  formControlName="buscador"
+                    nbInput 
+                    fieldSize="small" 
+                    shape="semi-round" 
+                    status="info"
+                    placeholder="Buscar:" 
+                    type="text">
 
-      <button class="boton" type="submit" nbButton ghost><nb-icon icon="file-text-outline"></nb-icon></button>
+            <button class="boton" type="submit" nbButton ghost>
+              <nb-icon icon="file-text-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
+
     </nb-card-body>
-
   </nb-card>
 </form>
 
 <nb-card *ngIf="aparece">
   <nb-card-body>
     <ng2-smart-table 
-                     class="center"
-                     [settings]="settings"
-                     [source]="source"
-                     (custom)="ordenCompleta($event)">
+      class="center"
+      [settings]="settings"
+      [source]="source"
+      (custom)="ordenCompleta($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

@@ -1,19 +1,17 @@
-
-
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/breakpoints";
 @import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
   nb-card {
-    margin-left: 1rem;
-    margin-top: -4px;
+    margin-left  : 1rem;
+    margin-top   : -4px;
     margin-bottom: 6px;
-    width: 48rem;
-    height: 262px;
+    width        : 48rem;
+    height       : 262px;
   }
 
-  .input-largo{
+  .input-largo {
     width: 12rem;
   }
 
@@ -25,11 +23,11 @@
     height: 6rem;
   }
 
-  .columna{
+  .columna {
     height: 4rem;
   }
-  
-  .ancho{
+
+  .ancho {
     height: 2.5rem;
   }
 
@@ -37,24 +35,20 @@
     text-align: center;
   }
 
-  .input-calendario{
+  .input-calendario {
     margin-right: 2rem;
   }
 
-  .input-arriba{
+  .input-arriba {
     margin-top: 28px;
   }
 
-  .boton{
+  .boton {
     margin-left: 12rem;
-    margin-top: -57px;
-    
+    margin-top : -57px;
   }
-
-
 }
 
 :host /deep/ ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
   margin-bottom: -65px !important;
 }
-

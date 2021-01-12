@@ -105,8 +105,7 @@ export class ShowcaseDialogComponent implements OnInit {
 
     // Obtiene dato del servicio y lo formatea con número de carácteres indicado (Método slice):
     this.encargadoNombre = this.encargado.slice(0, -4);
-
-  }
+  };
 
 
   // Método ngOnInit:
@@ -115,27 +114,29 @@ export class ShowcaseDialogComponent implements OnInit {
     // Llamada de métodos:
     this.newFecha(this.index);
     this.getOrdenes();
-  }
+  };
 
 
   // Los métodos sendXXXX enlazan datos del componente actual, con los metodos del servicio:
   sendIdOrden(datos) {
     this.service.setIdOrden(datos);
-  }
+  };
 
   sendOrdenCompleta(datos) {
     this.service.setOrdenCompleta(datos);
-  }
+  };
 
 
   // Método a iniciarse cuando se clickea un evento en el componente html:
   mostrarOrden(event) {
 
-    // Inserta los datos extraídos del evento, en un arreglo:
+    // Inserta el id obtenido del evento, en un arreglo:
     this.idOrden.push(event);
 
+    // Envía la orden obtenida del evento al servicio indicado:
     this.service.setOrden(event['data']['orden']);
 
+    // Envía el rur obtenido del evento al servicio indicado:
     this.service.setRut_cliente(event['data']['orden']['client_order']['rut']);
 
     // Al iniciarse el método, se abre el componente indicado:
@@ -143,8 +144,7 @@ export class ShowcaseDialogComponent implements OnInit {
 
     // Al iniciarse el método, se cierra el componente actual guardado en referencia:
     this.ref.close();
-
-  }
+  };
 
 
   // Método que obtiene todas las ordenes deseadas que fueron enlazadas en el servicio:
@@ -156,9 +156,8 @@ export class ShowcaseDialogComponent implements OnInit {
       // Condición a ejecutar si las ordenes de cada técnico por día, son mayores a 0:
       if (this.ordenesDiariasPorTecnico[i] != 0) {
         this.ordDiarias.push(this.ordenesDiariasPorTecnico[i]);
-      }
-    }
-
+      };
+    };
 
     // Compara y enlaza todas las ordenes separadas anteriormente:
     try {
@@ -184,25 +183,24 @@ export class ShowcaseDialogComponent implements OnInit {
                 orden       : this.ordDiarias[j][i],
                 id_orden    : this.ordDiarias[j][i]['id'],
                 tecnico     : this.ordDiarias[j][i]['encargado']['nombre'],
-                localizacion: this.mayus
-                (this.formato(this.ordDiarias[j][i]['client_residence']['direccion'])),
+                localizacion: this.mayus(this.formato(
+                              this.ordDiarias[j][i]['client_residence']['direccion'])),
                 tipo_orden  : this.ordDiarias[j][i]['tipo']['descripcion'],
                 fecha       : this.ordDiarias[j][i]['fechaejecucion']
               });
-            }
+            };
 
             // Carga los datos insertados en una estructura del componente html:
             this.source.load(this.data);
-
-          }
-        }
-      }
+          };
+        };
+      };
     } catch (error) {
 
       // Encierra un error en caso de que no exista alguna orden indicada:
       console.log("No existe");
-    }
-  }
+    };
+  };
 
 
   // Método encargado de enlazar el día de semana seleccionado por un índice, con la fecha correspondiente:
@@ -212,11 +210,10 @@ export class ShowcaseDialogComponent implements OnInit {
     if (index === 0) {
 
       // Obtiene la fecha desde el servicio:
-      let fechaAux    = new Date(this.service.getNuevaFecha());
+      let fechaAux = new Date(this.service.getNuevaFecha());
 
       // Formatea la fecha recibida anteriormente:
-      let fechaFormat = this.datePipe.
-      transform((fechaAux.setDate(fechaAux.getDate() + 1)), 'yyyy-MM-dd');
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 1)), 'yyyy-MM-dd');
 
       // retorna la fecha formateada:
       return fechaFormat;
@@ -224,11 +221,10 @@ export class ShowcaseDialogComponent implements OnInit {
     } else if (index === 1) {
 
       // Obtiene la fecha desde el servicio:
-      let fechaAux    = new Date(this.service.getNuevaFecha());
+      let fechaAux = new Date(this.service.getNuevaFecha());
 
       // Formatea la fecha recibida anteriormente:
-      let fechaFormat = this.datePipe.
-      transform((fechaAux.setDate(fechaAux.getDate() + 2)), 'yyyy-MM-dd');
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 2)), 'yyyy-MM-dd');
 
       // retorna la fecha formateada:
       return fechaFormat;
@@ -236,11 +232,10 @@ export class ShowcaseDialogComponent implements OnInit {
     } else if (index === 2) {
 
       // Obtiene la fecha desde el servicio:
-      let fechaAux    = new Date(this.service.getNuevaFecha());
+      let fechaAux = new Date(this.service.getNuevaFecha());
 
       // Formatea la fecha recibida anteriormente:
-      let fechaFormat = this.datePipe.
-      transform((fechaAux.setDate(fechaAux.getDate() + 3)), 'yyyy-MM-dd');
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 3)), 'yyyy-MM-dd');
 
       // retorna la fecha formateada:
       return fechaFormat;
@@ -248,11 +243,10 @@ export class ShowcaseDialogComponent implements OnInit {
     } else if (index === 3) {
 
       // Obtiene la fecha desde el servicio:
-      let fechaAux    = new Date(this.service.getNuevaFecha());
+      let fechaAux = new Date(this.service.getNuevaFecha());
 
       // Formatea la fecha recibida anteriormente:
-      let fechaFormat = this.datePipe.
-      transform((fechaAux.setDate(fechaAux.getDate() + 4)), 'yyyy-MM-dd');
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 4)), 'yyyy-MM-dd');
 
       // retorna la fecha formateada:
       return fechaFormat;
@@ -260,11 +254,10 @@ export class ShowcaseDialogComponent implements OnInit {
     } else if (index === 4) {
 
       // Obtiene la fecha desde el servicio:
-      let fechaAux    = new Date(this.service.getNuevaFecha());
+      let fechaAux = new Date(this.service.getNuevaFecha());
 
       // Formatea la fecha recibida anteriormente:
-      let fechaFormat = this.datePipe.
-      transform((fechaAux.setDate(fechaAux.getDate() + 5)), 'yyyy-MM-dd');
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 5)), 'yyyy-MM-dd');
 
       // retorna la fecha formateada:
       return fechaFormat;
@@ -272,24 +265,24 @@ export class ShowcaseDialogComponent implements OnInit {
     } else if (index === 5) {
 
       // Obtiene la fecha desde el servicio:
-      let fechaAux    = new Date(this.service.getNuevaFecha());
+      let fechaAux = new Date(this.service.getNuevaFecha());
 
       // Formatea la fecha recibida anteriormente:
-      let fechaFormat = this.datePipe.
-      transform((fechaAux.setDate(fechaAux.getDate() + 6)), 'yyyy-MM-dd');
+      let fechaFormat = this.datePipe.transform((fechaAux.setDate(fechaAux.getDate() + 6)), 'yyyy-MM-dd');
 
       // retorna la fecha formateada:
       return fechaFormat;
-
-    } 
-
-  }
+    };
+  };
 
 
-  mayus(dato){
+  // Método encargado de transformar la primera letra de cada palabra en mayúscula:
+  mayus(dato) {
     return String(dato).replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))
-  }
+  };
 
+
+  // Método encargado de formatear los carácteres especiales que no son interpretados el navegador:
   formato(dato) {
     return String(dato)
       .replace('&ntilde', 'ñ')
@@ -360,12 +353,11 @@ export class ShowcaseDialogComponent implements OnInit {
       .replace('&yacute', 'ý')
       .replace('&thorn', 'þ')
       .replace('&yuml', 'ÿ');
-  }
+  };
 
-  
+
   // Método que cierra el diálogo y lo remueve de la pantalla:
   dismiss() {
     this.ref.close();
-  }
-
-}
+  };
+};

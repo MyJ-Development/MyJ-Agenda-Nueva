@@ -79,8 +79,9 @@ export class ListaOrdenesComponent implements OnInit {
   // Variables:
   source           : LocalDataSource = new LocalDataSource();
   data             : any[]           = [];
-  rut_cliente      : any;
   ordenesPorCliente: any[];
+  rut_cliente      : any;
+
 
 
   // Constructor:
@@ -88,7 +89,7 @@ export class ListaOrdenesComponent implements OnInit {
               private tableService: tableService,
               private mostrar     : NbDialogService) {
 
-  }
+  };
 
 
   // Método ngOnInit:
@@ -99,7 +100,7 @@ export class ListaOrdenesComponent implements OnInit {
 
     //Llamada de métodos:
     this.sincronizacion();
-  }
+  };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
@@ -122,13 +123,12 @@ export class ListaOrdenesComponent implements OnInit {
           estado_ticket  : this.ordenesPorCliente[i]['estadoticket'],
         });
 
-      }
+      };
 
       // Carga los datos insertados en una estructura del componente html:
       this.source.load(this.data);
-
-    })
-  }
+    });
+  };
   
 
   // Método encargado de enviar los datos del evento al servicio y abre el componente indicado:
@@ -137,11 +137,10 @@ export class ListaOrdenesComponent implements OnInit {
     // Abre el componente indicado:
     this.mostrar.open(OrdenCompletaComponent);
 
-    // Envía los datos obtenidos del evento al servicio:
+    // Envía el id obtenido del evento, al servicio indicado:
     this.tableService.setIdListaOrden(event['data']['indice']);
 
-    // Envía la orden seleccionada al servicio:
+    // Envía la orden obtenida del evento, al servicio indicado:
     this.tableService.setOrden(event['data']['objeto']);
-  }
-
-}
+  };
+};

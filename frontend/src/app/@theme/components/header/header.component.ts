@@ -5,7 +5,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbDialogService, NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
@@ -13,6 +13,8 @@ import { Subject } from 'rxjs';
 import { UserStore } from '../../../@core/stores/user.store';
 import { SettingsData } from '../../../@core/interfaces/common/settings';
 import { User } from '../../../@core/interfaces/common/users';
+import { AgregarOrdenComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-orden/agregar-orden.component';
+import { AgregarClienteComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-cliente/agregar-cliente.component';
 
 @Component({
   selector: 'ngx-header',
@@ -54,7 +56,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private userStore: UserStore,
               private settingsService: SettingsData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private mostrar: NbDialogService,) {
   }
 
   getMenuItems() {
@@ -117,5 +120,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  agregarOrden(){
+
+    this.mostrar.open(AgregarOrdenComponent)
+  }
+
+  agregarCliente(){
+
+    this.mostrar.open(AgregarClienteComponent)
   }
 }

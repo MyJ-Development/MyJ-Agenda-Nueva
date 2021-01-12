@@ -1,20 +1,18 @@
-
-
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/breakpoints";
 @import "../../../../@theme/styles/themes";
 
 @include nb-install-component() {
   nb-card {
-    margin-top: 1px;
+    margin-top   : 1px;
     margin-bottom: 10px;
-    max-width: 1000px;
+    max-width    : 1000px;
   }
 
   nb-card-body {
-    margin-top: 0px;
+    margin-top   : 0px;
     margin-bottom: 0px;
-    height: 600px;
+    height       : 600px;
   }
 
   ng2-smart-table {
@@ -23,8 +21,8 @@
 
   button[nbTreeGridRowToggle] {
     background: transparent;
-    border: none;
-    padding: 0;
+    border    : none;
+    padding   : 0;
   }
 
   .nb-column-name {

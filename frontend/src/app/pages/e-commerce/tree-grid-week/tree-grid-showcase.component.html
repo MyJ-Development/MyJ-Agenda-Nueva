@@ -3,36 +3,32 @@
 <div *ngIf=data>
   <nb-card>
     <nb-card-body> 
-      <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" 
-                                        class="tablares">
+      <table  [nbTreeGrid]="dataSource"
+              [nbSort]="dataSource" 
+              (sort)="updateSort($event)"
+              class="tablares">
 
         <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-         <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+        <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
 
-          <ng-container *ngFor="let column of defaultColumns; let index = index"
-                        [nbTreeGridColumnDef]="column"
-                        [showOn]="getShowOn(index)">
-
-            <th class="tablitatr" nbTreeGridHeaderCell 
-                                  *nbTreeGridHeaderCellDef
-                                  [nbSortHeader]="getSortDirection(column)">
-                                  {{column}}
-            </th>
-
-            <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
-              {{row.data[column] | slice: 0: -3 || '-'}}
-
-              <hr>
-
-              <button nbButton (click)="open(index, row.data[column], column)">
-                {{row.data[column] | slice: -2: -1}}
-              </button>
-            </td>
-
-          </ng-container>
-
-        </table>
-      </nb-card-body>
+        <ng-container *ngFor="let column of defaultColumns; let index = index"
+                      [nbTreeGridColumnDef]="column"
+                      [showOn]="getShowOn(index)">
+          <th class="tablitatr" nbTreeGridHeaderCell 
+                                *nbTreeGridHeaderCellDef
+                                [nbSortHeader]="getSortDirection(column)">
+                                {{column}}
+          </th>
+          <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
+            {{row.data[column] | slice: 0: -3 || '-'}}
+            <hr>
+            <button nbButton (click)="open(index, row.data[column], column)">
+              {{row.data[column] | slice: -2: -1}}
+            </button>
+          </td>
+        </ng-container>
+      </table>
+    </nb-card-body>
   </nb-card>
 </div>
 

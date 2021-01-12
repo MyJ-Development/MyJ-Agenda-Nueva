@@ -1,12 +1,9 @@
 
 
-<div class="row ">
-  <div>
-    <nb-card>
-      <nb-card-header>
-
+<div class="row">
+  <nb-card>
+    <nb-card-header>
         <div class="row">
-
           <div class="col-sm-4">
             <div class="form-group">
               <label class="label titulo blanco">Orden N°: {{id_orden}}</label>
@@ -18,17 +15,13 @@
               <label class="label titulo blanco">Fecha de ejecución: {{fecha_transform}}</label>
             </div>
           </div>
-
         </div>
+    </nb-card-header>
 
-      </nb-card-header>
-
-      <nb-card-body>
-
-        <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden()">
+    <nb-card-body>
+      <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden()">
           
-          <div class="row">
-
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="nombre_cliente" class="label">Nombre cliente:</label>
@@ -41,7 +34,6 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
 
@@ -57,14 +49,10 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
-
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="direccion_cliente" class="label">Dirección:</label>
@@ -76,15 +64,12 @@
                             shape="semi-round" 
                             status="info"
                             size="small">
-
                   <nb-option  *ngFor="let direccion of residencia_cliente"
                               type="text"
                               [value]="direccion.id">
                               {{direccion.direccion | caracteres | mayus}}
                   </nb-option>
-
                 </nb-select>
-
               </div>
             </div>
             
@@ -99,22 +84,16 @@
                             shape="semi-round" 
                             status="info"
                             size="small">
-
                   <nb-option  *ngFor="let comuna of residencia_cliente"
                               type="text"
                               [value]="comuna.id">
                               {{comuna.comuna | caracteres | mayus}}
                   </nb-option>
-
                 </nb-select>
-
               </div>
             </div>
-
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="telefono1" class="label">Teléfono 1:</label>
@@ -127,7 +106,6 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
             
@@ -143,14 +121,10 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>  
             </div>
-
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="correo_cliente" class="label">Correo:</label>
@@ -163,7 +137,6 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
             
@@ -178,22 +151,16 @@
                             shape="semi-round" 
                             status="info"
                             size="small">
-
                   <nb-option  *ngFor="let tecnico of tecnicos"
                               type="text"
                               [value]="tecnico.rut">
                               {{tecnico.nombre}}
                   </nb-option>
-
                 </nb-select>
-
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="creado_por" class="label">Creado por:</label>
@@ -206,7 +173,6 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
             
@@ -222,14 +188,10 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
@@ -259,14 +221,10 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="estado_cliente" class="label">Estado cliente:</label>
@@ -279,7 +237,6 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
             
@@ -295,14 +252,10 @@
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
-
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="medio_pago" class="label">Medio de pago:</label>
@@ -315,7 +268,6 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
             
@@ -331,14 +283,10 @@
                         status="info"
                         shape="semi-round" 
                         fieldSize="small">
-
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="tipo_orden" class="label">Tipo orden:</label>
@@ -351,15 +299,12 @@
                             status="info"
                             size="small"
                             [(selected)]="id_orden">
-
                   <nb-option  *ngFor="let orden of tipoOrdenes"
                               type="text"
                               [value]="orden.id">
                               {{orden.descripcion}}
                   </nb-option>
-
                 </nb-select>
-
               </div>
             </div>
             
@@ -375,14 +320,10 @@
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
-
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="comentario" class="label">Comentario:</label>
@@ -396,14 +337,10 @@
                           shape="semi-round"
                           fieldSize="small">
                 </textarea>
-                
               </div>
             </div>
-          
-          </div>
-
-          <div class="row">
-            
+        </div>
+        <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
 
@@ -417,7 +354,6 @@
                         outline>
                 Guardar cambios
                 </button>
-
               </div>
             </div>
 
@@ -435,14 +371,11 @@
                         outline>
                 Ver cliente
                 </button>
-
               </div>
             </div>
-          
-          </div>
+        </div>
 
-        </form>
-      </nb-card-body>
-    </nb-card>
-  </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
 </div>

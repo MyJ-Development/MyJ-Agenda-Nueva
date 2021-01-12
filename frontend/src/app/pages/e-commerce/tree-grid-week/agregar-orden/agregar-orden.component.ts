@@ -1,7 +1,9 @@
 
 // Angular/core:
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+
+// Angular/common:
+import { DatePipe } from '@angular/common';
 
 // Angular/forms:
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -43,21 +45,31 @@ export class AgregarOrdenComponent implements OnInit {
               private fb          : FormBuilder,
               private datePipe    : DatePipe) {
 
+    // Guarda en variable global el rut obtenido del servicio:
     this.rut_cli = this.tableService.getRut_cliente();
+
+    // Guarda en variable global el usuario actual obtenido del servicio:
     this.usuario = this.tableService.getUsuario();
+
+    // Llamada de método:
     this.crearFormulario();
 
-  }
+    // Obtiene los cambios instantáneos del formulario:
+    this.formulario.controls['rut_cliente'].valueChanges.subscribe(x => {
+
+      // Guarda en variable global el rut obtenido del formulario:
+      this.rut_cli = x;
+    });
+  };
 
 
   // Método ngOnInit:
   ngOnInit(): void {
 
     // Llamada de métodos:
-    this.sincronizarResidencia();
     this.sincronizarTecnicos();
     this.sincronizarTipoOrdenes();
-  }
+  };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
@@ -67,19 +79,19 @@ export class AgregarOrdenComponent implements OnInit {
     y los almacena en variable (tecnicos): */
     this.service.leerTecnicos().subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
-    })
-  }
+    });
+  };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
-  sincronizarResidencia() {
-
+  sincronizarResidencia(){
+    
     /* Obtiene la lista de residencias desde el servicio
     y los almacena en variable (residencia_cliente): */
     this.service.leerResidencia(this.rut_cli).subscribe((residenciaList) => {
       this.residencia_cliente = residenciaList;
-    })
-  }
+    });
+  };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
@@ -89,8 +101,8 @@ export class AgregarOrdenComponent implements OnInit {
     y los almacena en variable (tipoOrdenes): */
     this.service.leerTipoOrdenes().subscribe((tipoOrdenesList) => {
       this.tipoOrdenes = tipoOrdenesList;
-    })
-  }
+    });
+  };
 
 
   // Método encargado de enviar los datos obtenidos al servicio:
@@ -103,7 +115,8 @@ export class AgregarOrdenComponent implements OnInit {
       prioridad     : this.formulario.value['prioridad'],
       disponibilidad: this.formulario.value['disponibilidad'],
       comentario    : this.formulario.value['comentario'],
-      fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
+      fechaejecucion: this.datePipe.transform(
+                      this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
       estadocliente : this.formulario.value['estado_cliente'],
       estadoticket  : this.formulario.value['estado_ticket'],
       mediodepago   : this.formulario.value['medio_pago'],
@@ -125,7 +138,7 @@ export class AgregarOrdenComponent implements OnInit {
       console.log(res);
       this.router.navigate(['/success']);
     });
-  }
+  };
 
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
@@ -133,7 +146,7 @@ export class AgregarOrdenComponent implements OnInit {
 
     this.formulario = this.fb.group({
 
-      rut_cliente      : [{value: this.rut_cli, disabled: true}, Validators.required],
+      rut_cliente      : [this.rut_cli, Validators.required],
       direccion_cliente: ['', Validators.required],
       encargado        : ['', Validators.required],
       creado_por       : [{value: this.usuario, disabled: true}, Validators.required],
@@ -146,6 +159,6 @@ export class AgregarOrdenComponent implements OnInit {
       tipo_orden       : ['', Validators.required],
       prioridad        : ['', Validators.required],
       comentario       : ['', Validators.required],
-    })
-  }
-}
+    });
+  };
+};

@@ -1,294 +1,246 @@
 
 <div class="row ">
-  <div>
-    <nb-card>
-      <nb-card-body>
-
-        <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="agregarOrden()">
-          
-          <div class="row">
-
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="rut_cliente" class="label">Rut cliente:</label>
-
-                <input  formControlName="rut_cliente"
-                        type="text"
-                        id="rut_cliente"
-                        nbInput 
-                        fullWidth 
-                        status="info" 
-                        shape="semi-round" 
-                        fieldSize="small" 
-                        required>
-
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="encargado" class="label">Encargado: </label>
-
-                <nb-select  formControlName="encargado"
-                            name="encargado" 
-                            type="text"
-                            fullWidth 
-                            shape="semi-round" 
-                            status="info"
-                            size="small"
-                            placeholder="Seleccione un técnico">
-
-                  <nb-option  *ngFor="let tecnico of tecnicos"
-                              type="text"
-                              [value]="tecnico.rut">
-                              {{tecnico.nombre}}
-                  </nb-option>
-
-                </nb-select>
-              </div>
+  <nb-card>
+    <nb-card-body>
+      <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="agregarOrden()">
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="rut_cliente" class="label">Rut cliente:</label>
+              <input  formControlName="rut_cliente"
+                      type="text"
+                      id="rut_cliente"
+                      (blur)="sincronizarResidencia()"
+                      nbInput 
+                      fullWidth 
+                      status="info" 
+                      shape="semi-round" 
+                      fieldSize="small" 
+                      required>
             </div>
           </div>
 
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="direccion_cliente" class="label">Dirección:</label>
-
-                <nb-select  formControlName="direccion_cliente"
-                            name="direccion_cliente"
-                            type="text"
-                            fullWidth 
-                            shape="semi-round" 
-                            size="small"
-                            status="info"
-                            placeholder="Seleccione una direccion">
-
-                  <nb-option  *ngFor="let direccion of residencia_cliente"
-                              type="text"
-                              [value]="direccion.id">
-                              {{direccion.direccion | caracteres | mayus}}
-                  </nb-option>
-
-                </nb-select>
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="creado_por" class="label">Creado por:</label>
-
-                <input  type="text" 
-                        formControlName="creado_por" 
-                        nbInput 
-                        fullWidth 
-                        id="creado_por" 
-                        status="info" 
-                        shape="semi-round" 
-                        fieldSize="small">
-
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
-
-                <input  type="text"
-                        fullWidth 
-                        status="info"
-                        formControlName="fecha_ejecucion" 
-                        shape="semi-round" 
-                        fieldSize="small"
-                        nbInput
-                       [nbDatepicker]="formpicker">
-                <nb-datepicker #formpicker></nb-datepicker>
-
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="disponibilidad" class="label">Disponibilidad:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="disponibilidad" 
-                        status="info"
-                        formControlName="disponibilidad" 
-                        shape="semi-round" 
-                        fieldSize="small">
-
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="estado_cliente" class="label">Estado cliente:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="estado_cliente" 
-                        status="info"
-                        formControlName="estado_cliente" 
-                        shape="semi-round" 
-                        fieldSize="small">
-
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="estado_ticket" class="label">Estado ticket:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="estado_ticket" 
-                        status="info"
-                        formControlName="estado_ticket" 
-                        shape="semi-round" 
-                        fieldSize="small">
-
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="medio_pago" class="label">Medio de pago:</label>
-
-                <input  type="text" 
-                        nbInput 
-                        fullWidth 
-                        id="medio_pago" 
-                        status="info"
-                        formControlName="medio_pago" 
-                        shape="semi-round" 
-                        fieldSize="small">
-
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="monto" class="label">Monto:</label>
-
-                <input  type="text"
-                        nbInput 
-                        fullWidth 
-                        id="monto" 
-                        status="info"
-                        formControlName="monto" 
-                        shape="semi-round"  
-                        fieldSize="small">
-
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="tipo_orden" class="label">Tipo orden:</label>
-
-                  <nb-select  type="text"
-                              fullWidth 
-                              size="small"  
-                              shape="semi-round" 
-                              status="info" 
-                              name="tipo_orden" 
-                              formControlName="tipo_orden"
-                              placeholder="Seleccione el tipo de orden">
-
-                    <nb-option  *ngFor="let orden of tipoOrdenes" 
-                                type="text"
-                                [value]="orden.id" >
-                                {{orden.descripcion}}
-                    </nb-option>
-
-                </nb-select>
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="prioridad" class="label">Prioridad:</label>
-
-                <input  type="text"
-                        nbInput 
-                        fullWidth 
-                        id="prioridad" 
-                        status="info"
-                        formControlName="prioridad" 
-                        shape="semi-round"  
-                        fieldSize="small">
-
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row">
-            
-            <div class="col-sm-12">
-              <div class="form-group">
-                <label for="comentario" class="label">Comentario:</label>
-
-                <textarea rows="4" 
-                          nbInput 
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="encargado" class="label">Encargado: </label>
+              <nb-select  formControlName="encargado"
+                          name="encargado" 
+                          type="text"
                           fullWidth 
-                          id="comentario" 
-                          status="info"
-                          formControlName="comentario" 
                           shape="semi-round" 
-                          type="text" 
-                          fieldSize="small">
-                </textarea>
+                          status="info"
+                          size="small"
+                          placeholder="Seleccione un técnico">
+                <nb-option  *ngFor="let tecnico of tecnicos"
+                            type="text"
+                            [value]="tecnico.rut">
+                            {{tecnico.nombre}}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
 
-              </div>
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="direccion_cliente" class="label">Dirección:</label>
+              <nb-select  formControlName="direccion_cliente"
+                          name="direccion_cliente"
+                          type="text"
+                          fullWidth 
+                          shape="semi-round" 
+                          size="small"
+                          status="info"
+                          placeholder="Seleccione una direccion">
+                <nb-option  *ngFor="let direccion of residencia_cliente"
+                            type="text"
+                            [value]="direccion.id">
+                            {{direccion.direccion | caracteres | mayus}}
+                </nb-option>
+              </nb-select>
             </div>
           </div>
 
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="creado_por" class="label">Creado por:</label>
+              <input  type="text" 
+                      formControlName="creado_por" 
+                      nbInput 
+                      fullWidth 
+                      id="creado_por" 
+                      status="info" 
+                      shape="semi-round" 
+                      fieldSize="small">
+            </div>
+          </div>
+        </div>
 
-          <div class="row">
-            
-            <div class="col-sm-6">
-              <div class="form-group">
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
+              <input  type="text"
+                      fullWidth 
+                      status="info"
+                      formControlName="fecha_ejecucion" 
+                      shape="semi-round" 
+                      fieldSize="small"
+                      nbInput
+                     [nbDatepicker]="formpicker">
+              <nb-datepicker #formpicker></nb-datepicker>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="disponibilidad" class="label">Disponibilidad:</label>
+              <input  type="text" 
+                      nbInput 
+                      fullWidth 
+                      id="disponibilidad" 
+                      status="info"
+                      formControlName="disponibilidad" 
+                      shape="semi-round" 
+                      fieldSize="small">
+            </div>
+          </div>
+        </div>
 
-                <button type="submit" 
-                        nbButton 
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="estado_cliente" class="label">Estado cliente:</label>
+              <input  type="text" 
+                      nbInput 
+                      fullWidth 
+                      id="estado_cliente" 
+                      status="info"
+                      formControlName="estado_cliente" 
+                      shape="semi-round" 
+                      fieldSize="small">
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="estado_ticket" class="label">Estado ticket:</label>
+              <input  type="text" 
+                      nbInput 
+                      fullWidth 
+                      id="estado_ticket" 
+                      status="info"
+                      formControlName="estado_ticket" 
+                      shape="semi-round" 
+                      fieldSize="small">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="medio_pago" class="label">Medio de pago:</label>
+              <input  type="text" 
+                      nbInput 
+                      fullWidth 
+                      id="medio_pago" 
+                      status="info"
+                      formControlName="medio_pago" 
+                      shape="semi-round" 
+                      fieldSize="small">
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="monto" class="label">Monto:</label>
+              <input  type="text"
+                      nbInput 
+                      fullWidth 
+                      id="monto" 
+                      status="info"
+                      formControlName="monto" 
+                      shape="semi-round"  
+                      fieldSize="small">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="tipo_orden" class="label">Tipo orden:</label>
+              <nb-select  type="text"
+                          fullWidth 
+                          size="small"  
+                          shape="semi-round" 
+                          status="info" 
+                          name="tipo_orden" 
+                          formControlName="tipo_orden"
+                          placeholder="Seleccione el tipo de orden">
+                  <nb-option *ngFor="let orden of tipoOrdenes" 
+                              type="text"
+                             [value]="orden.id" >
+                              {{orden.descripcion}}
+                  </nb-option>
+              </nb-select>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="prioridad" class="label">Prioridad:</label>
+              <input  type="text"
+                      nbInput 
+                      fullWidth 
+                      id="prioridad" 
+                      status="info"
+                      formControlName="prioridad" 
+                      shape="semi-round"  
+                      fieldSize="small">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">  
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="comentario" class="label">Comentario:</label>
+              <textarea rows="4" 
+                        nbInput 
                         fullWidth 
-                        status="success" 
+                        id="comentario" 
+                        status="info"
+                        formControlName="comentario" 
                         shape="semi-round" 
-                        fieldSize="tiny" 
-                        size="small" 
-                        outline>
-                  Guardar cambios
-                </button>
-
-              </div>
+                        type="text" 
+                        fieldSize="small">
+              </textarea>
             </div>
           </div>
+        </div>
 
-        </form>
-      </nb-card-body>
-    </nb-card>
-  </div>
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <button type="submit" 
+                      nbButton 
+                      fullWidth 
+                      status="success" 
+                      shape="semi-round" 
+                      fieldSize="tiny" 
+                      size="small" 
+                      outline>
+                Guardar cambios
+              </button>
+            </div>
+          </div>
+        </div>
+        
+      </form>
+    </nb-card-body>
+  </nb-card>
 </div>

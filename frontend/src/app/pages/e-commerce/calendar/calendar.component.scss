@@ -1,20 +1,13 @@
-/*!
- * Copyright (c) Akveo 2019. All Rights Reserved.
- * Licensed under the Single Application / Multi Application License.
- * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
- */
-
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~@nebular/theme/styles/global/breakpoints';
-@import '../../../@theme/styles/themes';
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
+@import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
   .calendars {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -1rem -0.5rem;
+    display        : flex;
+    flex-wrap      : wrap;
+    margin         : -1rem -0.5rem;
     justify-content: center;
-   
   }
 
   .calendar-container {
@@ -22,9 +15,8 @@
   }
 
   .subtitle {
-    display: block;
+    display      : block;
     margin-bottom: 0.5rem;
-    
   }
 
   @include media-breakpoint-up(md) {
@@ -47,6 +39,7 @@
       margin: -1rem;
     }
   }
+
   button + button {
     margin-left: 2rem;
   }
@@ -57,7 +50,7 @@
     }
 
     button {
-      flex: 1;
+      flex   : 1;
       padding: 0.8rem;
     }
   }
@@ -72,10 +65,10 @@
         margin-left: 0;
       }
 
-      width: 100%;
-      display: block;
+      width        : 100%;
+      display      : block;
       margin-bottom: 2rem;
-      padding: 0.75rem;
+      padding      : 0.75rem;
     }
   }
 }

@@ -1,26 +1,27 @@
-
-
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/breakpoints";
 @import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
   ::ng-deep .form {
-    display: flex;
+    display       : flex;
     flex-direction: column;
 
     .text-label {
       margin-top: 1.5rem;
     }
   }
+
   button[nbTreeGridRowToggle] {
     background: transparent;
-    border: none;
-    padding: 0;
+    border    : none;
+    padding   : 0;
   }
+
   .calendar-container {
     margin: 1rem -9rem;
   }
+
   .search-input {
     margin: 1rem;
   }
@@ -54,21 +55,25 @@
       width: 23%;
     }
   }
+
   .tamañoTextoB {
-    font-size: 20px;
+    font-size  : 20px;
     font-weight: bold;
   }
+
   .ajustandoBuscador2 {
     margin: 0px;
   }
+
   .tablitatr {
-    padding: 5px;
+    padding   : 5px;
     text-align: center;
   }
 
   .tablares {
     overflow: scroll;
   }
+
   button + button {
     margin-left: 2rem;
   }
@@ -94,10 +99,10 @@
         margin-left: 0;
       }
 
-      width: 100%;
-      display: block;
+      width        : 100%;
+      display      : block;
       margin-bottom: 2rem;
-      padding: 0.75rem;
+      padding      : 0.75rem;
     }
   }
 }

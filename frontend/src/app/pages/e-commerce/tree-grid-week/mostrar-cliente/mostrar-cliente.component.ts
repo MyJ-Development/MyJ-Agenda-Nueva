@@ -2,6 +2,12 @@
 // Angular/core:
 import { Component, OnInit } from '@angular/core';
 
+// Angular/forms:
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+// Angular/router:
+import { Router } from '@angular/router';
+
 // Nebular/theme:
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
@@ -13,11 +19,8 @@ import { tableService }         from '../../../../services/table.service';
 import { AgregarOrdenComponent } from '../agregar-orden/agregar-orden.component';
 import { ListaOrdenesComponent } from '../lista-ordenes/lista-ordenes.component';
 
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
-
-// Componente decorador:
+// Componente decorado:
 @Component({
   selector   : 'ngx-mostrar-cliente',
   templateUrl: './mostrar-cliente.component.html',
@@ -49,7 +52,7 @@ export class MostrarClienteComponent implements OnInit {
               private fb          : FormBuilder,
               private router      : Router) {
 
-  }
+  };
 
 
   // Método ngOnInit:
@@ -63,34 +66,40 @@ export class MostrarClienteComponent implements OnInit {
     enviada previamente desde otro componente: */
     this.ordenCliente = this.tableService.getOrden();
 
+    // Guarda en variable global el usuario actual obtenido del servicio indicado:
     this.usuario = this.tableService.getUsuario();
 
     // Llamada de métodos:
     this.residencia();
     this.crearFormulario();
-  }
+  };
 
 
+  // Método get que obtiene y retorna la direccion desde el formulario y lo interpreta como formArray:
   get direccion(){
     return this.formulario.get('direccion_cliente') as FormArray;
-  }
+  };
 
+  // Método get que obtiene y retorna la comuna desde el formulario y lo interpreta como formArray:
   get comuna(){
     return this.formulario.get('comuna_cliente') as FormArray;
-  }
+  };
 
+  // Método get que obtiene y retorna la mac desde el formulario y lo interpreta como formArray:
   get mac(){
     return this.formulario.get('mac_cliente') as FormArray;
-  }
+  };
 
+  // Método get que obtiene y retorna el pppoe desde el formulario y lo interpreta como formArray:
   get pppoe(){
     return this.formulario.get('pppoe_cliente') as FormArray;
-  }
+  };
 
 
   // Método encargado de actualizar datos obtenidos desde la API:
   actualizarDatos() {
 
+    // Si el formulario es válido, ejecutar:
     if (this.formulario.valid) {
 
       /* Se define la estructura de datos a enviar al servicio y 
@@ -103,43 +112,57 @@ export class MostrarClienteComponent implements OnInit {
         contacto2 : this.formulario.value['telefono2'],
         created_by: this.ordenCliente['created_by']['email'],
         updated_by: this.usuario
+      };
+
+      console.log(this.report);
+
+      let res = '';
+
+      // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+      this.service.editarCliente(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+
+      // Si los campos tienen un error:
+    } else {
+      alert("Revisa los campos");
     };
-
-    console.log(this.report);
-
-    let res = '';
-
-    // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-    this.service.editarCliente(this.report).subscribe(data => {
-      res = data;
-      console.log('res');
-      console.log(res);
-      this.router.navigate(['/success']);
-    });
-    }
-    else {
-      alert("Revisa los campos")
-    }
-  }
+  };
 
 
+  // Método encargado de obtener la residencia desde el servicio indicado:
   residencia(){
 
+    // Almacena en variable global los datos de residencia del cliente, obtenidos del servicio indicado:
     this.residencia_clientes = this.tableService.getResidencia();
     
+    // Almacena en variable local la direccion obtenida de los datos de residencia del cliente:
     let direccion = this.residencia_clientes.map((x) => [x.direccion]);
+
+    // Almacena la direccion en un array del formBuilder:
     this.direccionArray = this.fb.array(direccion);
 
+    // Almacena en variable local la comuna obtenida de los datos de residencia del cliente:
     let comuna = this.residencia_clientes.map((x) => [x.comuna]);
+
+    // Almacena la comuna en un array del formBuilder:
     this.comunaArray = this.fb.array(comuna);
    
+    // Almacena en variable local la mac obtenida de los datos de residencia del cliente:
     let mac = this.residencia_clientes.map((x) => [x.mac]);
+
+    // Almacena la mac en un array del formBuilder:
     this.macArray = this.fb.array(mac);
    
+    // Almacena en variable local el pppoe obtenido de los datos de residencia del cliente:
     let pppoe = this.residencia_clientes.map((x) => [x.pppoe]);
+
+    // Almacena el pppoe en un array del formBuilder:
     this.pppoeArray = this.fb.array(pppoe);
-    
-  }
+  };
 
 
   // Método encargado de abrir el componente indicado y cerrar el actual:
@@ -153,7 +176,7 @@ export class MostrarClienteComponent implements OnInit {
 
     // Cierra el componente actual almacenado en una referencia:
     this.ref.close();
-  }
+  };
 
 
   // Método encargado de abrir el componente indicado y cerrar el actual:
@@ -164,7 +187,7 @@ export class MostrarClienteComponent implements OnInit {
 
     // Cierra el componente actual almacenado en una referencia:
     this.ref.close();
-  }
+  };
 
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
@@ -173,8 +196,8 @@ export class MostrarClienteComponent implements OnInit {
     this.formulario = this.fb.group({
 
       rut_cliente      : [this.rut_cliente, Validators.required],
-      nombre_cliente   : [this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])), 
-                          Validators.required],
+      nombre_cliente   : [this.mayus(
+                          this.formato(this.ordenCliente['client_order']['nombre'])), Validators.required],
       telefono1        : [this.ordenCliente['client_order']['contacto1'], Validators.required],
       telefono2        : [this.ordenCliente['client_order']['contacto2'], Validators.required],
       correo_cliente   : [this.ordenCliente['client_order']['email'], Validators.required],
@@ -185,13 +208,17 @@ export class MostrarClienteComponent implements OnInit {
       comuna_cliente   :  this.comunaArray,
       mac_cliente      :  this.macArray,
       pppoe_cliente    :  this.pppoeArray
-    })
-  }
+    });
+  };
 
+
+  // Método encargado de transformar la primera letra de cada palabra en mayúscula:
   mayus(dato){
     return String(dato).replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))
-  }
+  };
 
+
+  // Método encargado de formatear los carácteres que no son interpretados por el navegador:
   formato(dato) {
     return String(dato)
       .replace('&ntilde', 'ñ')
@@ -262,6 +289,5 @@ export class MostrarClienteComponent implements OnInit {
       .replace('&yacute', 'ý')
       .replace('&thorn', 'þ')
       .replace('&yuml', 'ÿ');
-  }
-
-}
+  };
+};

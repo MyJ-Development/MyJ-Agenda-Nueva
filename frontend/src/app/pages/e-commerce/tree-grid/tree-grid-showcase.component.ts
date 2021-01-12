@@ -1,6 +1,8 @@
 
-// Angular/ core:
+// Angular/core:
 import { DatePipe } from '@angular/common';
+
+// Angular/core:
 import { Component, Input } from '@angular/core';
 
 // Angular/forms:
@@ -11,11 +13,13 @@ import { NbDialogService } from '@nebular/theme';
 
 // Ng2-smart-table:
 import { LocalDataSource } from 'ng2-smart-table';
+
+// Rxjs:
 import { Observable } from 'rxjs';
 
 // Servicios:
 import { peticionesGetService } from '../../../services/peticionesGet.service';
-import { tableService } from '../../../services/table.service';
+import { tableService }         from '../../../services/table.service';
 
 // Componentes:
 import { OrdenCompletaComponent } from '../tree-grid-week/orden-completa/orden-completa.component';
@@ -23,9 +27,9 @@ import { OrdenCompletaComponent } from '../tree-grid-week/orden-completa/orden-c
 
 // Componente decorado:
 @Component({
-  selector: 'nb-tree-grid-showcase',
+  selector   : 'nb-tree-grid-showcase',
   templateUrl: './tree-grid-showcase.component.html',
-  styleUrls: ['./tree-grid-showcase.component.scss'],
+  styleUrls  : ['./tree-grid-showcase.component.scss'],
 })
 
 
@@ -46,14 +50,14 @@ export class TreeGridShowcaseComponent {
 
       // Acciones por defecto:
       filter: false,
-      add: false,
-      edit: false,
+      add   : false,
+      edit  : false,
       delete: false,
 
       // Acción customizada:
       custom: [
         {
-          name: 'mas',
+          name : 'mas',
           title: '<i class="icon ion-document" title="mas"></i>'
         },
       ]
@@ -63,67 +67,72 @@ export class TreeGridShowcaseComponent {
     columns: {
       id_orden: {
         title: 'Id orden',
-        type: 'string',
+        type : 'string',
       },
       nombre: {
         title: 'Nombre',
-        type: 'string',
+        type : 'string',
       },
       fecha: {
         title: 'Fecha',
-        type: 'string',
+        type : 'string',
       },
       direccion: {
         title: 'Dirección',
-        type: 'string',
+        type : 'string',
       },
       tipo: {
         title: 'Tipo orden',
-        type: 'string',
+        type : 'string',
       },
     },
   };
 
 
   // Variables:
-  formulario: FormGroup;
-  source: LocalDataSource = new LocalDataSource();
-  aparece: boolean = false;
-  ver: boolean = false;
-  data: any[];
-  buscar: any;
-  rut_cliente: any;
-  lista: any;
-  servicio: Observable<any[]>;
-  clientes: any[];
-  date_init: any;
-  date_inicio: any;
-  date_end: any;
-  date_fin: any;
-  opciones: any[];
-  opcion_rut_cliente: string = 'Rut cliente';
-  opcion_nombre_encargado: string = 'Nombre técnico';
-  opcion_id_orden: string = 'Id orden';
-  opcion_domicilio: string = 'Domicilio';
+  source                 : LocalDataSource = new LocalDataSource();
+  aparece                : boolean         = false;
+  ver                    : boolean         = false;
+  opcion_rut_cliente     : string          = 'Rut cliente';
+  opcion_nombre_encargado: string          = 'Nombre técnico';
+  opcion_id_orden        : string          = 'Id orden';
+  opcion_domicilio       : string          = 'Domicilio';
+  servicio               : Observable<any[]>;
+  formulario             : FormGroup;
+  data                   : any[];
+  clientes               : any[];
+  opciones               : any[];
+  buscar                 : any;
+  rut_cliente            : any;
+  lista                  : any;
+  date_init              : any;
+  date_inicio            : any;
+  date_end               : any;
+  date_fin               : any;
+
 
   // Constructor:
-  constructor(private mostrar: NbDialogService,
-    private service: peticionesGetService,
-    private tableService: tableService,
-    private datePipe: DatePipe,
-    private fb: FormBuilder) {
+  constructor(private mostrar     : NbDialogService,
+              private service     : peticionesGetService,
+              private tableService: tableService,
+              private datePipe    : DatePipe,
+              private fb          : FormBuilder) {
 
+    // Llamada de método:
     this.crearFormulario();
 
+    // Se crea un arreglo de opciones para integrarlo en select:
     this.opciones = [
       this.opcion_rut_cliente,
       this.opcion_nombre_encargado,
       this.opcion_id_orden,
       this.opcion_domicilio
-    ]
+    ];
 
+    // Se suscribe a los cambios del formulario, para mostrarlos instantáneamente:
     this.formulario.valueChanges.subscribe(x => {
 
+      // Si la opción seleccionada corresponde a alguna de las dos opciones, cambiar el estado de ver:
       if ((x.buscar === "Nombre técnico") || (x.buscar === "Domicilio")) {
 
         this.ver = true;
@@ -131,38 +140,40 @@ export class TreeGridShowcaseComponent {
       } else {
 
         this.ver = false;
-      }
-    })
-
-  }
+      };
+    });
+  };
 
 
   // Método encargado de obtener datos del formulario html:
   buscarOrden() {
 
+    // Se inicia el arreglo vacío:
     this.data = [];
 
+    // Si la opción seleccionada corresponde al rut cliente, iniciar:
     if (this.formulario.value['buscar'] === 'Rut cliente') {
 
-      // Iguala el dato obtenido del formulario con variable local:
+      // Iguala el dato obtenido del formulario con variable global:
       this.buscar = this.formulario.value['buscador'];
 
+      // Guarda en variable global el servicio correspondiente:
       this.servicio = this.service.leerOrdenesClientesRut(this.buscar);
 
-
       // Ejecuta el método seleccionado:
       this.sincronizacionOrdenesClientes();
 
       // Cambia el estado de la tabla para mostrar la información:
       this.aparece = true;
 
+      // Si la opción seleccionada corresponde al id orden, iniciar:
     } else if (this.formulario.value['buscar'] === 'Id orden') {
 
-      // Iguala el dato obtenido del formulario con variable local:
+      // Iguala el dato obtenido del formulario con variable global:
       this.buscar = this.formulario.value['buscador'];
 
+      // Guarda en variable local el servicio correspondiente:
       this.servicio = this.service.leerOrdenesClientesId(this.buscar);
-
 
       // Ejecuta el método seleccionado:
       this.sincronizacionOrdenesClientes();
@@ -170,52 +181,60 @@ export class TreeGridShowcaseComponent {
       // Cambia el estado de la tabla para mostrar la información:
       this.aparece = true;
 
+      // Si la opción seleccionada corresponde al nombre técnico y al valor del calendario, iniciar:
     } else if ((this.formulario.value['buscar'] === 'Nombre técnico')
       && (this.formulario.value['calendar'])) {
 
-      // Iguala el dato obtenido del formulario con variable local:
+      // Iguala el dato obtenido del formulario con variable global:
       this.buscar = this.formulario.value['buscador'];
 
+      // Guarda en variable global la fecha de inicio obtenida del calendario:
       this.date_inicio = new Date(this.formulario.value['calendar']['start']);
+
+      // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
       this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
 
       console.log(this.date_init);
 
+      // Guarda en variable global la fecha de final obtenida del calendario:
       this.date_fin = new Date(this.formulario.value['calendar']['end']);
+
+      // Formatea la fecha final obtenida, en formato standard de las órdenes:
       this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
 
       console.log(this.date_end);
 
+      // Obtiene los datos del servicio ingresando los parámetros nombre tecnico, fecha inicio y término:
       this.servicio = this.service.leerOrdenesClientesTecnico(this.buscar, this.date_init, this.date_end);
 
-
       // Ejecuta el método seleccionado:
       this.sincronizacionOrdenesClientes();
 
       // Cambia el estado de la tabla para mostrar la información:
       this.aparece = true;
 
-    } else if ((this.formulario.value['buscar'] === 'Domicilio')) {
+      // Si la opción seleccionada corresponde al domicilio y al valor del calendario, iniciar:
+    } else if ((this.formulario.value['buscar'] === 'Domicilio') && (this.formulario.value['calendar'])) {
 
-      // Iguala el dato obtenido del formulario con variable local:
-      this.buscar    = this.formulario.value['buscador'];
+      // Iguala el dato obtenido del formulario con variable global:
+      this.buscar = this.formulario.value['buscador'];
 
+      // Guarda y formatea la fecha inicial obtenida del calendario:
       this.date_init = new Date(this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd'));
 
+      // Guarda y formatea la fecha final obtenida del calendario:
       this.date_end = new Date(this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd'));
 
+      // Obtiene los datos del servicio ingresando los parámetros domicilio, fecha inicio y término:
       this.servicio  = this.service.leerOrdenesClientesDomicilio(this.buscar, this.date_init, this.date_end);
-
 
       // Ejecuta el método seleccionado:
       this.sincronizacionOrdenesClientes();
 
       // Cambia el estado de la tabla para mostrar la información:
       this.aparece = true;
-
-    }
-
-  }
+    };
+  };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
@@ -225,45 +244,48 @@ export class TreeGridShowcaseComponent {
     y los almacena en variable (clientes): */
     this.servicio.subscribe((clientesList) => {
 
+      // Guarda en variable global la lista de clientes obtenida del servicio:
       this.clientes = clientesList;
 
+      // bucle para recorrer el arreglo de la lista de clientes:
       for (let i = 0; i < this.clientes.length; i++) {
 
+        // Guarda en variable global el rut obtenido de la orden en la posición indicada:
         this.rut_cliente = this.clientes[i]['client_order']['rut'];
 
         // Inserta los datos del arreglo en la variable data:
         this.data.push({
-          indice: i,
-          objeto: this.clientes[i],
-          id_orden: this.clientes[i]['id'],
-          nombre: this.mayus(this.formato(this.clientes[i]['client_order']['nombre'])),
-          fecha: this.clientes[i]['fechaejecucion'],
+          indice   : i,
+          objeto   : this.clientes[i],
+          id_orden : this.clientes[i]['id'],
+          nombre   : this.mayus(this.formato(this.clientes[i]['client_order']['nombre'])),
           direccion: this.mayus(this.formato(this.clientes[i]['client_residence']['direccion'])),
-          tipo: this.clientes[i]['tipo']['descripcion'],
+          fecha    : this.clientes[i]['fechaejecucion'],
+          tipo     : this.clientes[i]['tipo']['descripcion'],
         });
-      }
+      };
 
       // Carga los datos insertados en una estructura del componente html:
       this.source.load(this.data);
-    })
-  }
+    });
+  };
 
 
   // Método encargado de enviar los datos del evento al servicio y abre el componente indicado:
   ordenCompleta(event) {
 
+    // Envía la orden obtenida del evento, al servicio indicado:
     this.tableService.setOrden(event['data']['objeto']);
 
     // Envía el rut del cliente seleccionado, al servicio indicado:
     this.tableService.setRut_cliente(event['data']['objeto']['client_order']['rut']);
 
-    // Envía los datos obtenidos del evento al servicio:
+    // Envía el id obtenido del evento, al servicio indicado:
     this.tableService.setIdOrden(event['data']['objeto']['id']);
 
     // Abre el componente indicado:
     this.mostrar.open(OrdenCompletaComponent);
-
-  }
+  };
 
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
@@ -271,16 +293,21 @@ export class TreeGridShowcaseComponent {
 
     this.formulario = this.fb.group({
 
-      buscar: ['', Validators.required],
+      // Controles del formulario, llamados por el componente html con formControlName:
+      buscar  : ['', Validators.required],
       buscador: ['', Validators.required],
       calendar: ['', Validators.required],
-    })
-  }
+    });
+  };
 
+
+  // Método encargado de transformar la primera letra de cada palabra en mayúscula:
   mayus(dato){
     return String(dato).replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))
-  }
+  };
 
+
+  // Método encargado de formatear los carácteres especiales que no son interpretados por el navegador:
   formato(dato) {
     return String(dato)
       .replace('&ntilde', 'ñ')
@@ -351,9 +378,8 @@ export class TreeGridShowcaseComponent {
       .replace('&yacute', 'ý')
       .replace('&thorn', 'þ')
       .replace('&yuml', 'ÿ');
-  }
-
-}
+  };
+};
 
 
 // Componente decorado:
@@ -371,10 +397,10 @@ export class TreeGridShowcaseComponent {
 
 // Clase exportable FsIconComponent:
 export class FsIconComponent {
-  @Input() tipo: string;
+  @Input() tipo    : string;
   @Input() expanded: boolean;
 
   isDir(): boolean {
     return true;
-  }
-}
+  };
+};
