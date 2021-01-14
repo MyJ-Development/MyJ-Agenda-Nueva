@@ -7,20 +7,6 @@
         <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="nombre_cliente" class="label">Nombre cliente:</label>
-
-                <input  formControlName="nombre_cliente"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <div class="form-group">
                 <label for="rut_cliente" class="label">Rut cliente:</label>
 
                 <input  formControlName="rut_cliente"
@@ -33,67 +19,8 @@
               </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="telefono1" class="label">Teléfono 1:</label>
 
-                <input  formControlName="telefono1"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
-
-              </div>
-            </div>
-            
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="telefono2" class="label">Teléfono 2:</label>
-
-                <input  formControlName="telefono2"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
-              </div>  
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="correo_cliente" class="label">Correo:</label>
-
-                <input  formControlName="correo_cliente"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="creado_por" class="label">Creado por:</label>
-
-                <input  formControlName="creado_por"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
-              </div>
-            </div>
-        </div>
-        <hr>
-        <div class="form-group row" formGroupName="residencia">
+        <div class="form-group row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="direccion_cliente" class="label">Dirección:</label>
@@ -167,7 +94,7 @@
                         size="medium" 
                         (click)="guardar()" 
                         outline>
-                Agregar cliente
+                Agregar direccion
                 </button>
               </div>
             </div>

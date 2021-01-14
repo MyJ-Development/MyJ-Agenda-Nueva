@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // Angular/common:
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 // Angular/forms:
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

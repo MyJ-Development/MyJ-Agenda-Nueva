@@ -15,6 +15,7 @@ import { SettingsData } from '../../../@core/interfaces/common/settings';
 import { User } from '../../../@core/interfaces/common/users';
 import { AgregarOrdenComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-orden/agregar-orden.component';
 import { AgregarClienteComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-cliente/agregar-cliente.component';
+import { AgregarDireccionComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-direccion/agregar-direccion.component';
 
 @Component({
   selector: 'ngx-header',
@@ -130,5 +131,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   agregarCliente(){
 
     this.mostrar.open(AgregarClienteComponent)
+  }
+
+  agregarDireccion(){
+
+    this.mostrar.open(AgregarDireccionComponent)
   }
 }
