@@ -19,7 +19,8 @@
   }
 
   nb-card-body {
-    padding-top: 0;
+    margin-top: -20px;
+    margin-bottom: -20px;
 
     > * {
       margin-top: 2rem;
@@ -27,10 +28,17 @@
   }
 
   nb-card {
-    margin-top: 1rem;
-    max-width : 700px;
-    max-height: 620px;
+    width: 650px;
+    height: 450px; 
+    // max-width : 700px;
+    // max-height: 620px;
   }
+
+
+}
+
+.head {
+  height: 35px;
 }
 
 .full-name-inputs,
@@ -61,4 +69,9 @@
 
 .restar {
   margin-left: -25px;
+}
+
+.h5s {
+  color: #b4b4db;
+    font-family: Open Sans, sans-serif;
 }

@@ -16,17 +16,11 @@
   </div>
 </div>
 
+
 <div class="header-container head">
-  <button (click)="agregarOrden()" nbButton outline status="success">Agregar orden</button>
+  <button nbButton outline status="info" [nbPopover]="templateRef">Agregar</button>
 </div>
 
-<div class="header-container">
-  <button (click)="agregarCliente()" nbButton outline status="success">Agregar cliente</button>
-</div>
-
-<div class="header-container">
-  <button (click)="agregarDireccion()" nbButton outline status="success">Agregar dirección</button>
-</div>
 
 <div class="header-container">
   <nb-actions size="small">
@@ -45,3 +39,21 @@
     </nb-action>
   </nb-actions>
 </div>
+
+<ng-template #templateRef>
+  <nb-popover align="center">
+
+    <div class="container">
+      <button (click)="agregarOrden()" nbButton outline status="success">Agregar orden</button>
+    </div>
+    <hr>
+    <div class="container">
+      <button (click)="agregarCliente()" nbButton outline status="success">Agregar cliente</button>
+    </div>
+    <hr>
+    <div class="container">
+      <button (click)="agregarDireccion()" nbButton outline status="success">Agregar dirección</button>
+    </div>
+
+  </nb-popover>
+</ng-template>

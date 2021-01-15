@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
+import { NbPopoverModule } from "@nebular/theme";
+
 
 // Componente decorado:
 @Component({
@@ -38,7 +40,7 @@ export class AgregarDireccionComponent {
   };
 
 
-  // Método encargado de construir el formulario junto con sus validadores:
+  // Método encargado de construir el formulario con cada control especificado con sus validadores:
   crearFormulario() {
 
     this.formulario = this.fb.group({
@@ -51,21 +53,26 @@ export class AgregarDireccionComponent {
     });
   };
 
+
+  // Método encargado de postear la información hacia la API:
   guardar() {
 
+    // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
 
+      // Obtiene los datos del formulario y los asigna a cada variable definida en la API:
       this.report = {
         client_rut: this.formulario.value['rut_cliente'],
-        direccion: this.formulario.value['direccion_cliente'],
-        comuna: this.formulario.value['comuna_cliente'],
-        mac: this.formulario.value['mac_cliente'],
-        pppoe: this.formulario.value['pppoe_cliente'],
+        direccion : this.formulario.value['direccion_cliente'],
+        comuna    : this.formulario.value['comuna_cliente'],
+        mac       : this.formulario.value['mac_cliente'],
+        pppoe     : this.formulario.value['pppoe_cliente'],
       };
     };
 
     let res = '';
 
+    // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
     this.peticiones.agregarResidencia(this.report).subscribe(data => {
       res = data;
       console.log('res');

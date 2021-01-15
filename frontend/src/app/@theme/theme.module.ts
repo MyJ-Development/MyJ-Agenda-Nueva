@@ -19,6 +19,7 @@ import {
   NbIconModule,
   NbSpinnerModule,
   NbThemeModule,
+  NbPopoverModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -64,6 +65,7 @@ const NB_MODULES = [
   NbIconModule,
   NbSpinnerModule,
   NbEvaIconsModule,
+  NbPopoverModule
 ];
 const COMPONENTS = [
   HeaderComponent,

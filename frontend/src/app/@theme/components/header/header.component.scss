@@ -34,7 +34,7 @@
   }
 
   .head{
-    margin-left: 15rem;
+    margin-left: -5rem;
   }
 
   .header-container {
@@ -77,4 +77,12 @@
       display: none;
     }
   }
+
+
+}
+
+nb-popover {
+  margin-top: 5rem;
+  width: 20rem !important;
+  height: 20rem !important;
 }

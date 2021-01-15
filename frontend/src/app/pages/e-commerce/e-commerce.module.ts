@@ -18,6 +18,7 @@ import {
   NbListModule,
   NbSpinnerModule,
   NbDatepickerModule,
+  NbPopoverModule,
   
 } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -126,6 +127,7 @@ import { AgregarDireccionComponent } from './tree-grid-week/agregar-direccion/ag
     FormsModule,
     ReactiveFormsModule,
     NbDatepickerModule,
+    NbPopoverModule
   ],
   declarations: [
     ECommerceComponent,

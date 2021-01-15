@@ -19,11 +19,8 @@
   }
 
   nb-card-body {
-    padding-top: 0;
-
-    > * {
-      margin-top: 2rem;
-    }
+    margin-bottom: -10px;
+    height: 200px;
   }
 
   nb-card {
@@ -61,4 +58,9 @@
 
 .restar {
   margin-left: -25px;
+}
+
+.h5s {
+  color: #b4b4db;
+    font-family: Open Sans, sans-serif;
 }
