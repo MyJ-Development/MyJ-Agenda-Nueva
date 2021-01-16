@@ -37,7 +37,7 @@ export class OrdenCompletaComponent implements OnInit {
   id_orden          : any;
   ordenCliente      : any;
   report            : any;
-  fecha_ejecucion   : Date;
+  fecha_ejecucion   : any;
   fecha_transform   : any;
   tecnicos          : any[];
   tipoOrdenes       : any[];
@@ -92,7 +92,7 @@ export class OrdenCompletaComponent implements OnInit {
   actualizarOrden() {
 
     // Si el formulario es válido, ejecutar:
-    if (this.formulario.valid) {
+    if ((this.formulario.valid) || (this.formulario.controls['fecha_ejecucion'].status == "INVALID")) {
 
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
@@ -115,6 +115,7 @@ export class OrdenCompletaComponent implements OnInit {
 
       let res = '';
 
+      
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
       this.service.editarOrden(this.report).subscribe(data => {
         res = data;
@@ -122,7 +123,12 @@ export class OrdenCompletaComponent implements OnInit {
         console.log(res);
         this.router.navigate(['/success']);
       });
+
+      console.log('paso');
+      console.log(this.report);
+      
     } else {
+      console.log(this.formulario);
       alert("Revisa los campos")
     };
   };

@@ -127,7 +127,7 @@ import { AgregarDireccionComponent } from './tree-grid-week/agregar-direccion/ag
     FormsModule,
     ReactiveFormsModule,
     NbDatepickerModule,
-    NbPopoverModule
+    NbPopoverModule,
   ],
   declarations: [
     ECommerceComponent,

@@ -16,19 +16,38 @@
   }
 
   .medida-card {
-    height: 7rem;
+    height: 8rem;
   }
 
-  .medida-body {
-    height: 6rem;
+  .lista {
+    height: 246px;
+  }
+
+  nb-card-body {
+    // margin-top: -0.5rem;
+    // margin-bottom: -1rem;
+    height: 0rem; //width: ancho, height: alto
+  }
+
+  .pos{
+    margin-top: -13px;
   }
 
   .columna {
-    height: 4rem;
+    height: 0rem;
+  }
+
+  .cabeza {
+    // width: 2rem;
+    height: 2.5rem;
+  }
+
+  .largo {
+    height: 0rem;
   }
 
   .ancho {
-    height: 2.5rem;
+    width: 20rem;
   }
 
   .center {
