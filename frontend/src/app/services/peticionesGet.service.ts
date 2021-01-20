@@ -11,9 +11,7 @@ export class peticionesGetService {
 
     ordenesDiarias: OrdenesDiarias = new OrdenesDiarias();
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(private http: HttpClient) {}
 
     leerOrdenesDiarias(date_init, date_end): Observable<OrdenesDiarias[]> {
         return this.http.get<OrdenesDiarias[]>('http://10.19.11.9:3003/api/scheduler/order?date_init=' + date_init + '&date_end=' + date_end + '')
@@ -74,6 +72,11 @@ export class peticionesGetService {
     editarCliente(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.put('http://10.19.11.9:3003/api/scheduler/client/', report);
+	}
+
+    editarResidencia(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/residence/', report);
 	}
 
 }

@@ -124,8 +124,6 @@ export class OrdenCompletaComponent implements OnInit {
         this.router.navigate(['/success']);
       });
 
-      console.log('paso');
-      console.log(this.report);
       
     } else {
       console.log(this.formulario);

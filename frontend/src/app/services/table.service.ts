@@ -10,21 +10,31 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class tableService {
 
-  ordenesDiarias: any[];
+  ordenesDiarias          : any[];
   ordenesDiariasPorTecnico: any[];
-  ordenesPorFecha: any[];
-  residencia: any[];
-  orden: any[];
-  index: any;
-  encargado: any;
-  fecha: any;
-  ordenCompleta: any[];
-  idOrden: any[];
-  idListaOrden: any;
-  rut_cliente: any;
-  usuario: any;
-  cantidad: any;
-  fechaClick: any;
+  ordenesPorFecha         : any[];
+  residencia              : any[];
+  orden                   : any[];
+  ordenCompleta           : any[];
+  idOrden                 : any[];
+  index                   : any;
+  encargado               : any;
+  fecha                   : any;
+  idListaOrden            : any;
+  rut_cliente             : any;
+  usuario                 : any;
+  rolUsuario              : any;
+  cantidad                : any;
+  fechaClick              : any;
+
+
+  setRolUsuario(valor: any) {
+    this.rolUsuario = valor;
+  }
+
+  getRolUsuario() {
+    return this.rolUsuario;
+  }
 
   setFechaClick(valor: any) {
     this.fechaClick = valor;
@@ -73,7 +83,7 @@ export class tableService {
   getIdListaOrden() {
     return this.idListaOrden;
   }
-  
+
   setRut_cliente(valor: any[]) {
     this.rut_cliente = valor;
   }

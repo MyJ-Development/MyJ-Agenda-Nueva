@@ -16,6 +16,7 @@ import { User } from '../../../@core/interfaces/common/users';
 import { AgregarOrdenComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-orden/agregar-orden.component';
 import { AgregarClienteComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-cliente/agregar-cliente.component';
 import { AgregarDireccionComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-direccion/agregar-direccion.component';
+import { tableService } from '../../../services/table.service';
 
 @Component({
   selector: 'ngx-header',
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: User;
+  permisos: boolean;
 
   themes = [
     {
@@ -58,7 +60,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private settingsService: SettingsData,
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
-              private mostrar: NbDialogService) {
+              private mostrar: NbDialogService,
+              private tableService: tableService) {
   }
 
   getMenuItems() {
@@ -70,6 +73,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.rolUsuario();
+
     this.currentTheme = this.themeService.currentTheme;
 
     this.userStore.onUserStateChange()
@@ -100,6 +106,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  rolUsuario(){
+    let rol = this.tableService.getRolUsuario();
+
+    if (rol === 'user') {
+      this.permisos = true;
+    }
   }
 
   changeTheme(themeName: string) {

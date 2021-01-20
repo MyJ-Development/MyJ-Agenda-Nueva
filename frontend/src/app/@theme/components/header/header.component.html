@@ -42,16 +42,15 @@
 
 <ng-template #templateRef>
   <nb-popover align="center">
-
     <div class="container">
       <button (click)="agregarOrden()" nbButton outline status="success">Agregar orden</button>
     </div>
-    <hr>
-    <div class="container">
+    <div *ngIf="permisos" class="container">
+      <hr>
       <button (click)="agregarCliente()" nbButton outline status="success">Agregar cliente</button>
+      <hr>
     </div>
-    <hr>
-    <div class="container">
+    <div *ngIf="permisos" class="container">
       <button (click)="agregarDireccion()" nbButton outline status="success">Agregar dirección</button>
     </div>
 

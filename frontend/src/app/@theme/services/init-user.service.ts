@@ -31,7 +31,9 @@ export class InitUserService {
                       && !!this.jsThemes.get(user.settings.themeName).variables.initialized) {
                       this.themeService.changeTheme(user.settings.themeName);
                       console.log('Usuario: ' + user.email);
+                      this.tableService.setRolUsuario(user.role);
                       this.tableService.setUsuario(user.email);
+                      console.log(user.role);
                     }
                   }
                 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 
 // Nebular/theme:
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { id } from '@swimlane/ngx-charts';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
@@ -39,10 +40,11 @@ export class MostrarClienteComponent implements OnInit {
   comunaArray        : any;
   macArray           : any;
   pppoeArray         : any;
-  report             : any;
+  reportCliente      : any;
+  reportResidencia   : any;
   usuario            : any;
   residencia_clientes: any[];
-  
+  arrayId_residencia : any;
 
   // Constructor:
   constructor(protected ref       : NbDialogRef<MostrarClienteComponent>,
@@ -102,9 +104,18 @@ export class MostrarClienteComponent implements OnInit {
     // Si el formulario es válido, ejecutar:
     if (this.formulario.valid) {
 
+      let res = '';
+
+      // Almacena los datos de residencia en arreglos, en caso de tener más de una residencia:
+      let arregloId       : any[] = this.formulario.value['id_residence'];
+      let arregloDireccion: any[] = this.formulario.value['direccion_cliente'];
+      let arregloComuna   : any[] = this.formulario.value['comuna_cliente'];
+      let arregloMac      : any[] = this.formulario.value['mac_cliente'];
+      let arregloPppoe    : any[] = this.formulario.value['pppoe_cliente'];
+
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
-      this.report = {
+      this.reportCliente = {
         rut       : this.formulario.value['rut_cliente'],
         email     : this.formulario.value['correo_cliente'],
         nombre    : this.formulario.value['nombre_cliente'],
@@ -114,17 +125,36 @@ export class MostrarClienteComponent implements OnInit {
         updated_by: this.usuario
       };
 
-      console.log(this.report);
 
-      let res = '';
+      // Recorre el arreglo de residencias y envía los datos a la API:
+      for (let i = 0; i < arregloId.length; i++) {
+
+        /* Se define la estructura de datos a enviar al servicio y 
+        se le asignan los datos obtenidos del formulario: */
+        this.reportResidencia = {
+          id        : arregloId[i],
+          direccion : arregloDireccion[i],
+          comuna    : arregloComuna[i],
+          mac       : arregloMac[i],
+          pppoe     : arregloPppoe[i],
+        };
+
+        // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
+        this.service.editarResidencia(this.reportResidencia).subscribe(data => {
+          res = data;
+          console.log('res');
+          console.log(res);
+          this.router.navigate(['/success']);
+        });
+      };
 
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-      this.service.editarCliente(this.report).subscribe(data => {
+      this.service.editarCliente(this.reportCliente).subscribe(data => {
         res = data;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
-      });
+      });      
 
       // Si los campos tienen un error:
     } else {
@@ -138,27 +168,33 @@ export class MostrarClienteComponent implements OnInit {
 
     // Almacena en variable global los datos de residencia del cliente, obtenidos del servicio indicado:
     this.residencia_clientes = this.tableService.getResidencia();
+
+    // Almacena en variable local la direccion obtenida de los datos de residencia del cliente:
+    let id_residencia = this.residencia_clientes.map((x) => x.id)
+
+    // Almacena la direccion en un array del formBuilder:
+    this.arrayId_residencia = this.fb.array(id_residencia);
     
     // Almacena en variable local la direccion obtenida de los datos de residencia del cliente:
-    let direccion = this.residencia_clientes.map((x) => [x.direccion]);
+    let direccion = this.residencia_clientes.map((x) => x.direccion);
 
     // Almacena la direccion en un array del formBuilder:
     this.direccionArray = this.fb.array(direccion);
 
     // Almacena en variable local la comuna obtenida de los datos de residencia del cliente:
-    let comuna = this.residencia_clientes.map((x) => [x.comuna]);
+    let comuna = this.residencia_clientes.map((x) => x.comuna);
 
     // Almacena la comuna en un array del formBuilder:
     this.comunaArray = this.fb.array(comuna);
    
     // Almacena en variable local la mac obtenida de los datos de residencia del cliente:
-    let mac = this.residencia_clientes.map((x) => [x.mac]);
+    let mac = this.residencia_clientes.map((x) => x.mac);
 
     // Almacena la mac en un array del formBuilder:
     this.macArray = this.fb.array(mac);
    
     // Almacena en variable local el pppoe obtenido de los datos de residencia del cliente:
-    let pppoe = this.residencia_clientes.map((x) => [x.pppoe]);
+    let pppoe = this.residencia_clientes.map((x) => x.pppoe);
 
     // Almacena el pppoe en un array del formBuilder:
     this.pppoeArray = this.fb.array(pppoe);
@@ -199,11 +235,12 @@ export class MostrarClienteComponent implements OnInit {
       nombre_cliente   : [this.mayus(
                           this.formato(this.ordenCliente['client_order']['nombre'])), Validators.required],
       telefono1        : [this.ordenCliente['client_order']['contacto1'], Validators.required],
-      telefono2        : [this.ordenCliente['client_order']['contacto2'], Validators.required],
+      telefono2        : [this.ordenCliente['client_order']['contacto2']],
       correo_cliente   : [this.ordenCliente['client_order']['email'], Validators.required],
       creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true}, 
                           Validators.required],
       actualizado_por  : [{value: this.usuario, disabled: true}, Validators.required],
+      id_residence     :  this.arrayId_residencia,
       direccion_cliente:  this.direccionArray,
       comuna_cliente   :  this.comunaArray,
       mac_cliente      :  this.macArray,

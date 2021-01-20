@@ -96,7 +96,7 @@ export class MostrarOrdenComponent implements OnInit {
   actualizarOrden() {
 
     // Si el formulario es válido, ejecutar:
-    if (this.formulario.valid) {
+    if ((this.formulario.valid) || (this.formulario.controls['fecha_ejecucion'].status == "INVALID")) {
 
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
