@@ -11,11 +11,16 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { PanelAdminComponent } from './e-commerce/panel-admin/panel-admin.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
+    {
+      path: 'panel-admin',
+      component: PanelAdminComponent,
+    },
     {
       path: 'dashboard',
       component: ECommerceComponent,

@@ -146,7 +146,7 @@ export class AgregarOrdenComponent implements OnInit {
 
     this.formulario = this.fb.group({
 
-      rut_cliente      : [this.rut_cli, Validators.required],
+      rut_cliente      : ['', Validators.required],
       direccion_cliente: ['', Validators.required],
       encargado        : ['', Validators.required],
       creado_por       : [{value: this.usuario, disabled: true}, Validators.required],

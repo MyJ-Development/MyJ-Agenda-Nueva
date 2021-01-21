@@ -17,19 +17,27 @@
 </div>
 
 
-<div class="header-container head">
-  <button nbButton outline status="info" [nbPopover]="templateRef">Agregar</button>
-</div>
-
-
 <div class="header-container">
   <nb-actions size="small">
 
-    <nb-action class="control-item">
-      <nb-search type="rotate-layout"></nb-search>
+    <nb-action>
+      <button (click)="home()" class="control-item" nbButton ghost>
+        <nb-icon icon="home-outline"></nb-icon>
+      </button>
     </nb-action>
-    <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action>
+
+    <nb-action>
+      <button class="control-item" nbButton [nbPopover]="agregar" nbPopoverPlacement="bottom" ghost>
+        <nb-icon icon="file-add-outline"></nb-icon>
+      </button>
+    </nb-action>
+
+    <nb-action >
+      <button class="control-item" nbButton [nbPopover]="admin" nbPopoverPlacement="bottom" ghost>
+        <nb-icon icon="settings-outline"></nb-icon>
+      </button>
+    </nb-action>
+
     <nb-action class="user-action"  *nbIsGranted="['view', 'current-user']">
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
@@ -37,22 +45,32 @@
                [picture]="user?.picture | ngxAuthToken | async">
       </nb-user>
     </nb-action>
+
   </nb-actions>
 </div>
 
-<ng-template #templateRef>
+<ng-template #agregar>
   <nb-popover align="center">
     <div class="container">
-      <button (click)="agregarOrden()" nbButton outline status="success">Agregar orden</button>
+      <button shape="semi-round" (click)="agregarOrden()" nbButton outline status="success">Agregar orden</button>
     </div>
     <div *ngIf="permisos" class="container">
       <hr>
-      <button (click)="agregarCliente()" nbButton outline status="success">Agregar cliente</button>
+      <button shape="semi-round" (click)="agregarCliente()" nbButton outline status="success">Agregar cliente</button>
       <hr>
     </div>
     <div *ngIf="permisos" class="container">
-      <button (click)="agregarDireccion()" nbButton outline status="success">Agregar dirección</button>
+      <button shape="semi-round" (click)="agregarDireccion()" nbButton outline status="success">Agregar dirección</button>
     </div>
 
+  </nb-popover>
+</ng-template>
+
+
+<ng-template #admin>
+  <nb-popover align="center">
+    <div class="container">
+      <button shape="semi-round" (click)="panel()" nbButton outline status="success">Panel de administración</button>
+    </div>
   </nb-popover>
 </ng-template>

@@ -17,6 +17,7 @@ import { AgregarOrdenComponent } from '../../../pages/e-commerce/tree-grid-week/
 import { AgregarClienteComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-cliente/agregar-cliente.component';
 import { AgregarDireccionComponent } from '../../../pages/e-commerce/tree-grid-week/agregar-direccion/agregar-direccion.component';
 import { tableService } from '../../../services/table.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -61,7 +62,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
               private mostrar: NbDialogService,
-              private tableService: tableService) {
+              private tableService: tableService,
+              private router: Router) {
   }
 
   getMenuItems() {
@@ -70,6 +72,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       { title: 'Profile', link: userLink, queryParams: { profile: true } },
       { title: 'Log out', link: '/auth/logout' },
     ];
+  }
+
+  panel(){
+    this.router.navigate(['/pages/panel-admin'])
+  }
+
+  home(){
+    this.router.navigate(['/pages/dashboard'])
   }
 
   ngOnInit() {

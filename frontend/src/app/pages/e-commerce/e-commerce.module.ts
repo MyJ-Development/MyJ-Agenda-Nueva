@@ -96,6 +96,8 @@ import { CaracteresPipe } from './pipes/caracteres.pipe';
 import { MayusPipe } from './pipes/mayus.pipe';
 import { AgregarClienteComponent } from './tree-grid-week/agregar-cliente/agregar-cliente.component';
 import { AgregarDireccionComponent } from './tree-grid-week/agregar-direccion/agregar-direccion.component';
+import { PanelAdminComponent } from './panel-admin/panel-admin.component';
+import { TipoOrdenComponent } from './panel-admin/tipo-orden/tipo-orden.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -178,6 +180,8 @@ import { AgregarDireccionComponent } from './tree-grid-week/agregar-direccion/ag
     MayusPipe,
     AgregarClienteComponent,
     AgregarDireccionComponent,
+    PanelAdminComponent,
+    TipoOrdenComponent
   ],
   providers: [
     CountryOrdersMapService,
