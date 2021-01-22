@@ -1,31 +1,55 @@
 @import "../../../../@theme/styles/themes";
 
 @include nb-install-component() {
-    .buttons-row {
-        margin: -0.5rem;
+    nb-card {
+        transform: translate3d(0, 0, 0);
+        // height: 505px;
+        display: flex; //agranda al tamaño del contenido.
     }
 
-    button[nbButton] {
-        margin: 0.5rem;
-    }
-
-    .action-icon {
-        @include nb-ltr(margin-right, 0.5rem);
-        @include nb-rtl(margin-left, 0.5rem);
-    }
-
-    .actions-card {
-        height: 8rem;
-    }
-
-    nb-card-body {
-        padding-top: 0;
-
-        > * {
-            margin-top: 1rem;
+    ::ng-deep .example-smart-table {
+        .form-control {
+            color: nb-theme(form-control-color);
         }
     }
-    nb-card {
-        width: 500px;
-    }
+
+    // .h5s{
+    //     margin-bottom: 10px;
+    // }
+
+    
 }
+
+:host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
+    padding-right: 0rem !important;
+    padding-left: 0rem !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    text-align: center;
+    background-color: #252547;
+}
+
+:host /deep/ ng2-smart-table table tr td {
+    text-align: center;
+    font-size: 14px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+:host /deep/ ng2-smart-table a.ng2-smart-action {
+    block-size: 20px;
+}
+
+:host /deep/ ng2-smart-table .ng2-smart-actions {
+    block-size: 1px;
+}
+
+:host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    inline-size: 330px;
+}
+
+

@@ -4,14 +4,14 @@
 
 @include nb-install-component() {
   nb-card {
-    display       : flex;
-    flex-direction: column;
-    margin-left  : 1rem;
-    margin-top   : -4px;
+    display: flex !important;
+    margin-left: 1rem;
+    margin-top: -4px;
     margin-bottom: 6px;
-    width        : 48rem;
+    // width        : 48rem;
     height       : 262px;
   }
+
 
   .input-largo {
     width: 12rem;
@@ -31,7 +31,7 @@
     height: 0rem; //width: ancho, height: alto
   }
 
-  .pos{
+  .pos {
     margin-top: -13px;
   }
 
@@ -67,10 +67,27 @@
 
   .boton {
     margin-left: 12rem;
-    margin-top : -57px;
+    margin-top: -57px;
   }
 }
 
 :host /deep/ ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
-  margin-bottom: -65px !important;
+  margin-bottom: -42px !important;
+}
+
+:host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  text-align: center;
+  background-color: #252547;
+  font-size: 14px;
+  font-weight: bolder;
+}
+
+:host /deep/ ng2-smart-table table tr td  { 
+  font-size: 13px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }

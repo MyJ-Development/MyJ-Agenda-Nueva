@@ -98,6 +98,11 @@ import { AgregarClienteComponent } from './tree-grid-week/agregar-cliente/agrega
 import { AgregarDireccionComponent } from './tree-grid-week/agregar-direccion/agregar-direccion.component';
 import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 import { TipoOrdenComponent } from './panel-admin/tipo-orden/tipo-orden.component';
+import { TecnicosComponent } from './panel-admin/tecnicos/tecnicos.component';
+import { EstadoClienteComponent } from './panel-admin/estado-cliente/estado-cliente.component';
+import { EstadoTicketComponent } from './panel-admin/estado-ticket/estado-ticket.component';
+import { MedioPagoComponent } from './panel-admin/medio-pago/medio-pago.component';
+import { PrioridadComponent } from './panel-admin/prioridad/prioridad.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -181,7 +186,12 @@ import { TipoOrdenComponent } from './panel-admin/tipo-orden/tipo-orden.componen
     AgregarClienteComponent,
     AgregarDireccionComponent,
     PanelAdminComponent,
-    TipoOrdenComponent
+    TipoOrdenComponent,
+    TecnicosComponent,
+    EstadoClienteComponent,
+    EstadoTicketComponent,
+    MedioPagoComponent,
+    PrioridadComponent
   ],
   providers: [
     CountryOrdersMapService,

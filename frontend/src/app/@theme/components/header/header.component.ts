@@ -83,6 +83,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.toggleSidebar();
 
     this.rolUsuario();
 
@@ -137,6 +138,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
+    
+    
     this.layoutService.changeLayoutSize();
 
     return false;

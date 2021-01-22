@@ -12,6 +12,10 @@
     }
   }
 
+  nb-card-header{
+    height: 100px;
+  }
+
   button[nbTreeGridRowToggle] {
     background: transparent;
     border    : none;
@@ -22,8 +26,12 @@
     margin: 1rem -9rem;
   }
 
+  .search-label {
+    display: block;
+  }
+
   .search-input {
-    margin: 1rem;
+    margin-bottom: 1rem;
   }
 
   .nb-column-name {
@@ -107,10 +115,10 @@
   }
 
   .nb-tree-grid-header-row {
-    background-color: rgba(45, 21, 73, 0.459);
+    background-color: #252547;
     color: rgb(255, 255, 255);
     font-family: nb-theme(tree-grid-header-text-font-family);
-    font-size: nb-theme(tree-grid-header-text-font-size);
+    font-size: large;
     font-weight: nb-theme(tree-grid-header-text-font-weight);
     line-height: nb-theme(tree-grid-header-text-line-height);
   }
@@ -119,7 +127,7 @@
     background-color: nb-theme(tree-grid-row-background-color);
     color: nb-theme(tree-grid-row-text-color);
     font-family: nb-theme(tree-grid-row-text-font-family);
-    font-size: nb-theme(tree-grid-row-text-font-size);
+    font-size: 13px;
     font-weight: nb-theme(tree-grid-row-text-font-weight);
     line-height: nb-theme(tree-grid-row-text-line-height);
     &:hover {
@@ -135,8 +143,8 @@
   .nb-tree-grid-footer-cell {
     height: nb-theme(tree-grid-row-min-height);
     padding: nb-theme(tree-grid-cell-padding);
-    border-width: 2px;
-    border-color: rgba(0, 0, 0, 0.295);
+    border-width: 1px;
+    border-color: #0095ff;
   }
 }
 

@@ -46,7 +46,7 @@ export class TreeGridShowcaseComponent {
     actions: {
 
       // Se define el título que aparecerá en la columna de acciones:
-      columnTitle: 'Ver más',
+      columnTitle: 'Ver',
 
       // Acciones por defecto:
       filter: false,
@@ -66,7 +66,7 @@ export class TreeGridShowcaseComponent {
     // Define las columnas que queremos mostrar en la tabla (Título/tipo de dato):
     columns: {
       id_orden: {
-        title: 'Id orden',
+        title: 'Id',
         type : 'string',
       },
       nombre: {

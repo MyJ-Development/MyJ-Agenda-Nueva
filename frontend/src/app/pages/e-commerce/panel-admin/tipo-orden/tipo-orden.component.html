@@ -1,11 +1,20 @@
 
 
 <nb-card accent="success">
-  <nb-card-header>Agregar tipo de orden</nb-card-header>
-  <nb-card-body>
-    <div class="form-group">
-      <label class="label">Nombre del tipo orden</label>
-      <input type="text" nbInput fieldSize="small" shape="semi-round" status="success" placeholder="Nombre tipo orden">
+  <nb-card-header>
+    <div class="h5s">
+      <h5>Agregar tipo de orden</h5>
     </div>
+    <!-- <input #search class="search" type="text" placeholder="Buscar por nombre o id" (keydown.enter)="buscar(search.value)"> -->
+  </nb-card-header>
+  <nb-card-body>
+
+    <ng2-smart-table class="example-smart-table"
+                     [settings]="settings"
+                     [source]="source"
+                     (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+
   </nb-card-body>
 </nb-card>
+
