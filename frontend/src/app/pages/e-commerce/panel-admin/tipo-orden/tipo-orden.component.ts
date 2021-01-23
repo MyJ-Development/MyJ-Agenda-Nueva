@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
+import { Component } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
@@ -7,9 +7,12 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
   templateUrl: './tipo-orden.component.html',
   styleUrls: ['./tipo-orden.component.scss']
 })
-export class TipoOrdenComponent implements OnInit {
+export class TipoOrdenComponent {
 
   settings = {
+
+    hideSubHeader: false,
+
     pager: {
       display: true,
       perPage: 5
@@ -28,32 +31,29 @@ export class TipoOrdenComponent implements OnInit {
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
+    actions: {
+      filter: true,
+    },
     columns: {
       id: {
         title: 'ID',
-        filter: false
       },
       tipo_orden: {
         title: 'Tipo orden',
-        filter: false
+      },
+      peso: {
+        title: 'Peso',
       },
     }
   };
 
   data: any[] = [];
   tipo_orden: any;
-  orden: any;
   source: LocalDataSource;
 
   constructor(private service: peticionesGetService) {
 
     this.datos();
-
-  }
-
-  ngOnInit(): void {
-
-
 
   }
 
@@ -66,7 +66,7 @@ export class TipoOrdenComponent implements OnInit {
       this.tipo_orden = x;
 
       for (let i = 0; i < this.tipo_orden.length; i++) {
-        
+
         this.data.push({
           id: this.tipo_orden[i]['id'],
           tipo_orden: this.tipo_orden[i]['descripcion']

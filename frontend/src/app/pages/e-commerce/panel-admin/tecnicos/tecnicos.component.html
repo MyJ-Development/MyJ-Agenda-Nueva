@@ -1,9 +1,19 @@
 
+
 <nb-card accent="success">
-    <nb-card-header>
-        <h5>Agregar técnico</h5>
-    </nb-card-header>
+  <nb-card-header>
+    <div class="h5s">
+      <h5>Técnicos</h5>
+    </div>
+    <!-- <input #search class="search" type="text" placeholder="Buscar por nombre o id" (keydown.enter)="buscar(search.value)"> -->
+  </nb-card-header>
   <nb-card-body>
-    Body
+
+    <ng2-smart-table class="example-smart-table"
+                     [settings]="settings"
+                     [source]="source"
+                     (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+
   </nb-card-body>
 </nb-card>
