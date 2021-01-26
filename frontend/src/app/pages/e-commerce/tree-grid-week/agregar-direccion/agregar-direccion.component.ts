@@ -28,6 +28,7 @@ export class AgregarDireccionComponent {
   // Variables:
   formulario: FormGroup;
   report    : any;
+  mostrar: boolean = false;
 
 
   // Constructor:

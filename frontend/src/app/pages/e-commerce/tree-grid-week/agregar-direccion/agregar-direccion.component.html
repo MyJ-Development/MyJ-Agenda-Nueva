@@ -1,10 +1,18 @@
 
-<div class="row">
+
   <nb-card accent="success">
-    <nb-card-header>
-      <h5 class="h5s">Agregar nueva dirección</h5>
-    </nb-card-header>
-    <nb-card-body >
+  <nb-card-header>
+    <div class="row">
+      <h5>Agregar direccion</h5>
+      <button class="offset-1 control-item" ghost nbButton (click)="mostrar=true">
+        <nb-icon icon="arrow-downward-outline"></nb-icon>
+      </button>
+      <button class="control-item" ghost nbButton (click)="mostrar=false">
+        <nb-icon icon="arrow-upward-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+    <nb-card-body *ngIf="mostrar">
 
       <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardar()">
         <div class="row">
@@ -106,4 +114,3 @@
 
     </nb-card-body>
   </nb-card>
-</div>

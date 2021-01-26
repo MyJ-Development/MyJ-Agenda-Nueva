@@ -15,7 +15,7 @@ export class TipoOrdenComponent {
 
     pager: {
       display: true,
-      perPage: 5
+      perPage: 7
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -50,6 +50,7 @@ export class TipoOrdenComponent {
   data: any[] = [];
   tipo_orden: any;
   source: LocalDataSource;
+  mostrar: boolean = false;
 
   constructor(private service: peticionesGetService) {
 

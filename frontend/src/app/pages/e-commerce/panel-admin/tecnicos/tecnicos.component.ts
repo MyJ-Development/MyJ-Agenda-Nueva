@@ -62,6 +62,7 @@ export class TecnicosComponent {
   data: any[] = [];
   tecnicos: any;
   source: LocalDataSource;
+  mostrar: boolean = false;
 
   constructor(private service: peticionesGetService) {
 

@@ -7,6 +7,10 @@
         // height: 100%;
     }
 
+    nb-card-body {
+        margin-left: -10px;
+    }
+
     ::ng-deep .example-smart-table {
         .form-control {
             color: nb-theme(form-control-color);
