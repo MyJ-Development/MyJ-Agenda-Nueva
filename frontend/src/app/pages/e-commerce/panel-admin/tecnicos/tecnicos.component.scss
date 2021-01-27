@@ -4,13 +4,21 @@
     nb-card {
         transform: translate3d(0, 0, 0);
         display: flex; //agranda al tamaño del contenido.
-        // height: 100%;
+    }
+
+    nb-card-body {
+        min-height: 570px;
+        max-height: 570px;
     }
 
     ::ng-deep .example-smart-table {
         .form-control {
             color: nb-theme(form-control-color);
         }
+    }
+
+    .pad {
+        padding-left: 13px;
     }
 
 }

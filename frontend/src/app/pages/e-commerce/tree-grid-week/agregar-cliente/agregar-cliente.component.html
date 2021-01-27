@@ -2,21 +2,13 @@
 
   <nb-card accent="success">
   <nb-card-header>
-    <div class="row">
       <h5>Agregar cliente</h5>
-      <button class="offset-1 control-item" ghost nbButton (click)="mostrar=true">
-        <nb-icon icon="arrow-downward-outline"></nb-icon>
-      </button>
-      <button class="control-item" ghost nbButton (click)="mostrar=false">
-        <nb-icon icon="arrow-upward-outline"></nb-icon>
-      </button>
-    </div>
   </nb-card-header>
-    <nb-card-body *ngIf="mostrar">
+    <nb-card-body>
 
       <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardar()">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="nombre_cliente" class="label">Nombre cliente:</label>
 
@@ -30,7 +22,7 @@
               </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="rut_cliente" class="label">Rut cliente:</label>
 
@@ -43,9 +35,25 @@
                         fieldSize="small">
               </div>
             </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="correo_cliente" class="label">Correo:</label>
+
+                <input  formControlName="correo_cliente"
+                        type="text" 
+                        nbInput 
+                        fullWidth
+                        status="info"
+                        shape="semi-round"
+                        fieldSize="small">
+              </div>
+            </div>
         </div>
+
         <div class="row">
-            <div class="col-sm-6">
+
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="telefono1" class="label">Teléfono 1:</label>
 
@@ -59,8 +67,8 @@
 
               </div>
             </div>
-            
-            <div class="col-sm-6">
+
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="telefono2" class="label">Teléfono 2:</label>
 
@@ -73,23 +81,10 @@
                         fieldSize="small">
               </div>  
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="correo_cliente" class="label">Correo:</label>
 
-                <input  formControlName="correo_cliente"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
-              </div>
-            </div>
 
-            <div class="col-sm-6">
+
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="creado_por" class="label">Creado por:</label>
 
@@ -105,7 +100,7 @@
         </div>
         <hr>
         <div class="form-group row" formGroupName="residencia">
-            <div class="col-sm-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="direccion_cliente" class="label">Dirección:</label>
 
@@ -119,7 +114,7 @@
               </div>
             </div>
             
-            <div class="col-sm-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="comuna_cliente" class="label">Comuna:</label>
 
@@ -133,7 +128,7 @@
               </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="mac_cliente" class="label">Mac:</label>
 
@@ -145,10 +140,9 @@
                         shape="semi-round"
                         fieldSize="small">
               </div>
-              <hr>
             </div>
-            
-            <div class="col-sm-6">
+            <hr>
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="pppoe_cliente" class="label">Pppoe:</label>
 
@@ -161,15 +155,14 @@
                         fieldSize="small">
 
               </div>
-              <hr>
             </div>
         </div>
 
-        <div class="row restar">
-            <div class="col-sm-4">
-              <div class="form-group">
-
+        <div class="row">
+            <div class="col-md-4 offset-4">
+              <div class="form-group pd">
                 <button type="button" 
+                        class="boton"
                         nbButton 
                         fullWidth 
                         status="success" 
@@ -183,6 +176,7 @@
               </div>
             </div>
         </div>
+
       </form>
 
     </nb-card-body>

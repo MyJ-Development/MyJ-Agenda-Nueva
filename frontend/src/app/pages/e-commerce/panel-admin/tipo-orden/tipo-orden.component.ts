@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
@@ -21,6 +22,7 @@ export class TipoOrdenComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -49,10 +51,12 @@ export class TipoOrdenComponent {
 
   data: any[] = [];
   tipo_orden: any;
+  report: any;
   source: LocalDataSource;
   mostrar: boolean = false;
 
-  constructor(private service: peticionesGetService) {
+  constructor(private service: peticionesGetService,
+              private router: Router) {
 
     this.datos();
 
@@ -66,11 +70,14 @@ export class TipoOrdenComponent {
     this.service.leerTipoOrdenes().subscribe((x) => {
       this.tipo_orden = x;
 
+      console.log(this.tipo_orden);
+
       for (let i = 0; i < this.tipo_orden.length; i++) {
 
         this.data.push({
           id: this.tipo_orden[i]['id'],
-          tipo_orden: this.tipo_orden[i]['descripcion']
+          tipo_orden: this.tipo_orden[i]['descripcion'],
+          peso: this.tipo_orden[i]['peso']
         })
 
       }
@@ -94,9 +101,39 @@ export class TipoOrdenComponent {
         field: 'tipo_orden',
         search: query
       },
+      {
+        field: 'peso',
+        search: query
+      },
     ], false);
   }
 
+
+  onCreateConfirm(event) {
+    if (window.confirm('Estás seguro que quieres crear este tipo de orden?')) {
+
+      this.report = {
+        descripcion: event.newData.tipo_orden,
+        peso: event.newData.peso
+      };
+
+      let res = '';
+
+      this.service.agregarTipoOrden(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
+      console.log(this.report);
+
+      event.confirm.resolve(event.newData);
+
+    } else {
+      event.confirm.reject();
+    }
+  }
 
   onDeleteConfirm(event): void {
     let dato = event.data['tipo_orden'];

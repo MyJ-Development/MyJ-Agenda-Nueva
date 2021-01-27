@@ -34,7 +34,7 @@
           <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
             {{row.data[column] | slice: 0: -3 || '-'}}
             <hr>
-            <button nbButton (click)="open(index, row.data[column], column)">
+            <button class="boton" nbButton (click)="open(index, row.data[column], column)">
               {{row.data[column] | slice: -2: -1}}
             </button>
           </td>

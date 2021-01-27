@@ -103,6 +103,7 @@ import { EstadoClienteComponent } from './panel-admin/estado-cliente/estado-clie
 import { EstadoTicketComponent } from './panel-admin/estado-ticket/estado-ticket.component';
 import { MedioPagoComponent } from './panel-admin/medio-pago/medio-pago.component';
 import { PrioridadComponent } from './panel-admin/prioridad/prioridad.component';
+import { UsuariosComponent } from './panel-admin/usuarios/usuarios.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -191,7 +192,8 @@ import { PrioridadComponent } from './panel-admin/prioridad/prioridad.component'
     EstadoClienteComponent,
     EstadoTicketComponent,
     MedioPagoComponent,
-    PrioridadComponent
+    PrioridadComponent,
+    UsuariosComponent,
   ],
   providers: [
     CountryOrdersMapService,

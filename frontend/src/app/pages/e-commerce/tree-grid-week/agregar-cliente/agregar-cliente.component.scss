@@ -1,6 +1,12 @@
 @import "../../../../@theme/styles/themes";
 
 @include nb-install-component() {
- 
+
+    nb-card {
+        margin-top: 1rem;
+        max-width: 700px;
+        max-height: 620px;
+    }
+
 
 }

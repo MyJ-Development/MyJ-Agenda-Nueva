@@ -2,7 +2,7 @@
 <nb-card accent="success">
    <nb-card-header>
     <div class="row">
-      <h5 class="pad">Estado ticket</h5>
+      <h5 class="pad">Usuarios</h5>
       <button class="offset-1 control-item" ghost nbButton (click)="mostrar=true">
         <nb-icon icon="arrow-downward-outline"></nb-icon>
       </button>
@@ -12,14 +12,6 @@
     </div>
   </nb-card-header>
   <nb-card-body *ngIf="mostrar">
-
-    <ng2-smart-table class="example-smart-table"
-                     [settings]="settings"
-                     [source]="source"
-                     (deleteConfirm)="onDeleteConfirm($event)"
-                     (createConfirm)="onCreateConfirm($event)">
-    </ng2-smart-table>
-
+    Body
   </nb-card-body>
 </nb-card>
-

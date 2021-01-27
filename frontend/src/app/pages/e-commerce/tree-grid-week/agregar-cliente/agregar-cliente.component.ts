@@ -31,7 +31,6 @@ export class AgregarClienteComponent {
   reportResidencia: any;
   correo_         : any;
   telefono2_      : any;
-  mostrar: boolean = false;
 
 
   // Constructor:
