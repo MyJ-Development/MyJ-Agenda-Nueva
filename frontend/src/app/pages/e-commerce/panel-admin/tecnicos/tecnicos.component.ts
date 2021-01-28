@@ -19,7 +19,9 @@ export class TecnicosComponent {
       perPage: 5
     },
     actions: {
+      columnTitle: 'Más',
       filter: true,
+      delete: false,
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -32,13 +34,10 @@ export class TecnicosComponent {
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
     },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
     columns: {
       id: {
         title: 'ID',
+        width: '12px',
       },
       rut: {
         title: 'Rut',
@@ -72,8 +71,6 @@ export class TecnicosComponent {
 
     this.datos();
   }
-
-
 
   datos() {
 

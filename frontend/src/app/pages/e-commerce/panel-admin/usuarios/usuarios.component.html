@@ -12,6 +12,14 @@
     </div>
   </nb-card-header>
   <nb-card-body *ngIf="mostrar">
-    Body
+
+    <ng2-smart-table class="example-smart-table"
+                     [settings]="settings"
+                     [source]="source"
+                     (deleteConfirm)="onDeleteConfirm($event)"
+                     (createConfirm)="onCreateConfirm($event)">
+    </ng2-smart-table>
+
   </nb-card-body>
 </nb-card>
+

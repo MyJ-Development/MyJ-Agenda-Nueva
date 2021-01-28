@@ -55,36 +55,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userMenu = this.getMenuItems();
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userStore: UserStore,
-              private settingsService: SettingsData,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService,
-              private mostrar: NbDialogService,
-              private tableService: tableService,
-              private router: Router) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userStore: UserStore,
+    private settingsService: SettingsData,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService,
+    private mostrar: NbDialogService,
+    private tableService: tableService,
+    private router: Router) {
   }
 
   getMenuItems() {
-    const userLink = this.user ?  '/pages/users/current/' : '';
+    const userLink = this.user ? '/pages/users/current/' : '';
     return [
       { title: 'Profile', link: userLink, queryParams: { profile: true } },
       { title: 'Log out', link: '/auth/logout' },
     ];
   }
 
-  panel(){
+  panel() {
     this.router.navigate(['/pages/panel-admin'])
   }
 
-  home(){
+  home() {
     this.router.navigate(['/pages/dashboard'])
   }
 
   ngOnInit() {
-    this.toggleSidebar();
-
     this.rolUsuario();
 
     this.currentTheme = this.themeService.currentTheme;
@@ -119,7 +117,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  rolUsuario(){
+  rolUsuario() {
     let rol = this.tableService.getRolUsuario();
 
     if (rol === 'user') {
@@ -138,8 +136,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
-    
-    
+
+
     this.layoutService.changeLayoutSize();
 
     return false;
@@ -150,17 +148,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  agregarOrden(){
+  agregarOrden() {
 
     this.mostrar.open(AgregarOrdenComponent)
   }
 
-  agregarCliente(){
+  agregarCliente() {
 
     this.mostrar.open(AgregarClienteComponent)
   }
 
-  agregarDireccion(){
+  agregarDireccion() {
 
     this.mostrar.open(AgregarDireccionComponent)
   }

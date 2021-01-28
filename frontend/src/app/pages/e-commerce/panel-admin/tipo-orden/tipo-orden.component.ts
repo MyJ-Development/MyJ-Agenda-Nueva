@@ -16,7 +16,7 @@ export class TipoOrdenComponent {
 
     pager: {
       display: true,
-      perPage: 7
+      perPage: 5
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -28,23 +28,37 @@ export class TipoOrdenComponent {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+      confirmSave: true,
     },
     actions: {
+      columnTitle: 'Más',
       filter: true,
+      delete: false
     },
     columns: {
       id: {
         title: 'ID',
+        type: 'html',
+        width: '10px',
       },
       tipo_orden: {
         title: 'Tipo orden',
+        width: '40px',
       },
       peso: {
         title: 'Peso',
+        width: '30px',
+      },
+      activo: {
+        title: 'Activo',
+        width: '40px',
+        editor: {
+          type: 'checkbox',
+          config: {
+            true: true,
+            false: false,
+          },
+        },
       },
     }
   };
@@ -56,11 +70,12 @@ export class TipoOrdenComponent {
   mostrar: boolean = false;
 
   constructor(private service: peticionesGetService,
-              private router: Router) {
+    private router: Router) {
 
     this.datos();
 
-  }
+  }    
+
 
   datos() {
 
@@ -68,16 +83,16 @@ export class TipoOrdenComponent {
 
 
     this.service.leerTipoOrdenes().subscribe((x) => {
-      this.tipo_orden = x;
 
-      console.log(this.tipo_orden);
+      this.tipo_orden = x;
 
       for (let i = 0; i < this.tipo_orden.length; i++) {
 
         this.data.push({
           id: this.tipo_orden[i]['id'],
           tipo_orden: this.tipo_orden[i]['descripcion'],
-          peso: this.tipo_orden[i]['peso']
+          peso: this.tipo_orden[i]['peso'],
+          activo: this.tipo_orden[i]['active']
         })
 
       }
@@ -105,6 +120,10 @@ export class TipoOrdenComponent {
         field: 'peso',
         search: query
       },
+      {
+        field: 'activo',
+        search: query
+      },
     ], false);
   }
 
@@ -114,7 +133,8 @@ export class TipoOrdenComponent {
 
       this.report = {
         descripcion: event.newData.tipo_orden,
-        peso: event.newData.peso
+        peso: event.newData.peso,
+        active: event.newData.activo,
       };
 
       let res = '';
@@ -126,7 +146,6 @@ export class TipoOrdenComponent {
         this.router.navigate(['/pages/panel-admin']);
       });
 
-      console.log(this.report);
 
       event.confirm.resolve(event.newData);
 
@@ -135,10 +154,29 @@ export class TipoOrdenComponent {
     }
   }
 
-  onDeleteConfirm(event): void {
-    let dato = event.data['tipo_orden'];
-    if (window.confirm(`Estás seguro que quieres eliminar ${dato}?`)) {
-      event.confirm.resolve();
+
+  onSaveConfirm(event) {
+    if (window.confirm('Guardar cambios establecidos?')) {
+
+      this.report = {
+        id: event.newData.id,
+        descripcion: event.newData.tipo_orden,
+        peso: event.newData.peso,
+        active: event.newData.activo,
+      };
+
+      let res = '';
+
+      this.service.editarTipoOrden(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
+      console.log(this.report);
+
+      event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
     }

@@ -7,8 +7,9 @@
     }
 
     nb-card-body {
-        min-height: 570px;
-        max-height: 570px;
+        padding-top: 35px;
+        min-height: 450px;
+        max-height: 450px;
     }
 
     ::ng-deep .example-smart-table {
@@ -40,8 +41,8 @@
 }
 
 :host /deep/ ng2-smart-table a.ng2-smart-action {
-    font-size: smaller;
-    block-size: 25px;
+    width: 37px;
+    height: 25px;
 }
 
 :host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
@@ -52,43 +53,34 @@
     inline-size: 330px;
 }
 
-
-
 :host /deep/ table-cell-edit-mode {
     font-size: small;
 }
 
 :host /deep/ .id .ng2-smart-filter {
     font-size: smaller;
-    width: 65px !important;
 }
 
 :host /deep/ .rut .ng2-smart-filter {
     font-size: smaller;
-    width: 85px !important;
 }
 
 :host /deep/ .nombre .ng2-smart-filter {
     font-size: smaller;
-    width: 117px !important;
 }
 
 :host /deep/ .comuna .ng2-smart-filter {
     font-size: smaller;
-    width: 75px !important;
 }
 
 :host /deep/ .estado .ng2-smart-filter {
     font-size: smaller;
-    width: 87px !important;
 }
 
 :host /deep/ .capacidad .ng2-smart-filter {
     font-size: smaller;
-    width: 62px !important;
 }
 
 :host /deep/ .activo .ng2-smart-filter {
     font-size: smaller;
-    width: 65px !important;
 }
