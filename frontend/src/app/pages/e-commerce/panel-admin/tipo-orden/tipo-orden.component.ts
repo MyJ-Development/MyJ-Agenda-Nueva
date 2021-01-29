@@ -16,7 +16,7 @@ export class TipoOrdenComponent {
 
     pager: {
       display: true,
-      perPage: 5
+      perPage: 4
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',

@@ -33,9 +33,13 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/ticketstatus')
     }
 
-    // leerFormaPago(): Observable<any[]> {
-    //     return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/ticketstatus')
-    // }
+    leerMedioPago(): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/mediodepago')
+    }
+
+    leerPrioridad(): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/prioridad')
+    }
 
     leerClientes(rut_cliente): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/client?rut=' + rut_cliente + '')
@@ -93,7 +97,17 @@ export class peticionesGetService {
 
     agregarEstadoTicket(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
-		return this.http.post('http://10.19.11.9:3003/api/scheduler/ticketstatus', report);
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/ticketstatus/', report);
+	}
+
+    agregarMedioPago(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/mediodepago/', report);
+	}
+
+    agregarPrioridad(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/prioridad/', report);
 	}
 
     editarOrden(report): Observable<any> {
@@ -114,6 +128,31 @@ export class peticionesGetService {
     editarTipoOrden(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.put('http://10.19.11.9:3003/api/scheduler/typeorder/', report);
+	}
+
+    editarTecnico(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/technician/', report);
+	}
+
+    editarEstadoCliente(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/clientstatus/', report);
+	}
+
+    editarEstadoTicket(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/ticketstatus/', report);
+	}
+
+    editarMedioPago(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/mediodepago/', report);
+	}
+
+    editarPrioridad(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/prioridad/', report);
 	}
 
 }

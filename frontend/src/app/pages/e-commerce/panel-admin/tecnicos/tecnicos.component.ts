@@ -33,35 +33,50 @@ export class TecnicosComponent {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
     },
     columns: {
       id: {
         title: 'ID',
-        width: '12px',
+        width: '10px',
       },
       rut: {
         title: 'Rut',
+        width: '40px',
       },
       nombre: {
         title: 'Nombre',
+        width: '70px',
       },
       comuna: {
         title: 'Comuna',
+        width: '50px',
       },
       estado: {
         title: 'Estado',
+        width: '50px',
       },
       capacidad: {
         title: 'Capacidad',
+        width: '50px',
       },
       activo: {
         title: 'Activo',
+        width: '50px',
+        editor: {
+          type: 'checkbox',
+          config: {
+            true: true,
+            false: false,
+          },
+        },
       },
     }
   };
 
   data: any[] = [];
   tecnicos: any;
+  reportCrear: any;
   report: any;
   source: LocalDataSource;
   mostrar: boolean = false;
@@ -72,13 +87,48 @@ export class TecnicosComponent {
     this.datos();
   }
 
+
+  buscar(query: string = '') {
+    this.source.setFilter([
+      // datos que se quieren incluir en la busqueda:
+      {
+        field: 'id',
+        search: query
+      },
+      {
+        field: 'rut',
+        search: query
+      },
+      {
+        field: 'nombre',
+        search: query
+      },
+      {
+        field: 'comuna',
+        search: query
+      },
+      {
+        field: 'estado',
+        search: query
+      },
+      {
+        field: 'capacidad',
+        search: query
+      },
+      {
+        field: 'activo',
+        search: query
+      },
+    ], false);
+  }
+
   datos() {
 
     this.source = new LocalDataSource(this.data);
 
     this.service.leerTecnicos().subscribe((x) => {
+
       this.tecnicos = x;
-      console.log(this.tecnicos);
 
       for (let i = 0; i < this.tecnicos.length; i++) {
 
@@ -97,6 +147,7 @@ export class TecnicosComponent {
     });
   };
 
+
   onCreateConfirm(event) {
     if (window.confirm('Estás seguro que quieres crear este técnico?')) {
 
@@ -105,7 +156,8 @@ export class TecnicosComponent {
         rut: event.newData.rut,
         nombre: event.newData.nombre,
         capacidad: event.newData.capacidad,
-        estado: event.newData.estado
+        estado: event.newData.estado,
+        active: event.newData.activo,
       };
 
       let res = '';
@@ -114,7 +166,7 @@ export class TecnicosComponent {
         res = data;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        this.router.navigate(['/pages/panel-admin']);
       });
 
       event.confirm.resolve(event.newData);
@@ -124,10 +176,30 @@ export class TecnicosComponent {
     }
   }
 
-  onDeleteConfirm(event): void {
-    let dato = event.data['nombre'];
-    if (window.confirm(`Estás seguro que quieres eliminar a ${dato}?`)) {
-      event.confirm.resolve();
+
+  onSaveConfirm(event) {
+    if (window.confirm('Guardar cambios establecidos?')) {
+
+      this.report = {
+        id: event.newData.id,
+        comuna: event.newData.comuna,
+        rut: event.newData.rut,
+        nombre: event.newData.nombre,
+        capacidad: event.newData.capacidad,
+        estado: event.newData.estado,
+        active: event.newData.activo,
+      };
+
+      let res = '';
+
+      this.service.editarTecnico(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
+      event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
     }

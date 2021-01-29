@@ -8,9 +8,9 @@
     }
 
     nb-card-body {
-        margin-left: -10px;
-        min-height: 570px;
-        max-height: 570px;
+        padding-top: 25px;
+        min-height: 450px;
+        max-height: 450px;
     }
 
     ::ng-deep .example-smart-table {
@@ -22,7 +22,6 @@
     .pad {
         padding-left: 13px;
     }
-
 }
 
 :host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
@@ -30,19 +29,24 @@
     padding-left: 0rem !important;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    text-align: center;
+    text-align: -webkit-center !important;
     background-color: #252547;
 }
 
 :host /deep/ ng2-smart-table table tr td {
-    text-align: center;
-    font-size: 13px;
+    font-size: smaller;
+    text-align: -webkit-center !important;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
 }
 
 :host /deep/ ng2-smart-table a.ng2-smart-action {
-    block-size: 25px;
+    width: 37px;
+    height: 25px;
+}
+
+:host /deep/ .ng2-smart-actions {
+    width: 37px;
 }
 
 :host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
@@ -53,13 +57,36 @@
     inline-size: 330px;
 }
 
+:host /deep/ table-cell-edit-mode {
+    font-size: small;
+}
+
 :host /deep/ .id .ng2-smart-filter {
     font-size: smaller;
-    width: 45px !important;
 }
 
 :host /deep/ .descripcion .ng2-smart-filter {
     font-size: smaller;
-    width: 125px !important;
 }
 
+:host /deep/ .activo .ng2-smart-filter {
+    font-size: smaller;
+}
+
+:host {
+    ::ng-deep .id .ng2-smart-title {
+        width: 20px;
+    }
+}
+
+:host {
+    ::ng-deep .descripcion .ng2-smart-title {
+        width: 160px;
+    }
+}
+
+:host {
+    ::ng-deep .activo .ng2-smart-title {
+        width: 80px;
+    }
+}

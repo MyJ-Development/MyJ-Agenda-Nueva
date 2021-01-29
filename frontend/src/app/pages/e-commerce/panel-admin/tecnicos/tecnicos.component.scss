@@ -7,7 +7,8 @@
     }
 
     nb-card-body {
-        padding-top: 35px;
+
+        padding-top: 10px;
         min-height: 450px;
         max-height: 450px;
     }
@@ -21,7 +22,6 @@
     .pad {
         padding-left: 13px;
     }
-
 }
 
 :host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
@@ -51,6 +51,10 @@
     padding-left: 2px !important;
     padding-right: 2px !important;
     inline-size: 330px;
+}
+
+:host /deep/ .ng2-smart-actions {
+    width: 37px;
 }
 
 :host /deep/ table-cell-edit-mode {
@@ -83,4 +87,46 @@
 
 :host /deep/ .activo .ng2-smart-filter {
     font-size: smaller;
+}
+
+:host {
+    ::ng-deep .id .ng2-smart-title {
+        width: 50px;
+    }
+}
+
+:host {
+    ::ng-deep .rut .ng2-smart-title {
+        width: 50px; //110
+    }
+}
+
+:host {
+    ::ng-deep .nombre .ng2-smart-title {
+        width: 200px;
+    }
+}
+
+:host {
+    ::ng-deep .comuna .ng2-smart-title {
+        width: 100px;
+    }
+}
+
+:host {
+    ::ng-deep .estado .ng2-smart-title {
+        width: 100px;
+    }
+}
+
+:host {
+    ::ng-deep .capacidad .ng2-smart-title {
+        width: 100px;
+    }
+}
+
+:host {
+    ::ng-deep .activo .ng2-smart-title {
+        width: 80px;
+    }
 }

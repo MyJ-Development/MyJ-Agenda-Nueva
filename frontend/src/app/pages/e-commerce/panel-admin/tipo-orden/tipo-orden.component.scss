@@ -9,7 +9,8 @@
     }
 
     nb-card-body {
-        padding-top: 35px;
+        margin-left: -15px;
+        padding-top: 10px;
         min-height: 450px;
         max-height: 450px;
     }
@@ -54,6 +55,10 @@
     inline-size: 330px;
 }
 
+:host /deep/ .ng2-smart-actions {
+    width: 37px;
+}
+
 :host /deep/ .id .ng2-smart-filter {
     font-size: smaller;
 }
@@ -79,19 +84,19 @@
 
 :host {
     ::ng-deep .tipo_orden .ng2-smart-title {
-        width: 110px;
+        width: 140px;
     }
 }
 
 :host {
     ::ng-deep .peso .ng2-smart-title {
-        width: 65px;
+        width: 66px;
     }
 }
 
 :host {
     ::ng-deep .activo .ng2-smart-title {
-        width: 75px;
+        width: 72px;
     }
 }
 

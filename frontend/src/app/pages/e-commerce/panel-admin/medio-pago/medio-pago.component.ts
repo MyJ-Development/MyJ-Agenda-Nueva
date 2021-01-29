@@ -6,9 +6,9 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
 
 
 @Component({
-  selector   : 'ngx-medio-pago',
+  selector: 'ngx-medio-pago',
   templateUrl: './medio-pago.component.html',
-  styleUrls  : ['./medio-pago.component.scss']
+  styleUrls: ['./medio-pago.component.scss']
 })
 
 
@@ -20,45 +20,57 @@ export class MedioPagoComponent {
 
     pager: {
       display: true,
-      perPage: 7
+      perPage: 5
     },
     add: {
-      addButtonContent   : '<i class="nb-plus"></i>',
+      addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate      : true,
+      confirmCreate: true,
     },
     edit: {
-      editButtonContent  : '<i class="nb-edit"></i>',
-      saveButtonContent  : '<i class="nb-checkmark"></i>',
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete      : true,
+      confirmSave: true,
     },
     actions: {
+      columnTitle: 'Más',
       filter: true,
+      delete: false,
     },
     columns: {
       id: {
         title: 'ID',
+        width: '10px',
       },
       descripcion: {
-        title: 'Descripción',
+        title: 'Descripcion',
+        width: '40px',
+      },
+      activo: {
+        title: 'Activo',
+        width: '50px',
+        editor: {
+          type: 'checkbox',
+          config: {
+            true: true,
+            false: false,
+          },
+        },
       },
     }
   };
 
-  data       : any[] = [];
+  data: any[] = [];
   descripcion: any;
-  report     : any;
-  source     : LocalDataSource;
-  mostrar    : boolean = false;
+  report: any;
+  source: LocalDataSource;
+  mostrar: boolean = false;
 
 
   constructor(private service: peticionesGetService,
-              private router : Router) {
+    private router: Router) {
 
     this.datos();
 
@@ -69,20 +81,20 @@ export class MedioPagoComponent {
 
     this.source = new LocalDataSource(this.data);
 
-    // this.service.leerEstadoTicket().subscribe((x) => {
+    this.service.leerMedioPago().subscribe((x) => {
 
-    //   this.descripcion = x;
+      this.descripcion = x;
 
-    //   for (let i = 0; i < this.descripcion.length; i++) {
+      for (let i = 0; i < this.descripcion.length; i++) {
 
-    //     this.data.push({
-    //       id    : this.descripcion[i]['id'],
-    //       estado: this.descripcion[i]['descripcion'],
-    //     });
-    //   };
+        this.data.push({
+          id: this.descripcion[i]['id'],
+          descripcion: this.descripcion[i]['descripcion'],
+          activo: this.descripcion[i]['active'],
+        });
+      };
 
-    //   this.source.load(this.data);
-    // });
+    });
   };
 
 
@@ -90,11 +102,15 @@ export class MedioPagoComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field : 'id',
+        field: 'id',
         search: query
       },
       {
-        field : 'descripcion',
+        field: 'descripcion',
+        search: query
+      },
+      {
+        field: 'activo',
         search: query
       },
     ], false);
@@ -106,16 +122,17 @@ export class MedioPagoComponent {
 
       this.report = {
         descripcion: event.newData.descripcion,
+        active: event.newData.activo,
       };
 
-      // let res = '';
+      let res = '';
 
-      // this.service.agregarEstadoTicket(this.report).subscribe(data => {
-      //   res = data;
-      //   console.log('res');
-      //   console.log(res);
-      //   this.router.navigate(['/success']);
-      // });
+      this.service.agregarMedioPago(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
 
       event.confirm.resolve(event.newData);
 
@@ -124,10 +141,25 @@ export class MedioPagoComponent {
     }
   }
 
-  onDeleteConfirm(event): void {
-    let dato = event.data['tipo_orden'];
-    if (window.confirm(`Estás seguro que quieres eliminar ${dato}?`)) {
-      event.confirm.resolve();
+  onSaveConfirm(event) {
+    if (window.confirm('Guardar cambios establecidos?')) {
+
+      this.report = {
+        id: event.newData.id,
+        descripcion: event.newData.descripcion,
+        active: event.newData.activo,
+      };
+
+      let res = '';
+
+      this.service.editarMedioPago(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
+      event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
     }

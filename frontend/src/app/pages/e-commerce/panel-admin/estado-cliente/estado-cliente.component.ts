@@ -6,9 +6,9 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
 
 
 @Component({
-  selector   : 'ngx-estado-cliente',
+  selector: 'ngx-estado-cliente',
   templateUrl: './estado-cliente.component.html',
-  styleUrls  : ['./estado-cliente.component.scss']
+  styleUrls: ['./estado-cliente.component.scss']
 })
 
 
@@ -20,45 +20,57 @@ export class EstadoClienteComponent {
 
     pager: {
       display: true,
-      perPage: 7
+      perPage: 5
     },
     add: {
-      addButtonContent   : '<i class="nb-plus"></i>',
+      addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate      : true,
+      confirmCreate: true,
     },
     edit: {
-      editButtonContent  : '<i class="nb-edit"></i>',
-      saveButtonContent  : '<i class="nb-checkmark"></i>',
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete      : true,
+      confirmSave: true,
     },
     actions: {
+      columnTitle: 'Más',
       filter: true,
+      delete: false,
     },
     columns: {
       id: {
         title: 'ID',
+        width: '10px',
       },
       estado: {
         title: 'Estado',
+        width: '40px',
+      },
+      activo: {
+        title: 'Activo',
+        width: '50px',
+        editor: {
+          type: 'checkbox',
+          config: {
+            true: true,
+            false: false,
+          },
+        },
       },
     }
   };
 
-  data   : any[] = [];
-  estado : any;
-  report : any;
-  source : LocalDataSource;
+  data: any[] = [];
+  estado: any;
+  report: any;
+  source: LocalDataSource;
   mostrar: boolean = false;
 
 
   constructor(private service: peticionesGetService,
-              private router : Router) {
+    private router: Router) {
 
     this.datos();
 
@@ -76,8 +88,9 @@ export class EstadoClienteComponent {
       for (let i = 0; i < this.estado.length; i++) {
 
         this.data.push({
-          id    : this.estado[i]['id'],
+          id: this.estado[i]['id'],
           estado: this.estado[i]['descripcion'],
+          activo: this.estado[i]['active'],
         });
       };
 
@@ -90,11 +103,15 @@ export class EstadoClienteComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field : 'id',
+        field: 'id',
         search: query
       },
       {
-        field : 'estado',
+        field: 'estado',
+        search: query
+      },
+      {
+        field: 'activo',
         search: query
       },
     ], false);
@@ -106,6 +123,7 @@ export class EstadoClienteComponent {
 
       this.report = {
         descripcion: event.newData.estado,
+        active: event.newData.activo,
       };
 
       let res = '';
@@ -114,7 +132,7 @@ export class EstadoClienteComponent {
         res = data;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        this.router.navigate(['/pages/panel-admin']);
       });
 
       event.confirm.resolve(event.newData);
@@ -123,15 +141,29 @@ export class EstadoClienteComponent {
       event.confirm.reject();
     }
   };
-  
 
-  onDeleteConfirm(event): void {
-    let dato = event.data['tipo_orden'];
-    if (window.confirm(`Estás seguro que quieres eliminar ${dato}?`)) {
-      event.confirm.resolve();
+
+  onSaveConfirm(event) {
+    if (window.confirm('Guardar cambios establecidos?')) {
+
+      this.report = {
+        id: event.newData.id,
+        descripcion: event.newData.estado,
+        active: event.newData.activo,
+      };
+
+      let res = '';
+
+      this.service.editarEstadoCliente(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
+      event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
     }
   }
-
 }
