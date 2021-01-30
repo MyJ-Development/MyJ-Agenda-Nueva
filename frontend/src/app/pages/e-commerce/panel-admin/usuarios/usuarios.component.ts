@@ -28,32 +28,60 @@ export class UsuariosComponent {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+      confirmSave: true,
     },
     actions: {
+      columnTitle: 'Más',
       filter: true,
+      delete: false
     },
     columns: {
       id: {
         title: 'ID',
+        width: '20px',
       },
-      descripcion: {
-        title: 'Descripcion',
+      nombre: {
+        title: 'Nombre',
+        width: '100px',
+      },
+      rut: {
+        title: 'Rut',
+        width: '80px',
+      },
+      correo: {
+        title: 'Correo',
+        width: '50px',
+      },
+      contraseña: {
+        title: 'Contraseña',
+        width: '50px',
+      },
+      rol: {
+        title: 'Rol',
+        width: '50px',
+      },
+      activo: {
+        title: 'Activo',
+        width: '40px',
+        editor: {
+          type: 'checkbox',
+          config: {
+            true: true,
+            false: false,
+          },
+        },
       },
     }
   };
 
   data: any[] = [];
-  descripcion: any;
+  usuarios: any;
   report: any;
   source: LocalDataSource;
   mostrar: boolean = false;
 
   constructor(private service: peticionesGetService,
-              private router: Router) {
+    private router: Router) {
 
     this.datos();
 
@@ -64,25 +92,28 @@ export class UsuariosComponent {
     this.source = new LocalDataSource(this.data);
 
 
-    // this.service.leerEstadoTicket().subscribe((x) => {
-    //   this.descripcion = x;
+    this.service.leerUsuarios().subscribe((x) => {
+      this.usuarios = x;
 
-    //   console.log(this.descripcion);
+      for (let i = 0; i < this.usuarios.length; i++) {
 
-    //   for (let i = 0; i < this.descripcion.length; i++) {
+        this.data.push({
+          id: this.usuarios[i]['id'],
+          nombre: this.usuarios[i]['name'],
+          rut: this.usuarios[i]['rut'],
+          correo: this.usuarios[i]['email'],
+          contraseña: this.usuarios[i]['password'],
+          rol: this.usuarios[i]['role'],
+          activo: this.usuarios[i]['active'],
+        })
 
-    //     this.data.push({
-    //       id: this.descripcion[i]['id'],
-    //       estado: this.descripcion[i]['descripcion'],
-    //     })
-
-    //   }
+      }
 
 
-    //   this.source.load(this.data);
+      this.source.load(this.data);
 
 
-    // })
+    })
   }
 
 
@@ -94,7 +125,23 @@ export class UsuariosComponent {
         search: query
       },
       {
-        field: 'descripcion',
+        field: 'nombre',
+        search: query
+      },
+      {
+        field: 'rut',
+        search: query
+      },
+      {
+        field: 'correo',
+        search: query
+      },
+      {
+        field: 'rol',
+        search: query
+      },
+      {
+        field: 'activo',
         search: query
       },
     ], false);
@@ -102,20 +149,28 @@ export class UsuariosComponent {
 
 
   onCreateConfirm(event) {
-    if (window.confirm('Estás seguro que quieres crear esta prioridad?')) {
+    if (window.confirm('Estás seguro que quieres crear este usuario?')) {
 
-      // this.report = {
-      //   descripcion: event.newData.descripcion,
-      // };
+      this.report = {
+        name: event.newData.nombre,
+        rut: event.newData.rut,
+        email: event.newData.correo,
+        password: event.newData.contraseña,
+        role: event.newData.rol,
+        active: event.newData.activo,
+      };
 
-      // let res = '';
+      let res = '';
 
-      // this.service.agregarEstadoTicket(this.report).subscribe(data => {
-      //   res = data;
-      //   console.log('res');
-      //   console.log(res);
-      //   this.router.navigate(['/success']);
-      // });
+      console.log(this.report);
+
+      this.service.agregarUsuario(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
 
       event.confirm.resolve(event.newData);
 
@@ -124,13 +179,32 @@ export class UsuariosComponent {
     }
   }
 
-  onDeleteConfirm(event): void {
-    let dato = event.data['tipo_orden'];
-    if (window.confirm(`Estás seguro que quieres eliminar ${dato}?`)) {
-      event.confirm.resolve();
+
+  onSaveConfirm(event) {
+    if (window.confirm('Guardar cambios establecidos?')) {
+
+      this.report = {
+        id: event.newData.id,
+        name: event.newData.nombre,
+        rut: event.newData.rut,
+        email: event.newData.correo,
+        password: event.newData.contraseña,
+        role: event.newData.rol,
+        active: event.newData.activo,
+      };
+
+      let res = '';
+
+      this.service.editarUsuario(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/pages/panel-admin']);
+      });
+
+      event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
     }
   }
-
 }

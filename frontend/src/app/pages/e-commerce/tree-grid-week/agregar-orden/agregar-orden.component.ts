@@ -36,6 +36,10 @@ export class AgregarOrdenComponent implements OnInit {
   usuario           : any;
   tecnicos          : any[];
   tipoOrdenes       : any[];
+  estadoCliente     : any[];
+  estadoTicket      : any[];
+  medioPago         : any[];
+  prioridad         : any[];
 
 
   // Constructor:
@@ -69,6 +73,10 @@ export class AgregarOrdenComponent implements OnInit {
     // Llamada de métodos:
     this.sincronizarTecnicos();
     this.sincronizarTipoOrdenes();
+    this.sincronizarEstadoCliente();
+    this.sincronizarEstadoTicket();
+    this.sincronizarMedioPago();
+    this.sincronizarPrioridad();
   };
 
 
@@ -104,6 +112,46 @@ export class AgregarOrdenComponent implements OnInit {
     });
   };
 
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarEstadoCliente(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (estadoCliente): */
+    this.service.leerEstadoCliente().subscribe((estadoClienteList) => {
+      this.estadoCliente = estadoClienteList;
+    });
+  };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarEstadoTicket(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (estadoTicket): */
+    this.service.leerEstadoTicket().subscribe((estadoTicketList) => {
+      this.estadoTicket = estadoTicketList;
+    });
+  };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarMedioPago(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (medioPago): */
+    this.service.leerMedioPago().subscribe((medioPagoList) => {
+      this.medioPago = medioPagoList;
+    });
+  };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarPrioridad(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (prioridad): */
+    this.service.leerPrioridad().subscribe((prioridadList) => {
+      this.prioridad = prioridadList;
+    });
+  };
+
 
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
@@ -126,8 +174,6 @@ export class AgregarOrdenComponent implements OnInit {
       client_order  : this.rut_cli,
       domicilio     : this.formulario.value['direccion_cliente'],
     };
-
-    console.log(this.report);
 
     let res = '';
 
@@ -154,7 +200,7 @@ export class AgregarOrdenComponent implements OnInit {
       disponibilidad   : ['', Validators.required],
       estado_cliente   : ['', Validators.required],
       estado_ticket    : ['', Validators.required],
-      medio_pago       : ['', Validators.required],
+      medioPago        : ['', Validators.required],
       monto            : ['', Validators.required],
       tipo_orden       : ['', Validators.required],
       prioridad        : ['', Validators.required],

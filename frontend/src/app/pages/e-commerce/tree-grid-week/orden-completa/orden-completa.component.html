@@ -23,7 +23,7 @@
       <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden()">
         
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="nombre_cliente" class="label">Nombre cliente:</label>
               <input  type="text"
@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="rut_cliente" class="label">Rut cliente:</label>
               <input  type="text" 
@@ -50,10 +50,8 @@
                       fieldSize="small">
             </div>
           </div>
-        </div>
 
-        <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="direccion_cliente" class="label">Dirección:</label>
               <nb-select  formControlName="direccion_cliente"
@@ -71,8 +69,10 @@
               </nb-select>
             </div>
           </div>
-          
-          <div class="col-sm-6">
+        </div>
+
+        <div class="row">  
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="comuna_cliente" class="label">Comuna:</label>
               <nb-select  formControlName="comuna_cliente"
@@ -90,10 +90,8 @@
               </nb-select>
             </div>
           </div>
-        </div>
 
-        <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="telefono1" class="label">Teléfono 1:</label>
               <input  type="text"
@@ -107,7 +105,7 @@
             </div>
           </div>
           
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="telefono2" class="label">Teléfono 2:</label>
               <input  type="text" 
@@ -123,7 +121,7 @@
         </div>
 
         <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="correo_cliente" class="label">Correo:</label>
               <input  type="text" 
@@ -137,7 +135,7 @@
             </div>
           </div>
           
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="encargado" class="label">Encargado:</label>
               <nb-select  formControlName="encargado"
@@ -155,10 +153,8 @@
               </nb-select>
             </div>
           </div>
-        </div>
 
-        <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="creado_por" class="label">Creado por:</label>
               <input  type="text"
@@ -171,8 +167,10 @@
                       fieldSize="small">
             </div>
           </div>
-          
-          <div class="col-sm-6">
+        </div>
+
+        <div class="row">  
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="fecha_creacion" class="label">Fecha creación:</label>
               <input  type="text"
@@ -185,10 +183,8 @@
                       fieldSize="small">
             </div>
           </div>
-        </div>
 
-        <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
               <input  type="text"
@@ -203,7 +199,7 @@
             </div>
           </div>
           
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="disponibilidad" class="label">Disponibilidad:</label>
               <input  type="text"
@@ -219,51 +215,69 @@
         </div>
 
         <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
-              <label for="estado_cliente" class="label">Estado cliente:</label>
-              <input  type="text" 
-                      formControlName="estado_cliente"
-                      nbInput 
-                      fullWidth 
-                      id="estado_cliente" 
-                      status="info"
-                      shape="semi-round" 
-                      fieldSize="small">
+              <label for="estadoCliente" class="label">Estado cliente:</label>
+              <nb-select  formControlName="estadoCliente"
+                          name="estadoCliente" 
+                          type="text"
+                          fullWidth 
+                          shape="semi-round" 
+                          status="info"
+                          size="small"
+                          [(selected)]="id_estadoCliente">
+                <nb-option *ngFor="let estado of estadoCliente"
+                            type="text"
+                           [value]="estado.id">
+                           {{estado.descripcion}}
+                </nb-option>
+              </nb-select>
             </div>
           </div>
           
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
-              <label for="estado_ticket" class="label">Estado ticket:</label>
-              <input  type="text"
-                      formControlName="estado_ticket"
-                      nbInput 
-                      fullWidth 
-                      id="estado_ticket" 
-                      status="info"
-                      shape="semi-round"
-                      fieldSize="small">
+              <label for="estadoTicket" class="label">Estado ticket:</label>
+              <nb-select  formControlName="estadoTicket"
+                          name="estadoTicket" 
+                          type="text"
+                          fullWidth 
+                          shape="semi-round" 
+                          status="info"
+                          size="small"
+                          [(selected)]="id_estadoTicket">
+                <nb-option *ngFor="let estado of estadoTicket"
+                            type="text"
+                           [value]="estado.id">
+                           {{estado.descripcion}}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="medioPago" class="label">Medio de pago:</label>
+              <nb-select  formControlName="medioPago"
+                          name="medioPago" 
+                          type="text"
+                          fullWidth 
+                          shape="semi-round" 
+                          status="info"
+                          size="small"
+                          [(selected)]="id_medioPago">
+                <nb-option *ngFor="let medio of medioPago"
+                            type="text"
+                           [value]="medio.id">
+                           {{medio.descripcion}}
+                </nb-option>
+              </nb-select>
             </div>
           </div>
         </div>
 
         <div class="row">  
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="medio_pago" class="label">Medio de pago:</label>
-              <input  type="text"
-                      formControlName="medio_pago"
-                      nbInput 
-                      fullWidth 
-                      id="medio_pago" 
-                      status="info"
-                      shape="semi-round" 
-                      fieldSize="small">
-            </div>
-          </div>
-          
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="monto" class="label">Monto:</label>
               <input  type="text" 
@@ -276,10 +290,8 @@
                       fieldSize="small">
             </div>
           </div>
-        </div>
 
-        <div class="row">  
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="tipo_orden" class="label">Tipo orden:</label>
               <nb-select  formControlName="tipo_orden"
@@ -298,18 +310,24 @@
               </nb-select>
             </div>
           </div>
-          
-          <div class="col-sm-6">
+
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="prioridad" class="label">Prioridad:</label>
-              <input  type="text"
-                      formControlName="prioridad"
-                      nbInput 
-                      fullWidth 
-                      id="prioridad" 
-                      status="info"
-                      shape="semi-round"
-                      fieldSize="small">
+              <nb-select  formControlName="prioridad"
+                          name="prioridad" 
+                          type="text"
+                          fullWidth
+                          shape="semi-round" 
+                          status="info"
+                          size="small"
+                          [(selected)]="id_prioridad">
+                <nb-option  *ngFor="let prioridad of prioridad"
+                            type="text"
+                            [value]="prioridad.id">
+                            {{prioridad.descripcion}}
+                </nb-option>
+              </nb-select>
             </div>
           </div>
         </div>
@@ -331,8 +349,23 @@
           </div>
         </div>
 
-        <div class="row">  
-          <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <button nbButton
+                      (click)="verCliente()"
+                      type="button"
+                      fullWidth 
+                      status="success" 
+                      shape="semi-round" 
+                      fieldSize="tiny" 
+                      size="small" 
+                      outline>
+              Ver cliente
+              </button>
+            </div>
+          </div> 
+          <div class="col-sm-4 offset-4">
             <div class="form-group">
               <button nbButton
                       type="submit"
@@ -340,7 +373,7 @@
                       status="success" 
                       shape="semi-round" 
                       fieldSize="tiny" 
-                      size="medium" 
+                      size="small" 
                       outline>
               Guardar cambios
               </button>

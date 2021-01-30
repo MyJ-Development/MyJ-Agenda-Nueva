@@ -13,7 +13,7 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
 import { tableService }         from '../../../../services/table.service';
 
 // Componentes:
-import { OrdenCompletaComponent } from '../orden-completa/orden-completa.component';
+import { MostrarOrdenComponent } from '../mostrar-orden/mostrar-orden.component';
 
 
 // Componente decorado:
@@ -133,14 +133,18 @@ export class ListaOrdenesComponent implements OnInit {
 
   // Método encargado de enviar los datos del evento al servicio y abre el componente indicado:
   ordenCompleta(event) {
+    console.log(event);
 
-    // Abre el componente indicado:
-    this.mostrar.open(OrdenCompletaComponent);
+    // Envía el rur obtenido del evento al servicio indicado:
+    this.tableService.setRut_cliente(event['data']['objeto']['client_order']['rut']);
 
     // Envía el id obtenido del evento, al servicio indicado:
     this.tableService.setIdListaOrden(event['data']['indice']);
 
     // Envía la orden obtenida del evento, al servicio indicado:
     this.tableService.setOrden(event['data']['objeto']);
+
+    // Abre el componente indicado:
+    this.mostrar.open(MostrarOrdenComponent);
   };
 };

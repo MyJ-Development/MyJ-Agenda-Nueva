@@ -5,10 +5,6 @@
     margin: -0.5rem;
   }
 
-  button[nbButton] {
-    margin: 0.5rem;
-  }
-
   .action-icon {
     @include nb-ltr(margin-right, 0.5rem);
     @include nb-rtl(margin-left, 0.5rem);
@@ -28,8 +24,8 @@
 
   nb-card {
     margin-top: 1rem;
-    max-width : 700px;
-    max-height: 620px;
+    max-width : 900px;
+    max-height: 630px;
   }
 }
 

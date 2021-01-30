@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // Angular/common:
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 // Angular/forms:
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,21 +12,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // Nebular/theme:
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogRef } from '@nebular/theme';
 
 // Servicios:
-import { tableService }         from '../../../../services/table.service';
+import { tableService } from '../../../../services/table.service';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
-
-// Componentes:
-import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.component';
 
 
 // Componente decorador:
 @Component({
-  selector   : 'ngx-mostrar-orden',
+  selector: 'ngx-mostrar-orden',
   templateUrl: './mostrar-orden.component.html',
-  styleUrls  : ['./mostrar-orden.component.scss']
+  styleUrls: ['./mostrar-orden.component.scss']
 })
 
 
@@ -34,26 +31,34 @@ import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.comp
 export class MostrarOrdenComponent implements OnInit {
 
   // Variables:
-  tecnicos          : any[];
-  tipoOrdenes       : any[];
+  tecnicos: any[];
+  tipoOrdenes: any[];
   residencia_cliente: any;
-  formulario        : FormGroup;
-  rut_cliente       : any;
-  id_orden          : any;
-  ordenCliente      : any;
-  report            : any;
-  fecha_ejecucion   : Date;
-  fecha_transform   : any;
+  formulario: FormGroup;
+  rut_cliente: any;
+  id_orden: any;
+  ordenCliente: any;
+  report: any;
+  fecha_ejecucion: Date;
+  fecha_transform: any;
+  estadoCliente: any[];
+  estadoTicket: any[];
+  medioPago: any[];
+  prioridad: any[];
+  id_estadoCliente: any;
+  id_estadoTicket: any;
+  id_medioPago: any;
+  id_prioridad: any;
+  id_tipoOrden: any;
 
 
   // Constructor:
-  constructor(protected ref       : NbDialogRef<MostrarOrdenComponent>,
-              private tableService: tableService,
-              private service     : peticionesGetService,
-              private datePipe    : DatePipe,
-              private router      : Router,
-              private mostrar     : NbDialogService,
-              private fb          : FormBuilder) {
+  constructor(protected ref: NbDialogRef<MostrarOrdenComponent>,
+    private tableService: tableService,
+    private service: peticionesGetService,
+    private datePipe: DatePipe,
+    private router: Router,
+    private fb: FormBuilder) {
 
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -69,6 +74,10 @@ export class MostrarOrdenComponent implements OnInit {
     this.sincronizarTecnicos();
     this.sincronizarTipoOrdenes();
     this.crearFormulario();
+    this.sincronizarEstadoCliente();
+    this.sincronizarEstadoTicket();
+    this.sincronizarMedioPago();
+    this.sincronizarPrioridad();
   };
 
 
@@ -80,6 +89,21 @@ export class MostrarOrdenComponent implements OnInit {
 
     // Almacena en variable global el id de la orden:
     this.id_orden = this.ordenCliente['id'];
+
+    // Almacena en variable global el id del tipo de orden:
+    this.id_tipoOrden = this.ordenCliente['tipo']['id'];
+
+    // Almacena en variable global el id del estado del cliente:
+    this.id_estadoCliente = this.ordenCliente['estadocliente']['id'];
+
+    // Almacena en variable global el id del estado del ticket:
+    this.id_estadoTicket = this.ordenCliente['estadoticket']['id'];
+
+    // Almacena en variable global el id del estado del medio de pago:
+    this.id_medioPago = this.ordenCliente['mediodepago']['id'];
+
+    // Almacena en variable global el id del estado de la prioridad:
+    this.id_prioridad = this.ordenCliente['prioridad']['id'];
 
     // Almacena en variable local la fecha de ejecución de la orden:
     let fecha = new Date(this.ordenCliente['fechaejecucion']);
@@ -101,20 +125,20 @@ export class MostrarOrdenComponent implements OnInit {
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
       this.report = {
-        id            : this.ordenCliente['id'],
-        idtipo        : this.formulario.value['tipo_orden'],
-        prioridad     : this.formulario.value['prioridad'],
+        id: this.ordenCliente['id'],
+        idtipo: this.formulario.value['tipo_orden'],
+        prioridad: this.formulario.value['prioridad'],
         disponibilidad: this.formulario.value['disponibilidad'],
-        comentario    : this.formulario.value['comentario'],
+        comentario: this.formulario.value['comentario'],
         fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
-        estadocliente : this.formulario.value['estado_cliente'],
-        estadoticket  : this.formulario.value['estado_ticket'],
-        mediodepago   : this.formulario.value['medio_pago'],
-        monto         : this.formulario.value['monto'],
-        created_by    : this.ordenCliente['created_by']['email'],
-        encargado     : this.formulario.value['encargado'],
-        client_order  : this.ordenCliente['client_order']['rut'],
-        domicilio     : this.formulario.value['direccion_cliente'],
+        estadocliente: this.formulario.value['estado_cliente'],
+        estadoticket: this.formulario.value['estado_ticket'],
+        mediodepago: this.formulario.value['medio_pago'],
+        monto: this.formulario.value['monto'],
+        created_by: this.ordenCliente['created_by']['email'],
+        encargado: this.formulario.value['encargado'],
+        client_order: this.ordenCliente['client_order']['rut'],
+        domicilio: this.formulario.value['direccion_cliente'],
       };
 
       let res = '';
@@ -150,7 +174,6 @@ export class MostrarOrdenComponent implements OnInit {
     y los almacena en variable (residencia_cliente): */
     this.service.leerResidencia(this.rut_cliente).subscribe((residenciaList) => {
       this.residencia_cliente = residenciaList;
-      this.tableService.setResidencia(this.residencia_cliente);
     });
   };
 
@@ -166,54 +189,106 @@ export class MostrarOrdenComponent implements OnInit {
   };
 
 
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarEstadoCliente() {
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (estadoCliente): */
+    this.service.leerEstadoCliente().subscribe((estadoClienteList) => {
+      this.estadoCliente = estadoClienteList;
+    });
+  };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarEstadoTicket() {
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (estadoTicket): */
+    this.service.leerEstadoTicket().subscribe((estadoTicketList) => {
+      this.estadoTicket = estadoTicketList;
+    });
+  };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarMedioPago() {
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (medioPago): */
+    this.service.leerMedioPago().subscribe((medioPagoList) => {
+      this.medioPago = medioPagoList;
+    });
+  };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarPrioridad() {
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (prioridad): */
+    this.service.leerPrioridad().subscribe((prioridadList) => {
+      this.prioridad = prioridadList;
+    });
+  };
+
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
     this.formulario = this.fb.group({
 
-      nombre_cliente   : [{value: this.mayus(this.formato(this.ordenCliente
-                          ['client_order']['nombre'])), disabled: true}, Validators.required],
+      nombre_cliente: [{
+        value: this.mayus(this.formato(this.ordenCliente
+        ['client_order']['nombre'])), disabled: true
+      }, Validators.required],
 
-      rut_cliente      : [{value: this.rut_cliente, disabled: true}, Validators.required],
+      rut_cliente: [{ value: this.rut_cliente, disabled: true }, Validators.required],
 
       direccion_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
 
-      comuna_cliente   : [this.ordenCliente['client_residence']['id'], Validators.required],
+      comuna_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
 
-      telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], 
-                           disabled: true}, Validators.required],
+      telefono1: [{
+        value: this.ordenCliente['client_order']['contacto1'],
+        disabled: true
+      }, Validators.required],
 
-      telefono2        : [{value: this.ordenCliente['client_order']['contacto1'], 
-                           disabled: true}, Validators.required],
+      telefono2: [{
+        value: this.ordenCliente['client_order']['contacto1'],
+        disabled: true
+      }, Validators.required],
 
-      correo_cliente   : [{value: this.ordenCliente['client_order']['email'], 
-                           disabled: true}, Validators.required],
+      correo_cliente: [{
+        value: this.ordenCliente['client_order']['email'],
+        disabled: true
+      }, Validators.required],
 
-      encargado        : [this.ordenCliente['encargado']['rut'], Validators.required],
+      encargado: [this.ordenCliente['encargado']['rut'], Validators.required],
 
-      creado_por       : [{value: this.ordenCliente['created_by']['email'], 
-                           disabled: true}, Validators.required],
+      creado_por: [{
+        value: this.ordenCliente['created_by']['email'],
+        disabled: true
+      }, Validators.required],
 
-      fecha_ejecucion  : [new Date(this.fecha_ejecucion), Validators.required],
+      fecha_ejecucion: [new Date(this.fecha_ejecucion), Validators.required],
 
-      fecha_creacion   : [{value: this.datePipe.transform(this.ordenCliente
-                          ['created_at'], 'yyyy-MM-dd'), disabled: true}, Validators.required],
+      fecha_creacion: [{
+        value: this.datePipe.transform(this.ordenCliente
+        ['created_at'], 'yyyy-MM-dd'), disabled: true
+      }, Validators.required],
 
-      disponibilidad   : [this.ordenCliente['disponibilidad'], Validators.required],
+      disponibilidad: [this.ordenCliente['disponibilidad'], Validators.required],
 
-      estado_cliente   : [this.ordenCliente['estadocliente'], Validators.required],
+      estadoCliente: [this.id_estadoCliente, Validators.required],
 
-      estado_ticket    : [this.ordenCliente['estadoticket'], Validators.required],
+      estadoTicket: [this.id_estadoTicket, Validators.required],
 
-      medio_pago       : [this.ordenCliente['mediodepago'], Validators.required],
+      medioPago: [this.id_medioPago, Validators.required],
 
-      monto            : [this.ordenCliente['monto'], Validators.required],
+      monto: [this.ordenCliente['monto'], Validators.required],
 
-      tipo_orden       : [this.ordenCliente['tipo']['id'], Validators.required],
+      tipo_orden: [this.id_tipoOrden, Validators.required],
 
-      prioridad        : [this.ordenCliente['prioridad'], Validators.required],
+      prioridad: [this.id_prioridad, Validators.required],
 
-      comentario       : [this.formato(this.ordenCliente['comentario']), Validators.required],
+      comentario: [this.formato(this.ordenCliente['comentario']), Validators.required],
     });
   };
 
@@ -297,22 +372,6 @@ export class MostrarOrdenComponent implements OnInit {
       .replace('&yuml', 'ÿ');
   };
 
-
-  // Método encargado de abrir el componente con los datos del cliente:
-  verCliente() {
-
-    // Envía el rut del cliente seleccionado, al servicio indicado:
-    this.tableService.setRut_cliente(this.rut_cliente);
-
-    // Envía la orden seleccionada, al servicio indicado:
-    this.tableService.setOrden(this.ordenCliente);
-
-    // Cierra el componente actual:
-    this.ref.close();
-
-    // Abre el componente indicado:
-    this.mostrar.open(MostrarClienteComponent);
-  };
 };
 
 

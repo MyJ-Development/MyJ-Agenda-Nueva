@@ -39,6 +39,7 @@ export class PrioridadComponent {
     columns: {
       id: {
         title: 'ID',
+        width: '20px',
       },
       descripcion: {
         title: 'Descripcion',

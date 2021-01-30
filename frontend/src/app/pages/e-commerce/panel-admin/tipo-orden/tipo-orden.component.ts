@@ -174,8 +174,6 @@ export class TipoOrdenComponent {
         this.router.navigate(['/pages/panel-admin']);
       });
 
-      console.log(this.report);
-
       event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
