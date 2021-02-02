@@ -1,17 +1,29 @@
 @import "../../../../@theme/styles/themes";
 
 @include nb-install-component() {
-  .buttons-row {
-    margin: -0.5rem;
-  }
-
+  
   button[nbButton] {
-    margin: 0.5rem;
+    padding: 0rem;
+    margin-left: 0.5rem;
   }
 
-  .action-icon {
-    @include nb-ltr(margin-right, 0.5rem);
-    @include nb-rtl(margin-left, 0.5rem);
+  .boton{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    margin-left: 0rem;
+  }
+
+  .fecha{
+    padding-left: 13px;
+  }
+
+  .seguimiento{
+    padding-left: 2.5rem;
+  }
+
+  .low{
+    padding-top: 1rem !important;
+    padding-bottom: 0rem !important;
   }
 
   .actions-card {

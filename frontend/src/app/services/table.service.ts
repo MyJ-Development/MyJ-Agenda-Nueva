@@ -26,7 +26,17 @@ export class tableService {
   rolUsuario              : any;
   cantidad                : any;
   fechaClick              : any;
+  id_orden                : any;
 
+
+  // para obtener los seguimientos:
+  setId_orden(valor: any) {
+    this.id_orden = valor;
+  }
+
+  getID_orden() {
+    return this.id_orden;
+  }
 
   setRolUsuario(valor: any) {
     this.rolUsuario = valor;

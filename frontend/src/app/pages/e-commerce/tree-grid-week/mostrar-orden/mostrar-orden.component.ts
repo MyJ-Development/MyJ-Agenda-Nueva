@@ -12,11 +12,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // Nebular/theme:
-import { NbDialogRef } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 // Servicios:
 import { tableService } from '../../../../services/table.service';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
+import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
 
 
 // Componente decorador:
@@ -39,6 +40,7 @@ export class MostrarOrdenComponent implements OnInit {
   id_orden: any;
   ordenCliente: any;
   report: any;
+  reportEventos: any;
   fecha_ejecucion: Date;
   fecha_transform: any;
   estadoCliente: any[];
@@ -50,6 +52,7 @@ export class MostrarOrdenComponent implements OnInit {
   id_medioPago: any;
   id_prioridad: any;
   id_tipoOrden: any;
+  id_residencia: any;
 
 
   // Constructor:
@@ -58,7 +61,8 @@ export class MostrarOrdenComponent implements OnInit {
     private service: peticionesGetService,
     private datePipe: DatePipe,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private mostrar: NbDialogService) {
 
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -90,6 +94,9 @@ export class MostrarOrdenComponent implements OnInit {
     // Almacena en variable global el id de la orden:
     this.id_orden = this.ordenCliente['id'];
 
+    // Almacena en variable global el id de la residencia:
+    this.id_residencia = this.ordenCliente['client_residence']['id'];
+
     // Almacena en variable global el id del tipo de orden:
     this.id_tipoOrden = this.ordenCliente['tipo']['id'];
 
@@ -115,6 +122,273 @@ export class MostrarOrdenComponent implements OnInit {
     this.fecha_ejecucion = fecha;
   };
 
+  eventos(){
+
+    let res = '';
+    let mensaje;
+
+    let montoPristine= this.formulario.controls['monto'].pristine;
+    let direccionPristine= this.formulario.controls['direccion_cliente'].pristine;
+    let comunaPristine= this.formulario.controls['comuna_cliente'].pristine;
+    let tecnicoPristine= this.formulario.controls['encargado'].pristine;
+    let fechaPristine= this.formulario.controls['fecha_ejecucion'].pristine;
+    let disponibilidadPristine= this.formulario.controls['disponibilidad'].pristine;
+    let estadoClientePristine= this.formulario.controls['estadoCliente'].pristine;
+    let estadoTicketPristine= this.formulario.controls['estadoTicket'].pristine;
+    let tipoOrdenPristine= this.formulario.controls['tipo_orden'].pristine;
+    let medioPagoPristine= this.formulario.controls['medioPago'].pristine;
+    let prioridadPristine= this.formulario.controls['prioridad'].pristine;
+    let comentarioPristine= this.formulario.controls['comentario'].pristine;
+
+
+
+
+    if ((montoPristine === false) && (this.ordenCliente['monto'] =! this.formulario.value['monto'])) {
+
+      mensaje = `Se modifica el monto de $${this.ordenCliente['monto']} a $${this.formulario.value['monto']}`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((direccionPristine === false) && (this.ordenCliente['client_residence']['direccion'] != 
+    this.residencia_cliente.filter(x => x.id == this.formulario.value['direccion_cliente'])[0]['direccion'])) {
+
+      mensaje = `Se modifica el domicilio '${this.ordenCliente['client_residence']['direccion']}' a 
+      '${this.residencia_cliente.filter(x => x.id == this.formulario.value['direccion_cliente'])[0]['direccion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((comunaPristine === false) && (this.ordenCliente['client_residence']['comuna'] != 
+    this.residencia_cliente.filter(x => x.id == this.formulario.value['comuna_cliente'])[0]['comuna'])) {
+
+      mensaje = `Se modifica la comuna '${this.ordenCliente['client_residence']['comuna']}' a 
+      '${this.residencia_cliente.filter(x => x.id == this.formulario.value['comuna_cliente'])[0]['comuna']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((tecnicoPristine === false) && (this.ordenCliente['encargado']['nombre'] != 
+    this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre'])) {
+
+      mensaje = `Se re-asigna técnico '${this.ordenCliente['encargado']['nombre']}' por 
+      '${this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((fechaPristine === false) && (this.datePipe.transform(this.ordenCliente['fechaejecucion'], 'dd-MM-yyyy') != this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy'))) {
+
+      mensaje = `Se re-agenda visita del ${this.datePipe.transform(this.ordenCliente['fechaejecucion'], 'dd-MM-yyyy')} para el ${this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy')}`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((disponibilidadPristine === false) && (this.ordenCliente['disponibilidad'] != 
+    this.formulario.value['disponibilidad'])) {
+
+      mensaje = `Se modifica la disponibilidad de '${this.ordenCliente['disponibilidad']}' a 
+      '${this.formulario.value['disponibilidad']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((estadoClientePristine === false) && (this.ordenCliente['estadocliente']['descripcion'] != 
+    this.estadoCliente.filter(x => x.id == this.formulario.value['estadoCliente'])[0]['descripcion'])) {
+      
+      mensaje = `Se modifica el estado del cliente '${this.ordenCliente['estadocliente']['descripcion']}' a '${this.estadoCliente.filter(x => x.id == this.formulario.value['estadoCliente'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((estadoTicketPristine === false) && (this.ordenCliente['estadoticket']['descripcion'] != 
+    this.estadoTicket.filter(x => x.id == this.formulario.value['estadoTicket'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica el estado del ticket '${this.ordenCliente['estadoticket']['descripcion']}' a 
+      '${this.estadoTicket.filter(x => x.id == this.formulario.value['estadoTicket'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((tipoOrdenPristine === false) && (this.ordenCliente['tipo']['descripcion'] != 
+    this.tipoOrdenes.filter(x => x.id == this.formulario.value['tipo_orden'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica el tipo de orden '${this.ordenCliente['tipo']['descripcion']}' a 
+      '${this.tipoOrdenes.filter(x => x.id == this.formulario.value['tipo_orden'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((medioPagoPristine === false) && (this.ordenCliente['mediodepago']['descripcion'] != 
+    this.medioPago.filter(x => x.id == this.formulario.value['medioPago'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica el medio de pago '${this.ordenCliente['mediodepago']['descripcion']}' a
+       '${this.medioPago.filter(x => x.id == this.formulario.value['medioPago'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((prioridadPristine === false) && (this.ordenCliente['prioridad']['descripcion'] != 
+    this.prioridad.filter(x => x.id == this.formulario.value['prioridad'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica prioridad '${this.ordenCliente['prioridad']['descripcion']}' a 
+      '${this.prioridad.filter(x => x.id == this.formulario.value['prioridad'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((comentarioPristine === false) && (this.ordenCliente['comentario'] != 
+    this.formulario.value['comentario'])) {
+
+      mensaje = `Se agrega comentario: ${this.formulario.value['comentario']}`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+  }
 
   // Método encargado de actualizar la orden obtenida desde el servicio:
   actualizarOrden() {
@@ -131,9 +405,9 @@ export class MostrarOrdenComponent implements OnInit {
         disponibilidad: this.formulario.value['disponibilidad'],
         comentario: this.formulario.value['comentario'],
         fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
-        estadocliente: this.formulario.value['estado_cliente'],
-        estadoticket: this.formulario.value['estado_ticket'],
-        mediodepago: this.formulario.value['medio_pago'],
+        estadocliente: this.formulario.value['estadoCliente'],
+        estadoticket: this.formulario.value['estadoTicket'],
+        mediodepago: this.formulario.value['medioPago'],
         monto: this.formulario.value['monto'],
         created_by: this.ordenCliente['created_by']['email'],
         encargado: this.formulario.value['encargado'],
@@ -143,7 +417,9 @@ export class MostrarOrdenComponent implements OnInit {
 
       let res = '';
 
-      //Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+      console.log(this.report);
+
+      // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
       this.service.editarOrden(this.report).subscribe(data => {
         res = data;
         console.log('res');
@@ -164,6 +440,8 @@ export class MostrarOrdenComponent implements OnInit {
     this.service.leerTecnicos().subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
     });
+
+
   };
 
 
@@ -229,6 +507,16 @@ export class MostrarOrdenComponent implements OnInit {
     });
   };
 
+
+
+  verSeguimientos(){
+
+    this.tableService.setId_orden(this.ordenCliente['id']);
+
+    this.mostrar.open(SeguimientosComponent);
+
+  }
+
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
@@ -241,9 +529,9 @@ export class MostrarOrdenComponent implements OnInit {
 
       rut_cliente: [{ value: this.rut_cliente, disabled: true }, Validators.required],
 
-      direccion_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
+      direccion_cliente: [this.id_residencia, Validators.required],
 
-      comuna_cliente: [this.ordenCliente['client_residence']['id'], Validators.required],
+      comuna_cliente: [this.id_residencia, Validators.required],
 
       telefono1: [{
         value: this.ordenCliente['client_order']['contacto1'],

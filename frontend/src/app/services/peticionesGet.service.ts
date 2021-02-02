@@ -45,6 +45,10 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/users')
     }
 
+    leerSeguimientos(id_orden): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/seguimientos?order_id=' + id_orden + '')
+    }
+
     leerClientes(rut_cliente): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/client?rut=' + rut_cliente + '')
     }
@@ -117,6 +121,11 @@ export class peticionesGetService {
     agregarUsuario(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.post('http://10.19.11.9:3003/api/scheduler/users/', report);
+	}
+
+    agregarSeguimiento(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/seguimientos/', report);
 	}
 
     editarOrden(report): Observable<any> {

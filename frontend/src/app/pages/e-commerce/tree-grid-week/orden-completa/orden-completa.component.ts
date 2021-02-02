@@ -18,6 +18,7 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { tableService }         from '../../../../services/table.service';
 import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.component';
+import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
 
 
 // Componente decorado:
@@ -51,6 +52,8 @@ export class OrdenCompletaComponent implements OnInit {
   id_medioPago      : any;
   id_prioridad      : any;
   id_tipoOrden      : any;
+  reportEventos     : any;
+  id_residencia     : any;
 
 
   // Constructor:
@@ -80,6 +83,7 @@ export class OrdenCompletaComponent implements OnInit {
     this.sincronizarEstadoTicket();
     this.sincronizarMedioPago();
     this.sincronizarPrioridad();
+    this.eventos();
   };
 
 
@@ -94,6 +98,9 @@ export class OrdenCompletaComponent implements OnInit {
 
     // Almacena en variable global el id del tipo de orden:
     this.id_tipoOrden = this.ordenCliente['tipo']['id'];
+
+    // Almacena en variable global el id de la residencia:
+    this.id_residencia = this.ordenCliente['client_residence']['id'];
 
     // Almacena en variable global el id del estado del cliente:
     this.id_estadoCliente = this.ordenCliente['estadocliente']['id'];
@@ -117,6 +124,275 @@ export class OrdenCompletaComponent implements OnInit {
     // Almacena en variable global la fecha obtenida anteriormente:
     this.fecha_ejecucion = fecha;
   };
+
+
+  eventos(){
+
+    let res = '';
+    let mensaje;
+
+    let montoPristine= this.formulario.controls['monto'].pristine;
+    let direccionPristine= this.formulario.controls['direccion_cliente'].pristine;
+    let comunaPristine= this.formulario.controls['comuna_cliente'].pristine;
+    let tecnicoPristine= this.formulario.controls['encargado'].pristine;
+    let fechaPristine= this.formulario.controls['fecha_ejecucion'].pristine;
+    let disponibilidadPristine= this.formulario.controls['disponibilidad'].pristine;
+    let estadoClientePristine= this.formulario.controls['estadoCliente'].pristine;
+    let estadoTicketPristine= this.formulario.controls['estadoTicket'].pristine;
+    let tipoOrdenPristine= this.formulario.controls['tipo_orden'].pristine;
+    let medioPagoPristine= this.formulario.controls['medioPago'].pristine;
+    let prioridadPristine= this.formulario.controls['prioridad'].pristine;
+    let comentarioPristine= this.formulario.controls['comentario'].pristine;
+
+
+
+
+    if ((montoPristine === false) && (this.ordenCliente['monto'] =! this.formulario.value['monto'])) {
+
+      mensaje = `Se modifica el monto de $${this.ordenCliente['monto']} a $${this.formulario.value['monto']}`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((direccionPristine === false) && (this.ordenCliente['client_residence']['direccion'] != 
+    this.residencia_cliente.filter(x => x.id == this.formulario.value['direccion_cliente'])[0]['direccion'])) {
+
+      mensaje = `Se modifica el domicilio '${this.ordenCliente['client_residence']['direccion']}' a 
+      '${this.residencia_cliente.filter(x => x.id == this.formulario.value['direccion_cliente'])[0]['direccion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((comunaPristine === false) && (this.ordenCliente['client_residence']['comuna'] != 
+    this.residencia_cliente.filter(x => x.id == this.formulario.value['comuna_cliente'])[0]['comuna'])) {
+
+      mensaje = `Se modifica la comuna '${this.ordenCliente['client_residence']['comuna']}' a 
+      '${this.residencia_cliente.filter(x => x.id == this.formulario.value['comuna_cliente'])[0]['comuna']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((tecnicoPristine === false) && (this.ordenCliente['encargado']['nombre'] != 
+    this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre'])) {
+
+      mensaje = `Se re-asigna técnico '${this.ordenCliente['encargado']['nombre']}' por 
+      '${this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((fechaPristine === false) && (this.datePipe.transform(this.ordenCliente['fechaejecucion'], 'dd-MM-yyyy') != this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy'))) {
+
+      mensaje = `Se re-agenda visita del ${this.datePipe.transform(this.ordenCliente['fechaejecucion'], 'dd-MM-yyyy')} para el ${this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy')}`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((disponibilidadPristine === false) && (this.ordenCliente['disponibilidad'] != 
+    this.formulario.value['disponibilidad'])) {
+
+      mensaje = `Se modifica la disponibilidad de '${this.ordenCliente['disponibilidad']}' a 
+      '${this.formulario.value['disponibilidad']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((estadoClientePristine === false) && (this.ordenCliente['estadocliente']['descripcion'] != 
+    this.estadoCliente.filter(x => x.id == this.formulario.value['estadoCliente'])[0]['descripcion'])) {
+      
+      mensaje = `Se modifica el estado del cliente '${this.ordenCliente['estadocliente']['descripcion']}' a '${this.estadoCliente.filter(x => x.id == this.formulario.value['estadoCliente'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((estadoTicketPristine === false) && (this.ordenCliente['estadoticket']['descripcion'] != 
+    this.estadoTicket.filter(x => x.id == this.formulario.value['estadoTicket'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica el estado del ticket '${this.ordenCliente['estadoticket']['descripcion']}' a 
+      '${this.estadoTicket.filter(x => x.id == this.formulario.value['estadoTicket'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((tipoOrdenPristine === false) && (this.ordenCliente['tipo']['descripcion'] != 
+    this.tipoOrdenes.filter(x => x.id == this.formulario.value['tipo_orden'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica el tipo de orden '${this.ordenCliente['tipo']['descripcion']}' a 
+      '${this.tipoOrdenes.filter(x => x.id == this.formulario.value['tipo_orden'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((medioPagoPristine === false) && (this.ordenCliente['mediodepago']['descripcion'] != 
+    this.medioPago.filter(x => x.id == this.formulario.value['medioPago'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica el medio de pago '${this.ordenCliente['mediodepago']['descripcion']}' a
+       '${this.medioPago.filter(x => x.id == this.formulario.value['medioPago'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((prioridadPristine === false) && (this.ordenCliente['prioridad']['descripcion'] != 
+    this.prioridad.filter(x => x.id == this.formulario.value['prioridad'])[0]['descripcion'])) {
+
+      mensaje = `Se modifica prioridad '${this.ordenCliente['prioridad']['descripcion']}' a 
+      '${this.prioridad.filter(x => x.id == this.formulario.value['prioridad'])[0]['descripcion']}'`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if ((comentarioPristine === false) && (this.ordenCliente['comentario'] != 
+    this.formulario.value['comentario'])) {
+
+      mensaje = `Se agrega comentario: ${this.formulario.value['comentario']}`;
+
+      this.reportEventos = {
+        order_id: this.ordenCliente['id'],
+        comentario: mensaje,
+        user_email: this.tableService.getUsuario(),
+      }
+  
+      this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+  }
 
 
   // Método encargado de actualizar la orden obtenida anteriormente:
@@ -148,12 +424,12 @@ export class OrdenCompletaComponent implements OnInit {
 
       
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-      this.service.editarOrden(this.report).subscribe(data => {
-        res = data;
-        console.log('res');
-        console.log(res);
-        this.router.navigate(['/success']);
-      });
+      // this.service.editarOrden(this.report).subscribe(data => {
+      //   res = data;
+      //   console.log('res');
+      //   console.log(res);
+      //   this.router.navigate(['/success']);
+      // });
 
       
     } else {
@@ -236,6 +512,15 @@ export class OrdenCompletaComponent implements OnInit {
         this.prioridad = prioridadList;
       });
     };
+    
+
+    verSeguimientos(){
+
+      this.tableService.setId_orden(this.ordenCliente['id']);
+  
+      this.mostrar.open(SeguimientosComponent);
+  
+    }
 
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
@@ -246,8 +531,8 @@ export class OrdenCompletaComponent implements OnInit {
       nombre_cliente   :[{value: this.mayus(this.formato(this.ordenCliente
                         ['client_order']['nombre'])), disabled: true}, Validators.required],
       rut_cliente      :[{value: this.rut_cliente, disabled: true}, Validators.required],
-      direccion_cliente:[this.ordenCliente['client_residence']['id'], Validators.required],
-      comuna_cliente   :[this.ordenCliente['client_residence']['id'], Validators.required],
+      direccion_cliente:[this.id_residencia, Validators.required],
+      comuna_cliente   :[this.id_residencia, Validators.required],
       telefono1        :[{value: this.ordenCliente['client_order']['contacto1'], 
                           disabled: true}, Validators.required],
       telefono2        :[{value: this.ordenCliente['client_order']['contacto2'], 

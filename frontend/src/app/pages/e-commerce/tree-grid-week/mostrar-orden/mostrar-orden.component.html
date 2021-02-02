@@ -3,23 +3,32 @@
 <div class="row">
   <nb-card accent="success">
     <nb-card-header>
-        <div class="row">
-          <div class="col-sm-4">
+        <div class="row low">
+          <div class="col-sm-3 offset-1">
             <div class="form-group">
               <label class="h5s">Orden N°: {{id_orden}}</label>
             </div>
           </div>
 
-          <div class="col-sm-7">
+          <div class="col-sm-4">
             <div class="form-group">
-              <label class="h5s">Fecha de ejecución: {{fecha_transform}}</label>
+              <label class="h5s fecha">Fecha de ejecución: {{fecha_transform}}</label>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group h5s seguimiento">
+              <button (click)="verSeguimientos()" nbButton ghost focus='disabled'>
+                Ver seguimientos
+                <nb-icon icon="eye-outline"></nb-icon>
+              </button>
             </div>
           </div>
         </div>
     </nb-card-header>
 
     <nb-card-body>
-      <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden()">
+      <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="actualizarOrden(); eventos()">
           
         <div class="row">
           <div class="col-sm-4">
@@ -59,7 +68,8 @@
                           fullWidth
                           shape="semi-round" 
                           status="info"
-                          size="small">
+                          size="small"
+                          [(selected)]="id_residencia">
                 <nb-option *ngFor="let direccion of residencia_cliente"
                             type="text"
                            [value]="direccion.id">
@@ -80,7 +90,8 @@
                           fullWidth
                           shape="semi-round" 
                           status="info"
-                          size="small">
+                          size="small"
+                          [(selected)]="id_residencia">
                 <nb-option *ngFor="let comuna of residencia_cliente"
                             type="text"
                            [value]="comuna.id">
@@ -352,6 +363,7 @@
           <div class="col-sm-4 offset-8">
             <div class="form-group">
               <button nbButton
+                      class="boton"
                       type="submit"
                       fullWidth 
                       status="success" 

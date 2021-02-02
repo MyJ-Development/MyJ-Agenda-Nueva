@@ -104,6 +104,7 @@ import { EstadoTicketComponent } from './panel-admin/estado-ticket/estado-ticket
 import { MedioPagoComponent } from './panel-admin/medio-pago/medio-pago.component';
 import { PrioridadComponent } from './panel-admin/prioridad/prioridad.component';
 import { UsuariosComponent } from './panel-admin/usuarios/usuarios.component';
+import { SeguimientosComponent } from './tree-grid-week/seguimientos/seguimientos.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -194,6 +195,7 @@ import { UsuariosComponent } from './panel-admin/usuarios/usuarios.component';
     MedioPagoComponent,
     PrioridadComponent,
     UsuariosComponent,
+    SeguimientosComponent,
   ],
   providers: [
     CountryOrdersMapService,
