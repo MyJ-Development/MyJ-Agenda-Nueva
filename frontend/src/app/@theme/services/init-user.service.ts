@@ -11,6 +11,7 @@ import { UserStore } from '../../@core/stores/user.store';
 import { Injectable } from '@angular/core';
 import { NbJSThemesRegistry, NbThemeService } from '@nebular/theme';
 import { tableService } from '../../services/table.service';
+import { peticionesGetService } from '../../services/peticionesGet.service';
 
 @Injectable()
 export class InitUserService {
@@ -18,7 +19,8 @@ export class InitUserService {
         protected usersService: UserData,
         protected jsThemes: NbJSThemesRegistry,
         protected themeService: NbThemeService,
-        private tableService: tableService) { }
+        private tableService: tableService,
+        private service: peticionesGetService) { }
 
     initCurrentUser(): Observable<User> {
       return this.usersService.getCurrentUser()
@@ -34,6 +36,7 @@ export class InitUserService {
                       this.tableService.setRolUsuario(this.userStore.getUser().role);
                       this.tableService.setUsuario(this.userStore.getUser().email);
                       console.log(this.userStore.getUser().role);
+                      this.service.leerUsuarioActual().subscribe(x => console.log(x));
                     }
                   }
                 }

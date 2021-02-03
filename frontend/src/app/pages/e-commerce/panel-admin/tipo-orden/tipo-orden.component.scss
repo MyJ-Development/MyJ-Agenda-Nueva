@@ -33,6 +33,7 @@
     padding-bottom: 5px !important;
     text-align: center;
     background-color: #252547;
+    color: rgb(255, 255, 255);
 }
 
 :host /deep/ ng2-smart-table table tr td {
@@ -77,7 +78,6 @@
 
 :host {
     ::ng-deep .id .ng2-smart-title {
-        
         width: 50px;
     }
 }
@@ -100,3 +100,16 @@
     }
 }
 
+:host /deep/ ng2-smart-table table > tbody > tr > td {
+    height: nb-theme(tree-grid-row-min-height);
+    padding: nb-theme(tree-grid-cell-padding);
+    border-width: 0.5px;
+    border-color: #0095ff36;
+}
+
+:host /deep/ ng2-smart-table thead > tr > th {
+    height: nb-theme(tree-grid-row-min-height);
+    padding: nb-theme(tree-grid-cell-padding);
+    border-width: 0.5px;
+    border-color: #0095ff36;
+}

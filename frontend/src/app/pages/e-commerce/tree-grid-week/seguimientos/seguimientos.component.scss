@@ -60,8 +60,8 @@
   }
 }
 
-:host /deep/ ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
-  margin-bottom: -45px !important;
+:host /deep/ ng2-smart-table .ng2-smart-actions ng2-st-tbody-edit-delete {
+  display: contents !important;
 }
 
 :host {
@@ -74,4 +74,24 @@
     ::ng-deep .usuario .ng2-smart-title {
         width: 90px;
     }
+}
+
+:host /deep/ ng2-smart-table table > tbody > tr > td {
+  height: nb-theme(tree-grid-row-min-height);
+  padding: nb-theme(tree-grid-cell-padding);
+  border-width: 0.5px;
+  border-color: #0095ff36;
+}
+
+:host /deep/ ng2-smart-table thead > tr > th  { 
+  height: nb-theme(tree-grid-row-min-height);
+  padding: nb-theme(tree-grid-cell-padding);
+  border-width: 0.5px;
+  border-color: #0095ff36;
+}  
+
+:host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
+  text-align: center;
+  background-color: #252547;
+  color: rgb(255, 255, 255);
 }

@@ -34,7 +34,10 @@
           <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
             {{row.data[column] | slice: 0: -3 || '-'}}
             <hr>
-            <button class="boton" nbButton (click)="open(index, row.data[column], column)">
+            <button [ngClass]="{'botonVerde':(row.data[column] | slice: -2: -1) > 0, 
+                                'botonRojo':(row.data[column] | slice: -2: -1) == 0}" 
+                    nbButton 
+                    (click)="open(index, row.data[column], row.data)">
               {{row.data[column] | slice: -2: -1}}
             </button>
           </td>

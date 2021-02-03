@@ -44,6 +44,10 @@ export class peticionesGetService {
     leerUsuarios(): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/users')
     }
+    
+    leerUsuarioActual(): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/users/current')
+    }
 
     leerSeguimientos(id_orden): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/seguimientos?order_id=' + id_orden + '')

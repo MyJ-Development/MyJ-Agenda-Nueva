@@ -120,7 +120,7 @@ export class ListaOrdenesComponent implements OnInit {
           id_orden       : this.ordenesPorCliente[i]['id'],
           fecha_ejecucion: this.ordenesPorCliente[i]['fechaejecucion'],
           encargado      : this.ordenesPorCliente[i]['encargado']['nombre'],
-          estado_ticket  : this.ordenesPorCliente[i]['estadoticket'],
+          estado_ticket  : this.ordenesPorCliente[i]['estadoticket']['descripcion'],
         });
 
       };

@@ -58,7 +58,7 @@ export class TreeGridShowcaseComponent {
       custom: [
         {
           name : 'mas',
-          title: '<i class="icon ion-document" title="mas"></i>'
+          title: '<i class="icon ion-document" title="mas"></i>',
         },
       ]
     },
@@ -76,6 +76,7 @@ export class TreeGridShowcaseComponent {
       fecha: {
         title: 'Fecha',
         type : 'string',
+        width: '40px',
       },
       direccion: {
         title: 'Dirección',
@@ -106,9 +107,9 @@ export class TreeGridShowcaseComponent {
   rut_cliente            : any;
   lista                  : any;
   date_init              : any;
-  date_inicio            : any;
+  date_inicio            : Date;
   date_end               : any;
-  date_fin               : any;
+  date_fin               : Date;
 
 
   // Constructor:
@@ -194,15 +195,11 @@ export class TreeGridShowcaseComponent {
       // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
       this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
 
-      console.log(this.date_init);
-
       // Guarda en variable global la fecha de final obtenida del calendario:
       this.date_fin = new Date(this.formulario.value['calendar']['end']);
 
       // Formatea la fecha final obtenida, en formato standard de las órdenes:
       this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
-
-      console.log(this.date_end);
 
       // Obtiene los datos del servicio ingresando los parámetros nombre tecnico, fecha inicio y término:
       this.servicio = this.service.leerOrdenesClientesTecnico(this.buscar, this.date_init, this.date_end);
@@ -219,11 +216,17 @@ export class TreeGridShowcaseComponent {
       // Iguala el dato obtenido del formulario con variable global:
       this.buscar = this.formulario.value['buscador'];
 
-      // Guarda y formatea la fecha inicial obtenida del calendario:
-      this.date_init = new Date(this.datePipe.transform(this.formulario.value['calendar']['start'], 'yyyy-MM-dd'));
+      // Guarda en variable global la fecha de inicio obtenida del calendario:
+      this.date_inicio = new Date(this.formulario.value['calendar']['start']);
 
-      // Guarda y formatea la fecha final obtenida del calendario:
-      this.date_end = new Date(this.datePipe.transform(this.formulario.value['calendar']['end'], 'yyyy-MM-dd'));
+      // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
+      this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
+
+      // Guarda en variable global la fecha de final obtenida del calendario:
+      this.date_fin = new Date(this.formulario.value['calendar']['end']);
+
+      // Formatea la fecha final obtenida, en formato standard de las órdenes:
+      this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
 
       // Obtiene los datos del servicio ingresando los parámetros domicilio, fecha inicio y término:
       this.servicio  = this.service.leerOrdenesClientesDomicilio(this.buscar, this.date_init, this.date_end);
@@ -260,7 +263,7 @@ export class TreeGridShowcaseComponent {
           id_orden : this.clientes[i]['id'],
           nombre   : this.mayus(this.formato(this.clientes[i]['client_order']['nombre'])),
           direccion: this.mayus(this.formato(this.clientes[i]['client_residence']['direccion'])),
-          fecha    : this.clientes[i]['fechaejecucion'],
+          fecha    : this.datePipe.transform(this.clientes[i]['fechaejecucion'], 'dd-MM-yyy'),
           tipo     : this.clientes[i]['tipo']['descripcion'],
         });
       };

@@ -12,8 +12,12 @@
     }
   }
 
-  .boton {
-    background-color: #00d68f; //#d60000b4 para error
+  .botonVerde {
+    background-color: #00d68f;
+  }
+
+  .botonRojo {
+    background-color: #f75d5df5;
   }
 
   nb-card-header{
@@ -148,7 +152,7 @@
     height: nb-theme(tree-grid-row-min-height);
     padding: nb-theme(tree-grid-cell-padding);
     border-width: 1px;
-    border-color: #0095ff;
+    border-color: #0095ff36;
   }
 }
 
