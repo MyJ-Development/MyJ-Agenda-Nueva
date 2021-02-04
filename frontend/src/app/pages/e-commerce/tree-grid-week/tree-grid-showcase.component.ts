@@ -33,7 +33,6 @@ interface TreeNode<T> {
 };
 
 interface FSEntry {
-  objeto?   : any;
   Lunes    : string;
   Martes   : string;
   Miercoles: string;
@@ -140,7 +139,6 @@ export class TreeGridWeekShowcaseComponent {
 
   // Método que al ejecutarse, obtiene y envía datos al servicio:
   open(index: any, data: any, event) {
-    console.log(event);
     this.encargado = data;
     this.indice    = index;
     this.sendIndex(this.indice);
@@ -252,14 +250,6 @@ export class TreeGridWeekShowcaseComponent {
         // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
         this.data.push({
           data: {
-            objeto: {
-              Lunes    : counter[0],
-              Martes   : counter[1],
-              Miercoles: counter[2],
-              Jueves   : counter[3],
-              Viernes  : counter[4],
-              Sabado   : counter[5],
-            },
             Lunes    : tecnico.nombre + " (" + counter[0] + ")",
             Martes   : tecnico.nombre + " (" + counter[1] + ")",
             Miercoles: tecnico.nombre + " (" + counter[2] + ")",

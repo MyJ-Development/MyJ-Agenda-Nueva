@@ -16,7 +16,7 @@ export class TipoOrdenComponent {
 
     pager: {
       display: true,
-      perPage: 4
+      perPage: 5
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -47,6 +47,10 @@ export class TipoOrdenComponent {
       },
       peso: {
         title: 'Peso',
+        width: '30px',
+      },
+      valor: {
+        title: 'Valor',
         width: '30px',
       },
       activo: {
@@ -92,6 +96,7 @@ export class TipoOrdenComponent {
           id: this.tipo_orden[i]['id'],
           tipo_orden: this.tipo_orden[i]['descripcion'],
           peso: this.tipo_orden[i]['peso'],
+          valor: this.tipo_orden[i]['valor'],
           activo: this.tipo_orden[i]['active']
         })
 
@@ -121,6 +126,10 @@ export class TipoOrdenComponent {
         search: query
       },
       {
+        field: 'valor',
+        search: query
+      },
+      {
         field: 'activo',
         search: query
       },
@@ -134,6 +143,7 @@ export class TipoOrdenComponent {
       this.report = {
         descripcion: event.newData.tipo_orden,
         peso: event.newData.peso,
+        valor: event.newData.valor,
         active: event.newData.activo,
       };
 
@@ -162,10 +172,13 @@ export class TipoOrdenComponent {
         id: event.newData.id,
         descripcion: event.newData.tipo_orden,
         peso: event.newData.peso,
+        valor: event.newData.valor,
         active: event.newData.activo,
       };
 
       let res = '';
+
+      console.log(this.report);
 
       this.service.editarTipoOrden(this.report).subscribe(data => {
         res = data;

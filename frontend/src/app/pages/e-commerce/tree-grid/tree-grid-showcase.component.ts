@@ -228,6 +228,9 @@ export class TreeGridShowcaseComponent {
       // Formatea la fecha final obtenida, en formato standard de las órdenes:
       this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
 
+      console.log(this.date_init);
+      console.log(this.date_end);
+
       // Obtiene los datos del servicio ingresando los parámetros domicilio, fecha inicio y término:
       this.servicio  = this.service.leerOrdenesClientesDomicilio(this.buscar, this.date_init, this.date_end);
 

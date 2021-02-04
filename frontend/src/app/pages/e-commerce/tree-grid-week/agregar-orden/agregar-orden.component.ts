@@ -40,6 +40,10 @@ export class AgregarOrdenComponent implements OnInit {
   estadoTicket      : any[];
   medioPago         : any[];
   prioridad         : any[];
+  ordenesDiarias    : any[];
+  listaTecnicos     : any;
+  fechaControl      : any;
+  encargadoControl  : any;
 
 
   // Constructor:
@@ -64,6 +68,7 @@ export class AgregarOrdenComponent implements OnInit {
       // Guarda en variable global el rut obtenido del formulario:
       this.rut_cli = x;
     });
+
   };
 
 
@@ -77,7 +82,76 @@ export class AgregarOrdenComponent implements OnInit {
     this.sincronizarEstadoTicket();
     this.sincronizarMedioPago();
     this.sincronizarPrioridad();
+    this.getOrdenes();
   };
+
+  getOrdenes(){
+
+    this.formulario.valueChanges.subscribe(x => {
+
+      if ((this.formulario.controls['tipo_orden'].value != "") && 
+      (this.formulario.controls['fecha_ejecucion'].value != "")) {
+
+        this.fechaControl = this.datePipe.transform(this.formulario.controls['fecha_ejecucion'].value, 'yyyy-MM-dd');
+
+        // this.encargadoControl = this.tecnicos.filter(encargado => 
+        //   encargado.rut == this.formulario.controls['encargado'].value).map(x => x.nombre)[0];
+
+
+        let tipoOrdenControl = this.formulario.controls['tipo_orden'].value;
+
+        // Obtiene el peso de cada tipo de orden seleccionada:
+        let capacidad = this.tipoOrdenes.filter(tipo => tipo.id == tipoOrdenControl)
+        .map(tipo => tipo.peso)[0];
+
+        // Filtra los tecnicos por capacidad:
+        let capacidadTecnico = this.tecnicos.filter(encargado => 
+          encargado.capacidad >= capacidad);
+
+          console.log(capacidadTecnico);
+
+
+        this.service.leerOrdenesDiarias(this.fechaControl, this.fechaControl)
+        .subscribe((ordenesList) => {
+
+          this.ordenesDiarias = ordenesList;
+
+          for (let tecnico of capacidadTecnico){
+
+            let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre)
+
+            console.log(orden);
+          }
+
+          // let todo = this.ordenesDiarias.filter(x => x.encargado.nombre == capacidadTecnico)
+
+          // console.log(todo);
+
+          // let ordenesPorTecnico = this.ordenesDiarias.filter(x => 
+          //   x.encargado.nombre == this.encargadoControl)
+
+          // let peso = this.ordenesDiarias.map(x => x.tipo.peso);
+          // let suma;
+
+          // for (let i = 0; i < peso.length; i++) {
+          //   suma = i + 1;
+          // }
+
+
+
+            // let nuevaCapacidad = capacidadTecnico - suma;
+
+
+            // this.listaTecnicos = this.tecnicos.filter(encargado => 
+            //   ((encargado.capacidad >= (capacidad + nuevaCapacidad))))
+
+        })
+        
+      }
+      
+    })
+
+  }
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:

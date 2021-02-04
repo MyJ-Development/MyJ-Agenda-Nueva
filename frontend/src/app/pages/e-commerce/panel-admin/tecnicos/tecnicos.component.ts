@@ -16,7 +16,7 @@ export class TecnicosComponent {
 
     pager: {
       display: true,
-      perPage: 5
+      perPage: 6
     },
     actions: {
       columnTitle: 'Más',
