@@ -41,9 +41,9 @@ export class AgregarOrdenComponent implements OnInit {
   medioPago         : any[];
   prioridad         : any[];
   ordenesDiarias    : any[];
-  listaTecnicos     : any;
+  listaTecnicos     : any[];
   fechaControl      : any;
-  encargadoControl  : any;
+  tecnicoCapacidad  : any[] = [];
 
 
   // Constructor:
@@ -94,64 +94,73 @@ export class AgregarOrdenComponent implements OnInit {
 
         this.fechaControl = this.datePipe.transform(this.formulario.controls['fecha_ejecucion'].value, 'yyyy-MM-dd');
 
-        // this.encargadoControl = this.tecnicos.filter(encargado => 
-        //   encargado.rut == this.formulario.controls['encargado'].value).map(x => x.nombre)[0];
-
-
         let tipoOrdenControl = this.formulario.controls['tipo_orden'].value;
 
         // Obtiene el peso de cada tipo de orden seleccionada:
-        let capacidad = this.tipoOrdenes.filter(tipo => tipo.id == tipoOrdenControl)
+        let pesoOrden = this.tipoOrdenes.filter(tipo => tipo.id == tipoOrdenControl)
         .map(tipo => tipo.peso)[0];
 
         // Filtra los tecnicos por capacidad:
-        let capacidadTecnico = this.tecnicos.filter(encargado => 
-          encargado.capacidad >= capacidad);
-
-          console.log(capacidadTecnico);
-
+        // let capacidadTecnico = this.tecnicos.filter(encargado => encargado.capacidad >= capacidad);
 
         this.service.leerOrdenesDiarias(this.fechaControl, this.fechaControl)
         .subscribe((ordenesList) => {
 
           this.ordenesDiarias = ordenesList;
 
-          for (let tecnico of capacidadTecnico){
+          let capacidadTotal;
 
-            let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre)
+          this.listaTecnicos = [];
 
-            console.log(orden);
-          }
+          for (let tecnico of this.tecnicos){
 
-          // let todo = this.ordenesDiarias.filter(x => x.encargado.nombre == capacidadTecnico)
+            // Filtra las ordenes por nombre del tecnico.
+            let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre);
 
-          // console.log(todo);
+            // Mapea las ordenes del tecnico por el peso.
+            let mapeo = orden.map(x => x.tipo.peso);
 
-          // let ordenesPorTecnico = this.ordenesDiarias.filter(x => 
-          //   x.encargado.nombre == this.encargadoControl)
+            let suma: number = 0;
 
-          // let peso = this.ordenesDiarias.map(x => x.tipo.peso);
-          // let suma;
+            // Suma el peso de cada orden diaria del tecnico y lo almacena en variable.
+            for (let i = 0; i < mapeo.length; i++) {
+              suma = mapeo[i] + suma
+            };
 
-          // for (let i = 0; i < peso.length; i++) {
-          //   suma = i + 1;
-          // }
+            capacidadTotal = suma + pesoOrden;
+            
+            if (suma >= 1) {
+              this.tecnicoCapacidad.push({
+                tecnico: tecnico.nombre,
+                capacidad: suma,
+              });
+            } else {
+              suma = 0;
+              this.tecnicoCapacidad.push({
+                tecnico: tecnico.nombre,
+                capacidad: suma,
+              });
+            };
 
+            if (tecnico.capacidad >= capacidadTotal) {
 
+              let capRestante = tecnico.capacidad - capacidadTotal;
 
-            // let nuevaCapacidad = capacidadTecnico - suma;
-
-
-            // this.listaTecnicos = this.tecnicos.filter(encargado => 
-            //   ((encargado.capacidad >= (capacidad + nuevaCapacidad))))
-
-        })
-        
-      }
-      
-    })
-
-  }
+              this.listaTecnicos.push({
+                id: tecnico.id,
+                rut: tecnico.rut,
+                nombre: `(${capRestante}) ${tecnico.nombre}`,
+                comuna: tecnico.comuna,
+                estado: tecnico.estado,
+                capacidad: tecnico.capacidad,
+                active: tecnico.active,
+              });
+            };
+          };
+        });
+      };
+    });
+  };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:

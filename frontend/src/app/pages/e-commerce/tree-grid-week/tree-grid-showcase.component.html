@@ -32,13 +32,13 @@
                                 {{column}}
           </th>
           <td class="tablitatr" nbTreeGridCell *nbTreeGridCellDef="let row">
-            {{row.data[column] | slice: 0: -3 || '-'}}
+            {{row.data[column] || '-'}}
             <hr>
-            <button [ngClass]="{'botonVerde':(row.data[column] | slice: -2: -1) > 0, 
-                                'botonRojo':(row.data[column] | slice: -2: -1) == 0}" 
+            <button [ngClass]="{'botonVerde':(row.data.objeto[column]) > 0, 
+                                'botonRojo':(row.data.objeto[column]) == 0}" 
                     nbButton 
-                    (click)="open(index, row.data[column], row.data)">
-              {{row.data[column] | slice: -2: -1}}
+                    (click)="open(index, row.data[column], row.data.objeto[column])">
+              {{row.data.objeto[column]}}
             </button>
           </td>
         </ng-container>

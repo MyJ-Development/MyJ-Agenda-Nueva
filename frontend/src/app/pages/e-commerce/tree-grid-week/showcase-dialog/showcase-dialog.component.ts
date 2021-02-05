@@ -91,7 +91,6 @@ export class ShowcaseDialogComponent implements OnInit {
   ordDiarias              : any[]           = [];
   idOrden                 : any[]           = [];
   data                    : any[]           = [];
-  encargadoNombre         : any;
 
 
   // Constructor:
@@ -102,9 +101,6 @@ export class ShowcaseDialogComponent implements OnInit {
 
     // Obtiene las órdenes del servicio y los enlaza en variable:
     this.ordenesDiariasPorTecnico = this.service.getOrdenesDiariasPorTecnico();
-
-    // Obtiene dato del servicio y lo formatea con número de carácteres indicado (Método slice):
-    this.encargadoNombre = this.encargado.slice(0, -4);
   };
 
 
@@ -170,7 +166,7 @@ export class ShowcaseDialogComponent implements OnInit {
           if ((this.ordDiarias[j][i])) {
 
             // Condición a ejecutar si el nombre del técnico y la fecha indicada es la misma que la orden del arreglo en la posición indicada:
-            if ((this.encargadoNombre === this.ordDiarias[j][i]['encargado']['nombre'])
+            if ((this.encargado === this.ordDiarias[j][i]['encargado']['nombre'])
               && (this.newFecha(this.index) == this.ordDiarias[j][i]['fechaejecucion'])) {
 
               // Inserta y envía la orden filtrada anteriormente en la posición indicada:

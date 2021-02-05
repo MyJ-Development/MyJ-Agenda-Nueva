@@ -31,6 +31,7 @@ export class AgregarClienteComponent {
   reportResidencia: any;
   correo_         : any;
   telefono2_      : any;
+  a               : any[] = [];
 
 
   // Constructor:
@@ -70,6 +71,15 @@ export class AgregarClienteComponent {
 
   // Método encargado de postear la información hacia la API:
   guardar() {
+
+    this.peticiones.leerClientes(this.formulario.value['rut_cliente']).subscribe(data => 
+      this.a.push(data)
+    )
+
+      console.log(this.a);
+    // if (String(a[0]['rut']) === this.formulario.value['rut_cliente'] ){
+    //   console.log('oli');
+    // }
 
     // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
@@ -122,6 +132,7 @@ export class AgregarClienteComponent {
       this.router.navigate(['/success']);
     });
 
+    console.log(this.reportResidencia);
 
     // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
     this.peticiones.agregarResidencia(this.reportResidencia).subscribe(data => {

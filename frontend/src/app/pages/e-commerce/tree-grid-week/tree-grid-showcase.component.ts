@@ -33,6 +33,7 @@ interface TreeNode<T> {
 };
 
 interface FSEntry {
+  objeto?  : any;
   Lunes    : string;
   Martes   : string;
   Miercoles: string;
@@ -233,10 +234,11 @@ export class TreeGridWeekShowcaseComponent {
           x.encargado.nombre   == tecnico.nombre));
 
         let aux_date: Date = new Date(String(date_init));
+        aux_date.setDate(aux_date.getDate() + 1);
 
 
         // Realiza un conteo de las ordenes filtradas por fecha de ejecución y la inserta en arreglo:
-        for (let i = -1; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
           let row_date    = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
           let aux_counter = (this.ordenesPorTecnico.filter(x =>
             this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == row_date));
@@ -250,12 +252,20 @@ export class TreeGridWeekShowcaseComponent {
         // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
         this.data.push({
           data: {
-            Lunes    : tecnico.nombre + " (" + counter[0] + ")",
-            Martes   : tecnico.nombre + " (" + counter[1] + ")",
-            Miercoles: tecnico.nombre + " (" + counter[2] + ")",
-            Jueves   : tecnico.nombre + " (" + counter[3] + ")",
-            Viernes  : tecnico.nombre + " (" + counter[4] + ")",
-            Sabado   : tecnico.nombre + " (" + counter[5] + ")"
+            objeto:{
+              Lunes    : counter[0],
+              Martes   : counter[1],
+              Miercoles: counter[2],
+              Jueves   : counter[3],
+              Viernes  : counter[4],
+              Sabado   : counter[5],
+            },
+            Lunes    : tecnico.nombre,
+            Martes   : tecnico.nombre,
+            Miercoles: tecnico.nombre,
+            Jueves   : tecnico.nombre,
+            Viernes  : tecnico.nombre,
+            Sabado   : tecnico.nombre,
           }
         });
 
