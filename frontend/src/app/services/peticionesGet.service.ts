@@ -49,6 +49,10 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/users/current')
     }
 
+    leerTecnicoTipoOrden(rut_tecnico): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/techtypeorder?rut_tecnico=' + rut_tecnico + '')
+    }
+
     leerSeguimientos(id_orden): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/seguimientos?order_id=' + id_orden + '')
     }

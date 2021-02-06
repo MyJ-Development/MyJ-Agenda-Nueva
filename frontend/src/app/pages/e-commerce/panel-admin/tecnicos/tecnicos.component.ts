@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { request } from 'http';
 import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
@@ -60,6 +61,9 @@ export class TecnicosComponent {
         title: 'Capacidad',
         width: '50px',
       },
+      tipo_orden: {
+        title: 'Tipo de orden',
+      },
       activo: {
         title: 'Activo',
         width: '50px',
@@ -75,7 +79,8 @@ export class TecnicosComponent {
   };
 
   data: any[] = [];
-  tecnicos: any;
+  tecnicos: any[];
+  tipoOrdenes: any[];
   reportCrear: any;
   report: any;
   source: LocalDataSource;
@@ -112,6 +117,10 @@ export class TecnicosComponent {
         search: query
       },
       {
+        field: 'tipo_orden',
+        search: query
+      },
+      {
         field: 'capacidad',
         search: query
       },
@@ -124,6 +133,9 @@ export class TecnicosComponent {
 
   datos() {
 
+    let tipo;
+
+
     this.source = new LocalDataSource(this.data);
 
     this.service.leerTecnicos().subscribe((x) => {
@@ -132,12 +144,28 @@ export class TecnicosComponent {
 
       for (let i = 0; i < this.tecnicos.length; i++) {
 
+        this.service.leerTecnicoTipoOrden(this.tecnicos[i]['rut']).subscribe((x) => {
+          tipo = x;
+    
+          console.log(tipo[i]);
+        })
+
+
+        // for (let j = 0; j < this.tecnicos.length; j++) {
+
+        //   console.log(tipo[j]['type_orders'][i]['descripcion']);
+
+
+          
+        // }
+
         this.data.push({
           id: this.tecnicos[i]['id'],
           rut: this.tecnicos[i]['rut'],
           nombre: this.tecnicos[i]['nombre'],
           comuna: this.tecnicos[i]['comuna'],
           estado: this.tecnicos[i]['estado'],
+          tipo_orden: this.tecnicos[i]['type_orders'],
           capacidad: this.tecnicos[i]['capacidad'],
           activo: this.tecnicos[i]['active'],
         });

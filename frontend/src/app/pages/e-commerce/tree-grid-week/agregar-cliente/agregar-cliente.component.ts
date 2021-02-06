@@ -72,15 +72,6 @@ export class AgregarClienteComponent {
   // Método encargado de postear la información hacia la API:
   guardar() {
 
-    this.peticiones.leerClientes(this.formulario.value['rut_cliente']).subscribe(data => 
-      this.a.push(data)
-    )
-
-      console.log(this.a);
-    // if (String(a[0]['rut']) === this.formulario.value['rut_cliente'] ){
-    //   console.log('oli');
-    // }
-
     // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
 
@@ -122,25 +113,31 @@ export class AgregarClienteComponent {
       };
     };
 
-    let res = '';
-
-    // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
-    this.peticiones.agregarCliente(this.reportCliente).subscribe(data => {
-      res = data;
-      console.log('res');
-      console.log(res);
-      this.router.navigate(['/success']);
-    });
-
     console.log(this.reportResidencia);
 
-    // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
-    this.peticiones.agregarResidencia(this.reportResidencia).subscribe(data => {
-      res = data;
-      console.log('res');
-      console.log(res);
-      this.router.navigate(['/success']);
-    });
+    let res = '';
+
+
+    if (this.reportCliente) {
+      // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
+      this.peticiones.agregarCliente(this.reportCliente).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
+
+
+    if (this.reportResidencia) {
+      // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
+      this.peticiones.agregarResidencia(this.reportResidencia).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    }
 
 
     //Se resetean los valores del formulario, dejando por defecto el valor del usuario:
