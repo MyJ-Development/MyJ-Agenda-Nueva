@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { request } from 'http';
 import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
-  selector: 'ngx-tecnicos',
-  templateUrl: './tecnicos.component.html',
-  styleUrls: ['./tecnicos.component.scss']
+  selector: 'ngx-tecnico-tipo-orden',
+  templateUrl: './tecnico-tipo-orden.component.html',
+  styleUrls: ['./tecnico-tipo-orden.component.scss']
 })
-export class TecnicosComponent {
+export class TecnicoTipoOrdenComponent {
 
   settings = {
 
@@ -37,10 +36,6 @@ export class TecnicosComponent {
       confirmSave: true,
     },
     columns: {
-      id: {
-        title: 'ID',
-        width: '10px',
-      },
       rut: {
         title: 'Rut',
         width: '40px',
@@ -49,28 +44,13 @@ export class TecnicosComponent {
         title: 'Nombre',
         width: '70px',
       },
-      comuna: {
-        title: 'Comuna',
-        width: '50px',
-      },
-      estado: {
-        title: 'Estado',
-        width: '50px',
+      tipo_orden: {
+        title: 'Tipo de orden',
+        width: '70px',
       },
       capacidad: {
         title: 'Capacidad',
         width: '50px',
-      },
-      activo: {
-        title: 'Activo',
-        width: '50px',
-        editor: {
-          type: 'checkbox',
-          config: {
-            true: true,
-            false: false,
-          },
-        },
       },
     }
   };
@@ -93,10 +73,6 @@ export class TecnicosComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field: 'id',
-        search: query
-      },
-      {
         field: 'rut',
         search: query
       },
@@ -105,19 +81,11 @@ export class TecnicosComponent {
         search: query
       },
       {
-        field: 'comuna',
-        search: query
-      },
-      {
-        field: 'estado',
+        field: 'tipo_orden',
         search: query
       },
       {
         field: 'capacidad',
-        search: query
-      },
-      {
-        field: 'activo',
         search: query
       },
     ], false);
@@ -146,14 +114,10 @@ export class TecnicosComponent {
 
 
         this.data.push({
-          id        : this.tecnicos[i]['id'],
           rut       : this.tecnicos[i]['rut'],
           nombre    : this.tecnicos[i]['nombre'],
-          comuna    : this.tecnicos[i]['comuna'],
-          estado    : this.tecnicos[i]['estado'],
           tipo_orden: this.tecnicos[i]['type_orders'].map(x => x.descripcion),
           capacidad : this.tecnicos[i]['capacidad'],
-          activo    : this.tecnicos[i]['active'],
         });
       };
 
@@ -166,12 +130,9 @@ export class TecnicosComponent {
     if (window.confirm('Estás seguro que quieres crear este técnico?')) {
 
       this.report = {
-        comuna: event.newData.comuna,
         rut: event.newData.rut,
         nombre: event.newData.nombre,
         capacidad: event.newData.capacidad,
-        estado: event.newData.estado,
-        active: event.newData.activo,
       };
 
       let res = '';
@@ -195,13 +156,9 @@ export class TecnicosComponent {
     if (window.confirm('Guardar cambios establecidos?')) {
 
       this.report = {
-        id: event.newData.id,
-        comuna: event.newData.comuna,
         rut: event.newData.rut,
         nombre: event.newData.nombre,
         capacidad: event.newData.capacidad,
-        estado: event.newData.estado,
-        active: event.newData.activo,
       };
 
       let res = '';

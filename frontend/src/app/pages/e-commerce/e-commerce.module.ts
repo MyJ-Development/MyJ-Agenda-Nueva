@@ -105,6 +105,7 @@ import { MedioPagoComponent } from './panel-admin/medio-pago/medio-pago.componen
 import { PrioridadComponent } from './panel-admin/prioridad/prioridad.component';
 import { UsuariosComponent } from './panel-admin/usuarios/usuarios.component';
 import { SeguimientosComponent } from './tree-grid-week/seguimientos/seguimientos.component';
+import { TecnicoTipoOrdenComponent } from './panel-admin/tecnico-tipo-orden/tecnico-tipo-orden.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -196,6 +197,7 @@ import { SeguimientosComponent } from './tree-grid-week/seguimientos/seguimiento
     PrioridadComponent,
     UsuariosComponent,
     SeguimientosComponent,
+    TecnicoTipoOrdenComponent,
   ],
   providers: [
     CountryOrdersMapService,
