@@ -3,9 +3,9 @@ export class TipoOrdenes{
     descripcion: string;
     contador: number;
 
-    constructor(){
-        this.id = this.id;
-        this.descripcion = this.descripcion;
-        this.contador = this.contador;
+    constructor(id, descripcion, contador){
+        this.id = id;
+        this.descripcion = descripcion;
+        this.contador = contador;
     }
 }

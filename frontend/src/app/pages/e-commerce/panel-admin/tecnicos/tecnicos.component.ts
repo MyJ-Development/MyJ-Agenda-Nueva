@@ -142,9 +142,6 @@ export class TecnicosComponent {
           console.log(tipo[i]);
         })
 
-        this.tecnicos[i]['type_orders'].map(x => console.log(x))
-
-
         this.data.push({
           id        : this.tecnicos[i]['id'],
           rut       : this.tecnicos[i]['rut'],

@@ -50,7 +50,7 @@ export class peticionesGetService {
     }
 
     leerTecnicoTipoOrden(rut_tecnico): Observable<any[]> {
-        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/techtypeorder?rut_tecnico=' + rut_tecnico + '')
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/techtypeorder?ordertype_id=' + rut_tecnico + '')
     }
 
     leerSeguimientos(id_orden): Observable<any[]> {
@@ -134,6 +134,11 @@ export class peticionesGetService {
     agregarSeguimiento(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.post('http://10.19.11.9:3003/api/scheduler/seguimientos/', report);
+	}
+
+    agregarTecnicoTipoOrden(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/techtypeorder/', report);
 	}
 
     editarOrden(report): Observable<any> {
