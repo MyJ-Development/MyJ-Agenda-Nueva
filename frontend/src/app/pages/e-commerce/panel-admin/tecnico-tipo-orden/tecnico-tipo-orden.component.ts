@@ -71,14 +71,13 @@ export class TecnicoTipoOrdenComponent {
         },
         tipo_orden: {
           title: 'Tipo orden',
-          type: 'html',
-          valuePrepareFunction: (cell, row) => { return row },
           editor: {
             type: 'list',
             config: {
               list: this.tipoOrdenes,
             }
-          }
+          },
+          valuePrepareFunction: (cell, row) => { return console.log(row)},
         },
       }
     };
@@ -109,21 +108,34 @@ export class TecnicoTipoOrdenComponent {
 
     this.service.leerTipoOrdenes().subscribe((x) => {
 
-      // this.objeto = x      
+      this.tipoOrdenes = x
+
+      for (let tipo of this.tipoOrdenes) {
+        
+        // this.settings.columns.tipo_orden.editor.config.list.push({value: tipo.id, title: tipo.descripcion});
+        // this.settings = Object.assign({}, this.settings);
+
+        this.tipoOrdenes.push(
+          {value: tipo.id,
+           title: tipo.descripcion}
+        )
+      }
+
+
 
       // for (let i = 0; i < this.objeto.length; i++) {
         
-      //   this.tipoOrdenes.push(
-      //     {value: this.objeto.map(x => x.id)[i],
-      //      title: this.objeto.map(x => x.descripcion)[i]}
-      //   )
+        // this.tipoOrdenes.push(
+        //   {value: this.objeto.map(x => x.id)[i],
+        //    title: this.objeto.map(x => x.descripcion)[i]}
+        // )
       // }
 
 
       // console.log(this.tipoOrdenes);
     });
 
-    this.service.leerTipoOrdenes().subscribe((x) => {
+    this.service.leerTecnicos().subscribe((x) => {
 
       this.objeto = x;
 
@@ -137,48 +149,44 @@ export class TecnicoTipoOrdenComponent {
 
       // console.log(this.tecnicos.map(x => x.type_orders).length);
 
-      for (let tipoOrden of this.objeto) {
+      for (let tecnico of this.objeto) {
 
-        console.log(tipoOrden);
+        // this.tipoOrdenes.push(
+        //   {value: tipoOrden.id,
+        //    title: tipoOrden.descripcion}
+        // )
 
-        console.log(tipoOrden.id);
-
-        this.service.leerTecnicoTipoOrden(tipoOrden.id).subscribe((x) => {
+        this.service.leerTecnicoTipoOrden(tecnico.rut).subscribe((x) => {
 
           this.tipo = x;
 
-          console.log(this.tipo);
-
           for (let tecnico of this.tipo) {
-
+            
             console.log(tecnico);
+
+            // this.data.push({
+            //   rut       : tecnico.rut,
+            //   nombre    : tecnico.nombre,
+            //   tipo_orden: tecnico.type_orders,
+            // });
+
             
           }
 
-          if (this.tipo) {
+          // if (this.tipo) {
 
-            console.log(this.tipo['type_orders'].length);
+          //   console.log(this.tipo['type_orders'].length);
             
-            for (let j = 0; j < this.tipo['type_orders'].length; j++) {
-              console.log(this.tipo['type_orders'].map(x => x.id)[j]);
+          //   for (let j = 0; j < this.tipo['type_orders'].length; j++) {
+          //     console.log(this.tipo['type_orders'].map(x => x.id)[j]);
 
-              this.tipoOrdenes.push(
-                {value: this.objeto.map(x => x.id)[j],
-                 title: this.objeto.map(x => x.descripcion)[j]}
-              )
+
               
-              this.data.push({
-                rut       : this.tipo['rut'],
-                nombre    : this.tipo['nombre'],
-                tipo_orden: {
-                  value: this.tipo['type_orders'].map(x => x.id)[j],
-                  title: this.tipo['type_orders'].map(x => x.descripcion)[j]
-                },
-              });
-            }
+
+          //   }
             
 
-          }
+          // }
         })
 
         // this.tecnicos[i]['type_orders'].map(x => console.log(x))
