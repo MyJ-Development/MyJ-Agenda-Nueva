@@ -142,20 +142,24 @@ export class AgregarOrdenComponent implements OnInit {
               });
             };
 
-            if (tecnico.capacidad >= capacidadTotal) {
+            for (let tipo of tecnico.type_orders) {
+              if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && (tecnico.active)) {
 
-              let capRestante = tecnico.capacidad - capacidadTotal;
+                let capRestante = tecnico.capacidad - capacidadTotal;
+  
+                this.listaTecnicos.push({
+                  id: tecnico.id,
+                  rut: tecnico.rut,
+                  nombre: `(${capRestante}) ${tecnico.nombre}`,
+                  comuna: tecnico.comuna,
+                  estado: tecnico.estado,
+                  capacidad: tecnico.capacidad,
+                  active: tecnico.active,
+                });
+              };
+            }
 
-              this.listaTecnicos.push({
-                id: tecnico.id,
-                rut: tecnico.rut,
-                nombre: `(${capRestante}) ${tecnico.nombre}`,
-                comuna: tecnico.comuna,
-                estado: tecnico.estado,
-                capacidad: tecnico.capacidad,
-                active: tecnico.active,
-              });
-            };
+
           };
         });
       };

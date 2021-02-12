@@ -34,6 +34,10 @@
     color: rgb(255, 255, 255);
 }
 
+:host /deep/ ng2-smart-table th.ng2-smart-actions-title-add a{
+    margin-right: -10px;
+}
+
 :host /deep/ ng2-smart-table table tr td {
     font-size: smaller;
     text-align: -webkit-center !important;
@@ -62,10 +66,6 @@
     font-size: small;
 }
 
-:host /deep/ .id .ng2-smart-filter {
-    font-size: smaller;
-}
-
 :host /deep/ .rut .ng2-smart-filter {
     font-size: smaller;
 }
@@ -74,26 +74,8 @@
     font-size: smaller;
 }
 
-:host /deep/ .comuna .ng2-smart-filter {
+:host /deep/ .tipo_orden .ng2-smart-filter {
     font-size: smaller;
-}
-
-:host /deep/ .estado .ng2-smart-filter {
-    font-size: smaller;
-}
-
-:host /deep/ .capacidad .ng2-smart-filter {
-    font-size: smaller;
-}
-
-:host /deep/ .activo .ng2-smart-filter {
-    font-size: smaller;
-}
-
-:host {
-    ::ng-deep .id .ng2-smart-title {
-        width: 50px;
-    }
 }
 
 :host {
@@ -109,26 +91,8 @@
 }
 
 :host {
-    ::ng-deep .comuna .ng2-smart-title {
-        width: 100px;
-    }
-}
-
-:host {
-    ::ng-deep .estado .ng2-smart-title {
-        width: 100px;
-    }
-}
-
-:host {
-    ::ng-deep .capacidad .ng2-smart-title {
-        width: 100px;
-    }
-}
-
-:host {
-    ::ng-deep .activo .ng2-smart-title {
-        width: 80px;
+    ::ng-deep .tipo_orden .ng2-smart-title {
+        width: 90px;
     }
 }
 
@@ -145,3 +109,5 @@
     border-width: 0.5px;
     border-color: #0095ff36;
   }  
+
+  

@@ -137,9 +137,8 @@ export class TecnicosComponent {
 
 
         this.service.leerTecnicoTipoOrden(this.tecnicos[i]['rut']).subscribe((x) => {
+
           tipo = x;
-    
-          console.log(tipo[i]);
         })
 
         this.data.push({

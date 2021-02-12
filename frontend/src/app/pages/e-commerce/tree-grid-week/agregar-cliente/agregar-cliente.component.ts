@@ -45,6 +45,8 @@ export class AgregarClienteComponent {
 
     // Llamada de métodos:
     this.crearFormulario();
+
+    this.formulario.valueChanges.subscribe(x => console.log(x))
   };
 
 
@@ -53,11 +55,13 @@ export class AgregarClienteComponent {
 
     this.formulario = this.fb.group({
 
-      rut_cliente   : ['', Validators.required],
+      rut_cliente   : ['', [Validators.pattern('^(\d{2}\.\d{3}\.\d{3}-)([a-zA-Z]{1}$|\d{1}$)'), 
+                            Validators.required]],
       nombre_cliente: ['', Validators.required],
       telefono1     : ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12)]],
       telefono2     : [''],
-      correo_cliente: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      correo_cliente: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), 
+                            Validators.required]],
       creado_por    : [this.usuario, Validators.required],
       residencia    : this.fb.group({
         direccion_cliente: ['', Validators.required],
@@ -112,8 +116,6 @@ export class AgregarClienteComponent {
         pppoe     : this.formulario.value['residencia']['pppoe_cliente'],
       };
     };
-
-    console.log(this.reportResidencia);
 
     let res = '';
 

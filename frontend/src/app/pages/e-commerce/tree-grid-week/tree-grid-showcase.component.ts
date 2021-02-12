@@ -248,8 +248,8 @@ export class TreeGridWeekShowcaseComponent {
           test.push(this.ordenesDiariasPorTecnico);
         };
 
-
-        // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
+        if (tecnico.active) {
+                  // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
         this.data.push({
           data: {
             objeto:{
@@ -268,6 +268,7 @@ export class TreeGridWeekShowcaseComponent {
             Sabado   : tecnico.nombre,
           }
         });
+        }
 
         tec_counter = tec_counter + 1;
       };
