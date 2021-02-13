@@ -4,9 +4,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
-  selector: 'ngx-tecnico-tipo-orden',
+  selector   : 'ngx-tecnico-tipo-orden',
   templateUrl: './tecnico-tipo-orden.component.html',
-  styleUrls: ['./tecnico-tipo-orden.component.scss']
+  styleUrls  : ['./tecnico-tipo-orden.component.scss']
 })
 export class TecnicoTipoOrdenComponent {
 
@@ -21,14 +21,16 @@ export class TecnicoTipoOrdenComponent {
   settings   : any;
 
   constructor(private service: peticionesGetService,
-    private router: Router) {
+              private router: Router) {
 
     this.datos();
 
     this.estructura();
   }
 
+
   estructura() {
+
     this.settings = {
 
       hideSubHeader: false,
@@ -39,19 +41,19 @@ export class TecnicoTipoOrdenComponent {
       },
       actions: {
         columnTitle: 'Más',
-        filter: true,
-        edit: false,
-        width: '10px',
+        filter     : true,
+        edit       : false,
+        width      : '10px',
       },
       add: {
-        addButtonContent: '<i class="nb-plus"></i>',
+        addButtonContent   : '<i class="nb-plus"></i>',
         createButtonContent: '<i class="nb-checkmark"></i>',
         cancelButtonContent: '<i class="nb-close"></i>',
-        confirmCreate: true,
+        confirmCreate      : true,
       },
       delete: {
         deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true,
+        confirmDelete      : true,
       },
       columns: {
         rut: {
@@ -74,15 +76,15 @@ export class TecnicoTipoOrdenComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field: 'rut',
+        field : 'rut',
         search: query
       },
       {
-        field: 'nombre',
+        field : 'nombre',
         search: query
       },
       {
-        field: 'tipo_orden',
+        field : 'tipo_orden',
         search: query
       },
     ], false);
@@ -103,10 +105,10 @@ export class TecnicoTipoOrdenComponent {
         for (let tipo of tecnico.type_orders) {
 
           this.data.push({
-            rut: tecnico.rut,
-            nombre: tecnico.nombre,
+            rut       : tecnico.rut,
+            nombre    : tecnico.nombre,
             tipo_orden: tipo.descripcion,
-            id_tipo: tipo.id,
+            id_tipo   : tipo.id,
           })
         };
       };
@@ -121,7 +123,7 @@ export class TecnicoTipoOrdenComponent {
 
       this.report = {
         ordertype_id: event.newData.tipo_orden,
-        tecnico_rut: event.newData.rut,
+        tecnico_rut : event.newData.rut,
       };
 
       let res = '';
@@ -145,7 +147,7 @@ export class TecnicoTipoOrdenComponent {
 
       this.report = {
         ordertype_id: event.data.id_tipo,
-        tecnico_rut: event.data.rut,
+        tecnico_rut : event.data.rut,
       };
 
       let res = '';

@@ -130,36 +130,39 @@ export class AgregarOrdenComponent implements OnInit {
             capacidadTotal = suma + pesoOrden;
             
             if (suma >= 1) {
+
               this.tecnicoCapacidad.push({
-                tecnico: tecnico.nombre,
+                tecnico  : tecnico.nombre,
                 capacidad: suma,
               });
+
             } else {
+
               suma = 0;
+
               this.tecnicoCapacidad.push({
-                tecnico: tecnico.nombre,
+                tecnico  : tecnico.nombre,
                 capacidad: suma,
               });
             };
 
             for (let tipo of tecnico.type_orders) {
-              if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && (tecnico.active)) {
+              if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && 
+              (tecnico.active)) {
 
                 let capRestante = tecnico.capacidad - capacidadTotal;
   
                 this.listaTecnicos.push({
-                  id: tecnico.id,
-                  rut: tecnico.rut,
-                  nombre: `(${capRestante}) ${tecnico.nombre}`,
-                  comuna: tecnico.comuna,
-                  estado: tecnico.estado,
+                  id       : tecnico.id,
+                  rut      : tecnico.rut,
+                  nombre   : `(${capRestante}) ${tecnico.nombre}`,
+                  comuna   : tecnico.comuna,
+                  estado   : tecnico.estado,
                   capacidad: tecnico.capacidad,
-                  active: tecnico.active,
+                  active   : tecnico.active,
                 });
               };
-            }
-
-
+            };
           };
         });
       };

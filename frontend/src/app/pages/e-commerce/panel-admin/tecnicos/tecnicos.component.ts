@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { request } from 'http';
 import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
-  selector: 'ngx-tecnicos',
+  selector   : 'ngx-tecnicos',
   templateUrl: './tecnicos.component.html',
-  styleUrls: ['./tecnicos.component.scss']
+  styleUrls  : ['./tecnicos.component.scss']
 })
 export class TecnicosComponent {
 
@@ -21,20 +20,20 @@ export class TecnicosComponent {
     },
     actions: {
       columnTitle: 'Más',
-      filter: true,
-      delete: false,
+      filter     : true,
+      delete     : false,
     },
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
+      addButtonContent   : '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
+      confirmCreate      : true,
     },
     edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
+      editButtonContent  : '<i class="nb-edit"></i>',
+      saveButtonContent  : '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
+      confirmSave        : true,
     },
     columns: {
       id: {
@@ -62,12 +61,12 @@ export class TecnicosComponent {
         width: '50px',
       },
       activo: {
-        title: 'Activo',
-        width: '50px',
+        title : 'Activo',
+        width : '50px',
         editor: {
-          type: 'checkbox',
+          type  : 'checkbox',
           config: {
-            true: true,
+            true : true,
             false: false,
           },
         },
@@ -83,7 +82,7 @@ export class TecnicosComponent {
   mostrar    : boolean = false;
 
   constructor(private service: peticionesGetService,
-    private router: Router) {
+              private router: Router) {
 
     this.datos();
   }
@@ -93,35 +92,36 @@ export class TecnicosComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field: 'id',
+        field : 'id',
         search: query
       },
       {
-        field: 'rut',
+        field : 'rut',
         search: query
       },
       {
-        field: 'nombre',
+        field : 'nombre',
         search: query
       },
       {
-        field: 'comuna',
+        field : 'comuna',
         search: query
       },
       {
-        field: 'estado',
+        field : 'estado',
         search: query
       },
       {
-        field: 'capacidad',
+        field : 'capacidad',
         search: query
       },
       {
-        field: 'activo',
+        field : 'activo',
         search: query
       },
     ], false);
   }
+
 
   datos() {
 
@@ -162,12 +162,12 @@ export class TecnicosComponent {
     if (window.confirm('Estás seguro que quieres crear este técnico?')) {
 
       this.report = {
-        comuna: event.newData.comuna,
-        rut: event.newData.rut,
-        nombre: event.newData.nombre,
+        comuna   : event.newData.comuna,
+        rut      : event.newData.rut,
+        nombre   : event.newData.nombre,
         capacidad: event.newData.capacidad,
-        estado: event.newData.estado,
-        active: event.newData.activo,
+        estado   : event.newData.estado,
+        active   : event.newData.activo,
       };
 
       let res = '';
@@ -191,13 +191,13 @@ export class TecnicosComponent {
     if (window.confirm('Guardar cambios establecidos?')) {
 
       this.report = {
-        id: event.newData.id,
-        comuna: event.newData.comuna,
-        rut: event.newData.rut,
-        nombre: event.newData.nombre,
+        id       : event.newData.id,
+        comuna   : event.newData.comuna,
+        rut      : event.newData.rut,
+        nombre   : event.newData.nombre,
         capacidad: event.newData.capacidad,
-        estado: event.newData.estado,
-        active: event.newData.activo,
+        estado   : event.newData.estado,
+        active   : event.newData.activo,
       };
 
       let res = '';

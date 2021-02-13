@@ -4,9 +4,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
-  selector: 'ngx-usuarios',
+  selector   : 'ngx-usuarios',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  styleUrls  : ['./usuarios.component.scss']
 })
 export class UsuariosComponent {
 
@@ -19,21 +19,21 @@ export class UsuariosComponent {
       perPage: 7
     },
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
+      addButtonContent   : '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
+      confirmCreate      : true,
     },
     edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
+      editButtonContent  : '<i class="nb-edit"></i>',
+      saveButtonContent  : '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
+      confirmSave        : true,
     },
     actions: {
       columnTitle: 'Más',
-      filter: true,
-      delete: false
+      filter     : true,
+      delete     : false
     },
     columns: {
       id: {
@@ -61,12 +61,12 @@ export class UsuariosComponent {
         width: '50px',
       },
       activo: {
-        title: 'Activo',
-        width: '40px',
+        title : 'Activo',
+        width : '40px',
         editor: {
-          type: 'checkbox',
+          type  : 'checkbox',
           config: {
-            true: true,
+            true : true,
             false: false,
           },
         },
@@ -74,45 +74,41 @@ export class UsuariosComponent {
     }
   };
 
-  data: any[] = [];
+  data    : any[] = [];
   usuarios: any;
-  report: any;
-  source: LocalDataSource;
-  mostrar: boolean = false;
+  report  : any;
+  source  : LocalDataSource;
+  mostrar : boolean = false;
 
   constructor(private service: peticionesGetService,
-    private router: Router) {
+              private router: Router) {
 
     this.datos();
-
   }
+
 
   datos() {
 
     this.source = new LocalDataSource(this.data);
 
-
     this.service.leerUsuarios().subscribe((x) => {
+
       this.usuarios = x;
 
       for (let i = 0; i < this.usuarios.length; i++) {
 
         this.data.push({
-          id: this.usuarios[i]['id'],
-          nombre: this.usuarios[i]['name'],
-          rut: this.usuarios[i]['rut'],
-          correo: this.usuarios[i]['email'],
+          id        : this.usuarios[i]['id'],
+          nombre    : this.usuarios[i]['name'],
+          rut       : this.usuarios[i]['rut'],
+          correo    : this.usuarios[i]['email'],
           contraseña: this.usuarios[i]['password'],
-          rol: this.usuarios[i]['role'],
-          activo: this.usuarios[i]['active'],
+          rol       : this.usuarios[i]['role'],
+          activo    : this.usuarios[i]['active'],
         })
-
       }
 
-
       this.source.load(this.data);
-
-
     })
   }
 
@@ -121,27 +117,27 @@ export class UsuariosComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field: 'id',
+        field : 'id',
         search: query
       },
       {
-        field: 'nombre',
+        field : 'nombre',
         search: query
       },
       {
-        field: 'rut',
+        field : 'rut',
         search: query
       },
       {
-        field: 'correo',
+        field : 'correo',
         search: query
       },
       {
-        field: 'rol',
+        field : 'rol',
         search: query
       },
       {
-        field: 'activo',
+        field : 'activo',
         search: query
       },
     ], false);
@@ -149,20 +145,19 @@ export class UsuariosComponent {
 
 
   onCreateConfirm(event) {
+
     if (window.confirm('Estás seguro que quieres crear este usuario?')) {
 
       this.report = {
-        name: event.newData.nombre,
-        rut: event.newData.rut,
-        email: event.newData.correo,
+        name    : event.newData.nombre,
+        rut     : event.newData.rut,
+        email   : event.newData.correo,
         password: event.newData.contraseña,
-        role: event.newData.rol,
-        active: event.newData.activo,
+        role    : event.newData.rol,
+        active  : event.newData.activo,
       };
 
       let res = '';
-
-      console.log(this.report);
 
       this.service.agregarUsuario(this.report).subscribe(data => {
         res = data;
@@ -170,7 +165,6 @@ export class UsuariosComponent {
         console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
-
 
       event.confirm.resolve(event.newData);
 
@@ -184,13 +178,13 @@ export class UsuariosComponent {
     if (window.confirm('Guardar cambios establecidos?')) {
 
       this.report = {
-        id: event.newData.id,
-        name: event.newData.nombre,
-        rut: event.newData.rut,
-        email: event.newData.correo,
+        id      : event.newData.id,
+        name    : event.newData.nombre,
+        rut     : event.newData.rut,
+        email   : event.newData.correo,
         password: event.newData.contraseña,
-        role: event.newData.rol,
-        active: event.newData.activo,
+        role    : event.newData.rol,
+        active  : event.newData.activo,
       };
 
       let res = '';

@@ -4,9 +4,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
-  selector: 'ngx-tipo-orden',
+  selector   : 'ngx-tipo-orden',
   templateUrl: './tipo-orden.component.html',
-  styleUrls: ['./tipo-orden.component.scss']
+  styleUrls  : ['./tipo-orden.component.scss']
 })
 export class TipoOrdenComponent {
 
@@ -19,26 +19,26 @@ export class TipoOrdenComponent {
       perPage: 5
     },
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
+      addButtonContent   : '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
+      confirmCreate      : true,
     },
     edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
+      editButtonContent  : '<i class="nb-edit"></i>',
+      saveButtonContent  : '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
+      confirmSave        : true,
     },
     actions: {
       columnTitle: 'Más',
-      filter: true,
-      delete: false
+      filter     : true,
+      delete     : false
     },
     columns: {
       id: {
         title: 'ID',
-        type: 'html',
+        type : 'html',
         width: '10px',
       },
       tipo_orden: {
@@ -54,12 +54,12 @@ export class TipoOrdenComponent {
         width: '30px',
       },
       activo: {
-        title: 'Activo',
-        width: '40px',
+        title : 'Activo',
+        width : '40px',
         editor: {
-          type: 'checkbox',
+          type  : 'checkbox',
           config: {
-            true: true,
+            true : true,
             false: false,
           },
         },
@@ -67,24 +67,22 @@ export class TipoOrdenComponent {
     }
   };
 
-  data: any[] = [];
+  data      : any[] = [];
   tipo_orden: any;
-  report: any;
-  source: LocalDataSource;
-  mostrar: boolean = false;
+  report    : any;
+  source    : LocalDataSource;
+  mostrar   : boolean = false;
 
   constructor(private service: peticionesGetService,
-    private router: Router) {
+              private router: Router) {
 
     this.datos();
-
   }    
 
 
   datos() {
 
     this.source = new LocalDataSource(this.data);
-
 
     this.service.leerTipoOrdenes().subscribe((x) => {
 
@@ -93,19 +91,15 @@ export class TipoOrdenComponent {
       for (let i = 0; i < this.tipo_orden.length; i++) {
 
         this.data.push({
-          id: this.tipo_orden[i]['id'],
+          id        : this.tipo_orden[i]['id'],
           tipo_orden: this.tipo_orden[i]['descripcion'],
-          peso: this.tipo_orden[i]['peso'],
-          valor: this.tipo_orden[i]['valor'],
-          activo: this.tipo_orden[i]['active']
+          peso      : this.tipo_orden[i]['peso'],
+          valor     : this.tipo_orden[i]['valor'],
+          activo    : this.tipo_orden[i]['active']
         })
-
       }
 
-
       this.source.load(this.data);
-
-
     })
   }
 
@@ -114,19 +108,19 @@ export class TipoOrdenComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field: 'id',
+        field : 'id',
         search: query
       },
       {
-        field: 'tipo_orden',
+        field : 'tipo_orden',
         search: query
       },
       {
-        field: 'peso',
+        field : 'peso',
         search: query
       },
       {
-        field: 'valor',
+        field : 'valor',
         search: query
       },
       {
@@ -142,9 +136,9 @@ export class TipoOrdenComponent {
 
       this.report = {
         descripcion: event.newData.tipo_orden,
-        peso: event.newData.peso,
-        valor: event.newData.valor,
-        active: event.newData.activo,
+        peso       : event.newData.peso,
+        valor      : event.newData.valor,
+        active     : event.newData.activo,
       };
 
       let res = '';
@@ -155,7 +149,6 @@ export class TipoOrdenComponent {
         console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
-
 
       event.confirm.resolve(event.newData);
 
@@ -169,11 +162,11 @@ export class TipoOrdenComponent {
     if (window.confirm('Guardar cambios establecidos?')) {
 
       this.report = {
-        id: event.newData.id,
+        id         : event.newData.id,
         descripcion: event.newData.tipo_orden,
-        peso: event.newData.peso,
-        valor: event.newData.valor,
-        active: event.newData.activo,
+        peso       : event.newData.peso,
+        valor      : event.newData.valor,
+        active     : event.newData.activo,
       };
 
       let res = '';
@@ -192,5 +185,4 @@ export class TipoOrdenComponent {
       event.confirm.reject();
     }
   }
-
 }

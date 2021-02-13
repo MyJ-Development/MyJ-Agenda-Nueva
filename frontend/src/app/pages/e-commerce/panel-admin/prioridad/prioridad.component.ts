@@ -5,9 +5,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 @Component({
-  selector: 'ngx-prioridad',
+  selector   : 'ngx-prioridad',
   templateUrl: './prioridad.component.html',
-  styleUrls: ['./prioridad.component.scss']
+  styleUrls  : ['./prioridad.component.scss']
 })
 export class PrioridadComponent {
 
@@ -20,21 +20,21 @@ export class PrioridadComponent {
       perPage: 5
     },
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
+      addButtonContent   : '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
+      confirmCreate      : true,
     },
     edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
+      editButtonContent  : '<i class="nb-edit"></i>',
+      saveButtonContent  : '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
+      confirmSave        : true,
     },
     actions: {
       columnTitle: 'Más',
-      filter: true,
-      delete: false,
+      filter     : true,
+      delete     : false,
     },
     columns: {
       id: {
@@ -45,12 +45,12 @@ export class PrioridadComponent {
         title: 'Descripcion',
       },
       activo: {
-        title: 'Activo',
-        width: '50px',
+        title : 'Activo',
+        width : '50px',
         editor: {
-          type: 'checkbox',
+          type  : 'checkbox',
           config: {
-            true: true,
+            true : true,
             false: false,
           },
         },
@@ -58,23 +58,22 @@ export class PrioridadComponent {
     },
   };
 
-  data: any[] = [];
+  data       : any[] = [];
   descripcion: any;
-  report: any;
-  source: LocalDataSource;
-  mostrar: boolean = false;
+  report     : any;
+  source     : LocalDataSource;
+  mostrar    : boolean = false;
 
   constructor(private service: peticionesGetService,
-    private router: Router) {
+              private router: Router) {
 
     this.datos();
-
   }
+
 
   datos() {
 
     this.source = new LocalDataSource(this.data);
-
 
     this.service.leerPrioridad().subscribe((x) => {
       this.descripcion = x;
@@ -82,15 +81,13 @@ export class PrioridadComponent {
       for (let i = 0; i < this.descripcion.length; i++) {
 
         this.data.push({
-          id: this.descripcion[i]['id'],
+          id         : this.descripcion[i]['id'],
           descripcion: this.descripcion[i]['descripcion'],
-          activo: this.descripcion[i]['active'],
+          activo     : this.descripcion[i]['active'],
         })
-
       }
 
       this.source.load(this.data);
-
     })
   }
 
@@ -99,15 +96,15 @@ export class PrioridadComponent {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
       {
-        field: 'id',
+        field : 'id',
         search: query
       },
       {
-        field: 'descripcion',
+        field : 'descripcion',
         search: query
       },
       {
-        field: 'activo',
+        field : 'activo',
         search: query
       },
     ], false);
@@ -119,7 +116,7 @@ export class PrioridadComponent {
 
       this.report = {
         descripcion: event.newData.descripcion,
-        active: event.newData.activo,
+        active     : event.newData.activo,
       };
 
       let res = '';
@@ -142,9 +139,9 @@ export class PrioridadComponent {
     if (window.confirm('Guardar cambios establecidos?')) {
 
       this.report = {
-        id: event.newData.id,
+        id         : event.newData.id,
         descripcion: event.newData.descripcion,
-        active: event.newData.activo,
+        active     : event.newData.activo,
       };
 
       let res = '';

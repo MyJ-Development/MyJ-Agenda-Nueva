@@ -23,6 +23,7 @@ import { OrdenesDiarias }          from '../../../models/ordenesDiarias';
 import { peticionesGetService } from '../../../services/peticionesGet.service';
 import { componentSyncService } from '../../../services/componentSync.service';
 import { tableService }         from '../../../services/table.service';
+import { Router } from '@angular/router';
 
 
 // Interfaces:
@@ -87,7 +88,18 @@ export class TreeGridWeekShowcaseComponent {
               private syncService      : componentSyncService,
               private datePipe         : DatePipe,
               private dialogService    : NbDialogService,
-              private tableService     : tableService) {
+              private tableService     : tableService,
+              private router           : Router) {
+
+
+
+    // save current route first
+    const currentRoute = this.router.url;
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentRoute]); // navigate to same route
+    }); 
+
 
   };
 

@@ -19,6 +19,7 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
 import { tableService }         from '../../../../services/table.service';
 import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.component';
 import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
+import { CambiosComponent } from '../cambios/cambios.component';
 
 
 // Componente decorado:
@@ -63,7 +64,7 @@ export class OrdenCompletaComponent implements OnInit {
               private datePipe    : DatePipe,
               private router      : Router,
               private fb          : FormBuilder,
-              private mostrar: NbDialogService) {
+              private mostrar     : NbDialogService) {
 
     // Obtiene el rut del cliente desde el servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -131,18 +132,18 @@ export class OrdenCompletaComponent implements OnInit {
     let res = '';
     let mensaje;
 
-    let montoPristine= this.formulario.controls['monto'].pristine;
-    let direccionPristine= this.formulario.controls['direccion_cliente'].pristine;
-    let comunaPristine= this.formulario.controls['comuna_cliente'].pristine;
-    let tecnicoPristine= this.formulario.controls['encargado'].pristine;
-    let fechaPristine= this.formulario.controls['fecha_ejecucion'].pristine;
+    let montoPristine         = this.formulario.controls['monto'].pristine;
+    let direccionPristine     = this.formulario.controls['direccion_cliente'].pristine;
+    let comunaPristine        = this.formulario.controls['comuna_cliente'].pristine;
+    let tecnicoPristine       = this.formulario.controls['encargado'].pristine;
+    let fechaPristine         = this.formulario.controls['fecha_ejecucion'].pristine;
     let disponibilidadPristine= this.formulario.controls['disponibilidad'].pristine;
-    let estadoClientePristine= this.formulario.controls['estadoCliente'].pristine;
-    let estadoTicketPristine= this.formulario.controls['estadoTicket'].pristine;
-    let tipoOrdenPristine= this.formulario.controls['tipo_orden'].pristine;
-    let medioPagoPristine= this.formulario.controls['medioPago'].pristine;
-    let prioridadPristine= this.formulario.controls['prioridad'].pristine;
-    let comentarioPristine= this.formulario.controls['comentario'].pristine;
+    let estadoClientePristine = this.formulario.controls['estadoCliente'].pristine;
+    let estadoTicketPristine  = this.formulario.controls['estadoTicket'].pristine;
+    let tipoOrdenPristine     = this.formulario.controls['tipo_orden'].pristine;
+    let medioPagoPristine     = this.formulario.controls['medioPago'].pristine;
+    let prioridadPristine     = this.formulario.controls['prioridad'].pristine;
+    let comentarioPristine    = this.formulario.controls['comentario'].pristine;
 
 
 
@@ -152,7 +153,7 @@ export class OrdenCompletaComponent implements OnInit {
       mensaje = `Se modifica el monto de $${this.ordenCliente['monto']} a $${this.formulario.value['monto']}`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -173,7 +174,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.residencia_cliente.filter(x => x.id == this.formulario.value['direccion_cliente'])[0]['direccion']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -194,7 +195,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.residencia_cliente.filter(x => x.id == this.formulario.value['comuna_cliente'])[0]['comuna']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -215,7 +216,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -234,7 +235,7 @@ export class OrdenCompletaComponent implements OnInit {
       mensaje = `Se re-agenda visita del ${this.datePipe.transform(this.ordenCliente['fechaejecucion'], 'dd-MM-yyyy')} para el ${this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy')}`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -255,7 +256,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.formulario.value['disponibilidad']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -275,7 +276,7 @@ export class OrdenCompletaComponent implements OnInit {
       mensaje = `Se modifica el estado del cliente '${this.ordenCliente['estadocliente']['descripcion']}' a '${this.estadoCliente.filter(x => x.id == this.formulario.value['estadoCliente'])[0]['descripcion']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -296,7 +297,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.estadoTicket.filter(x => x.id == this.formulario.value['estadoTicket'])[0]['descripcion']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -317,7 +318,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.tipoOrdenes.filter(x => x.id == this.formulario.value['tipo_orden'])[0]['descripcion']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -338,7 +339,7 @@ export class OrdenCompletaComponent implements OnInit {
        '${this.medioPago.filter(x => x.id == this.formulario.value['medioPago'])[0]['descripcion']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -359,7 +360,7 @@ export class OrdenCompletaComponent implements OnInit {
       '${this.prioridad.filter(x => x.id == this.formulario.value['prioridad'])[0]['descripcion']}'`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -379,7 +380,7 @@ export class OrdenCompletaComponent implements OnInit {
       mensaje = `Se agrega comentario: ${this.formulario.value['comentario']}`;
 
       this.reportEventos = {
-        order_id: this.ordenCliente['id'],
+        order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
@@ -399,7 +400,8 @@ export class OrdenCompletaComponent implements OnInit {
   actualizarOrden() {
 
     // Si el formulario es válido, ejecutar:
-    if ((this.formulario.valid) || (this.formulario.controls['fecha_ejecucion'].status == "INVALID")) {
+    if (((this.formulario.valid) || (this.formulario.controls['fecha_ejecucion'].status == "INVALID")) &&
+    this.formulario.touched === true) {
 
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
@@ -410,9 +412,9 @@ export class OrdenCompletaComponent implements OnInit {
         disponibilidad: this.formulario.value['disponibilidad'],
         comentario    : this.formulario.value['comentario'],
         fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
-        estadocliente : this.formulario.value['estado_cliente'],
-        estadoticket  : this.formulario.value['estado_ticket'],
-        mediodepago   : this.formulario.value['medio_pago'],
+        estadocliente : this.formulario.value['estadoCliente'],
+        estadoticket  : this.formulario.value['estadoTicket'],
+        mediodepago   : this.formulario.value['medioPago'],
         monto         : this.formulario.value['monto'],
         created_by    : this.ordenCliente['created_by']['email'],
         encargado     : this.formulario.value['encargado'],
@@ -424,13 +426,15 @@ export class OrdenCompletaComponent implements OnInit {
 
       
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-      // this.service.editarOrden(this.report).subscribe(data => {
-      //   res = data;
-      //   console.log('res');
-      //   console.log(res);
-      //   this.router.navigate(['/success']);
-      // });
+      this.service.editarOrden(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
 
+      this.ref.close();
+      this.mostrar.open(CambiosComponent);
       
     } else {
       console.log(this.formulario);
