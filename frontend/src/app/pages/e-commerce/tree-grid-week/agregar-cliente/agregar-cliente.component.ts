@@ -31,7 +31,19 @@ export class AgregarClienteComponent {
   reportResidencia: any;
   correo_         : any;
   telefono2_      : any;
-  a               : any[] = [];
+
+  emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+  rutRegExp = new RegExp('^([0-9]+-[0-9K])$');
+
+  telefonoRegExp = new RegExp(/^(\+?56)?(\s?)(0?9)(\s?)[9876543]\d{7}$/);
+
+  direccionRegExp = new RegExp(/^[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)$/);
+
+  comunaRegExp = new RegExp (/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/);
+
+  macRegExp = new RegExp (/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/);
+
 
 
   // Constructor:
@@ -45,28 +57,63 @@ export class AgregarClienteComponent {
 
     // Llamada de métodos:
     this.crearFormulario();
-
-    this.formulario.valueChanges.subscribe(x => console.log(x))
   };
 
+  get rutNoValido() {
+    return this.formulario.get('rut_cliente').invalid && this.formulario.get('rut_cliente').touched;
+  }
+
+  get nombreNoValido() {
+    return this.formulario.get('nombre_cliente').invalid && this.formulario.get('nombre_cliente').touched;
+  }
+
+  get correoNoValido() {
+    return this.formulario.get('correo_cliente').invalid && this.formulario.get('correo_cliente').touched;
+  }
+
+  get telefono1NoValido() {
+    return this.formulario.get('telefono1').invalid && this.formulario.get('telefono1').touched;
+  }
+
+  get telefono2NoValido() {
+    return this.formulario.get('telefono2').invalid && this.formulario.get('telefono2').touched;
+  }
+
+  get direccionNoValido() {
+    return this.formulario.get('residencia.direccion_cliente').invalid && 
+    this.formulario.get('residencia.direccion_cliente').touched;
+  }
+
+  get comunaNoValido() {
+    return this.formulario.get('residencia.comuna_cliente').invalid && 
+    this.formulario.get('residencia.comuna_cliente').touched;
+  }
+
+  get macNoValido() {
+    return this.formulario.get('residencia.mac_cliente').invalid && 
+    this.formulario.get('residencia.mac_cliente').touched;
+  }
+
+  get pppoeNoValido() {
+    return this.formulario.get('residencia.pppoe_cliente').invalid && 
+    this.formulario.get('residencia.pppoe_cliente').touched;
+  }
 
   // Método encargado de construir el formulario con cada control especificado con sus validadores:
   crearFormulario() {
 
     this.formulario = this.fb.group({
 
-      rut_cliente   : ['', [Validators.pattern('^(\d{2}\.\d{3}\.\d{3}-)([a-zA-Z]{1}$|\d{1}$)'), 
-                            Validators.required]],
-      nombre_cliente: ['', Validators.required],
-      telefono1     : ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12)]],
-      telefono2     : [''],
-      correo_cliente: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), 
-                            Validators.required]],
+      rut_cliente   : ['', [Validators.pattern(this.rutRegExp), Validators.required]],
+      nombre_cliente: ['', [Validators.required, Validators.minLength(6)]],
+      telefono1     : ['', [Validators.required, Validators.pattern(this.telefonoRegExp)]],
+      telefono2     : ['', Validators.pattern(this.telefonoRegExp)],
+      correo_cliente: ['', [Validators.pattern(this.emailRegExp), Validators.required]],
       creado_por    : [this.usuario, Validators.required],
       residencia    : this.fb.group({
-        direccion_cliente: ['', Validators.required],
-        comuna_cliente   : ['', Validators.required],
-        mac_cliente      : ['', Validators.required],
+        direccion_cliente: ['', [Validators.required, Validators.pattern(this.direccionRegExp)]],
+        comuna_cliente   : ['', [Validators.required, Validators.pattern(this.comunaRegExp)]],
+        mac_cliente      : ['', [Validators.required, Validators.pattern(this.macRegExp)]],
         pppoe_cliente    : ['', Validators.required],
       })
     });
@@ -115,10 +162,11 @@ export class AgregarClienteComponent {
         mac       : this.formulario.value['residencia']['mac_cliente'],
         pppoe     : this.formulario.value['residencia']['pppoe_cliente'],
       };
-    };
+    } else {
+      return this.formulario.markAllAsTouched();
+    }
 
     let res = '';
-
 
     if (this.reportCliente) {
       // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
@@ -127,24 +175,22 @@ export class AgregarClienteComponent {
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
+
+        if (this.reportResidencia) {
+          // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
+          this.peticiones.agregarResidencia(this.reportResidencia).subscribe(data => {
+            res = data;
+            console.log('res');
+            console.log(res);
+            this.router.navigate(['/success']);
+          });
+        };
       });
-    }
-
-
-    if (this.reportResidencia) {
-      // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
-      this.peticiones.agregarResidencia(this.reportResidencia).subscribe(data => {
-        res = data;
-        console.log('res');
-        console.log(res);
-        this.router.navigate(['/success']);
-      });
-    }
-
+    };
 
     //Se resetean los valores del formulario, dejando por defecto el valor del usuario:
     this.formulario.reset({
-      creado_por: this.usuario,
+      creado_por: this.usuario
     });
   };
 };

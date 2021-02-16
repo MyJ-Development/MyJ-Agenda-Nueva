@@ -16,9 +16,12 @@
                         type="text" 
                         nbInput 
                         fullWidth
+                        [ngClass]="{'borde': rutNoValido}"
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
+
+                <small *ngIf="rutNoValido" class="form-text text-danger">Ingrese un rut válido</small>
               </div>
             </div>
         </div>
@@ -32,9 +35,12 @@
                         type="text" 
                         nbInput 
                         fullWidth
+                        [ngClass]="{'borde': direccionNoValido}"
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
+
+                <small *ngIf="direccionNoValido" class="form-text text-danger">Ingrese una dirección válida</small>
               </div>
             </div>
             
@@ -46,9 +52,12 @@
                         type="text" 
                         nbInput 
                         fullWidth
+                        [ngClass]="{'borde': comunaNoValido}"
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
+
+                <small *ngIf="comunaNoValido" class="form-text text-danger">Ingrese una comuna válida</small>
               </div>
             </div>
 
@@ -60,9 +69,12 @@
                         type="text" 
                         nbInput 
                         fullWidth
+                        [ngClass]="{'borde': macNoValido}"
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
+
+                <small *ngIf="macNoValido" class="form-text text-danger">Ingrese una mac válida</small>
               </div>
               <hr>
             </div>
@@ -75,9 +87,12 @@
                         type="text" 
                         nbInput 
                         fullWidth
+                        [ngClass]="{'borde': pppoeNoValido}"
                         status="info"
                         shape="semi-round"
                         fieldSize="small">
+
+                <small *ngIf="pppoeNoValido" class="form-text text-danger">Ingrese pppoe</small>
 
               </div>
               <hr>

@@ -16,11 +16,14 @@
                       id="rut_cliente"
                       (blur)="sincronizarResidencia()"
                       nbInput 
-                      fullWidth 
+                      fullWidth
+                      [ngClass]="{'borde': rutNoValido}"
                       status="info" 
                       shape="semi-round" 
                       fieldSize="small" 
                       required>
+
+              <small *ngIf="rutNoValido" class="form-text text-danger">Ingrese un rut válido</small>
             </div>
           </div>
 
@@ -30,6 +33,7 @@
               <nb-select  formControlName="encargado"
                           name="encargado" 
                           type="text"
+                          [ngClass]="{'borde': encargadoNoValido}"
                           fullWidth 
                           shape="semi-round" 
                           status="info"
@@ -41,6 +45,8 @@
                             {{tecnico.nombre}}
                 </nb-option>
               </nb-select>
+
+              <small *ngIf="encargadoNoValido" class="form-text text-danger">Seleccione un encargado</small>
             </div>
           </div>
 
@@ -51,6 +57,7 @@
                           name="direccion_cliente"
                           type="text"
                           fullWidth 
+                          [ngClass]="{'borde': direccionNoValido}"
                           shape="semi-round" 
                           size="small"
                           status="info"
@@ -61,6 +68,8 @@
                             {{direccion.direccion | caracteres | mayus}}
                 </nb-option>
               </nb-select>
+
+              <small *ngIf="direccionNoValido" class="form-text text-danger">Seleccione una dirección</small>
             </div>
           </div>
         </div>
@@ -100,12 +109,15 @@
               <label for="disponibilidad" class="label">Disponibilidad:</label>
               <input  type="text" 
                       nbInput 
-                      fullWidth 
+                      fullWidth
+                      [ngClass]="{'borde': disponibilidadNoValido}"
                       id="disponibilidad" 
                       status="info"
                       formControlName="disponibilidad" 
                       shape="semi-round" 
                       fieldSize="small">
+
+              <small *ngIf="disponibilidadNoValido" class="form-text text-danger">Ingrese disponibilidad</small>
             </div>
           </div>
         </div>
@@ -117,7 +129,8 @@
               <nb-select  formControlName="estado_cliente"
                           name="estado_cliente" 
                           type="text"
-                          fullWidth 
+                          fullWidth
+                          [ngClass]="{'borde': estadoClienteNoValido}"
                           shape="semi-round" 
                           status="info"
                           size="small"
@@ -128,6 +141,8 @@
                             {{estado.descripcion}}
                 </nb-option>
               </nb-select>
+
+              <small *ngIf="estadoClienteNoValido" class="form-text text-danger">Seleccione un estado</small>
             </div>
           </div>
           
@@ -137,7 +152,8 @@
               <nb-select  formControlName="estado_ticket"
                           name="estado_ticket" 
                           type="text"
-                          fullWidth 
+                          fullWidth
+                          [ngClass]="{'borde': estadoTicketNoValido}"
                           shape="semi-round" 
                           status="info"
                           size="small"
@@ -148,6 +164,8 @@
                             {{estado.descripcion}}
                 </nb-option>
               </nb-select>
+
+              <small *ngIf="estadoTicketNoValido" class="form-text text-danger">Seleccione un estado</small>
             </div>
           </div>
 
@@ -157,7 +175,8 @@
               <nb-select  formControlName="medioPago"
                           name="medioPago" 
                           type="text"
-                          fullWidth 
+                          fullWidth
+                          [ngClass]="{'borde': medioPagoNoValido}"
                           shape="semi-round" 
                           status="info"
                           size="small"
@@ -168,6 +187,8 @@
                             {{medio.descripcion}}
                 </nb-option>
               </nb-select>
+
+              <small *ngIf="medioPagoNoValido" class="form-text text-danger">Seleccione un medio de pago</small>
             </div>
           </div>
         </div>
@@ -177,7 +198,8 @@
             <div class="form-group">
               <label for="tipo_orden" class="label">Tipo orden:</label>
               <nb-select  type="text"
-                          fullWidth 
+                          fullWidth
+                          [ngClass]="{'borde': tipoOrdenNoValido}"
                           size="small"  
                           shape="semi-round" 
                           status="info" 
@@ -190,6 +212,8 @@
                               {{orden.descripcion}}
                   </nb-option>
               </nb-select>
+
+              <small *ngIf="tipoOrdenNoValido" class="form-text text-danger">Seleccione un tipo de orden</small>
             </div>
           </div>
           
@@ -199,6 +223,7 @@
               <nb-select  formControlName="prioridad"
                           name="prioridad" 
                           type="text"
+                          [ngClass]="{'borde': prioridadNoValido}"
                           fullWidth 
                           shape="semi-round" 
                           status="info"
@@ -210,6 +235,8 @@
                             {{prioridad.descripcion}}
                 </nb-option>
               </nb-select>
+
+              <small *ngIf="prioridadNoValido" class="form-text text-danger">Seleccione prioridad</small>
             </div>
           </div>
           
@@ -218,12 +245,15 @@
               <label for="monto" class="label">Monto:</label>
               <input  type="text"
                       nbInput 
-                      fullWidth 
+                      fullWidth
+                      [ngClass]="{'borde': montoNoValido}"
                       id="monto" 
                       status="info"
                       formControlName="monto" 
                       shape="semi-round"  
                       fieldSize="small">
+
+              <small *ngIf="montoNoValido" class="form-text text-danger">Ingrese un monto</small>
             </div>
           </div>
         </div>
@@ -234,14 +264,17 @@
               <label for="comentario" class="label">Comentario:</label>
               <textarea rows="4" 
                         nbInput 
-                        fullWidth 
+                        fullWidth
+                        [ngClass]="{'borde': comentarioNoValido}"
                         id="comentario" 
                         status="info"
-                        formControlName="comentario" 
+                        formControlName="comentario"
                         shape="semi-round" 
                         type="text" 
                         fieldSize="small">
               </textarea>
+
+              <small *ngIf="comentarioNoValido" class="form-text text-danger">Ingrese un comentario</small>
             </div>
           </div>
         </div>

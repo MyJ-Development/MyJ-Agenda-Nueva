@@ -29,6 +29,13 @@ export class AgregarDireccionComponent {
   formulario: FormGroup;
   report    : any;
 
+  rutRegExp = new RegExp('^([0-9]+-[0-9K])$');
+
+  direccionRegExp = new RegExp(/^[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)$/);
+
+  comunaRegExp = new RegExp (/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/);
+
+  macRegExp = new RegExp (/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/);
 
   // Constructor:
   constructor(private fb        : FormBuilder,
@@ -39,16 +46,39 @@ export class AgregarDireccionComponent {
     this.crearFormulario();
   };
 
+  get rutNoValido() {
+    return this.formulario.get('rut_cliente').invalid && this.formulario.get('rut_cliente').touched;
+  }
+
+  get direccionNoValido() {
+    return this.formulario.get('direccion_cliente').invalid && 
+    this.formulario.get('direccion_cliente').touched;
+  }
+
+  get comunaNoValido() {
+    return this.formulario.get('comuna_cliente').invalid && 
+    this.formulario.get('comuna_cliente').touched;
+  }
+
+  get macNoValido() {
+    return this.formulario.get('mac_cliente').invalid && 
+    this.formulario.get('mac_cliente').touched;
+  }
+
+  get pppoeNoValido() {
+    return this.formulario.get('pppoe_cliente').invalid && 
+    this.formulario.get('pppoe_cliente').touched;
+  }
 
   // Método encargado de construir el formulario con cada control especificado con sus validadores:
   crearFormulario() {
 
     this.formulario = this.fb.group({
 
-      rut_cliente      : ['', Validators.required],
-      direccion_cliente: ['', Validators.required],
-      comuna_cliente   : ['', Validators.required],
-      mac_cliente      : ['', Validators.required],
+      rut_cliente      : ['', [Validators.pattern(this.rutRegExp), Validators.required]],
+      direccion_cliente: ['', [Validators.pattern(this.direccionRegExp), Validators.required]],
+      comuna_cliente   : ['', [Validators.pattern(this.comunaRegExp), Validators.required]],
+      mac_cliente      : ['', [Validators.pattern(this.macRegExp), Validators.required]],
       pppoe_cliente    : ['', Validators.required]
     });
   };
@@ -68,16 +98,20 @@ export class AgregarDireccionComponent {
         mac       : this.formulario.value['mac_cliente'],
         pppoe     : this.formulario.value['pppoe_cliente'],
       };
+    } else {
+      return this.formulario.markAllAsTouched();
     };
 
     let res = '';
 
     // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
-    this.peticiones.agregarResidencia(this.report).subscribe(data => {
-      res = data;
-      console.log('res');
-      console.log(res);
-      this.router.navigate(['/success']);
-    });
+    if (this.report) {
+      this.peticiones.agregarResidencia(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    };
   };
 };

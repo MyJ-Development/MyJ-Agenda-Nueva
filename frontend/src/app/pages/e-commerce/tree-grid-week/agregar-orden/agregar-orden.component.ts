@@ -45,6 +45,10 @@ export class AgregarOrdenComponent implements OnInit {
   fechaControl      : any;
   tecnicoCapacidad  : any[] = [];
 
+  rutRegExp = new RegExp('^([0-9]+-[0-9K])$');
+
+  montoRegExp = new RegExp(/^[0-9]$/);
+
 
   // Constructor:
   constructor(private tableService: tableService,
@@ -69,6 +73,8 @@ export class AgregarOrdenComponent implements OnInit {
       this.rut_cli = x;
     });
 
+  
+
   };
 
 
@@ -84,6 +90,84 @@ export class AgregarOrdenComponent implements OnInit {
     this.sincronizarPrioridad();
     this.getOrdenes();
   };
+
+  get rutNoValido() {
+    return this.formulario.get('rut_cliente').invalid &&
+    this.formulario.get('rut_cliente').touched;
+  }
+
+  get direccionNoValido() {
+    return this.formulario.get('direccion_cliente').invalid &&
+    this.formulario.get('direccion_cliente').touched;
+  }
+
+  get encargadoNoValido() {
+    return this.formulario.get('encargado').invalid &&
+    this.formulario.get('encargado').touched;
+  }
+
+  get disponibilidadNoValido() {
+    return this.formulario.get('disponibilidad').invalid &&
+    this.formulario.get('disponibilidad').touched;
+  }
+
+  get estadoClienteNoValido() {
+    return this.formulario.get('estado_cliente').invalid &&
+    this.formulario.get('estado_cliente').touched;
+  }
+
+  get estadoTicketNoValido() {
+    return this.formulario.get('estado_ticket').invalid &&
+    this.formulario.get('estado_ticket').touched;
+  }
+
+  get medioPagoNoValido() {
+    return this.formulario.get('medioPago').invalid &&
+    this.formulario.get('medioPago').touched;
+  }
+
+  get montoNoValido() {
+    return this.formulario.get('monto').invalid &&
+    this.formulario.get('monto').touched;
+  }
+
+  get tipoOrdenNoValido() {
+    return this.formulario.get('tipo_orden').invalid &&
+    this.formulario.get('tipo_orden').touched;
+  }
+
+  get prioridadNoValido() {
+    return this.formulario.get('prioridad').invalid &&
+    this.formulario.get('prioridad').touched;
+  }
+
+  get comentarioNoValido() {
+    return this.formulario.get('comentario').invalid &&
+    this.formulario.get('comentario').touched;
+  }
+
+
+  // Método encargado de crear el formulario que extrae los datos del componente html:
+  crearFormulario(){
+
+    this.formulario = this.fb.group({
+
+      rut_cliente      : ['', [Validators.required, Validators.pattern(this.rutRegExp)]],
+      direccion_cliente: ['', Validators.required],
+      encargado        : ['', Validators.required],
+      creado_por       : [{value: this.usuario, disabled: true}, Validators.required],
+      fecha_ejecucion  : ['', Validators.required],
+      disponibilidad   : ['', Validators.required],
+      estado_cliente   : ['', Validators.required],
+      estado_ticket    : ['', Validators.required],
+      medioPago        : ['', Validators.required],
+      monto            : ['', [Validators.required, Validators.pattern(this.montoRegExp)]],
+      tipo_orden       : ['', Validators.required],
+      prioridad        : ['', Validators.required],
+      comentario       : ['', Validators.required],
+    });
+  };
+
 
   getOrdenes(){
 
@@ -246,55 +330,42 @@ export class AgregarOrdenComponent implements OnInit {
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
 
-    /* Se define la estructura de datos a enviar al servicio y 
-    se le asignan los datos obtenidos del formulario: */
-    this.report = {
-      idtipo        : this.formulario.value['tipo_orden'],
-      prioridad     : this.formulario.value['prioridad'],
-      disponibilidad: this.formulario.value['disponibilidad'],
-      comentario    : this.formulario.value['comentario'],
-      fechaejecucion: this.datePipe.transform(
-                      this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
-      estadocliente : this.formulario.value['estado_cliente'],
-      estadoticket  : this.formulario.value['estado_ticket'],
-      mediodepago   : this.formulario.value['medio_pago'],
-      monto         : this.formulario.value['monto'],
-      created_by    : this.usuario,
-      encargado     : this.formulario.value['encargado'],
-      client_order  : this.rut_cli,
-      domicilio     : this.formulario.value['direccion_cliente'],
+    this.formulario.controls['fecha_ejecucion'].setErrors(null);
+
+    if (this.formulario.valid) {
+
+      /* Se define la estructura de datos a enviar al servicio y 
+      se le asignan los datos obtenidos del formulario: */
+      this.report = {
+        idtipo        : this.formulario.value['tipo_orden'],
+        prioridad     : this.formulario.value['prioridad'],
+        disponibilidad: this.formulario.value['disponibilidad'],
+        comentario    : this.formulario.value['comentario'],
+        fechaejecucion: this.datePipe.transform(
+                        this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
+        estadocliente : this.formulario.value['estado_cliente'],
+        estadoticket  : this.formulario.value['estado_ticket'],
+        mediodepago   : this.formulario.value['medioPago'],
+        monto         : this.formulario.value['monto'],
+        created_by    : this.usuario,
+        encargado     : this.formulario.value['encargado'],
+        client_order  : this.rut_cli,
+        domicilio     : this.formulario.value['direccion_cliente'],
+      };
+    } else {
+      this.formulario.markAllAsTouched();
     };
 
     let res = '';
 
-    // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-    this.service.agregarOrden(this.report).subscribe(data => {
-      res = data;
-      console.log('res');
-      console.log(res);
-      this.router.navigate(['/success']);
-    });
-  };
-
-
-  // Método encargado de crear el formulario que extrae los datos del componente html:
-  crearFormulario(){
-
-    this.formulario = this.fb.group({
-
-      rut_cliente      : ['', Validators.required],
-      direccion_cliente: ['', Validators.required],
-      encargado        : ['', Validators.required],
-      creado_por       : [{value: this.usuario, disabled: true}, Validators.required],
-      fecha_ejecucion  : ['', Validators.required],
-      disponibilidad   : ['', Validators.required],
-      estado_cliente   : ['', Validators.required],
-      estado_ticket    : ['', Validators.required],
-      medioPago        : ['', Validators.required],
-      monto            : ['', Validators.required],
-      tipo_orden       : ['', Validators.required],
-      prioridad        : ['', Validators.required],
-      comentario       : ['', Validators.required],
-    });
+    if (this.report) {
+      // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+      this.service.agregarOrden(this.report).subscribe(data => {
+        res = data;
+        console.log('res');
+        console.log(res);
+        this.router.navigate(['/success']);
+      });
+    };
   };
 };
