@@ -83,3 +83,8 @@
   background-color: #252547;
   color: rgb(255, 255, 255);
 }
+
+:host /deep/ ng2-smart-table-title > a {
+  color: rgb(255, 255, 255) !important;
+  font-weight: bolder !important;
+}

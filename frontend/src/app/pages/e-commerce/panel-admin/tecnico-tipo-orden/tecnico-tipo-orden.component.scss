@@ -7,7 +7,6 @@
     }
 
     nb-card-body {
-
         padding-top: 10px;
         min-height: 450px;
         max-height: 450px;
@@ -24,6 +23,24 @@
     }
 }
 
+:host /deep/ ng2-smart-table th.ng2-smart-actions-title-add {
+    width: 10px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    text-align: -webkit-center !important;
+}
+
+:host /deep/ ng2-smart-table a.ng2-smart-action {
+    width: 25px;
+    height: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
 :host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
     padding-right: 0rem !important;
     padding-left: 0rem !important;
@@ -34,20 +51,11 @@
     color: rgb(255, 255, 255);
 }
 
-:host /deep/ ng2-smart-table th.ng2-smart-actions-title-add a{
-    margin-right: -10px;
-}
-
 :host /deep/ ng2-smart-table table tr td {
     font-size: smaller;
     text-align: -webkit-center !important;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-}
-
-:host /deep/ ng2-smart-table a.ng2-smart-action {
-    width: 37px;
-    height: 25px;
 }
 
 :host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
@@ -56,10 +64,6 @@
     padding-left: 2px !important;
     padding-right: 2px !important;
     inline-size: 330px;
-}
-
-:host /deep/ .ng2-smart-actions {
-    width: 37px;
 }
 
 :host /deep/ table-cell-edit-mode {
@@ -101,13 +105,16 @@
     padding: nb-theme(tree-grid-cell-padding);
     border-width: 0.5px;
     border-color: #0095ff36;
-  }
-  
-  :host /deep/ ng2-smart-table thead > tr > th  { 
+}
+
+:host /deep/ ng2-smart-table thead > tr > th {
     height: nb-theme(tree-grid-row-min-height);
     padding: nb-theme(tree-grid-cell-padding);
     border-width: 0.5px;
     border-color: #0095ff36;
-  }  
+}
 
-  
+:host /deep/ ng2-smart-table-title > a {
+    color: rgb(255, 255, 255) !important;
+    font-weight: bolder !important;
+}

@@ -40,11 +40,6 @@
     padding-bottom: 5px !important;
 }
 
-:host /deep/ ng2-smart-table a.ng2-smart-action {
-    width: 37px;
-    height: 25px;
-}
-
 :host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
     padding-top: 2px !important;
     padding-bottom: 2px !important;
@@ -53,8 +48,27 @@
     inline-size: 330px;
 }
 
-:host /deep/ .ng2-smart-actions {
-    width: 37px;
+:host /deep/ ng2-smart-table th.ng2-smart-actions-title-add {
+    width: 10px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    text-align: -webkit-center !important;
+}
+
+:host /deep/ ng2-smart-table a.ng2-smart-action {
+    width: 25px;
+    height: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+:host /deep/ input[type="checkbox"] {
+    width: 20px !important;
+    margin: auto;
 }
 
 :host /deep/ table-cell-edit-mode {
@@ -145,3 +159,7 @@
     border-color: #0095ff36;
 }
 
+:host /deep/ ng2-smart-table-title > a {
+    color: rgb(255, 255, 255) !important;
+    font-weight: bolder !important;
+}

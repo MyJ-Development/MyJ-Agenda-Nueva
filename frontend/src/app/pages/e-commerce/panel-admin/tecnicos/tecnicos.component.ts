@@ -62,7 +62,7 @@ export class TecnicosComponent {
       },
       activo: {
         title : 'Activo',
-        width : '50px',
+        width : '30px',
         editor: {
           type  : 'checkbox',
           config: {
