@@ -3,20 +3,23 @@
 
 <form [formGroup]="formulario" (ngSubmit)="buscarOrden()" autocomplete="off">
 
-  <nb-card class="medida-card" accent="success">
-    <nb-card-header class="cabeza">
+  <nb-card class="card" accent="success">
+
+    <nb-card-header class="head">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <h5 class="h5s pos">
             Buscar ordenes:
           </h5>
         </div>
       </div>
     </nb-card-header>
-    <nb-card-body> 
-      <div class="row columna">
-        <div class="col-sm-3 largo">
-          <div class="form-group">
+
+    <nb-card-body class="body"> 
+      <div class="row">
+
+        <div class="col-md-3 offset-1">
+          <div class="form-group group">
             <label for="buscar" class="label">Buscar por: </label>
               <nb-select  formControlName="buscar"
                           type="text" 
@@ -32,19 +35,17 @@
                             {{opcion}}
                 </nb-option>
               </nb-select>
-
           </div>
         </div>
 
 
-        <div *ngIf="ver" class="col-sm-3 input-calendario input-arriba largo">
-          <div class="form-group largo">
-
+        <div *ngIf="ver" class="col-md-3 display">
+          <div class="form-group group">
             <input  type="text"
                     formControlName="calendar" 
                     fieldSize="small"
-                    class="input-largo"
-                    nbInput 
+                    nbInput
+                    size="small"
                     shape="semi-round" 
                     status="info"
                     placeholder="Rango de fechas" 
@@ -53,25 +54,25 @@
           </div>
         </div>
 
-        <div class="col-sm-3 input-arriba">
-          <div class="form-group largo">
-            
-            <input  formControlName="buscador"
-                    nbInput 
-                    fieldSize="small" 
-                    shape="semi-round" 
-                    status="info"
-                    placeholder="Buscar:" 
-                    type="text">
+        <div class="col-md-4 display">
+            <div class="form-group group">
+              <input  formControlName="buscador"
+                      nbInput
+                      size="small"
+                      fieldSize="small" 
+                      shape="semi-round" 
+                      status="info"
+                      placeholder="Buscar:" 
+                      type="text">
 
-            <button class="boton" type="submit" nbButton ghost>
-              <nb-icon icon="file-text-outline"></nb-icon>
-            </button>
-          </div>
+              <button class="boton" type="submit" nbButton ghost>
+                <nb-icon icon="file-text-outline"></nb-icon>
+              </button>
+            </div>
         </div>
       </div>
-
     </nb-card-body>
+
   </nb-card>
 </form>
 

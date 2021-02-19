@@ -87,7 +87,7 @@ export class CalendarComponent {
     this.data = [];
 
     // Formatea la fecha en formato standard para las ordenes:
-    this.fecha = this.datePipe.transform(this.date, "yyyy-MM-dd")
+    this.fecha = this.datePipe.transform(this.date, "yyyy-MM-dd");
 
     // Llamada del servicio para obtener la lista de técnicos:
     this.service.leerTecnicos().subscribe((tecnicosList) => { this.tecnicos = tecnicosList });
@@ -96,7 +96,7 @@ export class CalendarComponent {
     this.service.leerOrdenesDiarias(this.fecha, this.fecha).subscribe((x) => {
 
       // Almacena en variable global la lista obtenida:
-      this.ordenes = x
+      this.ordenes = x;
 
       // Contador para obtener el número de ordenes diarias de cada técnico:
       let counter: number = 0;

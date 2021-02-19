@@ -3,69 +3,98 @@
 @import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
-  nb-card {
-    display: flex !important;
-    margin-left: 1rem;
-    margin-top: -4px;
-    margin-bottom: 6px;
-    height: 262px;
-  }
 
-  .input-largo {
-    width: 12rem;
-  }
-
-  .medida-card {
-    height: 8rem;
-  }
-
-  .lista {
-    height: 249px;
-  }
-
-  nb-card-body {
-    height: 0rem; //width: ancho, height: alto
-  }
-
-  .pos {
-    margin-top: -13px;
-  }
-
-  .columna {
-    height: 0rem;
-  }
-
-  .cabeza {
-    // width: 2rem;
-    height: 2.5rem;
-  }
-
-  .largo {
-    margin-top: -8px;
-    height: 0rem;
-  }
-
-  .ancho {
-    width: 20rem;
-  }
-
-  .center {
-    text-align: center;
-  }
-
-  .input-calendario {
-    margin-right: 2rem;
-  }
-
-  .input-arriba {
-    margin-top: 28px;
+  .display {
+    display: flex;
+    align-items: flex-end;
   }
 
   .boton {
-    margin-left: 12rem;
-    margin-top: -57px;
+    padding: 0 !important;
+    margin-left: 0.5rem;
   }
+
+  .head {
+    padding: 3px 20px;
+  }
+
+  .body {
+    padding: 2px 20px 0 0;
+  }
+
+  .group {
+    margin: 0px 0 10px;
+  }
+
+  .card {
+    margin: 0;
+  }
+
+  // nb-card {
+  //   display: flex !important;
+  //   margin-left: 1rem;
+  //   margin-top: -4px;
+  //   margin-bottom: 6px;
+  //   height: 262px;
+  // }
+
+  // .input-largo {
+  //   width: 12rem;
+  // }
+
+  // .medida-card {
+  //   height: 8rem;
+  // }
+
+  // .lista {
+  //   height: 249px;
+  // }
+
+  // nb-card-body {
+  //   height: 0rem; //width: ancho, height: alto
+  // }
+
+  // .pos {
+  //   margin-top: -13px;
+  // }
+
+  // .columna {
+  //   height: 0rem;
+  // }
+
+  // .cabeza {
+  //   // width: 2rem;
+  //   height: 2.5rem;
+  // }
+
+  // .largo {
+  //   margin-top: -8px;
+  //   height: 0rem;
+  // }
+
+  // .ancho {
+  //   width: 20rem;
+  // }
+
+  // .center {
+  //   text-align: center;
+  // }
+
+  // .input-calendario {
+  //   margin-right: 2rem;
+  // }
+
+  // .input-arriba {
+  //   margin-top: 28px;
+  // }
+
+  // .boton {
+  //   margin-left: 12rem;
+  //   margin-top: -57px;
+  // }
 }
+
+
 
 :host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
   padding-right: 8px !important;

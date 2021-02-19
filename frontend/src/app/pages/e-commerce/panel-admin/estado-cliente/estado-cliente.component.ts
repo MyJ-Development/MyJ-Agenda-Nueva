@@ -1,10 +1,18 @@
 
+// Angular/core;
 import { Component } from '@angular/core';
+
+// Angular/router:
 import { Router } from '@angular/router';
+
+// Ng2 Smart-table:
 import { LocalDataSource } from 'ng2-smart-table';
+
+// Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 
+// Componente decorado:
 @Component({
   selector   : 'ngx-estado-cliente',
   templateUrl: './estado-cliente.component.html',
@@ -12,71 +20,83 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
 })
 
 
+// Clase exportable EstadoClienteComponent:
 export class EstadoClienteComponent {
 
-  settings = {
+  // Variables:
+  mostrar : boolean = false;
+  data    : any[]   = [];
+  estado  : any;
+  report  : any;
+  source  : LocalDataSource;
+  settings: any;
 
-    hideSubHeader: false,
 
-    pager: {
-      display: true,
-      perPage: 5
-    },
-    add: {
-      addButtonContent   : '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate      : true,
-    },
-    edit: {
-      editButtonContent  : '<i class="nb-edit"></i>',
-      saveButtonContent  : '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave        : true,
-    },
-    actions: {
-      columnTitle: 'Más',
-      filter     : true,
-      delete     : false,
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        width: '10px',
+  // Constructor:
+  constructor(private service: peticionesGetService,
+              private router : Router) {
+
+    // Llamada de métodos:
+    this.datos();
+    this.smartTable();
+  };
+
+
+  // Configuración y atributos de smart-table:
+  smartTable() {
+    this.settings = {
+
+      // Oculta el filtro por defecto:
+      hideSubHeader: false,
+  
+      // Configura las opciones de páginas:
+      pager: {
+        display: true,
+        perPage: 5
       },
-      estado: {
-        title: 'Estado',
-        width: '40px',
+      add: {
+        addButtonContent   : '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmCreate      : true,
       },
-      activo: {
-        title: 'Activo',
-        width: '50px',
-        editor: {
-          type  : 'checkbox',
-          config: {
-            true : true,
-            false: false,
+      edit: {
+        editButtonContent  : '<i class="nb-edit"></i>',
+        saveButtonContent  : '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave        : true,
+      },
+      actions: {
+        columnTitle: 'Más',
+        filter     : true,
+        delete     : false,
+      },
+      columns: {
+        id: {
+          title: 'ID',
+          width: '10px',
+        },
+        estado: {
+          title: 'Estado',
+          width: '40px',
+        },
+        activo: {
+          title: 'Activo',
+          width: '50px',
+          editor: {
+            type  : 'checkbox',
+            config: {
+              true : true,
+              false: false,
+            },
           },
         },
       },
-    }
-  };
-
-  data   : any[] = [];
-  estado : any;
-  report : any;
-  source : LocalDataSource;
-  mostrar: boolean = false;
-
-
-  constructor(private service: peticionesGetService,
-              private router: Router) {
-
-    this.datos();
-
+    };  
   };
 
 
+  // Obtiene los datos del servicio indicado y los inserta en la tabla:
   datos() {
 
     this.source = new LocalDataSource(this.data);
@@ -99,6 +119,7 @@ export class EstadoClienteComponent {
   };
 
 
+  // Configura las opciones del filtro de la tabla:
   buscar(query: string = '') {
     this.source.setFilter([
       // datos que se quieren incluir en la busqueda:
@@ -118,7 +139,9 @@ export class EstadoClienteComponent {
   };
 
 
+  // Método que crea un nuevo estado a partir de los datos obtenidos del evento:
   onCreateConfirm(event) {
+
     if (window.confirm('Estás seguro que quieres crear este estado?')) {
 
       this.report = {
@@ -143,7 +166,9 @@ export class EstadoClienteComponent {
   };
 
 
+  // Método que edita un estado a partir de los datos obtenidos del evento:
   onSaveConfirm(event) {
+
     if (window.confirm('Guardar cambios establecidos?')) {
 
       this.report = {
@@ -164,6 +189,6 @@ export class EstadoClienteComponent {
       event.confirm.resolve(event.newData);
     } else {
       event.confirm.reject();
-    }
-  }
-}
+    };
+  };
+};

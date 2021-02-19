@@ -1,5 +1,6 @@
 
 <nb-card accent="success">
+
    <nb-card-header>
     <div class="row">
       <h5 class="pad">Medio de pago</h5>
@@ -11,14 +12,14 @@
       </button>
     </div>
   </nb-card-header>
-  <nb-card-body *ngIf="mostrar">
 
+  <nb-card-body *ngIf="mostrar">
     <ng2-smart-table class="example-smart-table"
                      [settings]="settings"
                      [source]="source"
                      (createConfirm)="onCreateConfirm($event)"
                      (editConfirm)="onSaveConfirm($event)">
     </ng2-smart-table>
-
   </nb-card-body>
+  
 </nb-card>

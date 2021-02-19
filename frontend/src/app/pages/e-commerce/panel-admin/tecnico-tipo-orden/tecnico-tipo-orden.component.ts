@@ -25,11 +25,11 @@ export class TecnicoTipoOrdenComponent {
 
     this.datos();
 
-    this.estructura();
+    this.smartTable();
   }
 
 
-  estructura() {
+  smartTable() {
 
     this.settings = {
 

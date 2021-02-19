@@ -1,72 +1,10 @@
-@import "~bootstrap/scss/mixins/breakpoints";
-@import "~@nebular/theme/styles/global/breakpoints";
 @import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
-  .calendars {
-    display        : flex;
-    justify-content: center;
-  }
 
-  .calendar-container {
-    margin: 1rem 0.5rem;
-  }
+}
 
-  .subtitle {
-    display      : block;
-    margin-bottom: 0.5rem;
-  }
-
-  @include media-breakpoint-up(md) {
-    .calendars {
-      justify-content: flex-start;
-    }
-  }
-
-  @include media-breakpoint-up(lg) {
-    .calendars {
-      margin: -1.1rem;
-    }
-    .calendar-container {
-      margin: 1rem;
-    }
-  }
-
-  @include media-breakpoint-up(xxxl) {
-    .calendars {
-      margin: -1rem;
-    }
-  }
-
-  button + button {
-    margin-left: 2rem;
-  }
-
-  @include media-breakpoint-down(xxl) {
-    nb-card-body {
-      display: flex;
-    }
-
-    button {
-      flex   : 1;
-      padding: 0.8rem;
-    }
-  }
-
-  @include media-breakpoint-down(is) {
-    nb-card-body {
-      display: block;
-    }
-
-    button {
-      + button {
-        margin-left: 0;
-      }
-
-      width        : 100%;
-      display      : block;
-      margin-bottom: 2rem;
-      padding      : 0.75rem;
-    }
-  }
+:host /deep/ nb-base-calendar nb-card {
+  max-width: -webkit-fill-available;
+  display: flex;
 }

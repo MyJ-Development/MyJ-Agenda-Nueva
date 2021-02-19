@@ -2,15 +2,15 @@
 
 @include nb-install-component() {
     nb-card {
-        transform: translate3d(0, 0, 0);
-        display: flex; //agranda al tamaño del contenido.
+        transform : translate3d(0, 0, 0);
+        display   : flex; //agranda al tamaño del contenido.
         max-height: fit-content;
     }
 
     nb-card-body {
         padding-top: 25px;
-        min-height: 450px;
-        max-height: 450px;
+        min-height : 450px;
+        max-height : 450px;
     }
 
     ::ng-deep .example-smart-table {
@@ -25,40 +25,40 @@
 }
 
 :host /deep/ ng2-smart-table table tr td {
-    text-align: center;
-    font-size: 13px;
-    padding-top: 5px !important;
+    text-align    : center;
+    font-size     : 13px;
+    padding-top   : 5px !important;
     padding-bottom: 5px !important;
 }
 
 :host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
-    padding-top: 2px !important;
+    padding-top   : 2px !important;
     padding-bottom: 2px !important;
-    padding-left: 2px !important;
-    padding-right: 2px !important;
-    inline-size: 330px;
+    padding-left  : 2px !important;
+    padding-right : 2px !important;
+    inline-size   : 330px;
 }
 
 :host /deep/ ng2-smart-table th.ng2-smart-actions-title-add {
-    width: 10px !important;
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-    padding-left: 0px !important;
+    width        : 10px !important;
+    margin-left  : 0px !important;
+    margin-right : 0px !important;
+    padding-left : 0px !important;
     padding-right: 0px !important;
-    text-align: -webkit-center !important;
+    text-align   : -webkit-center !important;
 }
 
 :host /deep/ ng2-smart-table a.ng2-smart-action {
-    width: 25px;
-    height: 25px;
-    padding-left: 0px;
+    width        : 25px;
+    height       : 25px;
+    padding-left : 0px;
     padding-right: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left  : 0px;
+    margin-right : 0px;
 }
 
 :host /deep/ input[type="checkbox"] {
-    width: 20px !important;
+    width : 20px !important;
     margin: auto;
 }
 
@@ -97,30 +97,30 @@
 }
 
 :host /deep/ ng2-smart-table table > tbody > tr > td {
-    height: nb-theme(tree-grid-row-min-height);
-    padding: nb-theme(tree-grid-cell-padding);
+    height      : nb-theme(tree-grid-row-min-height);
+    padding     : nb-theme(tree-grid-cell-padding);
     border-width: 0.5px;
     border-color: #0095ff36;
 }
 
 :host /deep/ ng2-smart-table thead > tr > th {
-    height: nb-theme(tree-grid-row-min-height);
-    padding: nb-theme(tree-grid-cell-padding);
+    height      : nb-theme(tree-grid-row-min-height);
+    padding     : nb-theme(tree-grid-cell-padding);
     border-width: 0.5px;
     border-color: #0095ff36;
 }
 
 :host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
-    padding-right: 0rem !important;
-    padding-left: 0rem !important;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    text-align: center;
+    padding-right   : 0rem !important;
+    padding-left    : 0rem !important;
+    padding-top     : 5px !important;
+    padding-bottom  : 5px !important;
+    text-align      : center;
     background-color: #252547;
-    color: rgb(255, 255, 255);
+    color           : rgb(255, 255, 255);
 }
 
 :host /deep/ ng2-smart-table-title > a {
-    color: rgb(255, 255, 255) !important;
+    color      : rgb(255, 255, 255) !important;
     font-weight: bolder !important;
 }

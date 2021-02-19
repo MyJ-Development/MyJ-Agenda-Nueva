@@ -67,24 +67,19 @@ export class TreeGridShowcaseComponent {
     columns: {
       id_orden: {
         title: 'Id',
-        type : 'string',
       },
       nombre: {
         title: 'Nombre',
-        type : 'string',
       },
       fecha: {
         title: 'Fecha',
-        type : 'string',
         width: '40px',
       },
       direccion: {
         title: 'Dirección',
-        type : 'string',
       },
       tipo: {
         title: 'Tipo orden',
-        type : 'string',
       },
     },
   };
