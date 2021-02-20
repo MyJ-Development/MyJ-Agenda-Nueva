@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Angular/router:
 import { Router } from '@angular/router';
+import { NbDialogRef, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
@@ -47,10 +48,12 @@ export class AgregarClienteComponent {
 
 
   // Constructor:
-  constructor(private fb        : FormBuilder,
-              private service   : tableService,
-              private peticiones: peticionesGetService,
-              private router    : Router) {
+  constructor(private fb           : FormBuilder,
+              private service      : tableService,
+              private peticiones   : peticionesGetService,
+              private router       : Router,
+              private toastrService: NbToastrService,
+              protected ref        : NbDialogRef<AgregarClienteComponent>) {
 
     // Obtiene el usuario actual desde el servicio indicado:
     this.usuario = this.service.getUsuario();
@@ -119,6 +122,15 @@ export class AgregarClienteComponent {
     });
   };
 
+  
+  showToast(icono) {
+    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+    this.toastrService.show(
+      '',
+      'Cliente creado exitosamente!',
+      iconConfig)
+  }
+
 
   // Método encargado de postear la información hacia la API:
   guardar() {
@@ -185,6 +197,9 @@ export class AgregarClienteComponent {
             this.router.navigate(['/success']);
           });
         };
+
+        this.showToast('');
+        this.ref.close();
       });
     };
 

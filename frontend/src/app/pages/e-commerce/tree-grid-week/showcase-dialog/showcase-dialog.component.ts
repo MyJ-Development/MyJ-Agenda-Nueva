@@ -74,6 +74,10 @@ export class ShowcaseDialogComponent implements OnInit {
         title: 'Tipo orden',
         type : 'string',
       },
+      estado_ticket: {
+        title: 'Estado ticket',
+        type : 'string',
+      },
       fecha: {
         title: 'Fecha',
         type : 'string',
@@ -176,13 +180,14 @@ export class ShowcaseDialogComponent implements OnInit {
 
               // Inserta los datos filtrados en la tabla definida en un principio:
               this.data.push({
-                orden       : this.ordDiarias[j][i],
-                id_orden    : this.ordDiarias[j][i]['id'],
-                tecnico     : this.ordDiarias[j][i]['encargado']['nombre'],
-                localizacion: this.mayus(this.formato(
-                              this.ordDiarias[j][i]['client_residence']['direccion'])),
-                tipo_orden  : this.ordDiarias[j][i]['tipo']['descripcion'],
-                fecha       : this.ordDiarias[j][i]['fechaejecucion']
+                orden        : this.ordDiarias[j][i],
+                id_orden     : this.ordDiarias[j][i]['id'],
+                tecnico      : this.ordDiarias[j][i]['encargado']['nombre'],
+                localizacion : this.mayus(this.formato(
+                               this.ordDiarias[j][i]['client_residence']['direccion'])),
+                tipo_orden   : this.ordDiarias[j][i]['tipo']['descripcion'],
+                estado_ticket: this.ordDiarias[j][i]['estadoticket']['descripcion'],
+                fecha        : this.ordDiarias[j][i]['fechaejecucion']
               });
             };
 

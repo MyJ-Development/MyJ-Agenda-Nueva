@@ -9,8 +9,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // Nebular/theme:
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
-import { id } from '@swimlane/ngx-charts';
+import { NbDialogRef, NbDialogService, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
@@ -52,7 +51,8 @@ export class MostrarClienteComponent implements OnInit {
               private tableService: tableService,
               private service     : peticionesGetService,
               private fb          : FormBuilder,
-              private router      : Router) {
+              private router      : Router,
+              private toastrService: NbToastrService,) {
 
   };
 
@@ -97,6 +97,15 @@ export class MostrarClienteComponent implements OnInit {
     return this.formulario.get('pppoe_cliente') as FormArray;
   };
 
+
+  showToast(icono) {
+    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+    this.toastrService.show(
+      '',
+      'Datos actualizados exitosamente!',
+      iconConfig)
+  }
+  
 
   // Método encargado de actualizar datos obtenidos desde la API:
   actualizarDatos() {
@@ -156,6 +165,7 @@ export class MostrarClienteComponent implements OnInit {
         this.router.navigate(['/success']);
       });      
 
+      this.showToast('');
       // Si los campos tienen un error:
     } else {
       alert("Revisa los campos");

@@ -179,19 +179,19 @@ export class TreeGridShowcaseComponent {
 
       // Si la opción seleccionada corresponde al nombre técnico y al valor del calendario, iniciar:
     } else if ((this.formulario.value['buscar'] === 'Nombre técnico')
-      && (this.formulario.value['calendar'])) {
+      && (this.formulario.value['date_init']) && (this.formulario.value['date_end'])) {
 
       // Iguala el dato obtenido del formulario con variable global:
       this.buscar = this.formulario.value['buscador'];
 
       // Guarda en variable global la fecha de inicio obtenida del calendario:
-      this.date_inicio = new Date(this.formulario.value['calendar']['start']);
+      this.date_inicio = new Date(this.formulario.value['date_init']);
 
       // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
       this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
 
       // Guarda en variable global la fecha de final obtenida del calendario:
-      this.date_fin = new Date(this.formulario.value['calendar']['end']);
+      this.date_fin = new Date(this.formulario.value['date_end']);
 
       // Formatea la fecha final obtenida, en formato standard de las órdenes:
       this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
@@ -206,19 +206,19 @@ export class TreeGridShowcaseComponent {
       this.aparece = true;
 
       // Si la opción seleccionada corresponde al domicilio y al valor del calendario, iniciar:
-    } else if ((this.formulario.value['buscar'] === 'Domicilio') && (this.formulario.value['calendar'])) {
+    } else if ((this.formulario.value['buscar'] === 'Domicilio') && (this.formulario.value['date_init']) && (this.formulario.value['date_end'])) {
 
       // Iguala el dato obtenido del formulario con variable global:
       this.buscar = this.formulario.value['buscador'];
 
       // Guarda en variable global la fecha de inicio obtenida del calendario:
-      this.date_inicio = new Date(this.formulario.value['calendar']['start']);
+      this.date_inicio = new Date(this.formulario.value['date_init']);
 
       // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
       this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
 
       // Guarda en variable global la fecha de final obtenida del calendario:
-      this.date_fin = new Date(this.formulario.value['calendar']['end']);
+      this.date_fin = new Date(this.formulario.value['date_end']);
 
       // Formatea la fecha final obtenida, en formato standard de las órdenes:
       this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
@@ -295,9 +295,10 @@ export class TreeGridShowcaseComponent {
     this.formulario = this.fb.group({
 
       // Controles del formulario, llamados por el componente html con formControlName:
-      buscar  : ['', Validators.required],
-      buscador: ['', Validators.required],
-      calendar: ['', Validators.required],
+      buscar   : ['', Validators.required],
+      buscador : ['', Validators.required],
+      date_init: ['', Validators.required],
+      date_end : ['', Validators.required],
     });
   };
 

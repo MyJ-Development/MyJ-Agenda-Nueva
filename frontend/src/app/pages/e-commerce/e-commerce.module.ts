@@ -19,6 +19,7 @@ import {
   NbSpinnerModule,
   NbDatepickerModule,
   NbPopoverModule,
+  NbToastrModule,
   
 } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -139,6 +140,7 @@ import { CambiosComponent } from './tree-grid-week/cambios/cambios.component';
     ReactiveFormsModule,
     NbDatepickerModule,
     NbPopoverModule,
+    NbToastrModule.forRoot(),
   ],
   declarations: [
     ECommerceComponent,

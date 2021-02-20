@@ -43,3 +43,7 @@
   color: rgb(255, 255, 255) !important;
   font-weight: bolder !important;
 }
+
+:host /deep/ .cdk-global-scrollblock {
+  position: static !important;
+}

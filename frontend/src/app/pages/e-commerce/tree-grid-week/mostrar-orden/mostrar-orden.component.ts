@@ -1,6 +1,6 @@
 
 // Angular/core:
-import { Component, OnInit, ɵɵqueryRefresh } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 // Angular/common:
 import { DatePipe } from '@angular/common';
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // Nebular/theme:
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { tableService } from '../../../../services/table.service';
@@ -63,7 +63,8 @@ export class MostrarOrdenComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router,
               private fb: FormBuilder,
-              private mostrar: NbDialogService) {
+              private toastrService: NbToastrService,
+              private mostrar     : NbDialogService,) {
 
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -394,6 +395,16 @@ export class MostrarOrdenComponent implements OnInit {
     }
   }
 
+
+  showToast(icono) {
+    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+    this.toastrService.show(
+      'Actualiza para visualizar los cambios',
+      'Datos actualizados exitosamente!',
+      iconConfig)
+  }
+  
+
   // Método encargado de actualizar la orden obtenida desde el servicio:
   actualizarOrden() {
 
@@ -430,8 +441,8 @@ export class MostrarOrdenComponent implements OnInit {
         this.router.navigate(['/success']);
       });
 
+      this.showToast('');
       this.ref.close();
-      this.mostrar.open(CambiosComponent);
 
     } else {
       alert("Revisa los campos")

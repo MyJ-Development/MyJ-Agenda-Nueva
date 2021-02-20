@@ -94,3 +94,14 @@ $nb-themes: nb-register-theme((
 
   form-control-color: #495057,
 ), dark, dark);
+
+
+:host /deep/   cdk-global-scrollblock {
+  position: null;
+  width: null;
+  overflow-y: null;
+}
+
+:host /deep/ .cdk-global-scrollblock {
+  position: static !important;
+}

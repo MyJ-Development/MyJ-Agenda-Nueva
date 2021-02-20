@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // Nebular/theme:
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
@@ -64,7 +64,8 @@ export class OrdenCompletaComponent implements OnInit {
               private datePipe    : DatePipe,
               private router      : Router,
               private fb          : FormBuilder,
-              private mostrar     : NbDialogService) {
+              private mostrar     : NbDialogService,
+              private toastrService: NbToastrService,) {
 
     // Obtiene el rut del cliente desde el servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
@@ -396,6 +397,15 @@ export class OrdenCompletaComponent implements OnInit {
   }
 
 
+  showToast(icono) {
+    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+    this.toastrService.show(
+      'Actualiza para visualizar los cambios',
+      'Datos actualizados exitosamente!',
+      iconConfig)
+  }
+
+
   // Método encargado de actualizar la orden obtenida anteriormente:
   actualizarOrden() {
 
@@ -433,8 +443,8 @@ export class OrdenCompletaComponent implements OnInit {
         this.router.navigate(['/success']);
       });
 
+      this.showToast('');
       this.ref.close();
-      this.mostrar.open(CambiosComponent);
       
     } else {
       console.log(this.formulario);

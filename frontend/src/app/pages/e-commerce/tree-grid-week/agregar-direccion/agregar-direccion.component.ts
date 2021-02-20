@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
-import { NbPopoverModule } from "@nebular/theme";
+import { NbDialogRef, NbIconConfig, NbPopoverModule, NbToastrService } from "@nebular/theme";
 
 
 // Componente decorado:
@@ -40,7 +40,9 @@ export class AgregarDireccionComponent {
   // Constructor:
   constructor(private fb        : FormBuilder,
               private peticiones: peticionesGetService,
-              private router    : Router) {
+              private router    : Router,
+              private toastrService: NbToastrService,
+              protected ref        : NbDialogRef<AgregarDireccionComponent>) {
 
     // Llamada de método:
     this.crearFormulario();
@@ -84,6 +86,15 @@ export class AgregarDireccionComponent {
   };
 
 
+  showToast(icono) {
+    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+    this.toastrService.show(
+      '',
+      'Dirección creada exitosamente!',
+      iconConfig)
+  }
+  
+
   // Método encargado de postear la información hacia la API:
   guardar() {
 
@@ -111,6 +122,8 @@ export class AgregarDireccionComponent {
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
+        this.showToast('');
+        this.ref.close();
       });
     };
   };

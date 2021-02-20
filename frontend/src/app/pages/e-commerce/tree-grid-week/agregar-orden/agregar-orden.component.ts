@@ -11,6 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Angular/router:
 import { Router } from '@angular/router';
 
+import { NbDialogRef, NbIconConfig, NbToastrService } from '@nebular/theme';
+
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { tableService }         from '../../../../services/table.service';
@@ -45,15 +47,17 @@ export class AgregarOrdenComponent implements OnInit {
   fechaControl      : any;
   tecnicoCapacidad  : any[] = [];
   rutRegExp         = new RegExp('^([0-9]+-[0-9K])$');
-  montoRegExp       = new RegExp(/^[0-9]$/);
+  montoRegExp       = new RegExp(/^\d+$/);
 
 
   // Constructor:
-  constructor(private tableService: tableService,
-              private service     : peticionesGetService,
-              private router      : Router,
-              private fb          : FormBuilder,
-              private datePipe    : DatePipe) {
+  constructor(private tableService : tableService,
+              private service      : peticionesGetService,
+              private router       : Router,
+              private fb           : FormBuilder,
+              private datePipe     : DatePipe,
+              private toastrService: NbToastrService,
+              protected ref        : NbDialogRef<AgregarOrdenComponent>) {
 
     // Guarda en variable global el rut obtenido del servicio:
     this.rut_cli = this.tableService.getRut_cliente();
@@ -70,9 +74,6 @@ export class AgregarOrdenComponent implements OnInit {
       // Guarda en variable global el rut obtenido del formulario:
       this.rut_cli = x;
     });
-
-  
-
   };
 
 
@@ -325,6 +326,15 @@ export class AgregarOrdenComponent implements OnInit {
   };
 
 
+  showToast(icono) {
+    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+    this.toastrService.show(
+      '',
+      'Orden creada exitosamente!',
+      iconConfig)
+  }
+
+
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
 
@@ -363,6 +373,8 @@ export class AgregarOrdenComponent implements OnInit {
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
+        this.showToast('');
+        this.ref.close();
       });
     };
   };

@@ -26,8 +26,24 @@
     margin: 0px 0 10px;
   }
 
+  .buscar {
+    margin-left: 20px;
+  }
+
   .card {
     margin: 0;
+  }
+
+  .card-lista {
+    height: 219px;
+  }
+
+  .date {
+    width: 140px;
+  }
+
+  .calendar {
+    margin-right: 20px;
   }
 
   // nb-card {
@@ -139,4 +155,8 @@
 :host /deep/ ng2-smart-table-title > a { 
   color: rgb(255, 255, 255) !important;
   font-weight: bolder !important;
+}
+
+:host /deep/ .cdk-global-scrollblock {
+  position: static !important;
 }

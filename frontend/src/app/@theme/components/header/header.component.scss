@@ -86,3 +86,7 @@ nb-popover {
   width: 20rem !important;
   height: 20rem !important;
 }
+
+:host /deep/ .cdk-global-scrollblock {
+  position: static !important;
+  }

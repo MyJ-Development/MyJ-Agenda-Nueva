@@ -5,8 +5,10 @@
  */
 
 @import '../@theme/styles/themes';
+@import "~@angular/cdk/overlay-prebuilt.css";
 
 @include nb-install-component() {
+
   ::ng-deep router-outlet + * {
     display: block;
     animation: fade 1s;
@@ -21,4 +23,12 @@
       }
     }
   }
+}
+
+:host /deep/ .cdk-global-scrollblock {
+  position: static !important;
+}
+
+:host /deep/ .ng-global-scrollblock {
+  position: static !important;
 }
