@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Angular/router:
 import { Router } from '@angular/router';
 
-import { NbDialogRef, NbIconConfig, NbToastrService } from '@nebular/theme';
+import { NbDateService, NbDialogRef, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
@@ -48,6 +48,8 @@ export class AgregarOrdenComponent implements OnInit {
   tecnicoCapacidad  : any[] = [];
   rutRegExp         = new RegExp('^([0-9]+-[0-9K])$');
   montoRegExp       = new RegExp(/^\d+$/);
+  min               : Date;
+  max               : Date;
 
 
   // Constructor:
@@ -57,7 +59,8 @@ export class AgregarOrdenComponent implements OnInit {
               private fb           : FormBuilder,
               private datePipe     : DatePipe,
               private toastrService: NbToastrService,
-              protected ref        : NbDialogRef<AgregarOrdenComponent>) {
+              protected ref        : NbDialogRef<AgregarOrdenComponent>,
+              protected dateService: NbDateService<Date>) {
 
     // Guarda en variable global el rut obtenido del servicio:
     this.rut_cli = this.tableService.getRut_cliente();
@@ -74,6 +77,10 @@ export class AgregarOrdenComponent implements OnInit {
       // Guarda en variable global el rut obtenido del formulario:
       this.rut_cli = x;
     });
+
+    // Establece el mínimo y el máximo de rangos de fecha a escoger.
+    this.min = this.dateService.addDay(this.dateService.today(), 0);
+    this.max = this.dateService.addYear(this.dateService.today(), +1);
   };
 
 

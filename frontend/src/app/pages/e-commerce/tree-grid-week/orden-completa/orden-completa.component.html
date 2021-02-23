@@ -203,9 +203,10 @@
                       formControlName="fecha_ejecucion" 
                       shape="semi-round" 
                       fieldSize="small"
+                      onkeydown="return false"
                       nbInput
                      [nbDatepicker]="formpicker">
-              <nb-datepicker #formpicker></nb-datepicker>
+              <nb-datepicker [min]="min" [max]="max" #formpicker></nb-datepicker>
             </div>
           </div>
           
@@ -376,7 +377,7 @@
               </button>
             </div>
           </div> 
-          <div class="col-sm-4 offset-4">
+          <div *ngIf="mostrarBoton" class="col-sm-4 offset-4">
             <div class="form-group">
               <button nbButton
                       class="boton"

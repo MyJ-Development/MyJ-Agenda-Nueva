@@ -112,12 +112,12 @@ export class AgregarClienteComponent {
       telefono1     : ['', [Validators.required, Validators.pattern(this.telefonoRegExp)]],
       telefono2     : ['', Validators.pattern(this.telefonoRegExp)],
       correo_cliente: ['', [Validators.pattern(this.emailRegExp), Validators.required]],
-      creado_por    : [this.usuario, Validators.required],
+      creado_por    : [{value: this.usuario, disabled: true}, Validators.required],
       residencia    : this.fb.group({
         direccion_cliente: ['', [Validators.required, Validators.pattern(this.direccionRegExp)]],
         comuna_cliente   : ['', [Validators.required, Validators.pattern(this.comunaRegExp)]],
-        mac_cliente      : ['', [Validators.required, Validators.pattern(this.macRegExp)]],
-        pppoe_cliente    : ['', Validators.required],
+        mac_cliente      : ['', [Validators.pattern(this.macRegExp)]],
+        pppoe_cliente    : [''],
       })
     });
   };

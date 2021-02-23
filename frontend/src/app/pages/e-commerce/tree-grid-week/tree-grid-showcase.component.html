@@ -37,7 +37,7 @@
             <button [ngClass]="{'botonVerde':(row.data.objeto[column]) > 0, 
                                 'botonRojo':(row.data.objeto[column]) == 0}" 
                     nbButton 
-                    (click)="open(index, row.data[column], row.data.objeto[column])">
+                    (click)="open(index, row.data[column], result)">
               {{row.data.objeto[column]}}
             </button>
           </td>

@@ -12,14 +12,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // Nebular/theme:
-import { NbDialogRef, NbDialogService, NbIconConfig, NbToastrService } from '@nebular/theme';
+import { NbDateService, NbDialogRef, NbDialogService, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { tableService }         from '../../../../services/table.service';
 import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.component';
 import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
-import { CambiosComponent } from '../cambios/cambios.component';
 
 
 // Componente decorado:
@@ -55,6 +54,10 @@ export class OrdenCompletaComponent implements OnInit {
   id_tipoOrden      : any;
   reportEventos     : any;
   id_residencia     : any;
+  usuario           : any;
+  mostrarBoton      : boolean = false;
+  min               : Date;
+  max               : Date;
 
 
   // Constructor:
@@ -65,10 +68,16 @@ export class OrdenCompletaComponent implements OnInit {
               private router      : Router,
               private fb          : FormBuilder,
               private mostrar     : NbDialogService,
-              private toastrService: NbToastrService,) {
+              private toastrService: NbToastrService,
+              protected dateService: NbDateService<Date>) {
 
     // Obtiene el rut del cliente desde el servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
+    this.usuario = this.tableService.getRolUsuario();
+
+    // Establece el mínimo y el máximo de rangos de fecha a escoger.
+    this.min = this.dateService.addDay(this.dateService.today(), 0);
+    this.max = this.dateService.addYear(this.dateService.today(), +1);
   };
 
 
@@ -540,34 +549,68 @@ export class OrdenCompletaComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    this.formulario = this.fb.group({
+    if ((this.ordenCliente['estadoticket']['id'] === 1) && (this.usuario === 'user')) {
 
-      nombre_cliente   :[{value: this.mayus(this.formato(this.ordenCliente
-                        ['client_order']['nombre'])), disabled: true}, Validators.required],
-      rut_cliente      :[{value: this.rut_cliente, disabled: true}, Validators.required],
-      direccion_cliente:[this.id_residencia, Validators.required],
-      comuna_cliente   :[this.id_residencia, Validators.required],
-      telefono1        :[{value: this.ordenCliente['client_order']['contacto1'], 
+      this.formulario = this.fb.group({
+
+        nombre_cliente   : [{ value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),
+                          disabled: true}],
+        rut_cliente      : [{ value: this.rut_cliente, disabled: true }],
+        direccion_cliente: [{ value: this.id_residencia, disabled: true }],
+        comuna_cliente   : [{ value: this.id_residencia, disabled: true }],
+        telefono1        : [{ value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
+        telefono2        : [{ value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
+        correo_cliente   : [{ value: this.ordenCliente['client_order']['email'], disabled: true}],
+        encargado        : [{ value: this.ordenCliente['encargado']['rut'], disabled: true}],
+        creado_por       : [{ value: this.ordenCliente['created_by']['email'], disabled: true}],
+        fecha_ejecucion  : [{ value: new Date(this.fecha_ejecucion), disabled: true}],
+        fecha_creacion   : [{ value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'),
+                           disabled: true}],
+        disponibilidad   : [{ value: this.ordenCliente['disponibilidad'], disabled: true}],
+        estadoCliente    : [{ value: this.id_estadoCliente, disabled: true}],
+        estadoTicket     : [{ value: this.id_estadoTicket, disabled: true}],
+        medioPago        : [{ value: this.id_medioPago, disabled: true}],
+        monto            : [{ value: this.ordenCliente['monto'], disabled: true}],
+        tipo_orden       : [{ value: this.id_tipoOrden, disabled: true}],
+        prioridad        : [{ value: this.id_prioridad, disabled: true}],
+        comentario       : [{ value: this.formato(this.ordenCliente['comentario']), disabled: true}],
+      });
+      
+    } else {
+
+      this.mostrarBoton = true;
+      
+      this.formulario = this.fb.group({
+
+        nombre_cliente   : [{value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),
                           disabled: true}, Validators.required],
-      telefono2        :[{value: this.ordenCliente['client_order']['contacto2'], 
-                          disabled: true}, Validators.required],
-      correo_cliente   :[{value: this.ordenCliente['client_order']['email'], 
-                          disabled: true}, Validators.required],
-      encargado        :[this.ordenCliente['encargado']['rut'], Validators.required],
-      creado_por       :[{value: this.ordenCliente['created_by']['email'], 
-                          disabled: true}, Validators.required],
-      fecha_ejecucion  :[new Date(this.fecha_ejecucion), Validators.required],
-      fecha_creacion   :[{value: this.datePipe.transform(this.ordenCliente
-                        ['created_at'], 'yyyy-MM-dd'), disabled: true }, Validators.required],
-      disponibilidad   :[this.ordenCliente['disponibilidad'], Validators.required],
-      estadoCliente    :[this.id_estadoCliente, Validators.required],
-      estadoTicket     :[this.id_estadoTicket, Validators.required],
-      medioPago        :[this.id_medioPago, Validators.required],
-      monto            :[this.ordenCliente['monto'], Validators.required],
-      tipo_orden       :[this.id_medioPago, Validators.required],
-      prioridad        :[this.id_prioridad, Validators.required],
-      comentario       :[this.formato(this.ordenCliente['comentario']), Validators.required],
-    });
+        rut_cliente      : [{ value: this.rut_cliente, disabled: true }, Validators.required],
+        direccion_cliente: [this.id_residencia, Validators.required],
+        comuna_cliente   : [this.id_residencia, Validators.required],
+        telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+                           Validators.required],
+        telefono2        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+                           Validators.required],
+        correo_cliente   : [{value: this.ordenCliente['client_order']['email'], disabled: true},
+                           Validators.required],
+        encargado        : [this.ordenCliente['encargado']['rut'], Validators.required],
+        creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true},
+                           Validators.required],
+        fecha_ejecucion  : [new Date(this.fecha_ejecucion), Validators.required],
+        fecha_creacion   : [{value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'),
+                           disabled: true}, Validators.required],
+        disponibilidad   : [this.ordenCliente['disponibilidad'], Validators.required],
+        estadoCliente    : [this.id_estadoCliente, Validators.required],
+        estadoTicket     : [this.id_estadoTicket, Validators.required],
+        medioPago        : [this.id_medioPago, Validators.required],
+        monto            : [this.ordenCliente['monto'], Validators.required],
+        tipo_orden       : [this.id_tipoOrden, Validators.required],
+        prioridad        : [this.id_prioridad, Validators.required],
+        comentario       : [this.formato(this.ordenCliente['comentario']), Validators.required],
+      });
+    }
+
+
   };
 
     // Método encargado de abrir el componente con los datos del cliente:

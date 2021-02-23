@@ -155,11 +155,3 @@
     border-color: #0095ff36;
   }
 }
-
-:host /deep/ .cdk-global-scrollblock {
-  position: static !important;
-}
-
-:host /deep/ .ng-global-scrollblock {
-  position: static !important;
-}
