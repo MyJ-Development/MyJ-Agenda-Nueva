@@ -159,18 +159,18 @@ export class TreeGridWeekShowcaseComponent {
     this.sendIndex(this.indice);
     this.sendEncargado(this.encargado);
     this.dialogService.open(ShowcaseDialogComponent);
+
     console.log(event);
+    // console.log(event.length);
 
-    for (const id of event) {
-      if(id === 1){
-        this.result.push(id);
-      }
-      this.pendiente = this.result.length
-    }
+    // for (let id of event) {
+    //   if(id === 1){
+    //     this.result.push(id);
+    //   }
+      // this.pendiente = this.result.length
+    // }
 
-    
-
-    console.log(this.pendiente);
+    // console.log(this.result.length);
   };
 
 
@@ -251,6 +251,7 @@ export class TreeGridWeekShowcaseComponent {
       // Crea e inicia un contador de la semana en cero:
       let counter: number[] = [0, 0, 0, 0, 0, 0];
       let orden  : any[]    = ['', '', '', '', '', ''];
+      let completado  : any[]    = [false, false, false, false, false, false];
       let tec_counter       = 0;
 
       // Crea un bucle para cada técnico de la lista de técnicos:
@@ -274,6 +275,7 @@ export class TreeGridWeekShowcaseComponent {
           counter[i] = aux_counter.length;
           test.push(this.ordenesDiariasPorTecnico);
           let ins: any[] = [];
+
           for (let ord of aux_counter) {
             ins.push(ord.estadoticket.id)
           }
@@ -281,11 +283,40 @@ export class TreeGridWeekShowcaseComponent {
           orden[i] = ins;
 
           // console.log(ins);
-          console.log(orden[i]);
-          console.log(tecnico);
+          // console.log(orden[i]);
+          // console.log(tecnico);
         };
 
-        console.log(test);
+        // console.log(test);
+
+        for (let i = 0; i < orden.length; i++) {
+          // console.log(orden[i]);
+          this.result = [];
+          for (const id of orden[i]) {
+            
+            if (id === 1) {
+              this.result.push(id)
+            }
+          }
+          console.log(this.result);
+          console.log(this.result.length);
+          console.log(orden[i].length);
+
+          if ((this.result.length === orden[i].length) && (orden[i].length > 0)) {
+            completado[i] = true; 
+          }
+        }
+
+        console.log(completado[0]);
+        console.log(completado[1]);
+        console.log(completado[2]);
+        console.log(completado[3]);
+        console.log(completado[4]);
+        console.log(completado[5]);
+
+        // for (const id of orden) {
+        //   console.log(id);
+        // }
 
         if (tecnico.active) {
                   // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
@@ -293,12 +324,12 @@ export class TreeGridWeekShowcaseComponent {
           data: {
             objeto:{
               objeto   : {
-                Lunes    : orden[0],
-                Martes   : orden[1],
-                Miercoles: orden[2],
-                Jueves   : orden[3],
-                Viernes  : orden[4],
-                Sabado   : orden[5],
+                Lunes    : completado[0],
+                Martes   : completado[1],
+                Miercoles: completado[2],
+                Jueves   : completado[3],
+                Viernes  : completado[4],
+                Sabado   : completado[5],
               },
               Lunes    : counter[0],
               Martes   : counter[1],
@@ -321,8 +352,6 @@ export class TreeGridWeekShowcaseComponent {
       };
 
       this.sendOrdenesDiariasPorTecnico(test);
-
-      console.log(this.data);
 
       // Construye la estructura de datos a mostrar, en base a la interfaz definida:
       this.dataSource = this.dataSourceBuilder.create(this.data);
