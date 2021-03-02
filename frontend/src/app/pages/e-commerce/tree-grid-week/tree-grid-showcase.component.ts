@@ -294,7 +294,7 @@ export class TreeGridWeekShowcaseComponent {
           this.result = [];
           for (const id of orden[i]) {
             
-            if (id === 1) {
+            if (id === 4) {
               this.result.push(id)
             }
           }

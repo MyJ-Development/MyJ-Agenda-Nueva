@@ -28,7 +28,7 @@ import { tableService }         from '../../../../services/table.service';
 
 // Clase exportable AgregarOrdenComponent implementa ngOnInit:
 export class AgregarOrdenComponent implements OnInit {
-
+  loading = false;
   // Variables:
   formulario        : FormGroup;
   residencia_cliente: any;
@@ -332,15 +332,20 @@ export class AgregarOrdenComponent implements OnInit {
     });
   };
 
-
-  showToast(icono) {
-    const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
+/*
+  showToast(icono,text?) {
+    //const iconConfig: NbIconConfig = { icon: icono, pack: 'eva' };
     this.toastrService.show(
       '',
-      'Orden creada exitosamente!',
-      iconConfig)
+      text)
   }
-
+*/
+  showToast(destroyByClick,duration,id) {
+    this.toastrService.show(
+      'Orden creada exitosamente!',
+      `ID Orden: `+id,
+      { destroyByClick,duration });
+  }
 
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
@@ -348,7 +353,6 @@ export class AgregarOrdenComponent implements OnInit {
     this.formulario.controls['fecha_ejecucion'].setErrors(null);
 
     if (this.formulario.valid) {
-
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
       this.report = {
@@ -375,12 +379,14 @@ export class AgregarOrdenComponent implements OnInit {
 
     if (this.report) {
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+      this.loading = true
       this.service.agregarOrden(this.report).subscribe(data => {
+        this.loading = false
         res = data;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
-        this.showToast('');
+        this.showToast(false,15000,res['id']);
         this.ref.close();
       });
     };

@@ -31,7 +31,7 @@ import { CambiosComponent } from '../cambios/cambios.component';
 
 // Clase exportable MostrarOrdenComponent que implementa método ngOnInit:
 export class MostrarOrdenComponent implements OnInit {
-
+  loading = false;
   // Variables:
   tecnicos          : any[];
   tipoOrdenes       : any[];
@@ -165,9 +165,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -186,9 +187,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -207,9 +209,11 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
+        
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -231,9 +235,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -250,9 +255,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -271,9 +277,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -291,9 +298,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -312,9 +320,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -333,9 +342,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -354,9 +364,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -375,9 +386,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -395,9 +407,10 @@ export class MostrarOrdenComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -465,7 +478,7 @@ export class MostrarOrdenComponent implements OnInit {
 
     /* Obtiene la lista de técnicos desde el servicio
     y los almacena en variable (tecnicos): */
-    this.service.leerTecnicos().subscribe((TecnicosList) => {
+    this.service.leerTecnicos(1).subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
     });
 
@@ -547,7 +560,7 @@ export class MostrarOrdenComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    if ((this.ordenCliente['estadoticket']['id'] === 1) && (this.usuario === 'user')) {
+    if ((this.ordenCliente['estadoticket']['id'] === 4) && (this.usuario === 'user')) {
 
       this.formulario = this.fb.group({
 

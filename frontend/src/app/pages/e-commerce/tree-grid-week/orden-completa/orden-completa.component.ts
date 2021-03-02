@@ -31,7 +31,7 @@ import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
 
 // Clase exportable OrdenCompletaComponent implementa ngOnInit:
 export class OrdenCompletaComponent implements OnInit {
-
+  loading = false;
   // Variables:
   formulario        : FormGroup;
   residencia_cliente: any;
@@ -167,9 +167,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -188,9 +189,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -209,9 +211,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -230,9 +233,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -249,9 +253,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -270,9 +275,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -290,9 +296,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -311,9 +318,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -332,9 +340,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -353,9 +362,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -374,9 +384,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -394,9 +405,10 @@ export class OrdenCompletaComponent implements OnInit {
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
       }
-  
+      this.loading = true;
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
+        this.loading = false;
         console.log('res');
         console.log(res);
         this.router.navigate(['/success']);
@@ -549,7 +561,7 @@ export class OrdenCompletaComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    if ((this.ordenCliente['estadoticket']['id'] === 1) && (this.usuario === 'user')) {
+    if ((this.ordenCliente['estadoticket']['id'] === 4) && (this.usuario === 'user')) {
 
       this.formulario = this.fb.group({
 

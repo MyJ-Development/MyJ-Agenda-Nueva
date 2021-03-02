@@ -37,7 +37,7 @@ export class AgregarClienteComponent {
 
   rutRegExp = new RegExp('^([0-9]+-[0-9K])$');
 
-  telefonoRegExp = new RegExp(/^(\+?56)?(\s?)(0?9)(\s?)[9876543]\d{7}$/);
+  telefonoRegExp = new RegExp(/^(\+?56)?(\s?)(0?9)(\s?)[987654321]\d{7}$/);
 
   direccionRegExp = new RegExp(/^[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)$/);
 
@@ -114,7 +114,7 @@ export class AgregarClienteComponent {
       correo_cliente: ['', [Validators.pattern(this.emailRegExp), Validators.required]],
       creado_por    : [{value: this.usuario, disabled: true}, Validators.required],
       residencia    : this.fb.group({
-        direccion_cliente: ['', [Validators.required, Validators.pattern(this.direccionRegExp)]],
+        direccion_cliente: ['', [Validators.required, Validators.minLength(6)]],
         comuna_cliente   : ['', [Validators.required, Validators.pattern(this.comunaRegExp)]],
         mac_cliente      : ['', [Validators.pattern(this.macRegExp)]],
         pppoe_cliente    : [''],
