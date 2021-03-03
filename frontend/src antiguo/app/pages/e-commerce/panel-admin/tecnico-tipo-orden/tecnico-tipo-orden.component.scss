@@ -1,0 +1,120 @@
+@import "../../../../@theme/styles/themes";
+
+@include nb-install-component() {
+    nb-card {
+        transform: translate3d(0, 0, 0);
+        display: flex; //agranda al tamaño del contenido.
+    }
+
+    nb-card-body {
+        padding-top: 10px;
+        min-height: 450px;
+        max-height: 450px;
+    }
+
+    ::ng-deep .example-smart-table {
+        .form-control {
+            color: nb-theme(form-control-color);
+        }
+    }
+
+    .pad {
+        padding-left: 13px;
+    }
+}
+
+:host /deep/ ng2-smart-table th.ng2-smart-actions-title-add {
+    width: 10px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    text-align: -webkit-center !important;
+}
+
+:host /deep/ ng2-smart-table a.ng2-smart-action {
+    width: 25px;
+    height: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+:host /deep/ ng2-smart-table table tr.ng2-smart-titles th {
+    padding-right: 0rem !important;
+    padding-left: 0rem !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    text-align: -webkit-center !important;
+    background-color: #252547;
+    color: rgb(255, 255, 255);
+}
+
+:host /deep/ ng2-smart-table table tr td {
+    font-size: smaller;
+    text-align: -webkit-center !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+:host /deep/ ng2-smart-table nav.ng2-smart-pagination-nav .pagination {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    inline-size: 330px;
+}
+
+:host /deep/ table-cell-edit-mode {
+    font-size: small;
+}
+
+:host /deep/ .rut .ng2-smart-filter {
+    font-size: smaller;
+}
+
+:host /deep/ .nombre .ng2-smart-filter {
+    font-size: smaller;
+}
+
+:host /deep/ .tipo_orden .ng2-smart-filter {
+    font-size: smaller;
+}
+
+:host {
+    ::ng-deep .rut .ng2-smart-title {
+        width: 50px; //110
+    }
+}
+
+:host {
+    ::ng-deep .nombre .ng2-smart-title {
+        width: 200px;
+    }
+}
+
+:host {
+    ::ng-deep .tipo_orden .ng2-smart-title {
+        width: 90px;
+    }
+}
+
+:host /deep/ ng2-smart-table table > tbody > tr > td {
+    height: nb-theme(tree-grid-row-min-height);
+    padding: nb-theme(tree-grid-cell-padding);
+    border-width: 0.5px;
+    border-color: #0095ff36;
+}
+
+:host /deep/ ng2-smart-table thead > tr > th {
+    height: nb-theme(tree-grid-row-min-height);
+    padding: nb-theme(tree-grid-cell-padding);
+    border-width: 0.5px;
+    border-color: #0095ff36;
+}
+
+:host /deep/ ng2-smart-table-title > a {
+    color: rgb(255, 255, 255) !important;
+    font-weight: bolder !important;
+}

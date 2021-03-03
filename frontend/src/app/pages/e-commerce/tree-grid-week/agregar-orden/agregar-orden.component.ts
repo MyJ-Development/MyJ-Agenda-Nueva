@@ -16,6 +16,7 @@ import { NbDateService, NbDialogRef, NbIconConfig, NbToastrService } from '@nebu
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { tableService }         from '../../../../services/table.service';
+import { componentSyncService } from '../../../../services/componentSync.service';
 
 
 // Componente decorado:
@@ -60,7 +61,8 @@ export class AgregarOrdenComponent implements OnInit {
               private datePipe     : DatePipe,
               private toastrService: NbToastrService,
               protected ref        : NbDialogRef<AgregarOrdenComponent>,
-              protected dateService: NbDateService<Date>) {
+              protected dateService: NbDateService<Date>,
+              private syncService  : componentSyncService) {
 
     // Guarda en variable global el rut obtenido del servicio:
     this.rut_cli = this.tableService.getRut_cliente();
@@ -204,55 +206,58 @@ export class AgregarOrdenComponent implements OnInit {
 
           for (let tecnico of this.tecnicos){
 
-            // Filtra las ordenes por nombre del tecnico.
-            let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre);
+            if (tecnico.active) {
+              
+              // Filtra las ordenes por nombre del tecnico.
+              let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre);
 
-            // Mapea las ordenes del tecnico por el peso.
-            let mapeo = orden.map(x => x.tipo.peso);
+              // Mapea las ordenes del tecnico por el peso.
+              let mapeo = orden.map(x => x.tipo.peso);
 
-            let suma: number = 0;
+              let suma: number = 0;
 
-            // Suma el peso de cada orden diaria del tecnico y lo almacena en variable.
-            for (let i = 0; i < mapeo.length; i++) {
-              suma = mapeo[i] + suma
-            };
+              // Suma el peso de cada orden diaria del tecnico y lo almacena en variable.
+              for (let i = 0; i < mapeo.length; i++) {
+                suma = mapeo[i] + suma
+              };
 
-            capacidadTotal = suma + pesoOrden;
-            
-            if (suma >= 1) {
+              capacidadTotal = suma + pesoOrden;
 
-              this.tecnicoCapacidad.push({
-                tecnico  : tecnico.nombre,
-                capacidad: suma,
-              });
+              if (suma >= 1) {
 
-            } else {
+                this.tecnicoCapacidad.push({
+                  tecnico  : tecnico.nombre,
+                  capacidad: suma,
+                });
 
-              suma = 0;
+              } else {
 
-              this.tecnicoCapacidad.push({
-                tecnico  : tecnico.nombre,
-                capacidad: suma,
-              });
-            };
+                suma = 0;
 
-            for (let tipo of tecnico.type_orders) {
-              if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && 
-              (tecnico.active)) {
-
-                let capRestante = tecnico.capacidad - capacidadTotal;
-  
-                this.listaTecnicos.push({
-                  id       : tecnico.id,
-                  rut      : tecnico.rut,
-                  nombre   : `(${capRestante}) ${tecnico.nombre}`,
-                  comuna   : tecnico.comuna,
-                  estado   : tecnico.estado,
-                  capacidad: tecnico.capacidad,
-                  active   : tecnico.active,
+                this.tecnicoCapacidad.push({
+                  tecnico  : tecnico.nombre,
+                  capacidad: suma,
                 });
               };
-            };
+
+              for (let tipo of tecnico.type_orders) {
+                if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && 
+                (tecnico.active)) {
+
+                  let capRestante = tecnico.capacidad - capacidadTotal;
+                
+                  this.listaTecnicos.push({
+                    id       : tecnico.id,
+                    rut      : tecnico.rut,
+                    nombre   : `(${capRestante}) ${tecnico.nombre}`,
+                    comuna   : tecnico.comuna,
+                    estado   : tecnico.estado,
+                    capacidad: tecnico.capacidad,
+                    active   : tecnico.active,
+                  });
+                };
+              };
+            }
           };
         });
       };
@@ -349,6 +354,10 @@ export class AgregarOrdenComponent implements OnInit {
 
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
+
+    // let dia = this.tableService.getFechaClick();
+
+    // this.syncService.changeMessage(dia);
 
     this.formulario.controls['fecha_ejecucion'].setErrors(null);
 

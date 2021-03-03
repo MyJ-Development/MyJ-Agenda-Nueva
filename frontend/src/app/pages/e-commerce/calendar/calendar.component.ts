@@ -14,6 +14,7 @@ import { componentSyncService } from '../../../services/componentSync.service';
 
 // Componentes:
 import { DayCellComponent } from './day-cell/day-cell.component';
+import { tableService } from '../../../services/table.service';
 
 
 // Componente decorado:
@@ -49,17 +50,20 @@ export class CalendarComponent {
   constructor(private windowService: NbWindowService,
               private syncService  : componentSyncService,
               private datePipe     : DatePipe,
-              private service      : peticionesGetService) {
+              private service      : peticionesGetService,
+              private tableService : tableService) {
 
   };
 
 
   // Método ngOnInit;
   ngOnInit(): void {
-    this.syncService.currentMessage.subscribe(message => this.message = message);
+    // this.syncService.currentMessage.subscribe(message => this.message = message);
 
     // Sincroniza las ordenes del día con la fecha actual:
     this.syncService.changeMessage(this.date);
+
+    this.tableService.setFechaClick(this.date);
   };
 
 
@@ -68,6 +72,8 @@ export class CalendarComponent {
 
     // Obtiene la fecha seleccionada en el calendario y la almacena en variable date:
     this.date = event;
+
+    this.tableService.setFechaClick(this.date)
 
     // Llamada de método
     this.contador();

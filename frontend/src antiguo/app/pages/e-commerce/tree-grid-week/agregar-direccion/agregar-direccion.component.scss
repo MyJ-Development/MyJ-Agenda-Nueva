@@ -1,0 +1,22 @@
+@import "../../../../@theme/styles/themes";
+
+@include nb-install-component() {
+    nb-card {
+        margin-top: 1rem;
+        max-width: 700px;
+        max-height: 620px;
+    }
+
+    .boton {
+        width: 180px;
+    }
+
+    .pad {
+        padding-left: 13px;
+    }
+
+    .borde {
+        border-color: red;
+        background-color: rgba(255, 0, 0, 0.062);
+    }
+}

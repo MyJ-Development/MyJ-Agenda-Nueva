@@ -18,7 +18,6 @@ import { NbDateService, NbDialogRef, NbDialogService, NbIconConfig, NbToastrServ
 import { tableService } from '../../../../services/table.service';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
-import { CambiosComponent } from '../cambios/cambios.component';
 
 
 // Componente decorador:

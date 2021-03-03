@@ -479,7 +479,7 @@ export class OrdenCompletaComponent implements OnInit {
 
     /* Obtiene la lista de técnicos desde el servicio
     y los almacena en variable (tecnicos): */
-    this.service.leerTecnicos().subscribe((TecnicosList) => {
+    this.service.leerTecnicos(1).subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
     });
   };

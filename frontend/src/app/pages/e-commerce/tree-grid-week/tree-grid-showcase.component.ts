@@ -298,28 +298,16 @@ export class TreeGridWeekShowcaseComponent {
               this.result.push(id)
             }
           }
-          console.log(this.result);
-          console.log(this.result.length);
-          console.log(orden[i].length);
 
           if ((this.result.length === orden[i].length) && (orden[i].length > 0)) {
             completado[i] = true; 
           }
         }
 
-        console.log(completado[0]);
-        console.log(completado[1]);
-        console.log(completado[2]);
-        console.log(completado[3]);
-        console.log(completado[4]);
-        console.log(completado[5]);
-
-        // for (const id of orden) {
-        //   console.log(id);
-        // }
 
         if (tecnico.active) {
-                  // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
+        
+          // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
         this.data.push({
           data: {
             objeto:{

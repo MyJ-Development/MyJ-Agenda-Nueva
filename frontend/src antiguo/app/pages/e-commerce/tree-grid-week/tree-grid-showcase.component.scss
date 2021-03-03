@@ -1,0 +1,157 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  ::ng-deep .form {
+    display       : flex;
+    flex-direction: column;
+
+    .text-label {
+      margin-top: 1.5rem;
+    }
+  }
+
+  .botonVerde {
+    background-color: #00d68f;
+  }
+
+  .botonRojo {
+    background-color: #f75d5df5;
+  }
+
+  nb-card-header{
+    height: 100px;
+  }
+
+  button[nbTreeGridRowToggle] {
+    background: transparent;
+    border    : none;
+    padding   : 0;
+  }
+
+  .calendar-container {
+    margin: 1rem -9rem;
+  }
+
+  .search-label {
+    display: block;
+  }
+
+  .search-input {
+    margin-bottom: 1rem;
+  }
+
+  .nb-column-name {
+    width: 150%;
+  }
+
+  @media screen and (min-width: 400px) {
+    .nb-column-name,
+    .nb-column-size {
+      width: 50%;
+    }
+  }
+
+  @media screen and (min-width: 500px) {
+    .nb-column-name,
+    .nb-column-size,
+    .nb-column-kind {
+      width: 33.333%;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    .nb-column-name {
+      width: 31%;
+    }
+    .nb-column-size,
+    .nb-column-kind,
+    .nb-column-items {
+      width: 23%;
+    }
+  }
+
+  .tamañoTextoB {
+    font-size  : 20px;
+    font-weight: bold;
+  }
+
+  .ajustandoBuscador2 {
+    margin: 0px;
+  }
+
+  .tablitatr {
+    padding   : 5px;
+    text-align: center;
+  }
+
+  .tablares {
+    overflow: scroll;
+  }
+
+  button + button {
+    margin-left: 2rem;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    nb-card-body {
+      display: flex;
+    }
+
+    button {
+      flex: 1;
+      padding: 0.8rem;
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    nb-card-body {
+      display: block;
+    }
+
+    button {
+      + button {
+        margin-left: 0;
+      }
+
+      width        : 100%;
+      display      : block;
+      margin-bottom: 2rem;
+      padding      : 0.75rem;
+    }
+  }
+
+  .nb-tree-grid-header-row {
+    background-color: #252547;
+    color: rgb(255, 255, 255);
+    font-family: nb-theme(tree-grid-header-text-font-family);
+    font-size: large;
+    font-weight: nb-theme(tree-grid-header-text-font-weight);
+    line-height: nb-theme(tree-grid-header-text-line-height);
+  }
+
+  .nb-tree-grid-row {
+    background-color: nb-theme(tree-grid-row-background-color);
+    color: nb-theme(tree-grid-row-text-color);
+    font-family: nb-theme(tree-grid-row-text-font-family);
+    font-size: 13px;
+    font-weight: nb-theme(tree-grid-row-text-font-weight);
+    line-height: nb-theme(tree-grid-row-text-line-height);
+    &:hover {
+      background: nb-theme(tree-grid-row-hover-background-color);
+    }
+    &:nth-child(2n):not(:hover) {
+      background-color: nb-theme(tree-grid-row-even-background-color);
+    }
+  }
+
+  .nb-tree-grid-header-cell,
+  .nb-tree-grid-cell,
+  .nb-tree-grid-footer-cell {
+    height: nb-theme(tree-grid-row-min-height);
+    padding: nb-theme(tree-grid-cell-padding);
+    border-width: 1px;
+    border-color: #0095ff36;
+  }
+}

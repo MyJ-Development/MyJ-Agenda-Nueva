@@ -1,0 +1,124 @@
+
+
+  <nb-card accent="success">
+  <nb-card-header>
+      <h5>Agregar direccion</h5>
+  </nb-card-header>
+    <nb-card-body>
+
+      <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardar()">
+        <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="rut_cliente" class="label">Rut cliente:</label>
+
+                <input  formControlName="rut_cliente"
+                        type="text" 
+                        nbInput 
+                        fullWidth
+                        [ngClass]="{'borde': rutNoValido}"
+                        status="info"
+                        shape="semi-round"
+                        fieldSize="small">
+
+                <small *ngIf="rutNoValido" class="form-text text-danger">Ingrese un rut válido</small>
+              </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="direccion_cliente" class="label">Dirección:</label>
+
+                <input formControlName="direccion_cliente"
+                        type="text" 
+                        nbInput 
+                        fullWidth
+                        [ngClass]="{'borde': direccionNoValido}"
+                        status="info"
+                        shape="semi-round"
+                        fieldSize="small">
+
+                <small *ngIf="direccionNoValido" class="form-text text-danger">Ingrese una dirección válida</small>
+              </div>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="comuna_cliente" class="label">Comuna:</label>
+
+                <input formControlName="comuna_cliente"
+                        type="text" 
+                        nbInput 
+                        fullWidth
+                        [ngClass]="{'borde': comunaNoValido}"
+                        status="info"
+                        shape="semi-round"
+                        fieldSize="small">
+
+                <small *ngIf="comunaNoValido" class="form-text text-danger">Ingrese una comuna válida</small>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="mac_cliente" class="label">Mac:</label>
+
+                <input formControlName="mac_cliente"
+                        type="text" 
+                        nbInput 
+                        fullWidth
+                        [ngClass]="{'borde': macNoValido}"
+                        status="info"
+                        shape="semi-round"
+                        fieldSize="small">
+
+                <small *ngIf="macNoValido" class="form-text text-danger">Ingrese una mac válida</small>
+              </div>
+              <hr>
+            </div>
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="pppoe_cliente" class="label">Pppoe:</label>
+
+                <input formControlName="pppoe_cliente"
+                        type="text" 
+                        nbInput 
+                        fullWidth
+                        [ngClass]="{'borde': pppoeNoValido}"
+                        status="info"
+                        shape="semi-round"
+                        fieldSize="small">
+
+                <small *ngIf="pppoeNoValido" class="form-text text-danger">Ingrese pppoe</small>
+
+              </div>
+              <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 offset-8">
+              <div class="form-group">
+
+                <button type="button"
+                        class="boton"
+                        nbButton 
+                        fullWidth 
+                        status="success" 
+                        shape="semi-round" 
+                        fieldSize="tiny" 
+                        size="small"
+                        (click)="guardar()" 
+                        outline>
+                Agregar direccion
+                </button>
+              </div>
+            </div>
+        </div>
+      </form>
+
+    </nb-card-body>
+  </nb-card>

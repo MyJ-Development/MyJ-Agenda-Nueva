@@ -62,8 +62,8 @@ export class ShowcaseDialogComponent implements OnInit {
         title: 'ID Orden',
         type : 'number',
       },
-      tecnico: {
-        title: 'Encargado',
+      telefono: {
+        title: 'Teléfono',
         type : 'string',
       },
       localizacion: {
@@ -182,7 +182,7 @@ export class ShowcaseDialogComponent implements OnInit {
               this.data.push({
                 orden        : this.ordDiarias[j][i],
                 id_orden     : this.ordDiarias[j][i]['id'],
-                tecnico      : this.ordDiarias[j][i]['encargado']['nombre'],
+                telefono     : this.ordDiarias[j][i]['client_order']['contacto1'],
                 localizacion : this.mayus(this.formato(
                                this.ordDiarias[j][i]['client_residence']['direccion'])),
                 tipo_orden   : this.ordDiarias[j][i]['tipo']['descripcion'],

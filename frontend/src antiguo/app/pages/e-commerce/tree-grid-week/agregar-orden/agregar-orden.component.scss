@@ -1,0 +1,16 @@
+@import "../../../../@theme/styles/themes";
+
+@include nb-install-component() {
+
+  nb-card {
+    line-height: initial;
+    max-height: 650px;
+    margin: 0;
+    padding: 0;
+  }
+
+  /deep/ .cdk-global-scrollblock {
+    position: static !important;
+  }
+}
+
