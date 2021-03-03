@@ -37,6 +37,8 @@ export class AgregarDireccionComponent {
 
   macRegExp = new RegExp (/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/);
 
+  loading = false;
+
   // Constructor:
   constructor(private fb        : FormBuilder,
               private peticiones: peticionesGetService,
@@ -97,7 +99,7 @@ export class AgregarDireccionComponent {
 
   // Método encargado de postear la información hacia la API:
   guardar() {
-
+    this.loading = true;
     // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
 
@@ -121,6 +123,7 @@ export class AgregarDireccionComponent {
         res = data;
         console.log('res');
         console.log(res);
+        this.loading = false;
         this.router.navigate(['/success']);
         this.showToast('');
         this.ref.close();

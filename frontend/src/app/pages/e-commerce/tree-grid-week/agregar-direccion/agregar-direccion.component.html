@@ -103,7 +103,8 @@
             <div class="col-sm-4 offset-8">
               <div class="form-group">
 
-                <button type="button"
+                <button [nbSpinner]="loading" [disabled]="loading"
+                        type="button"
                         class="boton"
                         nbButton 
                         fullWidth 

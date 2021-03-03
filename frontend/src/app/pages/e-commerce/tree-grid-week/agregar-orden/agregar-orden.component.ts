@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Angular/router:
 import { Router } from '@angular/router';
-
+import { debounceTime } from "rxjs/operators";
 import { NbDateService, NbDialogRef, NbIconConfig, NbToastrService } from '@nebular/theme';
 
 // Servicios:
@@ -179,7 +179,7 @@ export class AgregarOrdenComponent implements OnInit {
 
   getOrdenes(){
 
-    this.formulario.valueChanges.subscribe(x => {
+    this.formulario.valueChanges.pipe(debounceTime(1500)).subscribe(x => {
 
       if ((this.formulario.controls['tipo_orden'].value != "") && 
       (this.formulario.controls['fecha_ejecucion'].value != "")) {
@@ -354,7 +354,7 @@ export class AgregarOrdenComponent implements OnInit {
 
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
-
+    this.loading = true
     // let dia = this.tableService.getFechaClick();
 
     // this.syncService.changeMessage(dia);
@@ -388,7 +388,7 @@ export class AgregarOrdenComponent implements OnInit {
 
     if (this.report) {
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-      this.loading = true
+      
       this.service.agregarOrden(this.report).subscribe(data => {
         this.loading = false
         res = data;

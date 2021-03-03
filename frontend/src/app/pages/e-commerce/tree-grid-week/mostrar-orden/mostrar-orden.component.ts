@@ -170,7 +170,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -192,7 +192,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -215,7 +215,7 @@ export class MostrarOrdenComponent implements OnInit {
         
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -240,7 +240,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -260,7 +260,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -282,7 +282,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -303,7 +303,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -325,7 +325,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -347,7 +347,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -369,7 +369,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -391,7 +391,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
 
@@ -412,7 +412,7 @@ export class MostrarOrdenComponent implements OnInit {
         this.loading = false;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
     }
   }
@@ -460,7 +460,7 @@ export class MostrarOrdenComponent implements OnInit {
         res = data;
         console.log('res');
         console.log(res);
-        this.router.navigate(['/success']);
+        //this.router.navigate(['/success']);
       });
 
       this.showToast('');

@@ -76,7 +76,7 @@ export class CalendarComponent {
     this.tableService.setFechaClick(this.date)
 
     // Llamada de método
-    this.contador();
+    //this.contador();
 
     // Actualiza la fecha seleccionada en el servicio:
     this.syncService.changeMessage(this.date);

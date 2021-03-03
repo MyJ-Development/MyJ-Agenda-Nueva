@@ -32,10 +32,10 @@ export class AgregarClienteComponent {
   reportResidencia: any;
   correo_         : any;
   telefono2_      : any;
-
+  loading = false;
   emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
-  rutRegExp = new RegExp('^([0-9]+-[0-9K])$');
+  rutRegExp = new RegExp('^([0-9]+-[0-9k])$');
 
   telefonoRegExp = new RegExp(/^(\+?56)?(\s?)(0?9)(\s?)[987654321]\d{7}$/);
 
@@ -43,7 +43,7 @@ export class AgregarClienteComponent {
 
   comunaRegExp = new RegExp (/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/);
 
-  macRegExp = new RegExp (/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/);
+  macRegExp = new RegExp (/^([0-9A-Za-z]{2}[:-]){5}([0-9A-Za-z]{2})$/);
 
 
 
@@ -115,7 +115,7 @@ export class AgregarClienteComponent {
       creado_por    : [{value: this.usuario, disabled: true}, Validators.required],
       residencia    : this.fb.group({
         direccion_cliente: ['', [Validators.required, Validators.minLength(6)]],
-        comuna_cliente   : ['', [Validators.required, Validators.pattern(this.comunaRegExp)]],
+        comuna_cliente   : ['', [Validators.required, Validators.minLength(6)]],
         mac_cliente      : ['', [Validators.pattern(this.macRegExp)]],
         pppoe_cliente    : [''],
       })
@@ -134,7 +134,7 @@ export class AgregarClienteComponent {
 
   // Método encargado de postear la información hacia la API:
   guardar() {
-
+    this.loading = true;
     // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
 
@@ -186,6 +186,7 @@ export class AgregarClienteComponent {
         res = data;
         console.log('res');
         console.log(res);
+        this.loading = false;
         this.router.navigate(['/success']);
 
         if (this.reportResidencia) {

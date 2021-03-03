@@ -225,7 +225,6 @@ export class TreeGridShowcaseComponent {
 
       // Obtiene los datos del servicio ingresando los parámetros domicilio, fecha inicio y término:
       this.servicio  = this.service.leerOrdenesClientesDomicilio(this.buscar, this.date_init, this.date_end);
-
       // Ejecuta el método seleccionado:
       this.sincronizacionOrdenesClientes();
 

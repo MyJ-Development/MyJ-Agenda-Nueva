@@ -77,7 +77,7 @@ export class TreeGridWeekShowcaseComponent {
   year                    : any;
   result                  : any[] = [];
   pendiente               : any;
-
+  loading                 : any = false;
 
   // Propiedad decorada:
   @ViewChild('escClose', { read: TemplateRef }) escCloseTemplate: TemplateRef<HTMLElement>;
@@ -121,9 +121,14 @@ export class TreeGridWeekShowcaseComponent {
       let año            = new Date(message);
       this.year          = año.getFullYear();
       this.newDate       = this.firstDayOfWeek(this.year, Number(this.todayFormated));
-      this.updateTreeGrid(this.newDate);
     });
   };
+
+  forceUpdate(){
+    this.loading = true;
+    this.newDate = this.firstDayOfWeek(this.year, Number(this.todayFormated));
+    this.updateTreeGrid(this.newDate);
+  }
 
 
   // Obtiene el primer día de la semana:
@@ -204,8 +209,8 @@ export class TreeGridWeekShowcaseComponent {
 
 
   // Método principal encargado de obtener y enlazar datos para mostrarlos en el componente html:
-  updateTreeGrid(first_date: Date) {
-
+  updateTreeGrid(date_aux: Date) {
+    
     // Inicia la variable con un objeto vacío.
     this.data = [];
 
@@ -213,6 +218,7 @@ export class TreeGridWeekShowcaseComponent {
     this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {this.tecnicos = TecnicosList;});
 
     // Obtiene la fecha del primer día de semana, lo formatea y determina el último día de la semana:
+    let first_date = date_aux;
     let last_date: Date      = first_date;
     let first_date_formatted = this.datePipe.transform(first_date, 'yyyy-MM-dd');
     let date_init: String    = String(first_date_formatted);
@@ -343,6 +349,8 @@ export class TreeGridWeekShowcaseComponent {
 
       // Construye la estructura de datos a mostrar, en base a la interfaz definida:
       this.dataSource = this.dataSourceBuilder.create(this.data);
+      this.loading = false;
+      first_date = this.newDate;
     });
   };
 };

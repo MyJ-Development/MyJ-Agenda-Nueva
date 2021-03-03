@@ -190,7 +190,8 @@
         <div class="row">
             <div class="col-sm-4 offset-8">
               <div class="form-group pd">
-                <button type="button" 
+                <button [nbSpinner]="loading" [disabled]="loading"
+                        type="button" 
                         class="boton"
                         nbButton 
                         fullWidth 
