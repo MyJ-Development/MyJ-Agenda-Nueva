@@ -138,14 +138,21 @@
               <div class="form-group">
                 <label for="comuna_cliente" class="label">Comuna:</label>
 
-                <input formControlName="comuna_cliente"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        [ngClass]="{'borde': comunaNoValido}"
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
+                <nb-select  formControlName="comuna_cliente"
+                            name="comuna_cliente"
+                            type="text"
+                            fullWidth 
+                            [ngClass]="{'borde': comunaNoValido}"
+                            shape="semi-round" 
+                            size="small"
+                            status="info"
+                            placeholder="Seleccione una comuna">
+                  <nb-option  *ngFor="let comuna of comuna"
+                              type="text"
+                              [value]="comuna.comuna">
+                              {{comuna.comuna | caracteres | mayus}}
+                  </nb-option>
+                </nb-select>
 
                 <small *ngIf="comunaNoValido" class="form-text text-danger">Ingrese una comuna válida</small>
               </div>

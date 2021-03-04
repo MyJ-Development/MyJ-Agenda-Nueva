@@ -44,6 +44,7 @@ export class MostrarClienteComponent implements OnInit {
   usuario            : any;
   residencia_clientes: any[];
   arrayId_residencia : any;
+  comunas            : any;
 
   // Constructor:
   constructor(protected ref       : NbDialogRef<MostrarClienteComponent>,
@@ -54,6 +55,8 @@ export class MostrarClienteComponent implements OnInit {
               private router      : Router,
               private toastrService: NbToastrService,) {
 
+    // Obtiene la lista de comunas:
+    this.comunas = this.tableService.getComuna();
   };
 
 

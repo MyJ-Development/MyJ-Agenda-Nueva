@@ -108,6 +108,7 @@ import { UsuariosComponent } from './panel-admin/usuarios/usuarios.component';
 import { SeguimientosComponent } from './tree-grid-week/seguimientos/seguimientos.component';
 import { TecnicoTipoOrdenComponent } from './panel-admin/tecnico-tipo-orden/tecnico-tipo-orden.component';
 import { CambiosComponent } from './tree-grid-week/cambios/cambios.component';
+import { TecnicoUsuarioComponent } from './panel-admin/tecnico-usuario/tecnico-usuario.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -202,6 +203,7 @@ import { CambiosComponent } from './tree-grid-week/cambios/cambios.component';
     SeguimientosComponent,
     TecnicoTipoOrdenComponent,
     CambiosComponent,
+    TecnicoUsuarioComponent,
   ],
   providers: [
     CountryOrdersMapService,

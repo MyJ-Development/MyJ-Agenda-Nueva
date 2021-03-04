@@ -134,13 +134,20 @@
               <div class="form-group">
                 <label for="comuna_cliente" class="label">Comuna {{i+1}}:</label>
 
-                <input [formControlName]="i"
-                        type="text" 
-                        nbInput 
-                        fullWidth
-                        status="info"
-                        shape="semi-round"
-                        fieldSize="small">
+                <nb-select  [formControlName]="i"
+                            name="comuna_cliente"
+                            type="text"
+                            fullWidth 
+                            [ngClass]="{'borde': comunaNoValido}"
+                            shape="semi-round" 
+                            size="small"
+                            status="info">
+                  <nb-option  *ngFor="let comuna of comunas"
+                              type="text"
+                              [value]="comuna.comuna">
+                              {{comuna.comuna | caracteres | mayus}}
+                  </nb-option>
+                </nb-select>
               </div>
             </div>
 

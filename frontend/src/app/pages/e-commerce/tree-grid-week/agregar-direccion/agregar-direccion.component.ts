@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 
 import { NbDialogRef, NbIconConfig, NbPopoverModule, NbToastrService } from "@nebular/theme";
+import { tableService } from '../../../../services/table.service';
 
 
 // Componente decorado:
@@ -28,23 +29,26 @@ export class AgregarDireccionComponent {
   // Variables:
   formulario: FormGroup;
   report    : any;
+  comuna    : any;
 
   rutRegExp = new RegExp('^([0-9]+-[0-9K])$');
 
   direccionRegExp = new RegExp(/^[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)$/);
-
-  comunaRegExp = new RegExp (/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/);
 
   macRegExp = new RegExp (/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/);
 
   loading = false;
 
   // Constructor:
-  constructor(private fb        : FormBuilder,
-              private peticiones: peticionesGetService,
-              private router    : Router,
+  constructor(private fb           : FormBuilder,
+              private peticiones   : peticionesGetService,
+              private router       : Router,
               private toastrService: NbToastrService,
+              private tableService : tableService,
               protected ref        : NbDialogRef<AgregarDireccionComponent>) {
+
+    // Obtiene la lista de comunas:
+    this.comuna = this.tableService.getComuna();
 
     // Llamada de método:
     this.crearFormulario();
@@ -81,7 +85,7 @@ export class AgregarDireccionComponent {
 
       rut_cliente      : ['', [Validators.pattern(this.rutRegExp), Validators.required]],
       direccion_cliente: ['', [Validators.pattern(this.direccionRegExp), Validators.required]],
-      comuna_cliente   : ['', [Validators.pattern(this.comunaRegExp), Validators.required]],
+      comuna_cliente   : ['', Validators.required],
       mac_cliente      : ['', [Validators.pattern(this.macRegExp), Validators.required]],
       pppoe_cliente    : ['', Validators.required]
     });

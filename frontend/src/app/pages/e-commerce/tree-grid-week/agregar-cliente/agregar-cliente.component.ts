@@ -32,7 +32,9 @@ export class AgregarClienteComponent {
   reportResidencia: any;
   correo_         : any;
   telefono2_      : any;
-  loading = false;
+  loading         : boolean = false;
+  comuna          : any;
+
   emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
   rutRegExp = new RegExp('^([0-9]+-[0-9k])$');
@@ -57,6 +59,9 @@ export class AgregarClienteComponent {
 
     // Obtiene el usuario actual desde el servicio indicado:
     this.usuario = this.service.getUsuario();
+
+    // Obtiene la lista de comunas:
+    this.comuna = this.service.getComuna();
 
     // Llamada de métodos:
     this.crearFormulario();

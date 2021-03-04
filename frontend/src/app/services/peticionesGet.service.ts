@@ -57,6 +57,10 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/techtypeorder?rut_tecnico=' + rut_tecnico + '')
     }
 
+    leerTecnicoUsuario(user_email): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/userassgignedtech?user_email=' + user_email + '')
+    }
+
     leerSeguimientos(id_orden): Observable<any[]> {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/seguimientos?order_id=' + id_orden + '')
     }
@@ -145,6 +149,11 @@ export class peticionesGetService {
 		return this.http.post('http://10.19.11.9:3003/api/scheduler/techtypeorder/', report);
 	}
 
+    agregarTecnicoUsuario(report): Observable<any> {
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.post('http://10.19.11.9:3003/api/scheduler/userassgignedtech/', report);
+	}
+
     editarOrden(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.put('http://10.19.11.9:3003/api/scheduler/order/', report);
@@ -198,6 +207,11 @@ export class peticionesGetService {
     eliminarTecnicoTipoOrden(report): Observable<any> {
         const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.put('http://10.19.11.9:3003/api/scheduler/techtypeorder/', report);
+    }
+
+    eliminarTecnicoUsuario(report): Observable<any> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this.http.put('http://10.19.11.9:3003/api/scheduler/userassgignedtech/', report);
     }
 
 }

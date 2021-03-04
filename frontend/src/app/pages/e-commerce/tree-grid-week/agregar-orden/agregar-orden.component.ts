@@ -61,8 +61,7 @@ export class AgregarOrdenComponent implements OnInit {
               private datePipe     : DatePipe,
               private toastrService: NbToastrService,
               protected ref        : NbDialogRef<AgregarOrdenComponent>,
-              protected dateService: NbDateService<Date>,
-              private syncService  : componentSyncService) {
+              protected dateService: NbDateService<Date>) {
 
     // Guarda en variable global el rut obtenido del servicio:
     this.rut_cli = this.tableService.getRut_cliente();
@@ -270,7 +269,7 @@ export class AgregarOrdenComponent implements OnInit {
 
     /* Obtiene la lista de técnicos desde el servicio
     y los almacena en variable (tecnicos): */
-    this.service.leerTecnicos().subscribe((TecnicosList) => {
+    this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
       this.tecnicos = TecnicosList;
     });
   };

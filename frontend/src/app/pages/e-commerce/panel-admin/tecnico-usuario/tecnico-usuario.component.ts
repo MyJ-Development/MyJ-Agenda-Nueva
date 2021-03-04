@@ -2,24 +2,25 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
+import { tableService } from '../../../../services/table.service';
 
 @Component({
-  selector   : 'ngx-tecnico-tipo-orden',
-  templateUrl: './tecnico-tipo-orden.component.html',
-  styleUrls  : ['./tecnico-tipo-orden.component.scss']
+  selector: 'ngx-tecnico-usuario',
+  templateUrl: './tecnico-usuario.component.html',
+  styleUrls: ['./tecnico-usuario.component.scss']
 })
-export class TecnicoTipoOrdenComponent {
+export class TecnicoUsuarioComponent {
 
   data       : any[] = [];
   tecnicos   : any[];
-  tipo       : any[] = [];
   report     : any;
   source     : LocalDataSource;
   mostrar    : boolean = false;
   settings   : any;
 
   constructor(private service: peticionesGetService,
-              private router: Router) {
+              private router : Router,
+              private tableService: tableService) {
 
     this.datos();
 
@@ -62,8 +63,8 @@ export class TecnicoTipoOrdenComponent {
           title: 'Nombre',
           width: '70px',
         },
-        tipo_orden: {
-          title: 'Tipo orden',
+        usuario: {
+          title: 'Usuario',
           width: '60px',
         },
       }
@@ -82,7 +83,7 @@ export class TecnicoTipoOrdenComponent {
         search: query
       },
       {
-        field : 'tipo_orden',
+        field : 'usuario',
         search: query
       },
     ], false);
@@ -98,15 +99,13 @@ export class TecnicoTipoOrdenComponent {
 
       for (let tecnico of this.tecnicos) {
 
-        this.tipo = [];
-
-        for (let tipo of tecnico.type_orders) {
+        for (let usuario of tecnico.assigned_user) {
 
           this.data.push({
             rut       : tecnico.rut,
             nombre    : tecnico.nombre,
-            tipo_orden: tipo.descripcion,
-            id_tipo   : tipo.id,
+            usuario   : usuario.email,
+            id_usuario: usuario.id,
           })
         };
       };
@@ -120,13 +119,13 @@ export class TecnicoTipoOrdenComponent {
     if (window.confirm('Estás seguro que quieres crear este técnico?')) {
 
       this.report = {
-        ordertype_id: event.newData.tipo_orden,
+        user_email  : event.newData.usuario,
         tecnico_rut : event.newData.rut,
       };
 
       let res = '';
 
-      this.service.agregarTecnicoTipoOrden(this.report).subscribe(data => {
+      this.service.agregarTecnicoUsuario(this.report).subscribe(data => {
         res = data;
         console.log('res');
         console.log(res);
@@ -143,14 +142,16 @@ export class TecnicoTipoOrdenComponent {
   onDeleteConfirm(event): void {
     if (window.confirm('Estás seguro que quieres eliminar este tipo de orden?')) {
 
+      console.log(event);
+
       this.report = {
-        ordertype_id: event.data.id_tipo,
+        user_email  : event.data.usuario,
         tecnico_rut : event.data.rut,
       };
 
       let res = '';
 
-      this.service.eliminarTecnicoTipoOrden(this.report).subscribe(data => {
+      this.service.eliminarTecnicoUsuario(this.report).subscribe(data => {
         res = data;
         console.log('res');
         console.log(res);

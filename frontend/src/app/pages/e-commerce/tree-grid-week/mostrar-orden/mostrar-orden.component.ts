@@ -55,8 +55,10 @@ export class MostrarOrdenComponent implements OnInit {
   id_residencia     : any;
   mostrarBoton      : boolean = false;
   usuario           : any;
+  rol               : any;
   min               : Date;
   max               : Date;
+  encargado         : any;
 
 
   // Constructor:
@@ -64,7 +66,6 @@ export class MostrarOrdenComponent implements OnInit {
               private tableService : tableService,
               private service      : peticionesGetService,
               private datePipe     : DatePipe,
-              private router       : Router,
               private fb           : FormBuilder,
               private toastrService: NbToastrService,
               private mostrar      : NbDialogService,
@@ -72,7 +73,10 @@ export class MostrarOrdenComponent implements OnInit {
 
     // Obtiene el rut del cliente seleccionado, al servicio indicado:
     this.rut_cliente = this.tableService.getRut_cliente();
-    this.usuario = this.tableService.getRolUsuario();
+
+    this.rol = this.tableService.getRolUsuario();
+
+    this.usuario = this.tableService.getUsuario();
 
     // Establece el mínimo y el máximo de rangos de fecha a escoger.
     this.min = this.dateService.addDay(this.dateService.today(), 0);
@@ -101,6 +105,8 @@ export class MostrarOrdenComponent implements OnInit {
 
     // Almacena en variable global la orden obtenida del servicio indicado:
     this.ordenCliente = this.tableService.getOrden();
+
+    this.encargado = this.ordenCliente['encargado'];
 
     // Almacena en variable global el id de la orden:
     this.id_orden = this.ordenCliente['id'];
@@ -475,10 +481,14 @@ export class MostrarOrdenComponent implements OnInit {
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarTecnicos() {
 
+    this.tecnicos = [];
+    this.tecnicos.push(this.encargado)
+
     /* Obtiene la lista de técnicos desde el servicio
     y los almacena en variable (tecnicos): */
-    this.service.leerTecnicos(1).subscribe((TecnicosList) => {
-      this.tecnicos = TecnicosList;
+    this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
+      this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+      console.log(this.tecnicos);
     });
 
 
@@ -559,7 +569,7 @@ export class MostrarOrdenComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    if ((this.ordenCliente['estadoticket']['id'] === 4) && (this.usuario === 'user')) {
+    if ((this.ordenCliente['estadoticket']['id'] === 4) && (this.rol === 'user')) {
 
       this.formulario = this.fb.group({
 

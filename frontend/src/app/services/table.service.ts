@@ -27,7 +27,18 @@ export class tableService {
   cantidad                : any;
   fechaClick              : any;
   id_orden                : any;
+  comuna                 : any[] = [{id: 1, comuna: 'Quilicura'}, 
+                                    {id: 2, comuna: 'Maipú'},
+                                    {id: 3, comuna: 'Melipilla'},]
 
+
+  setComuna(id: number, comuna: String) {
+    this.comuna.push({id: id, comuna: comuna});
+  }
+
+  getComuna() {
+    return this.comuna;
+  }
 
   // para obtener los seguimientos:
   setId_orden(valor: any) {
