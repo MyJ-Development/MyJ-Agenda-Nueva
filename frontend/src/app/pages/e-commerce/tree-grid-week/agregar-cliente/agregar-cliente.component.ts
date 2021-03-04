@@ -114,8 +114,8 @@ export class AgregarClienteComponent {
       correo_cliente: ['', [Validators.pattern(this.emailRegExp), Validators.required]],
       creado_por    : [{value: this.usuario, disabled: true}, Validators.required],
       residencia    : this.fb.group({
-        direccion_cliente: ['', [Validators.required, Validators.minLength(6)]],
-        comuna_cliente   : ['', [Validators.required, Validators.minLength(6)]],
+        direccion_cliente: ['', [Validators.required, Validators.minLength(4)]],
+        comuna_cliente   : ['', [Validators.required, Validators.minLength(4)]],
         mac_cliente      : ['', [Validators.pattern(this.macRegExp)]],
         pppoe_cliente    : [''],
       })
