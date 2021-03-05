@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   user: User;
   permisos: boolean;
+  panelAdmin: boolean;
 
   themes = [
     {
@@ -78,6 +79,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/pages/panel-admin'])
   }
 
+  misOrdenes() {
+    this.router.navigate(['/pages/mis-ordenes'])
+  }
+
   home() {
     this.router.navigate(['/pages/dashboard'])
   }
@@ -120,11 +125,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   rolUsuario() {
     let rol = this.tableService.getRolUsuario();
 
-    if (rol == 'super') {
+    if ((rol == 'super') || (rol == 'user')) {
       this.permisos = true;
     } else {
       this.permisos = false;
     }
+
+    if (rol == 'super') {
+      this.panelAdmin = true;
+    } else {
+      this.panelAdmin = false;
+    }
+
   }
 
   changeTheme(themeName: string) {

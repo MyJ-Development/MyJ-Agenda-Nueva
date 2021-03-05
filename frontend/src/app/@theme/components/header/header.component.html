@@ -63,8 +63,15 @@
 
 <ng-template #admin>
   <nb-popover align="center">
-    <div class="container">
+   
+    <div *ngIf="panelAdmin" class="container">
       <button shape="semi-round" (click)="panel()" nbButton outline status="success">Panel de administración</button>
+    </div>
+
+    <hr *ngIf="panelAdmin" >
+
+    <div class="container">
+      <button shape="semi-round" (click)="misOrdenes()" nbButton outline status="success">Mis ordenes</button>
     </div>
   </nb-popover>
 </ng-template>

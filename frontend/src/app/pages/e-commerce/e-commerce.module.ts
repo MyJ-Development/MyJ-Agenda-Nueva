@@ -109,6 +109,7 @@ import { SeguimientosComponent } from './tree-grid-week/seguimientos/seguimiento
 import { TecnicoTipoOrdenComponent } from './panel-admin/tecnico-tipo-orden/tecnico-tipo-orden.component';
 import { CambiosComponent } from './tree-grid-week/cambios/cambios.component';
 import { TecnicoUsuarioComponent } from './panel-admin/tecnico-usuario/tecnico-usuario.component';
+import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -204,6 +205,7 @@ import { TecnicoUsuarioComponent } from './panel-admin/tecnico-usuario/tecnico-u
     TecnicoTipoOrdenComponent,
     CambiosComponent,
     TecnicoUsuarioComponent,
+    MisOrdenesComponent,
   ],
   providers: [
     CountryOrdersMapService,

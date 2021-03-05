@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { PanelAdminComponent } from './e-commerce/panel-admin/panel-admin.component';
+import { MisOrdenesComponent } from './e-commerce/mis-ordenes/mis-ordenes.component';
 
 const routes: Routes = [{
   path: '',
@@ -20,6 +21,10 @@ const routes: Routes = [{
     {
       path: 'panel-admin',
       component: PanelAdminComponent,
+    },
+    {
+      path: 'mis-ordenes',
+      component: MisOrdenesComponent,
     },
     {
       path: 'dashboard',

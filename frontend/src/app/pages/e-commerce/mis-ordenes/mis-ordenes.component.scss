@@ -14,6 +14,11 @@
     margin-left: 0.5rem;
   }
 
+  .boton2 {
+    margin-top: -16px;
+    margin-left: -30px;
+  }
+
   .head {
     padding: 3px 20px;
   }
@@ -32,10 +37,6 @@
 
   .card {
     margin: 0;
-  }
-
-  .card-lista {
-    height: 219px;
   }
 
   .date {
@@ -91,4 +92,8 @@
 :host /deep/ ng2-smart-table-title > a { 
   color: rgb(255, 255, 255) !important;
   font-weight: bolder !important;
+}
+
+:host /deep/ ng2-smart-table table > tbody > tr > td {
+    text-align: center;
 }

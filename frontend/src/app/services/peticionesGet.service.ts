@@ -89,6 +89,10 @@ export class peticionesGetService {
         return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?domicilio=' + domicilio + '&date_init=' + date_init + '&date_end=' + date_end + '')
     }
 
+    leerOrdenesClientesUsuario(created_by, date_init, date_end): Observable<any[]> {
+        return this.http.get<any[]>('http://10.19.11.9:3003/api/scheduler/cl-orders?created_by=' + created_by + '&date_init=' + date_init + '&date_end=' + date_end + '')
+    }
+
 	agregarCliente(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.post('http://10.19.11.9:3003/api/scheduler/client/', report);

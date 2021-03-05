@@ -5,6 +5,7 @@
  */
 
 import { Component } from '@angular/core';
+import { tableService } from '../../services/table.service';
 
 @Component({
   selector: 'ngx-ecommerce',
@@ -12,4 +13,26 @@ import { Component } from '@angular/core';
 })
 
 export class ECommerceComponent {
+
+  mostrar: boolean = true;
+  buscador: boolean = true;
+  rol     : any;
+
+  constructor(private tableService: tableService) {
+
+    this.rolUsuario();
+  };
+
+  rolUsuario() {
+
+    this.rol = this.tableService.getRolUsuario();
+
+    if (this.rol == 'vendedor') {
+      this.mostrar = false;
+    }
+
+    if (this.rol != 'vendedor') {
+      this.buscador = false;
+    }
+  }
 }

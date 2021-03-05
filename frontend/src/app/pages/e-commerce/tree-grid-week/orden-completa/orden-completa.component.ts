@@ -19,6 +19,7 @@ import { peticionesGetService } from '../../../../services/peticionesGet.service
 import { tableService }         from '../../../../services/table.service';
 import { MostrarClienteComponent } from '../mostrar-cliente/mostrar-cliente.component';
 import { SeguimientosComponent } from '../seguimientos/seguimientos.component';
+import { debounceTime } from 'rxjs/operators';
 
 
 // Componente decorado:
@@ -60,6 +61,10 @@ export class OrdenCompletaComponent implements OnInit {
   min               : Date;
   max               : Date;
   encargado         : any;
+  fechaControl      : any;
+  ordenesDiarias    : any[];
+  listaTecnicos     : any[];
+  tecnicoCapacidad  : any[] = [];
 
 
   // Constructor:
@@ -100,6 +105,7 @@ export class OrdenCompletaComponent implements OnInit {
     this.sincronizarMedioPago();
     this.sincronizarPrioridad();
     this.eventos();
+    this.getOrdenes();
   };
 
 
@@ -433,6 +439,94 @@ export class OrdenCompletaComponent implements OnInit {
       iconConfig)
   }
 
+  getOrdenes(){
+
+    this.formulario.valueChanges.pipe(debounceTime(1500)).subscribe(x => {
+
+      if ((this.formulario.controls['tipo_orden'].value != "") && 
+      (this.formulario.controls['fecha_ejecucion'].value != "")) {
+
+        this.fechaControl = this.datePipe.transform(this.formulario.controls['fecha_ejecucion'].value, 'yyyy-MM-dd');
+
+        let tipoOrdenControl = this.formulario.controls['tipo_orden'].value;
+
+        // Obtiene el peso de cada tipo de orden seleccionada:
+        let pesoOrden = this.tipoOrdenes.filter(tipo => tipo.id == tipoOrdenControl)
+        .map(tipo => tipo.peso)[0];
+
+        // Filtra los tecnicos por capacidad:
+        // let capacidadTecnico = this.tecnicos.filter(encargado => encargado.capacidad >= capacidad);
+
+        this.service.leerOrdenesDiarias(this.fechaControl, this.fechaControl)
+        .subscribe((ordenesList) => {
+
+          this.ordenesDiarias = ordenesList;
+
+          let capacidadTotal;
+
+          this.listaTecnicos = [];
+
+          this.listaTecnicos.push(this.encargado)
+
+          for (let tecnico of this.tecnicos){
+
+            if (tecnico.active) {
+              
+              // Filtra las ordenes por nombre del tecnico.
+              let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre);
+
+              // Mapea las ordenes del tecnico por el peso.
+              let mapeo = orden.map(x => x.tipo.peso);
+
+              let suma: number = 0;
+
+              // Suma el peso de cada orden diaria del tecnico y lo almacena en variable.
+              for (let i = 0; i < mapeo.length; i++) {
+                suma = mapeo[i] + suma
+              };
+
+              capacidadTotal = suma + pesoOrden;
+
+              if (suma >= 1) {
+
+                this.tecnicoCapacidad.push({
+                  tecnico  : tecnico.nombre,
+                  capacidad: suma,
+                });
+
+              } else {
+
+                suma = 0;
+
+                this.tecnicoCapacidad.push({
+                  tecnico  : tecnico.nombre,
+                  capacidad: suma,
+                });
+              };
+
+              for (let tipo of tecnico.type_orders) {
+                if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && 
+                (tecnico.active)) {
+
+                  let capRestante = tecnico.capacidad - capacidadTotal;
+                
+                  this.listaTecnicos.push({
+                    id       : tecnico.id,
+                    rut      : tecnico.rut,
+                    nombre   : `(${capRestante}) ${tecnico.nombre}`,
+                    comuna   : tecnico.comuna,
+                    estado   : tecnico.estado,
+                    capacidad: tecnico.capacidad,
+                    active   : tecnico.active,
+                  });
+                };
+              };
+            }
+          };
+        });
+      };
+    });
+  };
 
   // Método encargado de actualizar la orden obtenida anteriormente:
   actualizarOrden() {
@@ -484,15 +578,23 @@ export class OrdenCompletaComponent implements OnInit {
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarTecnicos() {
 
-    this.tecnicos = [];
-    this.tecnicos.push(this.encargado)
+    if (this.rol == 'vendedor') {
+      
+      this.tecnicos = [];
+      this.tecnicos.push(this.encargado)
+  
+      /* Obtiene la lista de técnicos desde el servicio
+      y los almacena en variable (tecnicos): */
+      this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        console.log(this.tecnicos);
+      });
 
-    /* Obtiene la lista de técnicos desde el servicio
-    y los almacena en variable (tecnicos): */
-    this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
-      this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
-      console.log(this.tecnicos);
-    });
+    } else {
+      this.service.leerTecnicos().subscribe((TecnicosList) => {
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+      });
+    };
   };
 
 
@@ -572,7 +674,7 @@ export class OrdenCompletaComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    if ((this.ordenCliente['estadoticket']['id'] === 4) && (this.rol === 'user')) {
+    if ((this.ordenCliente['estadoticket']['id'] === 4) && ((this.rol === 'user') || (this.rol === 'vendedor'))) {
 
       this.formulario = this.fb.group({
 

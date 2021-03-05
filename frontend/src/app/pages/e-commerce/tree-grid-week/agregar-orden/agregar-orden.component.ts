@@ -51,7 +51,7 @@ export class AgregarOrdenComponent implements OnInit {
   montoRegExp       = new RegExp(/^\d+$/);
   min               : Date;
   max               : Date;
-
+  rol               : any;
 
   // Constructor:
   constructor(private tableService : tableService,
@@ -68,6 +68,8 @@ export class AgregarOrdenComponent implements OnInit {
 
     // Guarda en variable global el usuario actual obtenido del servicio:
     this.usuario = this.tableService.getUsuario();
+
+    this.rol = this.tableService.getRolUsuario();
 
     // Llamada de método:
     this.crearFormulario();
@@ -267,11 +269,19 @@ export class AgregarOrdenComponent implements OnInit {
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarTecnicos() {
 
-    /* Obtiene la lista de técnicos desde el servicio
-    y los almacena en variable (tecnicos): */
-    this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
-      this.tecnicos = TecnicosList;
-    });
+    if (this.rol === 'vendedor') {
+      /* Obtiene la lista de técnicos desde el servicio
+      y los almacena en variable (tecnicos): */
+      this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+      });
+
+    } else {
+
+      this.service.leerTecnicos().subscribe((TecnicosList) => {
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+      });
+    };
   };
 
 
