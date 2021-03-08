@@ -363,7 +363,7 @@ export class AgregarOrdenComponent implements OnInit {
 
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {
-    this.loading = true
+    
     // let dia = this.tableService.getFechaClick();
 
     // this.syncService.changeMessage(dia);
@@ -371,6 +371,7 @@ export class AgregarOrdenComponent implements OnInit {
     this.formulario.controls['fecha_ejecucion'].setErrors(null);
 
     if (this.formulario.valid) {
+
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
       this.report = {
@@ -389,6 +390,8 @@ export class AgregarOrdenComponent implements OnInit {
         client_order  : this.rut_cli,
         domicilio     : this.formulario.value['direccion_cliente'],
       };
+
+      this.loading = true
     } else {
       this.formulario.markAllAsTouched();
     };
@@ -396,8 +399,8 @@ export class AgregarOrdenComponent implements OnInit {
     let res = '';
 
     if (this.report) {
-      // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
       
+      // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
       this.service.agregarOrden(this.report).subscribe(data => {
         this.loading = false
         res = data;

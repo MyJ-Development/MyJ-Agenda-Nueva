@@ -139,7 +139,7 @@ export class AgregarClienteComponent {
 
   // Método encargado de postear la información hacia la API:
   guardar() {
-    this.loading = true;
+    
     // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
 
@@ -152,7 +152,7 @@ export class AgregarClienteComponent {
 
       // Si el valor del control es nulo, asignar valor por defecto, si no, asignar valor ingresado:
       if (this.formulario.value['telefono2'] === null) {
-        this.telefono2_ = 'Sin número';
+        this.telefono2_ = '';
       } else {
         this.telefono2_ = this.formulario.value['telefono2'];
       };
@@ -179,6 +179,9 @@ export class AgregarClienteComponent {
         mac       : this.formulario.value['residencia']['mac_cliente'],
         pppoe     : this.formulario.value['residencia']['pppoe_cliente'],
       };
+
+      this.loading = true;
+      
     } else {
       return this.formulario.markAllAsTouched();
     }
@@ -186,6 +189,7 @@ export class AgregarClienteComponent {
     let res = '';
 
     if (this.reportCliente) {
+
       // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
       this.peticiones.agregarCliente(this.reportCliente).subscribe(data => {
         res = data;

@@ -48,8 +48,17 @@
     padding: 0;
   }
 
+  nb-card-header {
+    height: 70px;
+    padding: 5px;
+  }
+
+  .botn {
+    margin-top: -6px;
+  }
+
   .h5s {
     color: #9797b3 !important;
-      font-family: Open Sans, sans-serif !important;
+    font-family: Open Sans, sans-serif !important;
   }
 }

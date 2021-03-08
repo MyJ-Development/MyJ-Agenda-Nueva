@@ -4,14 +4,21 @@
   <nb-card accent="success">
     <nb-card-header>
       <div class="row low">
-        <div class="col-sm-3 offset-1">
-          <p></p>
+
+        <div class="col-sm-1">
+          <div class="form-group">
+            <button class="botn" (click)="cerrar()" nbButton ghost focus="disabled">
+              <nb-icon icon="backspace-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
           <div class="form-group">
             <label class="h5s">Orden N°: {{id_orden}}</label>
           </div>
         </div>
         <div class="col-sm-4">
-          <p></p>
           <div class="form-group">
             <label class="h5s">Fecha de ejecución: {{fecha_transform}}</label>
           </div>
@@ -294,8 +301,7 @@
               <input  type="text" 
                       formControlName="monto"
                       nbInput 
-                      fullWidth 
-                      id="monto" 
+                      fullWidth
                       status="info"
                       shape="semi-round" 
                       fieldSize="small">

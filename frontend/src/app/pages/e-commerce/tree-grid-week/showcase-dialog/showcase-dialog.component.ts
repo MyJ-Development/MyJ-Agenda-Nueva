@@ -143,7 +143,7 @@ export class ShowcaseDialogComponent implements OnInit {
     this.mostrar.open(MostrarOrdenComponent);
 
     // Al iniciarse el método, se cierra el componente actual guardado en referencia:
-    this.ref.close();
+    // this.ref.close();
   };
 
 

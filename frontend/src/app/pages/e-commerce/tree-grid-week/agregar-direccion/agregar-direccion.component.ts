@@ -103,7 +103,7 @@ export class AgregarDireccionComponent {
 
   // Método encargado de postear la información hacia la API:
   guardar() {
-    this.loading = true;
+    
     // Si el estado del formulario es válido, ejecutar:
     if (this.formulario.status === "VALID") {
 
@@ -115,6 +115,9 @@ export class AgregarDireccionComponent {
         mac       : this.formulario.value['mac_cliente'],
         pppoe     : this.formulario.value['pppoe_cliente'],
       };
+
+      this.loading = true;
+      
     } else {
       return this.formulario.markAllAsTouched();
     };

@@ -124,6 +124,7 @@ export class TreeGridWeekShowcaseComponent {
     });
   };
 
+
   forceUpdate(){
     this.loading = true;
     this.newDate = this.firstDayOfWeek(this.year, Number(this.todayFormated));
@@ -164,18 +165,6 @@ export class TreeGridWeekShowcaseComponent {
     this.sendIndex(this.indice);
     this.sendEncargado(this.encargado);
     this.dialogService.open(ShowcaseDialogComponent);
-
-    console.log(event);
-    // console.log(event.length);
-
-    // for (let id of event) {
-    //   if(id === 1){
-    //     this.result.push(id);
-    //   }
-      // this.pendiente = this.result.length
-    // }
-
-    // console.log(this.result.length);
   };
 
 
@@ -215,7 +204,9 @@ export class TreeGridWeekShowcaseComponent {
     this.data = [];
 
     // Obtiene los datos de los técnicos del servicio y los guarda en una variable:
-    this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {this.tecnicos = TecnicosList;});
+    this.peticionesGet.leerTecnicos().subscribe((TecnicosList) => {
+      this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+    });
 
     // Obtiene la fecha del primer día de semana, lo formatea y determina el último día de la semana:
     let first_date = date_aux;
@@ -257,92 +248,93 @@ export class TreeGridWeekShowcaseComponent {
       // Crea e inicia un contador de la semana en cero:
       let counter: number[] = [0, 0, 0, 0, 0, 0];
       let orden  : any[]    = ['', '', '', '', '', ''];
-      let completado  : any[]    = [false, false, false, false, false, false];
       let tec_counter       = 0;
 
       // Crea un bucle para cada técnico de la lista de técnicos:
       for (let tecnico of this.tecnicos) {
 
-        // Filtra las ordenes diarias por el nombre de cada técnico:
-        this.ordenesPorTecnico = (this.ordenesDiarias.filter(x => 
-          x.encargado.nombre   == tecnico.nombre));
-
-        let aux_date: Date = new Date(String(date_init));
-        aux_date.setDate(aux_date.getDate() + 1);
-        
-
-        // Realiza un conteo de las ordenes filtradas por fecha de ejecución y la inserta en arreglo:
-        for (let i = 0; i < 6; i++) {
-          let row_date    = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
-          let aux_counter = (this.ordenesPorTecnico.filter(x =>
-            this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == row_date));
-          this.ordenesDiariasPorTecnico = aux_counter;
-          aux_date.setDate(aux_date.getDate() + 1);
-          counter[i] = aux_counter.length;
-          test.push(this.ordenesDiariasPorTecnico);
-          let ins: any[] = [];
-
-          for (let ord of aux_counter) {
-            ins.push(ord.estadoticket.id)
-          }
-
-          orden[i] = ins;
-
-          // console.log(ins);
-          // console.log(orden[i]);
-          // console.log(tecnico);
-        };
-
-        // console.log(test);
-
-        for (let i = 0; i < orden.length; i++) {
-          // console.log(orden[i]);
-          this.result = [];
-          for (const id of orden[i]) {
-            
-            if (id === 4) {
-              this.result.push(id)
-            }
-          }
-
-          if ((this.result.length === orden[i].length) && (orden[i].length > 0)) {
-            completado[i] = true; 
-          }
-        }
-
-
         if (tecnico.active) {
-        
-          // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
-        this.data.push({
-          data: {
-            objeto:{
-              objeto   : {
-                Lunes    : completado[0],
-                Martes   : completado[1],
-                Miercoles: completado[2],
-                Jueves   : completado[3],
-                Viernes  : completado[4],
-                Sabado   : completado[5],
-              },
-              Lunes    : counter[0],
-              Martes   : counter[1],
-              Miercoles: counter[2],
-              Jueves   : counter[3],
-              Viernes  : counter[4],
-              Sabado   : counter[5],
-            },
-            Lunes    : tecnico.nombre,
-            Martes   : tecnico.nombre,
-            Miercoles: tecnico.nombre,
-            Jueves   : tecnico.nombre,
-            Viernes  : tecnico.nombre,
-            Sabado   : tecnico.nombre,
-          }
-        });
-        };
+          
+          // Filtra las ordenes diarias por el nombre de cada técnico:
+          this.ordenesPorTecnico = (this.ordenesDiarias.filter(x => 
+            x.encargado.nombre   == tecnico.nombre));
 
-        tec_counter = tec_counter + 1;
+          let aux_date: Date = new Date(String(date_init));
+          aux_date.setDate(aux_date.getDate() + 1);
+          
+
+          // Realiza un conteo de las ordenes filtradas por fecha de ejecución y la inserta en arreglo:
+          for (let i = 0; i < 6; i++) {
+
+            let row_date    = this.datePipe.transform(aux_date, 'yyyy-MM-dd');
+
+            let aux_counter = (this.ordenesPorTecnico.filter(x =>
+              this.datePipe.transform(x.fechaejecucion, 'yyyy-MM-dd') == row_date));
+
+            this.ordenesDiariasPorTecnico = aux_counter;
+
+            aux_date.setDate(aux_date.getDate() + 1);
+            counter[i] = aux_counter.length;
+            test.push(this.ordenesDiariasPorTecnico);
+            
+            let ins: any[] = [];
+
+            for (let ord of aux_counter) {
+              ins.push(ord.estadoticket.id)
+            };
+
+            orden[i] = ins;
+          };
+
+          let completado  : any[]    = [false, false, false, false, false, false];
+
+          for (let i = 0; i < 6; i++) {
+
+            this.result = [];
+
+            for (let id of orden[i]) {
+
+              if (id === 4) {
+                this.result.push(id)
+              };
+            };
+
+            if ((this.result.length === orden[i].length) && (this.result.length != 0)) {
+              completado[i] = true; 
+            };
+          };
+
+          
+          // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
+          this.data.push({
+            data: {
+              objeto:{
+                objeto   : {
+                  Lunes    : completado[0],
+                  Martes   : completado[1],
+                  Miercoles: completado[2],
+                  Jueves   : completado[3],
+                  Viernes  : completado[4],
+                  Sabado   : completado[5],
+                },
+                Lunes    : counter[0],
+                Martes   : counter[1],
+                Miercoles: counter[2],
+                Jueves   : counter[3],
+                Viernes  : counter[4],
+                Sabado   : counter[5],
+              },
+              Lunes    : tecnico.nombre,
+              Martes   : tecnico.nombre,
+              Miercoles: tecnico.nombre,
+              Jueves   : tecnico.nombre,
+              Viernes  : tecnico.nombre,
+              Sabado   : tecnico.nombre,
+            }
+          });
+
+          tec_counter = tec_counter + 1;
+        }
       };
 
       this.sendOrdenesDiariasPorTecnico(test);

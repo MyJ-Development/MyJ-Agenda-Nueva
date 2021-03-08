@@ -679,7 +679,7 @@ export class MostrarOrdenComponent implements OnInit {
         direccion_cliente: [{ value: this.id_residencia, disabled: true }],
         comuna_cliente   : [{ value: this.id_residencia, disabled: true }],
         telefono1        : [{ value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
-        telefono2        : [{ value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
+        telefono2        : [{ value: this.ordenCliente['client_order']['contacto2'], disabled: true}],
         correo_cliente   : [{ value: this.ordenCliente['client_order']['email'], disabled: true}],
         encargado        : [{ value: this.ordenCliente['encargado']['rut'], disabled: true}],
         creado_por       : [{ value: this.ordenCliente['created_by']['email'], disabled: true}],
@@ -709,7 +709,7 @@ export class MostrarOrdenComponent implements OnInit {
         comuna_cliente   : [this.id_residencia, Validators.required],
         telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
                            Validators.required],
-        telefono2        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+        telefono2        : [{value: this.ordenCliente['client_order']['contacto2'], disabled: true},
                            Validators.required],
         correo_cliente   : [{value: this.ordenCliente['client_order']['email'], disabled: true},
                            Validators.required],
@@ -728,11 +728,12 @@ export class MostrarOrdenComponent implements OnInit {
         prioridad        : [this.id_prioridad, Validators.required],
         comentario       : [this.formato(this.ordenCliente['comentario']), Validators.required],
       });
-    }
-
-
+    };
   };
 
+  cerrar() {
+    this.ref.close();
+  }
 
   // Método encargado de transformar la primera letra de cada palabra en mayúscula:
   mayus(dato) {

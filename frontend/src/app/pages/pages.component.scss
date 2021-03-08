@@ -24,11 +24,3 @@
     }
   }
 }
-
-:host /deep/ .cdk-global-scrollblock {
-  position: static !important;
-}
-
-:host /deep/ .ng-global-scrollblock {
-  position: static !important;
-}

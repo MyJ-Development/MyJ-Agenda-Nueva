@@ -5,12 +5,22 @@
     <nb-card-header>
       <label class="search-label" for="search">Filtrar por nombre técnico:</label>
         <input nbInput
-        [nbFilterInput]="dataSource" 
-        id="search" 
-        class="search-input" 
-        shape="semi-round"
-        status="info">
-        <button [nbSpinner]="loading" [disabled]="loading" ghost nbButton (click)="forceUpdate()"><nb-icon icon="flip-2-outline"></nb-icon>{{ "Actualizar" }}</button>
+               [nbFilterInput]="dataSource" 
+               id="search" 
+               class="search-input" 
+               shape="semi-round"
+               status="info">
+
+        <button class="actualizar" 
+                [nbSpinner]="loading" 
+                [disabled]="loading" 
+                ghost 
+                nbButton 
+                (click)="forceUpdate()">
+                <nb-icon icon="flip-2-outline"></nb-icon>
+                {{ "Actualizar" }}
+        </button>
+        
    </nb-card-header>
     <nb-card-body>
 

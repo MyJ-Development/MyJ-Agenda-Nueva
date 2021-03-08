@@ -115,6 +115,8 @@ export class OrdenCompletaComponent implements OnInit {
     // Almacena en variable global la orden obtenida desde el servicio:
     this.ordenCliente = this.tableService.getOrden();
 
+    console.log(this.ordenCliente);
+
     this.encargado = this.ordenCliente['encargado'];
 
     // Almacena en variable global el id de la orden:
@@ -167,8 +169,6 @@ export class OrdenCompletaComponent implements OnInit {
     let medioPagoPristine     = this.formulario.controls['medioPago'].pristine;
     let prioridadPristine     = this.formulario.controls['prioridad'].pristine;
     let comentarioPristine    = this.formulario.controls['comentario'].pristine;
-
-
 
 
     if ((montoPristine === false) && (this.ordenCliente['monto'] =! this.formulario.value['monto'])) {
@@ -684,7 +684,7 @@ export class OrdenCompletaComponent implements OnInit {
         direccion_cliente: [{ value: this.id_residencia, disabled: true }],
         comuna_cliente   : [{ value: this.id_residencia, disabled: true }],
         telefono1        : [{ value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
-        telefono2        : [{ value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
+        telefono2        : [{ value: this.ordenCliente['client_order']['contacto2'], disabled: true}],
         correo_cliente   : [{ value: this.ordenCliente['client_order']['email'], disabled: true}],
         encargado        : [{ value: this.ordenCliente['encargado']['rut'], disabled: true}],
         creado_por       : [{ value: this.ordenCliente['created_by']['email'], disabled: true}],
@@ -714,7 +714,7 @@ export class OrdenCompletaComponent implements OnInit {
         comuna_cliente   : [this.id_residencia, Validators.required],
         telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
                            Validators.required],
-        telefono2        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+        telefono2        : [{value: this.ordenCliente['client_order']['contacto2'], disabled: true},
                            Validators.required],
         correo_cliente   : [{value: this.ordenCliente['client_order']['email'], disabled: true},
                            Validators.required],
@@ -747,12 +747,14 @@ export class OrdenCompletaComponent implements OnInit {
     // Envía la orden seleccionada, al servicio indicado:
     this.tableService.setOrden(this.ordenCliente);
 
-    // Cierra el componente actual:
-    this.ref.close();
-
     // Abre el componente indicado:
     this.mostrar.open(MostrarClienteComponent);
   };
+
+
+  cerrar() {
+    this.ref.close();
+  }
 
   // Método encargado de transformar la primera letra de cada palabra en mayúscula:
   mayus(dato) {
