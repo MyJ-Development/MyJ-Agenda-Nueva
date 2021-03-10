@@ -5,6 +5,16 @@
     max-width: 1600px;
     max-height: 700px;
   }
+
+  nb-card-header {
+    height: 80px;
+    padding-top: 5px;
+  }
+
+  .boton {
+    align-self: center;
+    padding-top: 26px;
+  }
 }
 
 :host /deep/ ng2-smart-table .ng2-smart-actions ng2-st-tbody-edit-delete {
@@ -30,6 +40,7 @@
   text-align: center;
   background-color: #252547;
   color: rgb(255, 255, 255);
+  padding-right: 20px !important;
 }
 
 :host /deep/ ng2-smart-table table > tbody > tr > td {
@@ -37,9 +48,14 @@
   padding: nb-theme(tree-grid-cell-padding);
   border-width: 0.5px;
   border-color: #0095ff36;
+  text-align: center;
 }
 
 :host /deep/ ng2-smart-table-title > a {
   color: rgb(255, 255, 255) !important;
   font-weight: bolder !important;
+}
+
+:host /deep/ input[type="checkbox"] {
+  height: 15px;
 }

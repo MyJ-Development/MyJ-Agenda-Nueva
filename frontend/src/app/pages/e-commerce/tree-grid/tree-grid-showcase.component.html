@@ -21,20 +21,20 @@
         <div class="col-md-3">
           <div class="form-group group buscar">
             <label for="buscar" class="label">Buscar por: </label>
-              <nb-select  formControlName="buscar"
-                          type="text" 
-                          nbSelect 
-                          fullWidth 
-                          size="small"  
-                          shape="semi-round" 
-                          status="info"
-                          placeholder="Seleccione:">
-                <nb-option  *ngFor="let opcion of opciones"
-                             type="text"
-                            [value]="opcion">
-                            {{opcion}}
-                </nb-option>
-              </nb-select>
+            <nb-select  formControlName="buscar"
+                        type="text" 
+                        nbSelect 
+                        fullWidth 
+                        size="small"  
+                        shape="semi-round" 
+                        status="info"
+                        placeholder="Seleccione:">
+              <nb-option  *ngFor="let opcion of opciones"
+                           type="text"
+                          [value]="opcion">
+                          {{opcion}}
+              </nb-option>
+            </nb-select>
           </div>
         </div>
 

@@ -496,7 +496,6 @@ export class MostrarOrdenComponent implements OnInit {
       y los almacena en variable (tecnicos): */
       this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
         this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
-        console.log(this.tecnicos);
       });
 
     } else {

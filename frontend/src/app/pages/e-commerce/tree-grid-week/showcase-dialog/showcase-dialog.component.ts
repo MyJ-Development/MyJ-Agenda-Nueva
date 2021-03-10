@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 // Nebular/theme:
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDateService, NbDialogRef, NbDialogService } from '@nebular/theme';
 
 // Ng2 smart-table:
 import { LocalDataSource } from 'ng2-smart-table';
@@ -16,6 +16,9 @@ import { tableService } from '../../../../services/table.service';
 
 // Componentes:
 import { MostrarOrdenComponent } from '../mostrar-orden/mostrar-orden.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { peticionesGetService } from '../../../../services/peticionesGet.service';
+import { debounceTime } from 'rxjs/operators';
 
 
 // Componente decorador:
@@ -31,6 +34,13 @@ export class ShowcaseDialogComponent implements OnInit {
 
   // Estructura de la tabla a mostrar en html:
   settings = {
+    
+    selectMode: 'multi',
+
+    pager: {
+      display: true,
+      perPage: 8
+    },
 
     // Oculta el header de búsqueda por defecto:
     hideSubHeader: true,
@@ -95,16 +105,42 @@ export class ShowcaseDialogComponent implements OnInit {
   ordDiarias              : any[]           = [];
   idOrden                 : any[]           = [];
   data                    : any[]           = [];
+  opcion_tecnico          : string          = 'Técnico';
+  opcion_fecha            : string          = 'Nueva fecha';
+  opciones                : any[];
+  formulario              : FormGroup;
+  verTecnico              : boolean         = false;
+  verFecha                : boolean         = false;
+  ventana                 : boolean         = false;
+  min                     : Date;
+  max                     : Date;
+  ordenesSeleccionadas    : any[];
+  report                  : any;
+  usuario                 : any;
+  tecnicos                : any[];
 
 
   // Constructor:
-  constructor(protected ref   : NbDialogRef<ShowcaseDialogComponent>,
-              private service : tableService,
-              private datePipe: DatePipe,
-              private mostrar : NbDialogService) {
+  constructor(protected ref        : NbDialogRef<ShowcaseDialogComponent>,
+              private service      : tableService,
+              private datePipe     : DatePipe,
+              private mostrar      : NbDialogService,
+              private fb           : FormBuilder,
+              protected dateService: NbDateService<Date>,
+              private peticiones   : peticionesGetService) {
+
+    // Llamada de método:
+    this.crearFormulario();
+
+    this.usuario = this.service.getUsuario();
 
     // Obtiene las órdenes del servicio y los enlaza en variable:
     this.ordenesDiariasPorTecnico = this.service.getOrdenesDiariasPorTecnico();
+
+
+    // Establece el mínimo y el máximo de rangos de fecha a escoger.
+    this.min = this.dateService.addDay(this.dateService.today(), 0);
+    this.max = this.dateService.addYear(this.dateService.today(), +1);
   };
 
 
@@ -114,8 +150,189 @@ export class ShowcaseDialogComponent implements OnInit {
     // Llamada de métodos:
     this.newFecha(this.index);
     this.getOrdenes();
+    this.opcionesList();
   };
 
+
+  tecnicosList(){
+
+    for (const orden of this.ordenesSeleccionadas) {
+
+      let tipo = orden.tipo.id
+
+      let encargado: any[];
+  
+      /* Obtiene la lista de técnicos desde el servicio
+      y los almacena en variable (tecnicos): */
+      this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        
+        console.log(this.tecnicos);
+        console.log(tipo);
+        // this.tecnicos = encargado.filter((tecnico) => tecnico.type_orders)
+      });
+    }
+
+  };
+
+  opcionesList() {
+
+    // Se crea un arreglo de opciones para integrarlo en select:
+    this.opciones = [
+      this.opcion_tecnico,
+      this.opcion_fecha,
+    ];
+
+    // Se suscribe a los cambios del formulario, para mostrarlos instantáneamente:
+    this.formulario.valueChanges.subscribe(x => {
+
+      // Si la opción seleccionada corresponde a alguna de las dos opciones, cambiar el estado de ver:
+      if (x.buscar === "Técnico") {
+
+        this.verTecnico = true;
+        this.verFecha   = false;
+
+      } else if (x.buscar === "Nueva fecha") {
+
+        this.verFecha   = true;
+        this.verTecnico = false;
+      };
+    });
+  };
+
+
+  moverOrden() {
+
+    if (this.formulario.value['buscar'] === 'Nueva fecha') {
+      
+      for (const orden of this.ordenesSeleccionadas) {
+
+        /* Se define la estructura de datos a enviar al servicio y 
+        se le asignan los datos obtenidos del formulario: */
+        this.report = {
+          id            : orden.id,
+          idtipo          : orden.tipo.id,
+          prioridad     : orden.prioridad.id,
+          disponibilidad: orden.disponibilidad,
+          comentario    : orden.comentario,
+          fechaejecucion: this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'),
+          estadocliente : orden.estadocliente.id,
+          estadoticket  : orden.estadoticket.id,
+          mediodepago   : orden.mediodepago.id,
+          monto         : orden.monto,
+          created_by    : orden.created_by.email,
+          encargado     : orden.encargado.rut,
+          client_order  : orden.client_order.rut,
+          domicilio     : orden.client_residence.id,
+        };
+  
+        let res = '';
+  
+        console.log(this.report);
+  
+        // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+        this.peticiones.editarOrden(this.report).subscribe(data => {
+          res = data;
+          console.log('res');
+          console.log(res);
+          //this.router.navigate(['/success']);
+        });
+      }
+    } else if (this.formulario.value['buscar'] === 'Técnico') {
+      
+      for (const orden of this.ordenesSeleccionadas) {
+
+        /* Se define la estructura de datos a enviar al servicio y 
+        se le asignan los datos obtenidos del formulario: */
+        this.report = {
+          id            : orden.id,
+          idtipo          : orden.tipo.id,
+          prioridad     : orden.prioridad.id,
+          disponibilidad: orden.disponibilidad,
+          comentario    : orden.comentario,
+          fechaejecucion: orden.fechaejecucion,
+          estadocliente : orden.estadocliente.id,
+          estadoticket  : orden.estadoticket.id,
+          mediodepago   : orden.mediodepago.id,
+          monto         : orden.monto,
+          created_by    : orden.created_by.email,
+          encargado     : this.formulario.value['tecnico'],
+          client_order  : orden.client_order.rut,
+          domicilio     : orden.client_residence.id,
+        };
+  
+        let res = '';
+  
+        console.log(this.report);
+  
+        // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+        this.peticiones.editarOrden(this.report).subscribe(data => {
+          res = data;
+          console.log('res');
+          console.log(res);
+          //this.router.navigate(['/success']);
+        });
+      }
+    }
+
+  }
+
+  ordenSeleccionada(evento) {
+
+    console.log(evento);
+    
+    
+
+    if (evento.selected.length > 0) {
+      this.ordenesSeleccionadas = [];
+
+      for (let i = 0; i < evento.selected.length; i++) {
+        this.ordenesSeleccionadas.push(evento.selected[i]['orden']);
+      }
+
+      this.tecnicos = [];
+
+      for (const orden of this.ordenesSeleccionadas) {
+
+        let tipo = orden.tipo.id;
+    
+        /* Obtiene la lista de técnicos desde el servicio
+        y los almacena en variable (tecnicos): */
+        this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
+
+          for (let i = 0; i < TecnicosList.length; i++) {
+
+            console.log(TecnicosList.filter((tecnico) => tecnico.active == true)[i]['rut']);
+            console.log(this.tecnicos[i]);
+            this.tecnicos.push(TecnicosList.filter((tecnico) => tecnico.active == true)[i]['rut']);
+            
+          }
+          
+          // this.tecnicos = encargado.filter((tecnico) => tecnico.type_orders)
+        });
+      }
+
+      console.log(this.tecnicos);
+
+      this.ventana = true;
+    } else {
+      this.ventana = false;
+    }
+
+    
+  }
+
+  // Método encargado de crear el formulario que extrae los datos del componente html:
+  crearFormulario() {
+
+    this.formulario = this.fb.group({
+
+      // Controles del formulario, llamados por el componente html con formControlName:
+      buscar            : ['', Validators.required],
+      fecha_ejecucion   : ['', Validators.required],
+      tecnico           : ['', Validators.required],
+    });
+  };
 
   // Los métodos sendXXXX enlazan datos del componente actual, con los metodos del servicio:
   sendIdOrden(datos) {
@@ -187,7 +404,7 @@ export class ShowcaseDialogComponent implements OnInit {
                                this.ordDiarias[j][i]['client_residence']['direccion'])),
                 tipo_orden   : this.ordDiarias[j][i]['tipo']['descripcion'],
                 estado_ticket: this.ordDiarias[j][i]['estadoticket']['descripcion'],
-                fecha        : this.ordDiarias[j][i]['fechaejecucion']
+                fecha        : this.datePipe.transform(this.ordDiarias[j][i]['created_at'], 'dd-MM-yyyy')
               });
             };
 

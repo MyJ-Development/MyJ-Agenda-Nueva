@@ -1,13 +1,85 @@
 
+<form [formGroup]="formulario" (ngSubmit)="moverOrden()" autocomplete="off">
 
-<nb-card accent="success">
-  <nb-card-body>
-    <ng2-smart-table 
-      class="example-smart-table"
-      [settings]="settings"
-      [source]="source"
-      (custom)="mostrarOrden($event)">
-    </ng2-smart-table>
-  </nb-card-body>
-</nb-card>
+  <nb-card accent="success">
 
+    <nb-card-header *ngIf="ventana">
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="buscar" class="label">Mover ordenes seleccionadas a: </label>
+            <nb-select  formControlName="buscar"
+                        type="text" 
+                        nbSelect 
+                        fullWidth 
+                        size="small"  
+                        shape="semi-round" 
+                        status="info"
+                        placeholder="Seleccione:">
+              <nb-option  *ngFor="let opcion of opciones"
+                           type="text"
+                          [value]="opcion">
+                          {{opcion}}
+              </nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div *ngIf="verFecha" class="col-sm-3">
+          <div class="form-group">
+            <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
+            <input  type="text"
+                    fullWidth 
+                    status="info"
+                    formControlName="fecha_ejecucion" 
+                    shape="semi-round" 
+                    fieldSize="small"
+                    onkeydown="return false"
+                    nbInput
+                   [nbDatepicker]="formpicker">
+            <nb-datepicker [min]="min" [max]="max" #formpicker></nb-datepicker>
+          </div>
+        </div>
+
+        <div *ngIf="verTecnico" class="col-sm-3">
+          <div class="form-group">
+            <label for="tecnico" class="label">Seleccione técnico:</label>
+            <nb-select  formControlName="tecnico"
+                        type="text"
+                        fullWidth 
+                        shape="semi-round" 
+                        status="info"
+                        size="small">
+              <nb-option *ngFor="let tecnico of tecnicos"
+                          type="text"
+                         [value]="tecnico.rut">
+                         {{tecnico.nombre}}
+              </nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div class="col-md-4 boton">
+            <div class="form-group">
+              <button class="boton" type="submit" nbButton ghost>
+                <nb-icon icon="file-text-outline"></nb-icon>
+              </button>
+            </div>
+        </div>
+      </div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <ng2-smart-table 
+        class="example-smart-table"
+        [settings]="settings"
+        [source]="source"
+        (custom)="mostrarOrden($event)"
+        (userRowSelect)="ordenSeleccionada($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+
+</form>
