@@ -32,70 +32,6 @@ import { debounceTime } from 'rxjs/operators';
 // Clase exportable ShowcaseDialogComponent que implementa método ngOnInit:
 export class ShowcaseDialogComponent implements OnInit {
 
-  // Estructura de la tabla a mostrar en html:
-  settings = {
-    
-    selectMode: 'multi',
-
-    pager: {
-      display: true,
-      perPage: 8
-    },
-
-    // Oculta el header de búsqueda por defecto:
-    hideSubHeader: true,
-
-    // Se define la columna de los botones con acciones a realizar:
-    actions: {
-
-      // Se define el título que aparecerá en la columna:
-      columnTitle: 'Ver más',
-
-      // Acciones por defecto:
-      filter: false,
-      add   : false,
-      edit  : false,
-      delete: false,
-
-      // Acción customizada:
-      custom: [
-        {
-          name : 'mas',
-          title: '<i class="icon ion-document" title="mas"></i>'
-        }
-      ]
-    },
-
-    // Define las columnas que queremos mostrar en la tabla (Título/tipo de dato):
-    columns: {
-      id_orden: {
-        title: 'ID Orden',
-        type : 'number',
-      },
-      telefono: {
-        title: 'Teléfono',
-        type : 'string',
-      },
-      localizacion: {
-        title: 'Localización',
-        type : 'string',
-      },
-      tipo_orden: {
-        title: 'Tipo orden',
-        type : 'string',
-      },
-      estado_ticket: {
-        title: 'Estado ticket',
-        type : 'string',
-      },
-      fecha: {
-        title: 'Fecha',
-        type : 'string',
-      },
-    },
-  };
-
-
   // Variables:
   source                  : LocalDataSource = new LocalDataSource();
   encargado               : any             = this.service.getEncargado();
@@ -118,11 +54,14 @@ export class ShowcaseDialogComponent implements OnInit {
   ordenesSeleccionadas    : any[];
   report                  : any;
   usuario                 : any;
+  rolUsuario              : any;
   tecnicos                : any[];
   reportEventos           : any;
   reportFecha             : any;
   reportTecnico           : any;
   loading                 : boolean = false;
+  settings                : any;
+  modo                    : any;
 
 
   // Constructor:
@@ -139,14 +78,21 @@ export class ShowcaseDialogComponent implements OnInit {
     this.crearFormulario();
 
     this.usuario = this.service.getUsuario();
+    this.rolUsuario = this.service.getRolUsuario();
 
     // Obtiene las órdenes del servicio y los enlaza en variable:
     this.ordenesDiariasPorTecnico = this.service.getOrdenesDiariasPorTecnico();
 
-
     // Establece el mínimo y el máximo de rangos de fecha a escoger.
     this.min = this.dateService.addDay(this.dateService.today(), 0);
     this.max = this.dateService.addYear(this.dateService.today(), +1);
+
+    if ((this.rolUsuario === 'super') || (this.rolUsuario === 'coordinador')) {
+      this.opcionesList();
+      this.modo = 'multi'
+    } else {
+      this.modo = false;
+    }
   };
 
 
@@ -156,8 +102,75 @@ export class ShowcaseDialogComponent implements OnInit {
     // Llamada de métodos:
     this.newFecha(this.index);
     this.getOrdenes();
-    this.opcionesList();
+    this.smartTable();
   };
+
+
+  smartTable() {
+
+    // Estructura de la tabla a mostrar en html:
+    this.settings = {
+      
+      selectMode: this.modo,
+    
+      pager: {
+        display: true,
+        perPage: 8
+      },
+    
+      // Oculta el header de búsqueda por defecto:
+      hideSubHeader: true,
+    
+      // Se define la columna de los botones con acciones a realizar:
+      actions: {
+      
+        // Se define el título que aparecerá en la columna:
+        columnTitle: 'Ver más',
+      
+        // Acciones por defecto:
+        filter: false,
+        add   : false,
+        edit  : false,
+        delete: false,
+      
+        // Acción customizada:
+        custom: [
+          {
+            name : 'mas',
+            title: '<i class="icon ion-document" title="mas"></i>'
+          }
+        ]
+      },
+    
+      // Define las columnas que queremos mostrar en la tabla (Título/tipo de dato):
+      columns: {
+        id_orden: {
+          title: 'ID Orden',
+          type : 'number',
+        },
+        telefono: {
+          title: 'Teléfono',
+          type : 'string',
+        },
+        localizacion: {
+          title: 'Localización',
+          type : 'string',
+        },
+        tipo_orden: {
+          title: 'Tipo orden',
+          type : 'string',
+        },
+        estado_ticket: {
+          title: 'Estado ticket',
+          type : 'string',
+        },
+        fecha: {
+          title: 'Fecha',
+          type : 'string',
+        },
+      },
+    };
+  }
 
 
   opcionesList() {
@@ -332,55 +345,58 @@ export class ShowcaseDialogComponent implements OnInit {
 
   ordenSeleccionada(evento) {
 
-    if (evento.selected.length > 0) {
-      this.ordenesSeleccionadas = [];
-
-      for (let i = 0; i < evento.selected.length; i++) {
-
-        this.ordenesSeleccionadas.push(evento.selected[i]['orden']);
-      };
-
-      this.tecnicos    = [];
-
-      let lista: any[] = [];
-      let tech : any   = {}
-
-      for (const orden of this.ordenesSeleccionadas) {
-
-        let tipo = orden.tipo.id;
-    
-        /* Obtiene la lista de técnicos desde el servicio
-        y los almacena en variable (tecnicos): */
-        this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
-
-          for (let i = 0; i < TecnicosList.length; i++) {
-
-            lista.push(TecnicosList.filter((tecnico) => tecnico.active == true)[i]);
-          };
-
-          lista.forEach((tecnico) => {
-
-            if (tecnico) {
-            
-              //Si el valor no existe en el objeto tecnicos:
-              if (!(tecnico.rut in tech)) {
-
-                // si no existe creamos ese valor y lo añadimos al array final, y si sí existe no lo añadimos.
-                tech[tecnico.rut] = true;
-                this.tecnicos.push(tecnico);
-              };
-            }
-
+    if ((this.rolUsuario === 'super') || (this.rolUsuario === 'coordinador')) {
+      
+      if (evento.selected.length > 0) {
+        this.ordenesSeleccionadas = [];
+  
+        for (let i = 0; i < evento.selected.length; i++) {
+  
+          this.ordenesSeleccionadas.push(evento.selected[i]['orden']);
+        };
+  
+        this.tecnicos    = [];
+  
+        let lista: any[] = [];
+        let tech : any   = {}
+  
+        for (const orden of this.ordenesSeleccionadas) {
+  
+          let tipo = orden.tipo.id;
+      
+          /* Obtiene la lista de técnicos desde el servicio
+          y los almacena en variable (tecnicos): */
+          this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
+  
+            for (let i = 0; i < TecnicosList.length; i++) {
+  
+              lista.push(TecnicosList.filter((tecnico) => tecnico.active == true)[i]);
+            };
+  
+            lista.forEach((tecnico) => {
+  
+              if (tecnico) {
+              
+                //Si el valor no existe en el objeto tecnicos:
+                if (!(tecnico.rut in tech)) {
+  
+                  // si no existe creamos ese valor y lo añadimos al array final, y si sí existe no lo añadimos.
+                  tech[tecnico.rut] = true;
+                  this.tecnicos.push(tecnico);
+                };
+              }
+  
+            });
           });
-        });
+        };
+  
+        this.ventana = true;
+  
+      } else {
+  
+        this.ventana = false;
       };
-
-      this.ventana = true;
-
-    } else {
-
-      this.ventana = false;
-    };
+    }
   };
 
 
@@ -389,7 +405,7 @@ export class ShowcaseDialogComponent implements OnInit {
     let mensaje: String;
     let res = '';
 
-    if (tipo === 'Nueva fecha') {
+    if ((tipo === 'Nueva fecha') && (datoFecha != this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd'))) {
 
       mensaje = `Se re-agenda visita del ${this.datePipe.transform(datoFecha, 'dd-MM-yyyy')} para el ${this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy')}`;
 
@@ -405,9 +421,11 @@ export class ShowcaseDialogComponent implements OnInit {
 
         console.log('res');
         console.log(res);
+
+        this.showToast(false,15000,orden_id);
       });
 
-    } else if (tipo === 'Técnico') {
+    } else if ((tipo === 'Técnico') && (datoTecnico != this.tecnicos.filter(x => x.rut == this.formulario.value['tecnico'])[0]['nombre'])) {
 
       mensaje = `Se re-asigna técnico '${datoTecnico}' por '${this.tecnicos.filter(x => x.rut == this.formulario.value['tecnico'])[0]['nombre']}'`;
 
@@ -426,7 +444,7 @@ export class ShowcaseDialogComponent implements OnInit {
         this.showToast(false,15000,orden_id);
       });
 
-    } else if (tipo === 'Técnico y fecha') {
+    } else if ((tipo === 'Técnico y fecha') && (datoFecha != this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'yyyy-MM-dd')) && (datoTecnico != this.tecnicos.filter(x => x.rut == this.formulario.value['tecnico'])[0]['nombre'])) {
 
       let mensajeFecha;
       let mensajeTecnico;
