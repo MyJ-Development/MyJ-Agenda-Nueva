@@ -160,27 +160,6 @@ export class ShowcaseDialogComponent implements OnInit {
   };
 
 
-  tecnicosList(){
-
-    for (const orden of this.ordenesSeleccionadas) {
-
-      let tipo = orden.tipo.id
-
-      let encargado: any[];
-  
-      /* Obtiene la lista de técnicos desde el servicio
-      y los almacena en variable (tecnicos): */
-      this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
-        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
-        
-        console.log(this.tecnicos);
-        console.log(tipo);
-        // this.tecnicos = encargado.filter((tecnico) => tecnico.type_orders)
-      });
-    }
-
-  };
-
   opcionesList() {
 
     // Se crea un arreglo de opciones para integrarlo en select:
@@ -331,8 +310,6 @@ export class ShowcaseDialogComponent implements OnInit {
         let res = '';
   
         this.eventos(this.formulario.value['buscar'], orden.id, orden.fechaejecucion, orden.encargado.nombre);
-
-        console.log(orden.encargado.nombre);
   
         if (this.report) {
           
@@ -351,6 +328,7 @@ export class ShowcaseDialogComponent implements OnInit {
       };
     };
   };
+
 
   ordenSeleccionada(evento) {
 
@@ -382,13 +360,17 @@ export class ShowcaseDialogComponent implements OnInit {
 
           lista.forEach((tecnico) => {
 
-            //Si el valor no existe en el objeto tecnicos:
-            if (!(tecnico.rut in tech)) {
+            if (tecnico) {
+            
+              //Si el valor no existe en el objeto tecnicos:
+              if (!(tecnico.rut in tech)) {
 
-              // si no existe creamos ese valor y lo añadimos al array final, y si sí existe no lo añadimos.
-              tech[tecnico.rut] = true;
-              this.tecnicos.push(tecnico);
-            };
+                // si no existe creamos ese valor y lo añadimos al array final, y si sí existe no lo añadimos.
+                tech[tecnico.rut] = true;
+                this.tecnicos.push(tecnico);
+              };
+            }
+
           });
         });
       };
@@ -406,10 +388,6 @@ export class ShowcaseDialogComponent implements OnInit {
 
     let mensaje: String;
     let res = '';
-
-    console.log(tipo);
-    console.log(datoFecha);
-    console.log(datoTecnico);
 
     if (tipo === 'Nueva fecha') {
 
@@ -431,8 +409,7 @@ export class ShowcaseDialogComponent implements OnInit {
 
     } else if (tipo === 'Técnico') {
 
-      mensaje = `Se re-asigna técnico '${datoTecnico}' por 
-      '${this.tecnicos.filter(x => x.rut == this.formulario.value['tecnico'])}'`;
+      mensaje = `Se re-asigna técnico '${datoTecnico}' por '${this.tecnicos.filter(x => x.rut == this.formulario.value['tecnico'])[0]['nombre']}'`;
 
       this.reportEventos = {
         order_id  : orden_id,
@@ -454,9 +431,7 @@ export class ShowcaseDialogComponent implements OnInit {
       let mensajeFecha;
       let mensajeTecnico;
 
-      console.log(this.tecnicos.filter(x => x.rut ==this.formulario.value['tecnico']));
-
-      mensajeTecnico = `Se re-asigna técnico '${datoTecnico}' por '${this.tecnicos.filter(x => x.rut ==this.formulario.value['tecnico'])}'`;
+      mensajeTecnico = `Se re-asigna técnico '${datoTecnico}' por '${this.tecnicos.filter(x => x.rut ==this.formulario.value['tecnico'])[0]['nombre']}'`;
 
       mensajeFecha = `Se re-agenda visita del ${this.datePipe.transform(datoFecha, 'dd-MM-yyyy')} para el ${this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy')}`;
 
