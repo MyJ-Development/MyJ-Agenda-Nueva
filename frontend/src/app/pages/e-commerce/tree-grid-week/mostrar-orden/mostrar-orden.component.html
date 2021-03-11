@@ -373,7 +373,9 @@
         <div *ngIf="mostrarBoton" class="row">  
           <div class="col-sm-4 offset-8">
             <div class="form-group">
-              <button [nbSpinner]="loading" nbButton
+              <button [nbSpinner]="loading" 
+                      [disabled]="loading" 
+                      nbButton
                       class="boton"
                       type="submit"
                       fullWidth 
