@@ -2,7 +2,7 @@
 
 @include nb-install-component() {
   nb-card {
-    max-width: 1600px;
+    max-width: 1250px;
     max-height: 700px;
   }
 
@@ -58,4 +58,16 @@
 
 :host /deep/ input[type="checkbox"] {
   height: 15px;
+}
+
+:host {
+  ::ng-deep .id_orden .ng2-smart-title {
+      width: 110px;
+  }
+}
+
+:host {
+  ::ng-deep .localizacion .ng2-smart-title {
+      width: 220px;
+  }
 }

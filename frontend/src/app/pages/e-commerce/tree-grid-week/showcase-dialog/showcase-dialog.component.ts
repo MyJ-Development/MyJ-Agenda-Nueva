@@ -137,7 +137,8 @@ export class ShowcaseDialogComponent implements OnInit {
         custom: [
           {
             name : 'mas',
-            title: '<i class="icon ion-document" title="mas"></i>'
+            title: '<i class="icon ion-document" title="mas"></i>',
+            width: '100px',
           }
         ]
       },
@@ -147,6 +148,7 @@ export class ShowcaseDialogComponent implements OnInit {
         id_orden: {
           title: 'ID Orden',
           type : 'number',
+          width: '110px',
         },
         telefono: {
           title: 'Teléfono',
@@ -155,6 +157,7 @@ export class ShowcaseDialogComponent implements OnInit {
         localizacion: {
           title: 'Localización',
           type : 'string',
+          width: '200px',
         },
         tipo_orden: {
           title: 'Tipo orden',

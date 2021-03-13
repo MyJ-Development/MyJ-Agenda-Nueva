@@ -76,8 +76,10 @@ export class TreeGridWeekShowcaseComponent {
   diaFecha                : Date;
   year                    : any;
   result                  : any[] = [];
-  pendiente               : any;
+  pendiente               : any[] = []
   loading                 : any = false;
+  orden                   : any[];
+
 
   // Propiedad decorada:
   @ViewChild('escClose', { read: TemplateRef }) escCloseTemplate: TemplateRef<HTMLElement>;
@@ -165,6 +167,8 @@ export class TreeGridWeekShowcaseComponent {
     this.sendIndex(this.indice);
     this.sendEncargado(this.encargado);
     this.dialogService.open(ShowcaseDialogComponent);
+
+    console.log(event);
   };
 
 
@@ -248,6 +252,7 @@ export class TreeGridWeekShowcaseComponent {
       // Crea e inicia un contador de la semana en cero:
       let counter: number[] = [0, 0, 0, 0, 0, 0];
       let orden  : any[]    = ['', '', '', '', '', ''];
+      this.orden            = ['', '', '', '', '', ''];
       let tec_counter       = 0;
 
       // Crea un bucle para cada técnico de la lista de técnicos:
@@ -278,30 +283,107 @@ export class TreeGridWeekShowcaseComponent {
             test.push(this.ordenesDiariasPorTecnico);
             
             let ins: any[] = [];
+            let ordUnit: any[] = [];
+
 
             for (let ord of aux_counter) {
-              ins.push(ord.estadoticket.id)
+              // ins.push(ord.estadoticket.id);
+              ordUnit.push(ord);
             };
 
             orden[i] = ins;
+            this.orden[i] =  ordUnit;
           };
 
-          let completado  : any[]    = [false, false, false, false, false, false];
+          let completado : any[] = [];
+          let fechaPasada: any[] = [];
 
           for (let i = 0; i < 6; i++) {
 
             this.result = [];
+            this.pendiente = [];
 
-            for (let id of orden[i]) {
+            for (let ord of this.orden[i]) {
 
-              if (id === 4) {
-                this.result.push(id)
+              console.log(ord);
+
+              let fechaCreacionParse = this.datePipe.transform(ord.created_at, 'yyyy-MM-dd');
+              let fechaEjecucionParse = ord.fechaejecucion;
+
+              let fechaCreacion  = new Date(fechaCreacionParse).getTime();
+              let fechaEjecucion = new Date(fechaEjecucionParse).getTime();
+
+              let dias: number = (fechaEjecucion - fechaCreacion) / (1000*60*60*24);
+
+              console.log(dias);
+
+              if (ord.estadoticket.id === 4) {
+
+                this.result.push(ord.estadoticket.id)
+
               };
-            };
+              
+              if ((ord.estadoticket.id !== 4) && (dias > 3)){
 
-            if ((this.result.length === orden[i].length) && (this.result.length != 0)) {
-              completado[i] = true; 
+                this.pendiente.push(ord);
+
+                // fechaPasada[i] = true
+                // completado[i] = null;
+              }
+
+              // } else if (dias <= 3) {
+              //   fechaPasada[i] = false;
+              //   completado[i] = false;
+              // } 
             };
+            
+
+            if ((this.result.length === this.orden[i].length) && (this.result.length !== 0)) {
+
+              completado[i] = true;
+              fechaPasada[i] = false;
+
+            } else if (this.result.length === 0) {
+
+              fechaPasada[i] = false;
+              completado[i] = false; 
+
+              
+            } else if (this.pendiente.length !== 0){
+
+              console.log(this.pendiente);
+
+              fechaPasada[i] = true;
+              completado[i] = null;
+
+            } else {
+
+              fechaPasada[i] = false;
+              completado[i] = false;
+            
+
+              // for (const ord of this.orden[i]) {
+
+                // let fechaCreacionParse = this.datePipe.transform(ord.created_at, 'yyyy-MM-dd');
+                // let fechaEjecucionParse = ord.fechaejecucion;
+  
+                // let fechaCreacion  = new Date(fechaCreacionParse).getTime();
+                // let fechaEjecucion = new Date(fechaEjecucionParse).getTime();
+  
+                // let dias = (fechaEjecucion - fechaCreacion) / (1000*60*60*24);
+                
+                
+                // if ((dias > 3)){
+
+                //   fechaPasada[i] = true
+                //   completado[i] = null;
+
+                // } else if (dias <= 3) {
+                //   fechaPasada[i] = false;
+                //   completado[i] = false;
+                // } 
+              // }
+            }
           };
 
           
@@ -310,6 +392,14 @@ export class TreeGridWeekShowcaseComponent {
             data: {
               objeto:{
                 objeto   : {
+                  objeto: {
+                    Lunes    : fechaPasada[0],
+                    Martes   : fechaPasada[1],
+                    Miercoles: fechaPasada[2],
+                    Jueves   : fechaPasada[3],
+                    Viernes  : fechaPasada[4],
+                    Sabado   : fechaPasada[5],
+                  },
                   Lunes    : completado[0],
                   Martes   : completado[1],
                   Miercoles: completado[2],
