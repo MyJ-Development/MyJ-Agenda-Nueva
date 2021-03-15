@@ -45,6 +45,7 @@ export class MostrarClienteComponent implements OnInit {
   residencia_clientes: any[];
   arrayId_residencia : any;
   comunas            : any;
+  rol                : any;
 
   // Constructor:
   constructor(protected ref       : NbDialogRef<MostrarClienteComponent>,
@@ -57,6 +58,8 @@ export class MostrarClienteComponent implements OnInit {
 
     // Obtiene la lista de comunas:
     this.comunas = this.tableService.getComuna();
+
+    this.rol = this.tableService.getRolUsuario();
   };
 
 
@@ -242,23 +245,45 @@ export class MostrarClienteComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    this.formulario = this.fb.group({
+    if (this.rol == 'super' || this.rol == 'coordinador') {
 
-      rut_cliente      : [this.rut_cliente, Validators.required],
-      nombre_cliente   : [this.mayus(
-                          this.formato(this.ordenCliente['client_order']['nombre'])), Validators.required],
-      telefono1        : [this.ordenCliente['client_order']['contacto1'], Validators.required],
-      telefono2        : [this.ordenCliente['client_order']['contacto2']],
-      correo_cliente   : [this.ordenCliente['client_order']['email'], Validators.required],
-      creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true}, 
-                          Validators.required],
-      actualizado_por  : [{value: this.usuario, disabled: true}, Validators.required],
-      id_residence     :  this.arrayId_residencia,
-      direccion_cliente:  this.direccionArray,
-      comuna_cliente   :  this.comunaArray,
-      mac_cliente      :  this.macArray,
-      pppoe_cliente    :  this.pppoeArray
-    });
+      this.formulario = this.fb.group({
+
+        rut_cliente      : [this.rut_cliente, Validators.required],
+        nombre_cliente   : [this.mayus(
+                            this.formato(this.ordenCliente['client_order']['nombre'])), Validators.required],
+        telefono1        : [this.ordenCliente['client_order']['contacto1'], Validators.required],
+        telefono2        : [this.ordenCliente['client_order']['contacto2']],
+        correo_cliente   : [this.ordenCliente['client_order']['email'], Validators.required],
+        creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true}, 
+                            Validators.required],
+        actualizado_por  : [{value: this.usuario, disabled: true}, Validators.required],
+        id_residence     :  this.arrayId_residencia,
+        direccion_cliente:  this.direccionArray,
+        comuna_cliente   :  this.comunaArray,
+        mac_cliente      :  this.macArray,
+        pppoe_cliente    :  this.pppoeArray
+      });
+      
+    } else {
+
+      this.formulario = this.fb.group({
+
+        rut_cliente      : [{ value: this.rut_cliente, disabled: true }],
+        nombre_cliente   : [{value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),
+                            disabled: true}],
+        telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true}],
+        telefono2        : [{value: this.ordenCliente['client_order']['contacto2'], disabled: true}],
+        correo_cliente   : [{value: this.ordenCliente['client_order']['email'], disabled: true}],
+        creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true}],
+        actualizado_por  : [{value: this.usuario, disabled: true}],
+        id_residence     :  this.arrayId_residencia,
+        direccion_cliente:  this.direccionArray,
+        comuna_cliente   :  this.comunaArray,
+        mac_cliente      :  this.macArray,
+        pppoe_cliente    :  this.pppoeArray
+      });
+    }
   };
 
 

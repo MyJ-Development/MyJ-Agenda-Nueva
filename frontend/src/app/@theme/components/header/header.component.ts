@@ -125,7 +125,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   rolUsuario() {
     let rol = this.tableService.getRolUsuario();
 
-    if ((rol == 'super') || (rol == 'user')) {
+    if ((rol == 'super') || (rol == 'user') || (rol == 'coordinador')) {
       this.permisos = true;
     } else {
       this.permisos = false;

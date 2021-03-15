@@ -11,12 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Angular/router:
 import { Router } from '@angular/router';
 import { debounceTime } from "rxjs/operators";
-import { NbDateService, NbDialogRef, NbIconConfig, NbToastrService } from '@nebular/theme';
+import { NbDateService, NbDialogRef, NbToastrService } from '@nebular/theme';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
 import { tableService }         from '../../../../services/table.service';
-import { componentSyncService } from '../../../../services/componentSync.service';
 
 
 // Componente decorado:
@@ -29,7 +28,7 @@ import { componentSyncService } from '../../../../services/componentSync.service
 
 // Clase exportable AgregarOrdenComponent implementa ngOnInit:
 export class AgregarOrdenComponent implements OnInit {
-  loading = false;
+  
   // Variables:
   formulario        : FormGroup;
   residencia_cliente: any;
@@ -52,6 +51,8 @@ export class AgregarOrdenComponent implements OnInit {
   min               : Date;
   max               : Date;
   rol               : any;
+  loading           = false;
+
 
   // Constructor:
   constructor(private tableService : tableService,
@@ -180,96 +181,108 @@ export class AgregarOrdenComponent implements OnInit {
 
   getOrdenes(){
 
-    this.formulario.valueChanges.pipe(debounceTime(1500)).subscribe(x => {
+    if (this.rol !== 'super') {
 
-      if ((this.formulario.controls['tipo_orden'].value != "") && 
-      (this.formulario.controls['fecha_ejecucion'].value != "")) {
+      this.formulario.valueChanges.pipe(debounceTime(1500)).subscribe(x => {
 
-        this.fechaControl = this.datePipe.transform(this.formulario.controls['fecha_ejecucion'].value, 'yyyy-MM-dd');
-
-        let tipoOrdenControl = this.formulario.controls['tipo_orden'].value;
-
-        // Obtiene el peso de cada tipo de orden seleccionada:
-        let pesoOrden = this.tipoOrdenes.filter(tipo => tipo.id == tipoOrdenControl)
-        .map(tipo => tipo.peso)[0];
-
-        // Filtra los tecnicos por capacidad:
-        // let capacidadTecnico = this.tecnicos.filter(encargado => encargado.capacidad >= capacidad);
-
-        this.service.leerOrdenesDiarias(this.fechaControl, this.fechaControl)
-        .subscribe((ordenesList) => {
-
-          this.ordenesDiarias = ordenesList;
-
-          let capacidadTotal;
-
-          this.listaTecnicos = [];
-
-          for (let tecnico of this.tecnicos){
-
-            if (tecnico.active) {
-              
-              // Filtra las ordenes por nombre del tecnico.
-              let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre);
-
-              // Mapea las ordenes del tecnico por el peso.
-              let mapeo = orden.map(x => x.tipo.peso);
-
-              let suma: number = 0;
-
-              // Suma el peso de cada orden diaria del tecnico y lo almacena en variable.
-              for (let i = 0; i < mapeo.length; i++) {
-                suma = mapeo[i] + suma
-              };
-
-              capacidadTotal = suma + pesoOrden;
-
-              if (suma >= 1) {
-
-                this.tecnicoCapacidad.push({
-                  tecnico  : tecnico.nombre,
-                  capacidad: suma,
-                });
-
-              } else {
-
-                suma = 0;
-
-                this.tecnicoCapacidad.push({
-                  tecnico  : tecnico.nombre,
-                  capacidad: suma,
-                });
-              };
-
-              for (let tipo of tecnico.type_orders) {
-                if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && 
-                (tecnico.active)) {
-
-                  let capRestante = tecnico.capacidad - capacidadTotal;
+        if ((this.formulario.controls['tipo_orden'].value != "") && 
+        (this.formulario.controls['fecha_ejecucion'].value != "")) {
+  
+          this.fechaControl = this.datePipe.transform(this.formulario.controls['fecha_ejecucion'].value, 'yyyy-MM-dd');
+  
+          let tipoOrdenControl = this.formulario.controls['tipo_orden'].value;
+  
+          // Obtiene el peso de cada tipo de orden seleccionada:
+          let pesoOrden = this.tipoOrdenes.filter(tipo => tipo.id == tipoOrdenControl)
+          .map(tipo => tipo.peso)[0];
+  
+          // Filtra los tecnicos por capacidad:
+          // let capacidadTecnico = this.tecnicos.filter(encargado => encargado.capacidad >= capacidad);
+  
+          this.service.leerOrdenesDiarias(this.fechaControl, this.fechaControl)
+          .subscribe((ordenesList) => {
+  
+            this.ordenesDiarias = ordenesList;
+  
+            let capacidadTotal;
+  
+            this.listaTecnicos = [];
+  
+            for (let tecnico of this.tecnicos){
+  
+              if (tecnico.active) {
                 
-                  this.listaTecnicos.push({
-                    id       : tecnico.id,
-                    rut      : tecnico.rut,
-                    nombre   : `(${capRestante}) ${tecnico.nombre}`,
-                    comuna   : tecnico.comuna,
-                    estado   : tecnico.estado,
-                    capacidad: tecnico.capacidad,
-                    active   : tecnico.active,
+                // Filtra las ordenes por nombre del tecnico.
+                let orden = this.ordenesDiarias.filter(x => x.encargado.nombre == tecnico.nombre);
+  
+                // Mapea las ordenes del tecnico por el peso.
+                let mapeo = orden.map(x => x.tipo.peso);
+  
+                let suma: number = 0;
+  
+                // Suma el peso de cada orden diaria del tecnico y lo almacena en variable.
+                for (let i = 0; i < mapeo.length; i++) {
+                  suma = mapeo[i] + suma
+                };
+  
+                capacidadTotal = suma + pesoOrden;
+  
+                if (suma >= 1) {
+  
+                  this.tecnicoCapacidad.push({
+                    tecnico  : tecnico.nombre,
+                    capacidad: suma,
+                  });
+  
+                } else {
+  
+                  suma = 0;
+  
+                  this.tecnicoCapacidad.push({
+                    tecnico  : tecnico.nombre,
+                    capacidad: suma,
                   });
                 };
-              };
-            }
-          };
-        });
-      };
-    });
+  
+                for (let tipo of tecnico.type_orders) {
+                  if ((tecnico.capacidad >= capacidadTotal) && (tipo.id === tipoOrdenControl) && 
+                  (tecnico.active)) {
+  
+                    let capRestante = tecnico.capacidad - capacidadTotal;
+                  
+                    this.listaTecnicos.push({
+                      id       : tecnico.id,
+                      rut      : tecnico.rut,
+                      nombre   : `(${capRestante}) ${tecnico.nombre}`,
+                      comuna   : tecnico.comuna,
+                      estado   : tecnico.estado,
+                      capacidad: tecnico.capacidad,
+                      active   : tecnico.active,
+                    });
+                  };
+                };
+              }
+            };
+          });
+        };
+      });
+    };
   };
 
 
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarTecnicos() {
 
-    if (this.rol === 'vendedor') {
+    if (this.rol === 'super') {
+
+      /* Obtiene la lista de técnicos desde el servicio
+      y los almacena en variable (tecnicos): */
+      this.service.leerTecnicos().subscribe((TecnicosList) => {
+        this.listaTecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+      });
+      
+    } else if (this.rol === 'vendedor') {
+
       /* Obtiene la lista de técnicos desde el servicio
       y los almacena en variable (tecnicos): */
       this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {

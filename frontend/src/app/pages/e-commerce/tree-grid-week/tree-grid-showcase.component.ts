@@ -305,7 +305,8 @@ export class TreeGridWeekShowcaseComponent {
 
             for (let ord of this.orden[i]) {
 
-              console.log(ord);
+              //AMARILLO
+              /* console.log(ord);
 
               let fechaCreacionParse = this.datePipe.transform(ord.created_at, 'yyyy-MM-dd');
               let fechaEjecucionParse = ord.fechaejecucion;
@@ -315,7 +316,7 @@ export class TreeGridWeekShowcaseComponent {
 
               let dias: number = (fechaEjecucion - fechaCreacion) / (1000*60*60*24);
 
-              console.log(dias);
+              console.log(dias);*/
 
               if (ord.estadoticket.id === 4) {
 
@@ -323,13 +324,13 @@ export class TreeGridWeekShowcaseComponent {
 
               };
               
-              if ((ord.estadoticket.id !== 4) && (dias > 3)){
+              /*if ((ord.estadoticket.id !== 4) && (dias > 3)){
 
                 this.pendiente.push(ord);
 
                 // fechaPasada[i] = true
                 // completado[i] = null;
-              }
+              }*/
 
               // } else if (dias <= 3) {
               //   fechaPasada[i] = false;
@@ -349,40 +350,17 @@ export class TreeGridWeekShowcaseComponent {
               completado[i] = false; 
 
               
-            } else if (this.pendiente.length !== 0){
+            } /*else if (this.pendiente.length !== 0){
 
               console.log(this.pendiente);
 
               fechaPasada[i] = true;
               completado[i] = null;
 
-            } else {
+            }*/ else {
 
               fechaPasada[i] = false;
               completado[i] = false;
-            
-
-              // for (const ord of this.orden[i]) {
-
-                // let fechaCreacionParse = this.datePipe.transform(ord.created_at, 'yyyy-MM-dd');
-                // let fechaEjecucionParse = ord.fechaejecucion;
-  
-                // let fechaCreacion  = new Date(fechaCreacionParse).getTime();
-                // let fechaEjecucion = new Date(fechaEjecucionParse).getTime();
-  
-                // let dias = (fechaEjecucion - fechaCreacion) / (1000*60*60*24);
-                
-                
-                // if ((dias > 3)){
-
-                //   fechaPasada[i] = true
-                //   completado[i] = null;
-
-                // } else if (dias <= 3) {
-                //   fechaPasada[i] = false;
-                //   completado[i] = false;
-                // } 
-              // }
             }
           };
 
@@ -392,14 +370,14 @@ export class TreeGridWeekShowcaseComponent {
             data: {
               objeto:{
                 objeto   : {
-                  objeto: {
+                  /*objeto: {
                     Lunes    : fechaPasada[0],
                     Martes   : fechaPasada[1],
                     Miercoles: fechaPasada[2],
                     Jueves   : fechaPasada[3],
                     Viernes  : fechaPasada[4],
                     Sabado   : fechaPasada[5],
-                  },
+                  },*/
                   Lunes    : completado[0],
                   Martes   : completado[1],
                   Miercoles: completado[2],

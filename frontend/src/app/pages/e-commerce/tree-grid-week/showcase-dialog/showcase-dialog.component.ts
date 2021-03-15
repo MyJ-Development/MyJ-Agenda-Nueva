@@ -62,6 +62,7 @@ export class ShowcaseDialogComponent implements OnInit {
   loading                 : boolean = false;
   settings                : any;
   modo                    : any;
+  ordenesAbiertas         : any[];
 
 
   // Constructor:
@@ -348,7 +349,17 @@ export class ShowcaseDialogComponent implements OnInit {
 
   ordenSeleccionada(evento) {
 
-    if ((this.rolUsuario === 'super') || (this.rolUsuario === 'coordinador')) {
+    this.ordenesAbiertas = [];
+
+    for (let i = 0; i < evento.selected.length; i++) {
+      
+      if (evento.selected[i].orden.estadoticket.id !== 4) {
+        this.ordenesAbiertas.push(evento.selected[i].orden)
+      };
+    };
+
+
+    if (((this.rolUsuario === 'super') || (this.rolUsuario === 'coordinador')) && (evento.selected.length === this.ordenesAbiertas.length)) {
       
       if (evento.selected.length > 0) {
         this.ordenesSeleccionadas = [];
@@ -359,38 +370,48 @@ export class ShowcaseDialogComponent implements OnInit {
         };
   
         this.tecnicos    = [];
-  
-        let lista: any[] = [];
-        let tech : any   = {}
-  
-        for (const orden of this.ordenesSeleccionadas) {
-  
-          let tipo = orden.tipo.id;
-      
-          /* Obtiene la lista de técnicos desde el servicio
-          y los almacena en variable (tecnicos): */
-          this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
-  
-            for (let i = 0; i < TecnicosList.length; i++) {
-  
-              lista.push(TecnicosList.filter((tecnico) => tecnico.active == true)[i]);
-            };
-  
-            lista.forEach((tecnico) => {
-  
-              if (tecnico) {
-              
-                //Si el valor no existe en el objeto tecnicos:
-                if (!(tecnico.rut in tech)) {
-  
-                  // si no existe creamos ese valor y lo añadimos al array final, y si sí existe no lo añadimos.
-                  tech[tecnico.rut] = true;
-                  this.tecnicos.push(tecnico);
+
+        if (this.rolUsuario === 'super') {
+
+          this.peticiones.leerTecnicos().subscribe((tecnicosList) => {
+
+            this.tecnicos = tecnicosList.filter((tecnico) => tecnico.active == true)
+          })
+          
+        } else {
+
+          let lista: any[] = [];
+          let tech : any   = {}
+    
+          for (const orden of this.ordenesSeleccionadas) {
+    
+            let tipo = orden.tipo.id;
+        
+            /* Obtiene la lista de técnicos desde el servicio
+            y los almacena en variable (tecnicos): */
+            this.peticiones.leerTecnicoTipoOrdenId(tipo).subscribe((TecnicosList) => {
+    
+              for (let i = 0; i < TecnicosList.length; i++) {
+    
+                lista.push(TecnicosList.filter((tecnico) => tecnico.active == true)[i]);
+              };
+    
+              // Se llena una lista nueva para que no se repitan los técnicos.
+              lista.forEach((tecnico) => {
+    
+                if (tecnico) {
+                
+                  //Si el valor no existe en el objeto tecnicos:
+                  if (!(tecnico.rut in tech)) {
+    
+                    // si no existe creamos ese valor y lo añadimos al array final, y si sí existe no lo añadimos.
+                    tech[tecnico.rut] = true;
+                    this.tecnicos.push(tecnico);
+                  };
                 };
-              }
-  
+              });
             });
-          });
+          };
         };
   
         this.ventana = true;
@@ -399,7 +420,11 @@ export class ShowcaseDialogComponent implements OnInit {
   
         this.ventana = false;
       };
-    }
+
+    } else {
+
+      this.ventana = false;
+    };
   };
 
 
