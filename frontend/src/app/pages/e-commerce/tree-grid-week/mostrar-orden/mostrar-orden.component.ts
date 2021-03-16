@@ -163,9 +163,7 @@ export class MostrarOrdenComponent implements OnInit {
     let comentarioPristine    = this.formulario.controls['comentario'].pristine;
 
 
-
-
-    if ((montoPristine === false) && (this.ordenCliente['monto'] =! this.formulario.value['monto'])) {
+    if ((montoPristine === false) && (this.ordenCliente['monto'] !== this.formulario.value['monto'])) {
 
       mensaje = `Se modifica el monto de $${this.ordenCliente['monto']} a $${this.formulario.value['monto']}`;
 
@@ -231,10 +229,7 @@ export class MostrarOrdenComponent implements OnInit {
 
 
     if ((tecnicoPristine === false) && (this.ordenCliente['encargado']['nombre'] != 
-    this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre'])) {
-
-      console.log('pristine' + tecnicoPristine);
-      console.log(this.ordenCliente['encargado']['nombre'] + ' - ' + this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre']);
+    this.tecnicos.filter(x => x.rut == this.formulario.value['encargado'])[0]['nombre'])) {
 
       mensaje = `Se re-asigna técnico '${this.ordenCliente['encargado']['nombre']}' por 
       '${this.tecnicos.filter(x => x.rut ==this.formulario.value['encargado'])[0]['nombre']}'`;
@@ -490,7 +485,8 @@ export class MostrarOrdenComponent implements OnInit {
       /* Obtiene la lista de técnicos desde el servicio
       y los almacena en variable (tecnicos): */
       this.service.leerTecnicos().subscribe((TecnicosList) => {
-        this.listaTecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        this.listaTecnicos = this.tecnicos;
       });
       
     } else if (this.rol == 'vendedor') {

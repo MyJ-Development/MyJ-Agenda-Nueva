@@ -168,7 +168,7 @@ export class OrdenCompletaComponent implements OnInit {
     let comentarioPristine    = this.formulario.controls['comentario'].pristine;
 
 
-    if ((montoPristine === false) && (this.ordenCliente['monto'] =! this.formulario.value['monto'])) {
+    if ((montoPristine === false) && (this.ordenCliente['monto'] !== this.formulario.value['monto'])) {
 
       mensaje = `Se modifica el monto de $${this.ordenCliente['monto']} a $${this.formulario.value['monto']}`;
 
@@ -584,7 +584,8 @@ export class OrdenCompletaComponent implements OnInit {
       /* Obtiene la lista de técnicos desde el servicio
       y los almacena en variable (tecnicos): */
       this.service.leerTecnicos().subscribe((TecnicosList) => {
-        this.listaTecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        this.listaTecnicos = this.tecnicos;
       });
       
     } else if (this.rol == 'vendedor') {
@@ -596,7 +597,6 @@ export class OrdenCompletaComponent implements OnInit {
       y los almacena en variable (tecnicos): */
       this.service.leerTecnicoUsuario(this.usuario).subscribe((TecnicosList) => {
         this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
-        console.log(this.tecnicos);
       });
 
     } else {

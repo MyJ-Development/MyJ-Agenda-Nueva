@@ -245,7 +245,7 @@ export class MostrarClienteComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    if (this.rol == 'super' || this.rol == 'coordinador') {
+    if (this.rol == 'super' || this.rol == 'coordinador' || this.rol == 'user') {
 
       this.formulario = this.fb.group({
 
