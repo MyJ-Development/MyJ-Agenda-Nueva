@@ -122,7 +122,6 @@ export class ListaOrdenesComponent implements OnInit {
           encargado      : this.ordenesPorCliente[i]['encargado']['nombre'],
           estado_ticket  : this.ordenesPorCliente[i]['estadoticket']['descripcion'],
         });
-
       };
 
       // Carga los datos insertados en una estructura del componente html:
@@ -133,7 +132,6 @@ export class ListaOrdenesComponent implements OnInit {
 
   // Método encargado de enviar los datos del evento al servicio y abre el componente indicado:
   ordenCompleta(event) {
-    console.log(event);
 
     // Envía el rur obtenido del evento al servicio indicado:
     this.tableService.setRut_cliente(event['data']['objeto']['client_order']['rut']);

@@ -99,12 +99,13 @@ export class MisOrdenesComponent {
     this.permisos();
   };
 
+
   permisos() {
 
     if (this.rol == 'super') {
       this.correo = true;
-    }
-  }
+    };
+  };
 
 
   // Método encargado de obtener datos del formulario html:
@@ -139,6 +140,7 @@ export class MisOrdenesComponent {
         // Cambia el estado de la tabla para mostrar la información:
         this.aparece = true;
       };
+      
     } else {
 
       if ((this.formulario.value['buscador']) && (this.formulario.value['date_init']) 

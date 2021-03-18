@@ -18,7 +18,6 @@ import { tableService } from '../../../../services/table.service';
 import { MostrarOrdenComponent } from '../mostrar-orden/mostrar-orden.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
-import { debounceTime } from 'rxjs/operators';
 
 
 // Componente decorador:
@@ -89,11 +88,14 @@ export class ShowcaseDialogComponent implements OnInit {
     this.max = this.dateService.addYear(this.dateService.today(), +1);
 
     if ((this.rolUsuario === 'super') || (this.rolUsuario === 'coordinador')) {
+
       this.opcionesList();
       this.modo = 'multi'
+
     } else {
+
       this.modo = false;
-    }
+    };
   };
 
 
@@ -174,7 +176,7 @@ export class ShowcaseDialogComponent implements OnInit {
         },
       },
     };
-  }
+  };
 
 
   opcionesList() {
@@ -204,7 +206,7 @@ export class ShowcaseDialogComponent implements OnInit {
 
         this.verFecha   = true;
         this.verTecnico = true;
-      }
+      };
     });
   };
 
@@ -254,8 +256,7 @@ export class ShowcaseDialogComponent implements OnInit {
             this.ref.close();
           });
         };
-
-      }
+      };
 
     } else if (this.formulario.value['buscar'] === 'Técnico') {
       
@@ -354,6 +355,7 @@ export class ShowcaseDialogComponent implements OnInit {
     for (let i = 0; i < evento.selected.length; i++) {
       
       if (evento.selected[i].orden.estadoticket.id !== 4) {
+
         this.ordenesAbiertas.push(evento.selected[i].orden)
       };
     };
@@ -461,7 +463,7 @@ export class ShowcaseDialogComponent implements OnInit {
         order_id  : orden_id,
         comentario: mensaje,
         user_email: this.usuario,
-      }
+      };
 
       this.peticiones.agregarSeguimiento(this.reportEventos).subscribe(data => {
 
@@ -485,13 +487,13 @@ export class ShowcaseDialogComponent implements OnInit {
         order_id  : orden_id,
         comentario: mensajeTecnico,
         user_email: this.usuario,
-      }
+      };
 
       this.reportFecha = {
         order_id  : orden_id,
         comentario: mensajeFecha,
         user_email: this.usuario,
-      }
+      };
 
       this.peticiones.agregarSeguimiento(this.reportFecha).subscribe(data => {
 
@@ -518,7 +520,8 @@ export class ShowcaseDialogComponent implements OnInit {
       'Orden actualizada exitosamente!\n Recarga para visualizar',
       `ID Orden: `+id,
       { destroyByClick,duration });
-  }
+  };
+
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
@@ -532,10 +535,12 @@ export class ShowcaseDialogComponent implements OnInit {
     });
   };
 
+
   // Los métodos sendXXXX enlazan datos del componente actual, con los metodos del servicio:
   sendIdOrden(datos) {
     this.service.setIdOrden(datos);
   };
+
 
   sendOrdenCompleta(datos) {
     this.service.setOrdenCompleta(datos);
@@ -556,9 +561,6 @@ export class ShowcaseDialogComponent implements OnInit {
 
     // Al iniciarse el método, se abre el componente indicado:
     this.mostrar.open(MostrarOrdenComponent);
-
-    // Al iniciarse el método, se cierra el componente actual guardado en referencia:
-    // this.ref.close();
   };
 
 
@@ -574,6 +576,7 @@ export class ShowcaseDialogComponent implements OnInit {
       };
     };
 
+    
     // Compara y enlaza todas las ordenes separadas anteriormente:
     try {
 

@@ -101,60 +101,61 @@ export class AgregarOrdenComponent implements OnInit {
     this.getOrdenes();
   };
 
+
   get rutNoValido() {
     return this.formulario.get('rut_cliente').invalid &&
     this.formulario.get('rut_cliente').touched;
-  }
+  };
 
   get direccionNoValido() {
     return this.formulario.get('direccion_cliente').invalid &&
     this.formulario.get('direccion_cliente').touched;
-  }
+  };
 
   get encargadoNoValido() {
     return this.formulario.get('encargado').invalid &&
     this.formulario.get('encargado').touched;
-  }
+  };
 
   get disponibilidadNoValido() {
     return this.formulario.get('disponibilidad').invalid &&
     this.formulario.get('disponibilidad').touched;
-  }
+  };
 
   get estadoClienteNoValido() {
     return this.formulario.get('estado_cliente').invalid &&
     this.formulario.get('estado_cliente').touched;
-  }
+  };
 
   get estadoTicketNoValido() {
     return this.formulario.get('estado_ticket').invalid &&
     this.formulario.get('estado_ticket').touched;
-  }
+  };
 
   get medioPagoNoValido() {
     return this.formulario.get('medioPago').invalid &&
     this.formulario.get('medioPago').touched;
-  }
+  };
 
   get montoNoValido() {
     return this.formulario.get('monto').invalid &&
     this.formulario.get('monto').touched;
-  }
+  };
 
   get tipoOrdenNoValido() {
     return this.formulario.get('tipo_orden').invalid &&
     this.formulario.get('tipo_orden').touched;
-  }
+  };
 
   get prioridadNoValido() {
     return this.formulario.get('prioridad').invalid &&
     this.formulario.get('prioridad').touched;
-  }
+  };
 
   get comentarioNoValido() {
     return this.formulario.get('comentario').invalid &&
     this.formulario.get('comentario').touched;
-  }
+  };
 
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
@@ -278,7 +279,8 @@ export class AgregarOrdenComponent implements OnInit {
       /* Obtiene la lista de técnicos desde el servicio
       y los almacena en variable (tecnicos): */
       this.service.leerTecnicos().subscribe((TecnicosList) => {
-        this.listaTecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
+        this.listaTecnicos = this.tecnicos;
       });
       
     } else if (this.rol === 'vendedor') {
@@ -315,9 +317,10 @@ export class AgregarOrdenComponent implements OnInit {
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (tipoOrdenes): */
     this.service.leerTipoOrdenes().subscribe((tipoOrdenesList) => {
-      this.tipoOrdenes = tipoOrdenesList;
+      this.tipoOrdenes = tipoOrdenesList.filter((tipo) => tipo.active === true);
     });
   };
+
 
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarEstadoCliente(){
@@ -325,9 +328,10 @@ export class AgregarOrdenComponent implements OnInit {
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (estadoCliente): */
     this.service.leerEstadoCliente().subscribe((estadoClienteList) => {
-      this.estadoCliente = estadoClienteList;
+      this.estadoCliente = estadoClienteList.filter((estado) => estado.active === true);
     });
   };
+
 
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarEstadoTicket(){
@@ -335,9 +339,10 @@ export class AgregarOrdenComponent implements OnInit {
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (estadoTicket): */
     this.service.leerEstadoTicket().subscribe((estadoTicketList) => {
-      this.estadoTicket = estadoTicketList;
+      this.estadoTicket = estadoTicketList.filter((estado) => estado.active === true);
     });
   };
+
 
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarMedioPago(){
@@ -345,9 +350,10 @@ export class AgregarOrdenComponent implements OnInit {
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (medioPago): */
     this.service.leerMedioPago().subscribe((medioPagoList) => {
-      this.medioPago = medioPagoList;
+      this.medioPago = medioPagoList.filter((medio) => medio.active === true);
     });
   };
+
 
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarPrioridad(){
@@ -355,9 +361,10 @@ export class AgregarOrdenComponent implements OnInit {
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (prioridad): */
     this.service.leerPrioridad().subscribe((prioridadList) => {
-      this.prioridad = prioridadList;
+      this.prioridad = prioridadList.filter((prioridad) => prioridad.active === true);
     });
   };
+
 
 /*
   showToast(icono,text?) {
@@ -367,12 +374,14 @@ export class AgregarOrdenComponent implements OnInit {
       text)
   }
 */
+
   showToast(destroyByClick,duration,id) {
     this.toastrService.show(
       'Orden creada exitosamente!',
       `ID Orden: `+id,
       { destroyByClick,duration });
-  }
+  };
+  
 
   // Método encargado de enviar los datos obtenidos al servicio:
   agregarOrden() {

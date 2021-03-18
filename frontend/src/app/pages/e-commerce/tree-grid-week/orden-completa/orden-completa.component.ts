@@ -112,8 +112,6 @@ export class OrdenCompletaComponent implements OnInit {
     // Almacena en variable global la orden obtenida desde el servicio:
     this.ordenCliente = this.tableService.getOrden();
 
-    console.log(this.ordenCliente);
-
     this.encargado = this.ordenCliente['encargado'];
 
     // Almacena en variable global el id de la orden:
@@ -136,7 +134,6 @@ export class OrdenCompletaComponent implements OnInit {
 
     // Almacena en variable global el id del estado de la prioridad:
     this.id_prioridad = this.ordenCliente['prioridad']['id'];
-
 
     // Almacena en variable local la fecha de ejecución de la orden:
     let fecha = new Date(this.ordenCliente['fechaejecucion']);
@@ -176,16 +173,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((direccionPristine === false) && (this.ordenCliente['client_residence']['direccion'] != 
@@ -198,16 +196,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((comunaPristine === false) && (this.ordenCliente['client_residence']['comuna'] != 
@@ -220,16 +219,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((tecnicoPristine === false) && (this.ordenCliente['encargado']['nombre'] != 
@@ -242,16 +242,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((fechaPristine === false) && (this.datePipe.transform(this.ordenCliente['fechaejecucion'], 'dd-MM-yyyy') != this.datePipe.transform(this.formulario.value['fecha_ejecucion'], 'dd-MM-yyy'))) {
@@ -262,16 +263,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((disponibilidadPristine === false) && (this.ordenCliente['disponibilidad'] != 
@@ -284,16 +286,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((estadoClientePristine === false) && (this.ordenCliente['estadocliente']['descripcion'] != 
@@ -305,16 +308,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((estadoTicketPristine === false) && (this.ordenCliente['estadoticket']['descripcion'] != 
@@ -327,16 +331,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((tipoOrdenPristine === false) && (this.ordenCliente['tipo']['descripcion'] != 
@@ -349,16 +354,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((medioPagoPristine === false) && (this.ordenCliente['mediodepago']['descripcion'] != 
@@ -371,16 +377,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((prioridadPristine === false) && (this.ordenCliente['prioridad']['descripcion'] != 
@@ -393,16 +400,17 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
+    };
 
 
     if ((comentarioPristine === false) && (this.ordenCliente['comentario'] != 
@@ -414,18 +422,18 @@ export class OrdenCompletaComponent implements OnInit {
         order_id  : this.ordenCliente['id'],
         comentario: mensaje,
         user_email: this.tableService.getUsuario(),
-      }
+      };
+
       this.loading = true;
+
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
         console.log('res');
         console.log(res);
-        //this.router.navigate(['/success']);
       });
-    }
-
-  }
+    };
+  };
 
 
   showToast(icono) {
@@ -434,7 +442,8 @@ export class OrdenCompletaComponent implements OnInit {
       'Actualiza para visualizar los cambios',
       'Datos actualizados exitosamente!',
       iconConfig)
-  }
+  };
+
 
   getOrdenes(){
 
@@ -520,7 +529,7 @@ export class OrdenCompletaComponent implements OnInit {
                     });
                   };
                 };
-              }
+              };
             };
           });
         };
@@ -600,6 +609,7 @@ export class OrdenCompletaComponent implements OnInit {
       });
 
     } else {
+
       this.service.leerTecnicos().subscribe((TecnicosList) => {
         this.tecnicos = TecnicosList.filter((tecnico) => tecnico.active == true);
       });
@@ -625,59 +635,59 @@ export class OrdenCompletaComponent implements OnInit {
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (tipoOrdenes): */
     this.service.leerTipoOrdenes().subscribe((tipoOrdenesList) => {
-      this.tipoOrdenes = tipoOrdenesList;
+      this.tipoOrdenes = tipoOrdenesList.filter((tipo) => tipo.active === true);
     });
   };
 
 
-    // Método que sincroniza los datos del servicio con los del componente actual:
-    sincronizarEstadoCliente(){
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarEstadoCliente(){
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (estadoCliente): */
+    this.service.leerEstadoCliente().subscribe((estadoClienteList) => {
+      this.estadoCliente = estadoClienteList.filter((estado) => estado.active === true);
+    });
+  };
+  
 
-      /* Obtiene la lista de tipos de ordenes desde el servicio
-      y los almacena en variable (estadoCliente): */
-      this.service.leerEstadoCliente().subscribe((estadoClienteList) => {
-        this.estadoCliente = estadoClienteList;
-      });
-    };
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarEstadoTicket(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (estadoTicket): */
+    this.service.leerEstadoTicket().subscribe((estadoTicketList) => {
+      this.estadoTicket = estadoTicketList.filter((estado) => estado.active === true);
+    });
+  };
   
-    // Método que sincroniza los datos del servicio con los del componente actual:
-    sincronizarEstadoTicket(){
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarMedioPago(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (medioPago): */
+    this.service.leerMedioPago().subscribe((medioPagoList) => {
+      this.medioPago = medioPagoList.filter((medio) => medio.active === true);
+    });
+  };
   
-      /* Obtiene la lista de tipos de ordenes desde el servicio
-      y los almacena en variable (estadoTicket): */
-      this.service.leerEstadoTicket().subscribe((estadoTicketList) => {
-        this.estadoTicket = estadoTicketList;
-      });
-    };
-  
-    // Método que sincroniza los datos del servicio con los del componente actual:
-    sincronizarMedioPago(){
-  
-      /* Obtiene la lista de tipos de ordenes desde el servicio
-      y los almacena en variable (medioPago): */
-      this.service.leerMedioPago().subscribe((medioPagoList) => {
-        this.medioPago = medioPagoList;
-      });
-    };
-  
-    // Método que sincroniza los datos del servicio con los del componente actual:
-    sincronizarPrioridad(){
-  
-      /* Obtiene la lista de tipos de ordenes desde el servicio
-      y los almacena en variable (prioridad): */
-      this.service.leerPrioridad().subscribe((prioridadList) => {
-        this.prioridad = prioridadList;
-      });
-    };
+
+  // Método que sincroniza los datos del servicio con los del componente actual:
+  sincronizarPrioridad(){
+
+    /* Obtiene la lista de tipos de ordenes desde el servicio
+    y los almacena en variable (prioridad): */
+    this.service.leerPrioridad().subscribe((prioridadList) => {
+      this.prioridad = prioridadList.filter((prioridad) => prioridad.active === true);
+    });
+  };
     
 
-    verSeguimientos(){
+  verSeguimientos(){
+    this.tableService.setId_orden(this.ordenCliente['id']);
 
-      this.tableService.setId_orden(this.ordenCliente['id']);
-  
-      this.mostrar.open(SeguimientosComponent);
-  
-    }
+    this.mostrar.open(SeguimientosComponent);
+  };
 
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
@@ -745,7 +755,8 @@ export class OrdenCompletaComponent implements OnInit {
     };
   };
 
-    // Método encargado de abrir el componente con los datos del cliente:
+  
+  // Método encargado de abrir el componente con los datos del cliente:
   verCliente() {
 
     // Envía el rut del cliente seleccionado, al servicio indicado:
@@ -761,7 +772,8 @@ export class OrdenCompletaComponent implements OnInit {
 
   cerrar() {
     this.ref.close();
-  }
+  };
+  
 
   // Método encargado de transformar la primera letra de cada palabra en mayúscula:
   mayus(dato) {

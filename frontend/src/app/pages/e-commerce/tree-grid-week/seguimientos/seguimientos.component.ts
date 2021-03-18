@@ -49,21 +49,29 @@ export class SeguimientosComponent implements OnInit {
 
   constructor(private service: peticionesGetService,
               private tableService: tableService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe) { 
+
+  };
+
 
   ngOnInit(): void {
+
     this.sincronizarSeguimientos();
-  }
+  };
+
 
   // Método que sincroniza los datos del servicio con los del componente actual:
   sincronizarSeguimientos() {
+
     /* Obtiene la lista de tipos de ordenes desde el servicio
     y los almacena en variable (prioridad): */
     this.service.leerSeguimientos(this.tableService.getID_orden()).subscribe((seguimientosList) => {
+
       this.seguimientos = seguimientosList;
       
-            // Recorre el total de la lista de ordenes:
+      // Recorre el total de la lista de ordenes:
       for (let i = 0; i < this.seguimientos.length; i++) {
+
         // Inserta los datos indicados en la variable data:
         this.data.push({
           fecha        : this.datePipe.transform(this.seguimientos[i]['created_at'],'dd-MM-yyyy, h:mm a') ,
@@ -71,8 +79,9 @@ export class SeguimientosComponent implements OnInit {
           usuario      : this.seguimientos[i]['created_by']['email'],
         });
       };
+
       // Carga los datos insertados en una estructura del componente html:
       this.source.load(this.data);
     });
   };
-}
+};

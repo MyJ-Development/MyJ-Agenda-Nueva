@@ -76,7 +76,7 @@ export class TreeGridWeekShowcaseComponent {
   diaFecha                : Date;
   year                    : any;
   result                  : any[] = [];
-  pendiente               : any[] = []
+  pendiente               : any[] = [];
   loading                 : any = false;
   orden                   : any[];
 
@@ -95,16 +95,12 @@ export class TreeGridWeekShowcaseComponent {
               private tableService     : tableService,
               private router           : Router) {
 
-
-
     // save current route first
     const currentRoute = this.router.url;
 
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([currentRoute]); // navigate to same route
     }); 
-
-
   };
 
 
@@ -131,7 +127,7 @@ export class TreeGridWeekShowcaseComponent {
     this.loading = true;
     this.newDate = this.firstDayOfWeek(this.year, Number(this.todayFormated));
     this.updateTreeGrid(this.newDate);
-  }
+  };
 
 
   // Obtiene el primer día de la semana:
@@ -161,14 +157,13 @@ export class TreeGridWeekShowcaseComponent {
 
 
   // Método que al ejecutarse, obtiene y envía datos al servicio:
-  open(index: any, data: any, event) {
+  open(index: any, data: any) {
+
     this.encargado = data;
     this.indice    = index;
     this.sendIndex(this.indice);
     this.sendEncargado(this.encargado);
     this.dialogService.open(ShowcaseDialogComponent);
-
-    console.log(event);
   };
 
 
@@ -305,79 +300,65 @@ export class TreeGridWeekShowcaseComponent {
 
             for (let ord of this.orden[i]) {
 
-              //AMARILLO
-              /* console.log(ord);
-
-              let fechaCreacionParse = this.datePipe.transform(ord.created_at, 'yyyy-MM-dd');
-              let fechaEjecucionParse = ord.fechaejecucion;
-
-              let fechaCreacion  = new Date(fechaCreacionParse).getTime();
-              let fechaEjecucion = new Date(fechaEjecucionParse).getTime();
-
-              let dias: number = (fechaEjecucion - fechaCreacion) / (1000*60*60*24);
-
-              console.log(dias);*/
-
               if (ord.estadoticket.id === 4) {
 
                 this.result.push(ord.estadoticket.id)
 
+              } else {
+
+                let fechaCreacionParse = this.datePipe.transform(ord.created_at, 'yyyy-MM-dd');
+                let fechaEjecucionParse = ord.fechaejecucion;
+  
+                let fechaCreacion  = new Date(fechaCreacionParse).getTime();
+                let fechaEjecucion = new Date(fechaEjecucionParse).getTime();
+  
+                let dias = (fechaEjecucion - fechaCreacion) / (1000*60*60*24);
+
+
+                if (dias > 3) {
+
+                  this.pendiente.push(ord.id);
+                };
               };
-              
-              /*if ((ord.estadoticket.id !== 4) && (dias > 3)){
-
-                this.pendiente.push(ord);
-
-                // fechaPasada[i] = true
-                // completado[i] = null;
-              }*/
-
-              // } else if (dias <= 3) {
-              //   fechaPasada[i] = false;
-              //   completado[i] = false;
-              // } 
             };
-            
+
 
             if ((this.result.length === this.orden[i].length) && (this.result.length !== 0)) {
 
               completado[i] = true;
               fechaPasada[i] = false;
 
-            } else if (this.result.length === 0) {
+            } else if ((this.result.length === 0) && (this.pendiente.length === 0)) {
 
               fechaPasada[i] = false;
               completado[i] = false; 
 
-              
-            } /*else if (this.pendiente.length !== 0){
-
-              console.log(this.pendiente);
+            } else if (this.pendiente.length != 0){
 
               fechaPasada[i] = true;
               completado[i] = null;
 
-            }*/ else {
+            } else {
 
               fechaPasada[i] = false;
               completado[i] = false;
-            }
+            };
           };
-
           
+
           // Inserta en cada día de la semana, un técnico y el número de ordenes diarias:
           this.data.push({
             data: {
               objeto:{
                 objeto   : {
-                  /*objeto: {
+                  objeto: {
                     Lunes    : fechaPasada[0],
                     Martes   : fechaPasada[1],
                     Miercoles: fechaPasada[2],
                     Jueves   : fechaPasada[3],
                     Viernes  : fechaPasada[4],
                     Sabado   : fechaPasada[5],
-                  },*/
+                  },
                   Lunes    : completado[0],
                   Martes   : completado[1],
                   Miercoles: completado[2],
@@ -402,7 +383,7 @@ export class TreeGridWeekShowcaseComponent {
           });
 
           tec_counter = tec_counter + 1;
-        }
+        };
       };
 
       this.sendOrdenesDiariasPorTecnico(test);

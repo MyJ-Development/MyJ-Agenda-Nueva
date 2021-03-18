@@ -47,6 +47,7 @@ export class MostrarClienteComponent implements OnInit {
   comunas            : any;
   rol                : any;
 
+
   // Constructor:
   constructor(protected ref       : NbDialogRef<MostrarClienteComponent>,
               private mostrar     : NbDialogService,
@@ -110,7 +111,7 @@ export class MostrarClienteComponent implements OnInit {
       '',
       'Datos actualizados exitosamente!',
       iconConfig)
-  }
+  };
   
 
   // Método encargado de actualizar datos obtenidos desde la API:
@@ -172,6 +173,7 @@ export class MostrarClienteComponent implements OnInit {
       });      
 
       this.showToast('');
+
       // Si los campos tienen un error:
     } else {
       alert("Revisa los campos");
@@ -283,7 +285,7 @@ export class MostrarClienteComponent implements OnInit {
         mac_cliente      :  this.macArray,
         pppoe_cliente    :  this.pppoeArray
       });
-    }
+    };
   };
 
 

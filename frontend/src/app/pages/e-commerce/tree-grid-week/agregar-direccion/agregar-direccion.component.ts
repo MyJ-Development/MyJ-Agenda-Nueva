@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
 
 // Servicios:
 import { peticionesGetService } from '../../../../services/peticionesGet.service';
+import { tableService }         from '../../../../services/table.service';
 
-import { NbDialogRef, NbIconConfig, NbPopoverModule, NbToastrService } from "@nebular/theme";
-import { tableService } from '../../../../services/table.service';
+import { NbDialogRef, NbIconConfig, NbToastrService } from "@nebular/theme";
+
 
 
 // Componente decorado:
@@ -54,29 +55,31 @@ export class AgregarDireccionComponent {
     this.crearFormulario();
   };
 
+
   get rutNoValido() {
     return this.formulario.get('rut_cliente').invalid && this.formulario.get('rut_cliente').touched;
-  }
+  };
 
   get direccionNoValido() {
     return this.formulario.get('direccion_cliente').invalid && 
     this.formulario.get('direccion_cliente').touched;
-  }
+  };
 
   get comunaNoValido() {
     return this.formulario.get('comuna_cliente').invalid && 
     this.formulario.get('comuna_cliente').touched;
-  }
+  };
 
   get macNoValido() {
     return this.formulario.get('mac_cliente').invalid && 
     this.formulario.get('mac_cliente').touched;
-  }
+  };
 
   get pppoeNoValido() {
     return this.formulario.get('pppoe_cliente').invalid && 
     this.formulario.get('pppoe_cliente').touched;
-  }
+  };
+
 
   // Método encargado de construir el formulario con cada control especificado con sus validadores:
   crearFormulario() {
@@ -98,7 +101,7 @@ export class AgregarDireccionComponent {
       '',
       'Dirección creada exitosamente!',
       iconConfig)
-  }
+  };
   
 
   // Método encargado de postear la información hacia la API:

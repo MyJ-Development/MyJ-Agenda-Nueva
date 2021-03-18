@@ -67,45 +67,47 @@ export class AgregarClienteComponent {
     this.crearFormulario();
   };
 
+
   get rutNoValido() {
     return this.formulario.get('rut_cliente').invalid && this.formulario.get('rut_cliente').touched;
-  }
+  };
 
   get nombreNoValido() {
     return this.formulario.get('nombre_cliente').invalid && this.formulario.get('nombre_cliente').touched;
-  }
+  };
 
   get correoNoValido() {
     return this.formulario.get('correo_cliente').invalid && this.formulario.get('correo_cliente').touched;
-  }
+  };
 
   get telefono1NoValido() {
     return this.formulario.get('telefono1').invalid && this.formulario.get('telefono1').touched;
-  }
+  };
 
   get telefono2NoValido() {
     return this.formulario.get('telefono2').invalid && this.formulario.get('telefono2').touched;
-  }
+  };
 
   get direccionNoValido() {
     return this.formulario.get('residencia.direccion_cliente').invalid && 
     this.formulario.get('residencia.direccion_cliente').touched;
-  }
+  };
 
   get comunaNoValido() {
     return this.formulario.get('residencia.comuna_cliente').invalid && 
     this.formulario.get('residencia.comuna_cliente').touched;
-  }
+  };
 
   get macNoValido() {
     return this.formulario.get('residencia.mac_cliente').invalid && 
     this.formulario.get('residencia.mac_cliente').touched;
-  }
+  };
 
   get pppoeNoValido() {
     return this.formulario.get('residencia.pppoe_cliente').invalid && 
     this.formulario.get('residencia.pppoe_cliente').touched;
-  }
+  };
+
 
   // Método encargado de construir el formulario con cada control especificado con sus validadores:
   crearFormulario() {
@@ -134,7 +136,7 @@ export class AgregarClienteComponent {
       '',
       'Cliente creado exitosamente!',
       iconConfig)
-  }
+  };
 
 
   // Método encargado de postear la información hacia la API:
@@ -184,7 +186,7 @@ export class AgregarClienteComponent {
       
     } else {
       return this.formulario.markAllAsTouched();
-    }
+    };
 
     let res = '';
 

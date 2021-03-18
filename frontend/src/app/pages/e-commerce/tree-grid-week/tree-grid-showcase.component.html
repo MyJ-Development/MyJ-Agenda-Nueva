@@ -44,9 +44,10 @@
             {{row.data[column] || '-'}}
             <hr>
             <button [ngClass]="{'botonVerde':(row.data.objeto.objeto[column]) === true, 
-                                'botonRojo':(row.data.objeto.objeto[column]) === false}" 
+                                'botonRojo':(row.data.objeto.objeto[column]) === false, 
+                                'botonAmarillo':(row.data.objeto.objeto.objeto[column]) === true}" 
                     nbButton 
-                    (click)="open(index, row.data[column], row.data.objeto.objeto[column])">
+                    (click)="open(index, row.data[column], row.data.objeto.objeto.objeto[column])">
               {{row.data.objeto[column]}}
             </button>
           </td>

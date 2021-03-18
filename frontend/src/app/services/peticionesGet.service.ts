@@ -17,7 +17,7 @@ export class peticionesGetService {
         return this.http.get<OrdenesDiarias[]>('http://10.19.11.9:3003/api/scheduler/order?date_init=' + date_init + '&date_end=' + date_end + '')
     }
 
-    leerTipoOrdenes(): Observable<TipoOrdenes[]> {
+    leerTipoOrdenes(): Observable<any[]> {
         return this.http.get<TipoOrdenes[]>('http://10.19.11.9:3003/api/scheduler/typeorder')
     }
 
