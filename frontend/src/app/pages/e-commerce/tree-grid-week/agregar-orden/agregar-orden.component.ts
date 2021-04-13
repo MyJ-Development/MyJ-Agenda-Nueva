@@ -46,7 +46,7 @@ export class AgregarOrdenComponent implements OnInit {
   listaTecnicos     : any[];
   fechaControl      : any;
   tecnicoCapacidad  : any[] = [];
-  rutRegExp         = new RegExp('^([0-9]+-[0-9K])$');
+  rutRegExp         = new RegExp('^([0-9]+-[0-9k_K])$');
   montoRegExp       = new RegExp(/^\d+$/);
   min               : Date;
   max               : Date;

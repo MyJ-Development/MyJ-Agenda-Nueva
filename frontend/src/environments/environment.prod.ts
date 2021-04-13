@@ -5,7 +5,7 @@
  */
 export const environment = {
   production: true,
-  apiUrl: 'http://10.19.11.9:3003/api',
+  apiUrl: 'http://170.239.188.2:3011/api',
   testUser: {
     token: {},
     email: '',
