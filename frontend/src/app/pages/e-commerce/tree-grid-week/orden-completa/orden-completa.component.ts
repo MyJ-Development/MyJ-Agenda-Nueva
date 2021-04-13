@@ -63,7 +63,8 @@ export class OrdenCompletaComponent implements OnInit {
   listaTecnicos     : any[];
   tecnicoCapacidad  : any[] = [];
   loading           = false;
-
+  telefonista = false;
+  coordinador = false;
 
   // Constructor:
   constructor(protected ref       : NbDialogRef<OrdenCompletaComponent>,
@@ -568,6 +569,7 @@ export class OrdenCompletaComponent implements OnInit {
 
       
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+      console.log(this.report)
       this.service.editarOrden(this.report).subscribe(data => {
         res = data;
         console.log('res');
@@ -693,10 +695,10 @@ export class OrdenCompletaComponent implements OnInit {
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario() {
 
-    if ((this.rol === 'super') || (this.ordenCliente['estadoticket']['id'] !== 4)) {
-
+    if (this.rol === 'super') {
+      this.telefonista = false;
+      this.coordinador = false;
       this.mostrarBoton = true;
-      
       this.formulario = this.fb.group({
 
         nombre_cliente   : [{value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),
@@ -726,8 +728,74 @@ export class OrdenCompletaComponent implements OnInit {
         comentario       : [this.formato(this.ordenCliente['comentario']), Validators.required],
       });
 
-    } else if (this.ordenCliente['estadoticket']['id'] === 4) {
+    }
 
+    else if (this.ordenCliente['estadoticket']['id'] != 4 && this.rol == 'coordinador') {
+      this.coordinador = true;
+      this.mostrarBoton = true;
+      this.formulario = this.fb.group({
+
+        nombre_cliente   : [{value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),
+                          disabled: true}, Validators.required],
+        rut_cliente      : [{ value: this.rut_cliente, disabled: true }, Validators.required],
+        direccion_cliente: [this.id_residencia, Validators.required],
+        comuna_cliente   : [this.id_residencia, Validators.required],
+        telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+                           Validators.required],
+        telefono2        : [{value: this.ordenCliente['client_order']['contacto2'], disabled: true},
+                           Validators.required],
+        correo_cliente   : [{value: this.ordenCliente['client_order']['email'], disabled: true},
+                           Validators.required],
+        encargado        : [this.ordenCliente['encargado']['rut'], Validators.required],
+        creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true},
+                           Validators.required],
+        fecha_ejecucion  : [new Date(this.fecha_ejecucion), Validators.required],
+        fecha_creacion   : [{value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'),
+                           disabled: true}, Validators.required],
+        disponibilidad   : [this.ordenCliente['disponibilidad'], Validators.required],
+        estadoCliente    : [this.id_estadoCliente, Validators.required],
+        estadoTicket     : [this.id_estadoTicket, Validators.required],
+        medioPago        : [this.id_medioPago, Validators.required],
+        monto            : [this.ordenCliente['monto'], Validators.required],
+        tipo_orden       : [this.id_tipoOrden, Validators.required],
+        prioridad        : [this.id_prioridad, Validators.required],
+        comentario       : [this.formato(this.ordenCliente['comentario']), Validators.required],
+      });
+    }
+    else if ((this.ordenCliente['estadoticket']['id'] !== 4) && this.rol == 'telefonista') {
+      console.log("Entro telefonista!")
+      this.telefonista = true;
+      this.mostrarBoton = true;
+      this.formulario = this.fb.group({
+
+        nombre_cliente   : [{value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),
+                          disabled: true}, Validators.required],
+        rut_cliente      : [{ value: this.rut_cliente, disabled: true }, Validators.required],
+        direccion_cliente: [this.id_residencia, Validators.required],
+        comuna_cliente   : [this.id_residencia, Validators.required],
+        telefono1        : [{value: this.ordenCliente['client_order']['contacto1'], disabled: true},
+                           Validators.required],
+        telefono2        : [{value: this.ordenCliente['client_order']['contacto2'], disabled: true},
+                           Validators.required],
+        correo_cliente   : [{value: this.ordenCliente['client_order']['email'], disabled: true},
+                           Validators.required],
+        encargado        : [this.ordenCliente['encargado']['rut'], Validators.required],
+        creado_por       : [{value: this.ordenCliente['created_by']['email'], disabled: true},
+                           Validators.required],
+        fecha_ejecucion  : [new Date(this.fecha_ejecucion), Validators.required],
+        fecha_creacion   : [{value: this.datePipe.transform(this.ordenCliente['created_at'], 'yyyy-MM-dd'),
+                           disabled: true}, Validators.required],
+        disponibilidad   : [this.ordenCliente['disponibilidad'], Validators.required],
+        estadoCliente    : [this.id_estadoCliente, Validators.required],
+        estadoTicket     : [this.id_estadoTicket, Validators.required],
+        medioPago        : [this.id_medioPago, Validators.required],
+        monto            : [this.ordenCliente['monto'], Validators.required],
+        tipo_orden       : [this.id_tipoOrden, Validators.required],
+        prioridad        : [this.id_prioridad, Validators.required],
+        comentario       : [this.formato(this.ordenCliente['comentario']), Validators.required],
+      });
+
+    } else if (this.ordenCliente['estadoticket']['id'] === 4 && this.rol != 'super') {
       this.formulario = this.fb.group({
 
         nombre_cliente   : [{ value: this.mayus(this.formato(this.ordenCliente['client_order']['nombre'])),

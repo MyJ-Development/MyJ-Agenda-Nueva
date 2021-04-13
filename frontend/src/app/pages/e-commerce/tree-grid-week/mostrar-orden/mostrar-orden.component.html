@@ -159,7 +159,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="encargado" class="label">Encargado:</label>
-              <nb-select  formControlName="encargado"
+              <nb-select [disabled]="(telefonista)" formControlName="encargado"
                           name="encargado" 
                           type="text"
                           fullWidth 
@@ -208,7 +208,18 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="fecha_ejecucion" class="label">Fecha de ejecución:</label>
-              <input  type="text"
+              <input *ngIf="telefonista" type="text"
+                      fullWidth 
+                      disabled
+                      status="info"
+                      formControlName="fecha_ejecucion" 
+                      shape="semi-round" 
+                      fieldSize="small"
+                      onkeydown="return false"
+                      nbInput
+                     [nbDatepicker]="formpicker">
+
+              <input *ngIf="!telefonista" type="text"
                       fullWidth 
                       status="info"
                       formControlName="fecha_ejecucion" 
@@ -217,6 +228,7 @@
                       onkeydown="return false"
                       nbInput
                      [nbDatepicker]="formpicker">
+
               <nb-datepicker [min]="min" [max]="max" #formpicker></nb-datepicker>
             </div>
           </div>
@@ -260,7 +272,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="estadoTicket" class="label">Estado ticket:</label>
-              <nb-select  formControlName="estadoTicket"
+              <nb-select [disabled]="(telefonista)" formControlName="estadoTicket"
                           name="estadoTicket" 
                           type="text"
                           fullWidth 
@@ -280,7 +292,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="medioPago" class="label">Medio de pago:</label>
-              <nb-select  formControlName="medioPago"
+              <nb-select [disabled]="(telefonista)" formControlName="medioPago"
                           name="medioPago" 
                           type="text"
                           fullWidth 
@@ -315,7 +327,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="tipo_orden" class="label">Tipo orden:</label>
-              <nb-select  formControlName="tipo_orden"
+              <nb-select [disabled]="(telefonista)" formControlName="tipo_orden"
                           name="tipo_orden" 
                           type="text"
                           fullWidth
@@ -335,7 +347,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="prioridad" class="label">Prioridad:</label>
-              <nb-select  formControlName="prioridad"
+              <nb-select [disabled]="(telefonista)" formControlName="prioridad"
                           name="prioridad" 
                           type="text"
                           fullWidth
