@@ -89,8 +89,8 @@ export class AgregarDireccionComponent {
       rut_cliente      : ['', [Validators.pattern(this.rutRegExp), Validators.required]],
       direccion_cliente: ['', [Validators.pattern(this.direccionRegExp), Validators.required]],
       comuna_cliente   : ['', Validators.required],
-      mac_cliente      : ['', [Validators.pattern(this.macRegExp), Validators.required]],
-      pppoe_cliente    : ['', Validators.required]
+      mac_cliente      : ['', [Validators.pattern(this.macRegExp)]],
+      pppoe_cliente    : ['']
     });
   };
 
