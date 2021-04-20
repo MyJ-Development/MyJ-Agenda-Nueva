@@ -602,7 +602,7 @@ export class MostrarOrdenComponent implements OnInit {
 
     if (this.rol !== 'super') {
 
-      this.formulario.valueChanges.pipe(debounceTime(1500)).subscribe(x => {
+      this.formulario.valueChanges.pipe(debounceTime(1000)).subscribe(x => {
 
         if ((this.formulario.controls['tipo_orden'].value != "") && 
         (this.formulario.controls['fecha_ejecucion'].value != "")) {
@@ -731,6 +731,7 @@ export class MostrarOrdenComponent implements OnInit {
 
     else if (this.ordenCliente['estadoticket']['id'] != 4 && this.rol == 'coordinador') {
       this.coordinador = true;
+      this.telefonista = false; 
       this.mostrarBoton = true;
       this.formulario = this.fb.group({
 
