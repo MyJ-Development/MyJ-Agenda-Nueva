@@ -81,6 +81,9 @@ export class TreeGridShowcaseComponent {
       tipo: {
         title: 'Tipo orden',
       },
+      status: {
+        title: 'Estado orden',
+      },
     },
   };
 
@@ -259,6 +262,7 @@ export class TreeGridShowcaseComponent {
           direccion: this.mayus(this.formato(this.clientes[i]['client_residence']['direccion'])),
           fecha    : this.datePipe.transform(this.clientes[i]['fechaejecucion'], 'dd-MM-yyy'),
           tipo     : this.clientes[i]['tipo']['descripcion'],
+          status     : this.clientes[i]['estadoticket']['descripcion'],
         });
       };
 

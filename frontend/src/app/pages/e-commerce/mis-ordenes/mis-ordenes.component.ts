@@ -60,6 +60,9 @@ export class MisOrdenesComponent {
       tipo: {
         title: 'Tipo orden',
       },
+      created_by: {
+        title: 'Creado Por',
+      },
     },
   };
 
@@ -72,7 +75,7 @@ export class MisOrdenesComponent {
   formulario             : FormGroup;
   data                   : any[];
   clientes               : any[];
-  buscar                 : any;
+  buscar                 : any = "";
   rut_cliente            : any;
   lista                  : any;
   date_init              : any;
@@ -114,37 +117,7 @@ export class MisOrdenesComponent {
     // Se inicia el arreglo vacío:
     this.data = [];
 
-    if ((this. rol == 'vendedor') || (this. rol == 'user')) {
-
-      // Si la opción seleccionada corresponde al valor del calendario, iniciar:
-      if ((this.formulario.value['date_init']) && (this.formulario.value['date_end'])) {
-
-        // Guarda en variable global la fecha de inicio obtenida del calendario:
-        this.date_inicio = new Date(this.formulario.value['date_init']);
-
-        // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
-        this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
-
-        // Guarda en variable global la fecha de final obtenida del calendario:
-        this.date_fin = new Date(this.formulario.value['date_end']);
-
-        // Formatea la fecha final obtenida, en formato standard de las órdenes:
-        this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
-
-        // Obtiene los datos del servicio ingresando los parámetros nombre tecnico, fecha inicio y término:
-        this.servicio = this.service.leerOrdenesClientesUsuario(this.usuario, this.date_init, this.date_end);
-
-        // Ejecuta el método seleccionado:
-        this.sincronizacionOrdenesClientes();
-
-        // Cambia el estado de la tabla para mostrar la información:
-        this.aparece = true;
-      };
-      
-    } else {
-
-      if ((this.formulario.value['buscador']) && (this.formulario.value['date_init']) 
-      && (this.formulario.value['date_end'])) {
+    if(this.rol == 'super' && (this.formulario.value['date_init']) && (this.formulario.value['date_end'])){
 
         // Iguala el dato obtenido del formulario con variable global:
         this.buscar = this.formulario.value['buscador'];
@@ -162,15 +135,42 @@ export class MisOrdenesComponent {
         this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
 
         // Obtiene los datos del servicio ingresando los parámetros nombre tecnico, fecha inicio y término:
-        this.servicio = this.service.leerOrdenesClientesUsuario(this.buscar, this.date_init, this.date_end);
-
+        this.servicio = this.service.leerOrdenesClientesUsuario(this.date_init, this.date_end,this.buscar);
         // Ejecuta el método seleccionado:
         this.sincronizacionOrdenesClientes();
 
         // Cambia el estado de la tabla para mostrar la información:
         this.aparece = true;
       };
-    };
+    
+    if ((this. rol == 'vendedor') || (this. rol == 'telefonista')) {
+
+      // Si la opción seleccionada corresponde al valor del calendario, iniciar:
+      if ((this.formulario.value['date_init']) && (this.formulario.value['date_end'])) {
+
+        // Guarda en variable global la fecha de inicio obtenida del calendario:
+        this.date_inicio = new Date(this.formulario.value['date_init']);
+
+        // Formatea la fecha de inicio obtenida, en formato standard de las órdenes:
+        this.date_init = this.datePipe.transform(this.date_inicio, 'yyyy-MM-dd');
+
+        // Guarda en variable global la fecha de final obtenida del calendario:
+        this.date_fin = new Date(this.formulario.value['date_end']);
+
+        // Formatea la fecha final obtenida, en formato standard de las órdenes:
+        this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
+
+        console.log(this.date_init, this.date_end,this.usuario)
+        // Obtiene los datos del servicio ingresando los parámetros nombre tecnico, fecha inicio y término:
+        this.servicio = this.service.leerOrdenesClientesUsuario(this.date_init, this.date_end,this.usuario);
+        // Ejecuta el método seleccionado:
+        this.sincronizacionOrdenesClientes();
+
+        // Cambia el estado de la tabla para mostrar la información:
+        this.aparece = true;
+      };
+      
+    }
   };
 
 
@@ -197,8 +197,9 @@ export class MisOrdenesComponent {
           id_orden : this.clientes[i]['id'],
           nombre   : this.mayus(this.formato(this.clientes[i]['client_order']['nombre'])),
           direccion: this.mayus(this.formato(this.clientes[i]['client_residence']['direccion'])),
-          fecha    : this.datePipe.transform(this.clientes[i]['fechaejecucion'], 'dd-MM-yyy'),
+          fecha    : this.datePipe.transform(this.clientes[i]['created_at'], 'dd-MM-yyy'),
           tipo     : this.clientes[i]['tipo']['descripcion'],
+          created_by : this.clientes[i]['created_by']['email']
         });
       };
 
@@ -231,7 +232,7 @@ export class MisOrdenesComponent {
     this.formulario = this.fb.group({
 
       // Controles del formulario, llamados por el componente html con formControlName:
-      buscador : ['', Validators.required],
+      buscador : [''],
       date_init: ['', Validators.required],
       date_end : ['', Validators.required],
     });
