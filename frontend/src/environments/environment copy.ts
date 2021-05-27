@@ -10,7 +10,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://170.239.188.2:3012/api',
+  apiUrl: 'http://170.239.188.2:3011/api',
   testUser: {
     // tslint:disable
     token: {
