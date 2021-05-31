@@ -127,8 +127,6 @@ export class TecnicoUsuarioComponent {
 
       this.service.agregarTecnicoUsuario(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -142,7 +140,7 @@ export class TecnicoUsuarioComponent {
   onDeleteConfirm(event): void {
     if (window.confirm('Estás seguro que quieres eliminar este tipo de orden?')) {
 
-      console.log(event);
+      //console.log(event);
 
       this.report = {
         user_email  : event.data.usuario,
@@ -153,8 +151,6 @@ export class TecnicoUsuarioComponent {
 
       this.service.eliminarTecnicoUsuario(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

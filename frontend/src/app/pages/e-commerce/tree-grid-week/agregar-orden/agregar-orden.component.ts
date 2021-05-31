@@ -52,7 +52,7 @@ export class AgregarOrdenComponent implements OnInit {
   max               : Date;
   rol               : any;
   loading           = false;
-
+  showField         : any = true;  
 
   // Constructor:
   constructor(private tableService : tableService,
@@ -160,7 +160,6 @@ export class AgregarOrdenComponent implements OnInit {
 
   // Método encargado de crear el formulario que extrae los datos del componente html:
   crearFormulario(){
-
     this.formulario = this.fb.group({
 
       rut_cliente      : ['', [Validators.required, Validators.pattern(this.rutRegExp)]],
@@ -183,7 +182,7 @@ export class AgregarOrdenComponent implements OnInit {
   getOrdenes(){
 
     if (this.rol !== 'super') {
-
+      this.showField = false
       this.formulario.valueChanges.pipe(debounceTime(1500)).subscribe(x => {
 
         if ((this.formulario.controls['tipo_orden'].value != "") && 
@@ -381,6 +380,13 @@ export class AgregarOrdenComponent implements OnInit {
       `ID Orden: `+id,
       { destroyByClick,duration });
   };
+
+  showToastFail(destroyByClick,duration) {
+    this.toastrService.show(
+      'Fallo en la creación de la orden!',
+      `Cliente ya posee una orden abierta agendada`,
+      { destroyByClick,duration });
+  };
   
 
   // Método encargado de enviar los datos obtenidos al servicio:
@@ -423,15 +429,28 @@ export class AgregarOrdenComponent implements OnInit {
     if (this.report) {
       
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-      this.service.agregarOrden(this.report).subscribe(data => {
+
+      //this.service.verificarOrden()
+
+      this.service.verificarOrden(this.report.client_order).subscribe(data => {
         this.loading = false
+        let res :any;
         res = data;
-        console.log('res');
-        console.log(res);
-        this.router.navigate(['/success']);
-        this.showToast(false,15000,res['id']);
-        this.ref.close();
+        if(res['response'] == 1){
+          this.service.agregarOrden(this.report).subscribe(data => {
+            this.loading = false
+            res = data;
+            this.router.navigate(['/success']);
+            this.showToast(false,15000,res['id']);
+            this.ref.close();
+          });
+        } else {
+          this.showToastFail(false,5000)
+        }
+        
+
       });
+
     };
   };
 };

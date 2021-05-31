@@ -123,8 +123,6 @@ export class PrioridadComponent {
 
       this.service.agregarPrioridad(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -148,8 +146,6 @@ export class PrioridadComponent {
 
       this.service.editarPrioridad(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

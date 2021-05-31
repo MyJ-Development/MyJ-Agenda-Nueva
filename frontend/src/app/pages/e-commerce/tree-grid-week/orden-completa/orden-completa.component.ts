@@ -181,8 +181,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -204,8 +204,6 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -227,8 +225,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -250,8 +248,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -271,8 +269,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -294,8 +292,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -316,8 +314,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -339,8 +337,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -362,8 +360,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -385,8 +383,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -408,8 +406,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
 
@@ -430,8 +428,8 @@ export class OrdenCompletaComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
+        
+        
       });
     };
   };
@@ -569,11 +567,11 @@ export class OrdenCompletaComponent implements OnInit {
 
       
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
-      console.log(this.report)
+      //console.log(this.report)
       this.service.editarOrden(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
+        
+        
         //this.router.navigate(['/success']);
       });
 
@@ -581,7 +579,7 @@ export class OrdenCompletaComponent implements OnInit {
       this.ref.close();
       
     } else {
-      console.log(this.formulario);
+      //console.log(this.formulario);
       alert("Revisa los campos")
     };
   };
@@ -763,7 +761,7 @@ export class OrdenCompletaComponent implements OnInit {
       });
     }
     else if ((this.ordenCliente['estadoticket']['id'] !== 4) && this.rol == 'telefonista') {
-      console.log("Entro telefonista!")
+      //console.log("Entro telefonista!")
       this.telefonista = true;
       this.mostrarBoton = true;
       this.formulario = this.fb.group({

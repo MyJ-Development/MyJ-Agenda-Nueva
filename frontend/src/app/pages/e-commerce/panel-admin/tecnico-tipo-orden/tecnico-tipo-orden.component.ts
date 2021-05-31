@@ -128,8 +128,6 @@ export class TecnicoTipoOrdenComponent {
 
       this.service.agregarTecnicoTipoOrden(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -152,8 +150,6 @@ export class TecnicoTipoOrdenComponent {
 
       this.service.eliminarTecnicoTipoOrden(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

@@ -154,8 +154,6 @@ export class EstadoTicketComponent {
 
       this.service.agregarEstadoTicket(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -182,8 +180,6 @@ export class EstadoTicketComponent {
 
       this.service.editarEstadoTicket(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

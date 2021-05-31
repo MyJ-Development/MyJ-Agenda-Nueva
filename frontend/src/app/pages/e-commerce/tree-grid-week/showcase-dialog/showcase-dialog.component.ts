@@ -250,8 +250,8 @@ export class ShowcaseDialogComponent implements OnInit {
             res = data;
             this.loading = false;
 
-            console.log('res');
-            console.log(res);
+            
+            
 
             this.ref.close();
           });
@@ -293,8 +293,8 @@ export class ShowcaseDialogComponent implements OnInit {
           res = data;
           this.loading = false;
 
-          console.log('res');
-          console.log(res);
+          
+          
 
           this.ref.close();
         });
@@ -337,8 +337,8 @@ export class ShowcaseDialogComponent implements OnInit {
             res = data;
             this.loading = false;
 
-            console.log('res');
-            console.log(res);
+            
+            
 
             this.ref.close();
           });
@@ -449,8 +449,8 @@ export class ShowcaseDialogComponent implements OnInit {
 
         res = data;
 
-        console.log('res');
-        console.log(res);
+        
+        
 
         this.showToast(false,15000,orden_id);
       });
@@ -469,8 +469,8 @@ export class ShowcaseDialogComponent implements OnInit {
 
         res = data;
 
-        console.log('res');
-        console.log(res);
+        
+        
         this.showToast(false,15000,orden_id);
       });
 
@@ -499,15 +499,15 @@ export class ShowcaseDialogComponent implements OnInit {
 
         res = data;
 
-        console.log('res');
-        console.log(res);
+        
+        
 
         this.peticiones.agregarSeguimiento(this.reportTecnico).subscribe(data => {
 
           res = data;
   
-          console.log('res');
-          console.log(res);
+          
+          
           this.showToast(false,15000,orden_id);
         });
       });

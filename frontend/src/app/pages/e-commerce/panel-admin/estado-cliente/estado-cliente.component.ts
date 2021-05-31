@@ -153,8 +153,6 @@ export class EstadoClienteComponent {
 
       this.service.agregarEstadoCliente(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -181,8 +179,6 @@ export class EstadoClienteComponent {
 
       this.service.editarEstadoCliente(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

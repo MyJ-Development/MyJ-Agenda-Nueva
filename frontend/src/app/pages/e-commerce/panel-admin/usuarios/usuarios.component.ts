@@ -161,8 +161,6 @@ export class UsuariosComponent {
 
       this.service.agregarUsuario(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -191,8 +189,6 @@ export class UsuariosComponent {
 
       this.service.editarUsuario(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

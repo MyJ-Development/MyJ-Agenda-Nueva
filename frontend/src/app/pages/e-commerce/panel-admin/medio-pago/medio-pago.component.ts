@@ -128,8 +128,6 @@ export class MedioPagoComponent {
 
       this.service.agregarMedioPago(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -153,8 +151,6 @@ export class MedioPagoComponent {
 
       this.service.editarMedioPago(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

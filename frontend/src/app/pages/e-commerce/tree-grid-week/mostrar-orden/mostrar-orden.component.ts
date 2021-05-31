@@ -180,8 +180,6 @@ export class MostrarOrdenComponent implements OnInit {
 
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -204,8 +202,6 @@ export class MostrarOrdenComponent implements OnInit {
 
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -228,8 +224,6 @@ export class MostrarOrdenComponent implements OnInit {
         res = data;
         this.loading = false;
         
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -251,8 +245,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -273,8 +265,6 @@ export class MostrarOrdenComponent implements OnInit {
 
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -296,8 +286,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -318,8 +306,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -341,8 +327,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -364,8 +348,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -387,8 +369,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -410,8 +390,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
 
@@ -432,8 +410,6 @@ export class MostrarOrdenComponent implements OnInit {
       this.service.agregarSeguimiento(this.reportEventos).subscribe(data => {
         res = data;
         this.loading = false;
-        console.log('res');
-        console.log(res);
       });
     };
   };
@@ -479,8 +455,6 @@ export class MostrarOrdenComponent implements OnInit {
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
       this.service.editarOrden(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         //this.router.navigate(['/success']);
       });
 

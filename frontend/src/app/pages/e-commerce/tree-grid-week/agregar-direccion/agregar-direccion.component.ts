@@ -131,8 +131,6 @@ export class AgregarDireccionComponent {
     if (this.report) {
       this.peticiones.agregarResidencia(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.loading = false;
         this.router.navigate(['/success']);
         this.showToast('');

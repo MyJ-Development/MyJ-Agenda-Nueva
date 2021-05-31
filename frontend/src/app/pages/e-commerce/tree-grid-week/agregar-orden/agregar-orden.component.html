@@ -135,6 +135,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="estado_cliente" class="label">Estado cliente: </label>
+            <div *ngIf='showField'>
               <nb-select  formControlName="estado_cliente"
                           name="estado_cliente" 
                           type="text"
@@ -144,12 +145,31 @@
                           status="info"
                           size="small"
                           placeholder="Seleccione un estado">
-                <nb-option  *ngFor="let estado of estadoCliente"
-                            type="text"
-                            [value]="estado.id">
-                            {{estado.descripcion}}
-                </nb-option>
-              </nb-select>
+                  <nb-option  *ngFor="let estado of estadoCliente"
+                              type="text"
+                              [value]="estado.id">
+                              {{estado.descripcion}}
+                  </nb-option>
+                </nb-select>
+            </div>
+            <div *ngIf='!showField && estadoCliente'>
+              <nb-select  formControlName="estado_cliente"
+                          name="estado_cliente" 
+                          type="text"
+                          fullWidth
+                          [ngClass]="{'borde': estadoClienteNoValido}"
+                          shape="semi-round" 
+                          status="info"
+                          size="small"
+                          placeholder="Seleccione un estado">
+                  <nb-option
+                              type="text"
+                              [value]="estadoCliente[0].id">
+                              {{estadoCliente[0].descripcion}}
+                  </nb-option>
+                </nb-select>
+            </div>
+
 
               <small *ngIf="estadoClienteNoValido" class="form-text text-danger">Seleccione un estado</small>
             </div>
@@ -158,21 +178,41 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="estado_ticket" class="label">Estado ticket: </label>
-              <nb-select  formControlName="estado_ticket"
-                          name="estado_ticket" 
-                          type="text"
-                          fullWidth
-                          [ngClass]="{'borde': estadoTicketNoValido}"
-                          shape="semi-round" 
-                          status="info"
-                          size="small"
-                          placeholder="Seleccione un estado">
-                <nb-option  *ngFor="let estado of estadoTicket"
-                            type="text"
-                            [value]="estado.id">
-                            {{estado.descripcion}}
-                </nb-option>
-              </nb-select>
+              <div *ngIf='showField && estadoTicket'>
+                  <nb-select  formControlName="estado_ticket"
+                  name="estado_ticket" 
+                  type="text"
+                  fullWidth
+                  [ngClass]="{'borde': estadoTicketNoValido}"
+                  shape="semi-round" 
+                  status="info"
+                  size="small"
+                  placeholder="Seleccione un estado">
+                      <nb-option  *ngFor="let estado of estadoTicket"
+                                  type="text"
+                                  [value]="estado.id">
+                                  {{estado.descripcion}}
+                      </nb-option>
+                  </nb-select>
+                </div>
+              <div *ngIf='!showField && estadoTicket'>
+                  <nb-select  formControlName="estado_ticket"
+                  name="estado_ticket" 
+                  type="text"
+                  fullWidth
+                  [ngClass]="{'borde': estadoTicketNoValido}"
+                  shape="semi-round" 
+                  status="info"
+                  size="small"
+                  placeholder="Seleccione un estado">
+                      <nb-option
+                                  type="text"
+                                  [value]="estadoTicket[0].id">
+                                  {{estadoTicket[0].descripcion}}
+                      </nb-option>
+                  </nb-select>
+                </div>
+
 
               <small *ngIf="estadoTicketNoValido" class="form-text text-danger">Seleccione un estado</small>
             </div>

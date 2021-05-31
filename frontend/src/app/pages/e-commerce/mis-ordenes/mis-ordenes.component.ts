@@ -160,7 +160,7 @@ export class MisOrdenesComponent {
         // Formatea la fecha final obtenida, en formato standard de las órdenes:
         this.date_end = this.datePipe.transform(this.date_fin, 'yyyy-MM-dd');
 
-        console.log(this.date_init, this.date_end,this.usuario)
+        //console.log(this.date_init, this.date_end,this.usuario)
         // Obtiene los datos del servicio ingresando los parámetros nombre tecnico, fecha inicio y término:
         this.servicio = this.service.leerOrdenesClientesUsuario(this.date_init, this.date_end,this.usuario);
         // Ejecuta el método seleccionado:

@@ -109,7 +109,9 @@ export class TreeGridWeekShowcaseComponent {
 
     // Llamada de métodos:
     this.sincronizar();
-  };
+    this.forceUpdate();
+    setInterval(()=> { this.forceUpdate() }, 60000 );
+  };  
 
 
   // Sincroniza los datos del servicio con el primer día de la semana:
@@ -128,7 +130,7 @@ export class TreeGridWeekShowcaseComponent {
     this.newDate = this.firstDayOfWeek(this.year, Number(this.todayFormated));
     this.updateTreeGrid(this.newDate);
   };
-
+  
 
   // Obtiene el primer día de la semana:
   firstDayOfWeek(year, week) {
@@ -219,8 +221,8 @@ export class TreeGridWeekShowcaseComponent {
     this.sendNuevaFecha(date_init);
 
     // Imprime el inicio y término de semana:
-    console.log("init: " + date_init);
-    console.log("end: "  + date_end);
+    //console.log("init: " + date_init);
+    //console.log("end: "  + date_end);
 
     // Inicia la variable con un objeto vacío:
     let test = [];
@@ -390,6 +392,7 @@ export class TreeGridWeekShowcaseComponent {
 
       // Construye la estructura de datos a mostrar, en base a la interfaz definida:
       this.dataSource = this.dataSourceBuilder.create(this.data);
+      //console.log(this.data)
       this.loading = false;
       first_date = this.newDate;
     });

@@ -46,7 +46,7 @@ export class MostrarClienteComponent implements OnInit {
   arrayId_residencia : any;
   comunas            : any;
   rol                : any;
-
+  old_rut            : any = '';
 
   // Constructor:
   constructor(protected ref       : NbDialogRef<MostrarClienteComponent>,
@@ -70,7 +70,7 @@ export class MostrarClienteComponent implements OnInit {
     /* Obtiene el rut_cliente desde el servicio,
     enviado previamente desde otro componente: */
     this.rut_cliente = this.tableService.getRut_cliente();
-
+    this.old_rut = this.rut_cliente;
     /* Obtiene la orden completa del cliente desde el servicio,
     enviada previamente desde otro componente: */
     this.ordenCliente = this.tableService.getOrden();
@@ -131,15 +131,30 @@ export class MostrarClienteComponent implements OnInit {
 
       /* Se define la estructura de datos a enviar al servicio y 
       se le asignan los datos obtenidos del formulario: */
-      this.reportCliente = {
-        rut       : this.formulario.value['rut_cliente'],
-        email     : this.formulario.value['correo_cliente'],
-        nombre    : this.formulario.value['nombre_cliente'],
-        contacto1 : this.formulario.value['telefono1'],
-        contacto2 : this.formulario.value['telefono2'],
-        created_by: this.ordenCliente['created_by']['email'],
-        updated_by: this.usuario
-      };
+      if(this.old_rut == this.formulario.value['rut_cliente']){
+        this.reportCliente = {
+          rut       : this.formulario.value['rut_cliente'],
+          email     : this.formulario.value['correo_cliente'],
+          nombre    : this.formulario.value['nombre_cliente'],
+          contacto1 : this.formulario.value['telefono1'],
+          contacto2 : this.formulario.value['telefono2'],
+          created_by: this.ordenCliente['created_by']['email'],
+          updated_by: this.usuario
+        };
+      }
+      else{
+        this.reportCliente = {
+          rut       : this.formulario.value['rut_cliente'],
+          old_rut       : this.old_rut,
+          email     : this.formulario.value['correo_cliente'],
+          nombre    : this.formulario.value['nombre_cliente'],
+          contacto1 : this.formulario.value['telefono1'],
+          contacto2 : this.formulario.value['telefono2'],
+          created_by: this.ordenCliente['created_by']['email'],
+          updated_by: this.usuario
+        };
+      }
+
 
 
       // Recorre el arreglo de residencias y envía los datos a la API:
@@ -158,17 +173,14 @@ export class MostrarClienteComponent implements OnInit {
         // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
         this.service.editarResidencia(this.reportResidencia).subscribe(data => {
           res = data;
-          console.log('res');
-          console.log(res);
           this.router.navigate(['/success']);
         });
       };
 
       // Se envían los datos obtenidos del formulario al servicio para alojarlos en la API.
+
       this.service.editarCliente(this.reportCliente).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/success']);
       });      
 

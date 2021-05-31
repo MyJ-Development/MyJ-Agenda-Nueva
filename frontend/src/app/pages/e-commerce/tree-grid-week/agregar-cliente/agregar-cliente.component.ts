@@ -195,8 +195,6 @@ export class AgregarClienteComponent {
       // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
       this.peticiones.agregarCliente(this.reportCliente).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.loading = false;
         this.router.navigate(['/success']);
 
@@ -204,8 +202,6 @@ export class AgregarClienteComponent {
           // Llama al servicio requerido y envía los datos obtenidos anteriormente a la API:
           this.peticiones.agregarResidencia(this.reportResidencia).subscribe(data => {
             res = data;
-            console.log('res');
-            console.log(res);
             this.router.navigate(['/success']);
           });
         };

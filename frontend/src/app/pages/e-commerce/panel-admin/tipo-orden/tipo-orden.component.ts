@@ -145,8 +145,6 @@ export class TipoOrdenComponent {
 
       this.service.agregarTipoOrden(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -171,12 +169,10 @@ export class TipoOrdenComponent {
 
       let res = '';
 
-      console.log(this.report);
+      //console.log(this.report);
 
       this.service.editarTipoOrden(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 

@@ -95,10 +95,10 @@ export class peticionesGetService {
 
     leerOrdenesClientesUsuario(date_init, date_end,created_by?): Observable<any[]> {
         if(created_by){
-            console.log("1")
+            //console.log("1")
             return this.http.get<any[]>('http://170.239.188.2:3011/api/scheduler/cl-orders?created_by=' + created_by + '&date_init=' + date_init + '&date_end=' + date_end + '')
         } else {
-            console.log("2")
+            //console.log("2")
             return this.http.get<any[]>('http://170.239.188.2:3011/api/scheduler/cl-orders?' + 'date_init=' + date_init + '&date_end=' + date_end + '')
         }
 }
@@ -116,6 +116,10 @@ export class peticionesGetService {
 	agregarOrden(report): Observable<any> {
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		return this.http.post('http://170.239.188.2:3011/api/scheduler/order/', report);
+	}
+
+	verificarOrden(rut): Observable<any> {
+		return this.http.get('http://170.239.188.2:3011/api/scheduler/orderchecker?rut_cliente='+rut+'');
 	}
 
     agregarTecnico(report): Observable<any> {

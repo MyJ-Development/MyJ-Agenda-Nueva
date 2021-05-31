@@ -174,8 +174,6 @@ export class TecnicosComponent {
 
       this.service.agregarTecnico(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
@@ -204,8 +202,6 @@ export class TecnicosComponent {
 
       this.service.editarTecnico(this.report).subscribe(data => {
         res = data;
-        console.log('res');
-        console.log(res);
         this.router.navigate(['/pages/panel-admin']);
       });
 
