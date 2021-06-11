@@ -109,8 +109,15 @@ export class TreeGridWeekShowcaseComponent {
 
     // Llamada de métodos:
     this.sincronizar();
-    this.forceUpdate();
-    setInterval(()=> { this.forceUpdate() }, 60000 );
+    //console.log(Math.random() * (90 - 30 + 1) + 30)
+    //this.forceUpdate();
+    /*
+    let rol = this.tableService.getRolUsuario();
+    if(rol == 'super'){
+      setInterval(()=> { this.forceUpdate() }, Math.random() * (90 - 30 + 1) + 30 );
+    }
+    */
+    
   };  
 
 
@@ -200,7 +207,7 @@ export class TreeGridWeekShowcaseComponent {
 
   // Método principal encargado de obtener y enlazar datos para mostrarlos en el componente html:
   updateTreeGrid(date_aux: Date) {
-    
+
     // Inicia la variable con un objeto vacío.
     this.data = [];
 
